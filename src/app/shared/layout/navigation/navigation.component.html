@@ -18,9 +18,21 @@
           <li routerLinkActive="active">
             <a routerLink="/dashboard/analytics">{{'Analytics Dashboard' | i18n}}</a>
           </li>
-          <li routerLinkActive="active">
+          <!-- <li routerLinkActive="active">
             <a routerLink="/dashboard/social">{{'Social Wall' | i18n}}</a>
+          </li> -->
+        </ul>
+      </li>
+      <li>
+        <a title="Master"><i class="fa fa-lg fa-fw fa-database"></i> <span
+          class="menu-item-parent">Master</span></a>
+        <ul>
+          <li routerLinkActive="active">
+            <a routerLink="/master/vehicle-master">Vehicle Master</a>
           </li>
+          <li routerLinkActive="active">
+              <a routerLink="/master/route-master">Route Master</a>
+            </li>
         </ul>
       </li>
 

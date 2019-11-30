@@ -33,3 +33,14 @@
 .login_toll {
     color: #4f97d6 !important;
 }
+.errorMessage{color:red;}
+.marg-right {
+    margin-right: 25px;
+}
+#main {
+    margin-left: 220px;
+    padding: 0;
+    padding-bottom: 52px;
+    min-height: 304px;
+    position: relative;
+}

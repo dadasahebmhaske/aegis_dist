@@ -1,0 +1,218 @@
+<header id="header" class="animated fadeInDown">
+    
+      <div id="logo-group">
+        <span id="logo"> <img src="assets/img/logo.gif" alt="AEGIS"> </span>
+      </div>
+      <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
+          <div  class="text-center toll">
+              <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
+          </div>
+        </div>
+        <span id="extr-page-header-space">
+          <span class="hidden-mobile hiddex-xs">Already registered?</span> <a routerLink="/auth/login" class="btn btn-danger">Sign In</a> </span>
+    </header>
+    <div id="main" role="main" class="animated fadeInDown">
+    
+      <div id="content" class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 hidden-xs hidden-sm">
+              <div class="row">
+                  <div class="col-sm-12">
+
+                      <h1 class="txt-color-red login-header-big">Distributor Profile</h1>
+                      <div class="">
+                          <div class="pull-left">
+                              <p>Fill up all the details to create profile and click on Next button.  </p>
+                          </div>
+
+                      </div>
+                      <br />
+                      <div class="row">
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <h5 class="about-heading">How do I change my current address?</h5>
+                              <p>
+                                  To change current address tick <a style="font-size:16px;">&#9745;</a> on "Is current address different ?" and enter expected address.
+                              </p>
+                          </div>
+                          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                              <h5 class="about-heading">Which phone number to be entered?</h5>
+                              <p>
+                                  Agency landline number. Example - STD Code + Your phone number <a>(020-12345678)</a> .
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div><br>
+
+
+              <div class="row">
+                  <div class="col-sm-12">
+
+                      <h5 class="about-heading">How do I enter GSTIN number?</h5>
+
+                      <div class="gstn-noimg">
+
+                          <img src="assets/img/gstin-structure.jpg" height="200px;" />
+                      </div>
+
+                  </div>
+              </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <div class="distri_auth well no-padding">
+                  <form id="smart-form-register" name="DistAuthForm" class="smart-form client-form">
+                      <header>
+                          Distributor Profile
+                      </header>
+                      <fieldset>
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">Distributor Code</label>
+                                  <label class="input">
+                                      <i class="icon-append fa fa-shield"></i>
+                                      <input type="text" name="distributor_code" class="form-control "  title="Your Distributor code" minlength="8" maxlength="8" [disabled]="true"  required />
+                                  </label>
+                              </section>
+                              <section class="col col-6">
+                                  <label class="label">Agency Establishment Date<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <i class="icon-append fa fa-calendar"></i>
+                                      <input type="text" id="authdate" name="authentification_code" ng-model="distprofile.OrgeStDate" title="Select establishment date" birthdatepicker required />
+                                  </label>
+                              </section>
+                          </div>
+                          <section class="col-sm-12">
+                              <label class="label">Agency Name</label>
+                              <label class="input">
+                                  <i class="icon-append fa fa-user"></i>
+                                  <input type="text" class="form-control" name="distname" ng-model="distprofile.DistName" title="Your Distributor name" ng-disabled="true" required />
+                              </label>
+                          </section>
+                              <section class="col-sm-12">
+                                  <label class="label">Current Address</label>
+                                  <div class="bot15 form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address1" />
+                                      </label>
+                                  </div>
+                                  <div class="bot15 form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address2"/>
+                                      </label>
+                                  </div>
+                                  <div class=" form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address3"/>
+                                      </label>
+                                  </div>                                  
+                              </section>
+                            
+                              <div class="row ">
+                                  <section class="col col-4 ">
+                                      <label class="label">Pin Code<span class="errorMessage">*</span></label>
+                                      <label class="input">
+                                      <input type="text" class="form-control" ng-model="distprofile.PinCode" minlength="6" maxlength="6" title="Enter your pincode number"
+                                             oninvalid="this.setCustomValidity('Enter 6 digits pincode number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')"
+                                             numericonly required />
+                                            </label>
+                                  </section>
+                                  <section class="col col-4">
+                                      <label class="label">GSTIN Number<span class="errorMessage">*</span></label>
+                                      <label class="input">
+                                      <input type="text" class="form-control" ng-model="distprofile.GstnNo" ng-change="GetStateData(distprofile.GstnNo)" minlength="15" maxlength="15" pattern="\d{2}[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}"
+                                             alphanumericonly required />
+                                            </label>
+                                  </section>
+                                  <section class="col col-4">
+                                      <label class="label" for="sel1">State<span class="errorMessage">*</span></label>
+                                      <label class="input">
+                                          <i class="icon-append11 fa fa-home"></i>
+                                          <select class="form-control" id="sel1" ng-model="distprofile.StateCode" ng-options="s.StateCode as s.StateDesc for s in StateData" title="Your state" required>
+                                              <option value="">--State--</option>
+                                          </select>
+    
+                                      </label>
+    
+                                  </section>
+                              </div>
+                              <section class="col-sm-12" >
+                                  <label class="label">Delivery Address <span class="errorMessage">*</span></label>
+                                  <div class="bot15 form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address1s" oninvalid="this.setCustomValidity('Please Enter Delivery Address')" onchange="    setCustomValidity('')" oninput="    setCustomValidity(' ')" required />
+                                      </label>
+                                  </div>
+                                  <div class="bot15 form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address2s" />
+                                      </label>
+                                  </div>
+                                  <div class="bot15 form-group">
+                                      <label class="input">
+                                          <i class="icon-append fa fa-home"></i>
+                                          <input type="text" class="form-control" ng-model="distprofile.Address3s" />
+                                      </label>
+                                  </div>
+
+                                  <div class="col-sm-4">
+                                      <label class="label">Pincode <span class="errorMessage">*</span></label>
+                                      <label class="input">
+                                      <input type="text" class="form-control" ng-model="distprofile.PinCodes" minlength="6" maxlength="6" title="Enter your pincode number"
+                                             oninvalid="this.setCustomValidity('Enter 6 digits pincode number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                                            </label>
+                                            </div>
+
+                              </section>
+                              <div class="row">
+                                  <section class="col col-6">
+                                      <label class="label">Landline Phone No.<span class="errorMessage">*</span></label>
+                                      <label class="input">
+                                      <input class="form-control" type="text" name="phone" ng-model="distprofile.PhoneNo" pattern="[0-9]{11}" minlength="11" maxlength="11" title="Enter your phone number"
+                                             oninvalid="this.setCustomValidity('Enter 11 digits phone number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                                            </label>
+                                            </section>
+                                  <section class="col col-6">
+                                      <label class="label">Landline Phone No.(Optional)</label>
+                                      <label class="input">
+                                      <input class="form-control" type="text" ng-model="distprofile.PhoneNoEx" pattern="[0-9]{11}" minlength="11" maxlength="11" title="Enter your phone number"
+                                             oninvalid="this.setCustomValidity('Enter 11 digits phone number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly />
+                                 </label>
+                                            </section>
+                              </div>
+                      </fieldset>
+                      <footer>
+                          <div >
+                             <a routerLink="/auth/create-administrator-account">
+                              <button class="btn btn-primary" >
+                                  Next
+                              </button></a>
+                          </div>
+                          <!-- <div class="row" >
+                              <div class="col-sm-12 ">
+                                  <button type="button" name="" class=" btn btn-default pull-right modal-submit login-btn btn-large1 btn-large waves-effect waves-light btn-primary">
+                                      <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                                  </button>
+                              </div>
+                          </div> -->
+                      </footer>
+  
+                      <div class="message">
+                          <i class="fa fa-check"></i>
+                          <p>
+                              Thank you for your registration!
+                          </p>
+                      </div>
+                  </form>
+  
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    

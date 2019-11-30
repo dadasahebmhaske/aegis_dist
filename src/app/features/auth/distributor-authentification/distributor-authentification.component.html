@@ -1,0 +1,87 @@
+<header id="header" class="animated fadeInDown">
+  
+    <div id="logo-group">
+      <span id="logo"> <img src="assets/img/logo.gif" alt="AEGIS"> </span>
+    </div>
+    <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
+        <div  class="text-center toll">
+            <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
+        </div>
+      </div>
+      <span id="extr-page-header-space">
+        <span class="hidden-mobile hiddex-xs">Already registered?</span> <a routerLink="/auth/login" class="btn btn-danger">Sign In</a> </span>
+  </header>
+  <div id="main" role="main" class="animated fadeInDown">
+  
+    <div id="content" class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 hidden-xs hidden-sm">
+          <h1 class="txt-color-red login-header-big">Distributor On-Boarding</h1>
+          <div class="">
+              <div class="pull-left ">
+                  <p>
+                      To use Aegis application distributor need to register by following steps below :-
+                  <p>
+                  <p class="black"><span class="badge-red badge badge-pill badge-primary">Step 1</span> Enter distributor code</p>
+                  <p class="black"><span class="badge-red badge badge-primary">Step 2</span> Call toll free number to receive authentication code </p>
+                  <p class="black"><span class="badge-red badge badge-primary">Step 3</span> Enter authentication code and click on Next button</p>
+            
+          </div>
+        </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+            <div class="distri_auth well no-padding">
+                <form id="smart-form-register" name="DistAuthForm" class="smart-form client-form">
+                    <header>
+                        Distributor Authentication
+                    </header>
+                    <fieldset>
+                        <div class="row">
+                            <section class="col col-6">
+                                <label class="label">Distributor Code<span class="errorMessage">*</span></label>
+                                <label class="input">
+                                    <i class="icon-append 	fa fa-shield"></i>
+                                    <input type="text" name="distcode"  title="Distributor code must be digits only" maxlength="8" minlength="8"
+                                           required />
+                                </label>
+                            </section>
+                            <section class="col col-6">
+                                <label class="label">Authentication Code<span class="errorMessage">*</span></label>
+                                <label class="input">
+                                    <i class="icon-append 	fa fa-shield"></i>
+                                    <input type="text" name="authcode"  title="Enter valid authentication code" maxlength="5" minlength="5"
+                                          required />
+                                </label>
+                            </section>
+                        </div>
+                    </fieldset>
+                    <footer>
+                        <div >
+                           <a routerLink="/auth/distributor-profile">
+                            <button class="btn btn-primary" >
+                                Next
+                            </button></a>
+                        </div>
+                        <!-- <div class="row" >
+                            <div class="col-sm-12 ">
+                                <button type="button" name="" class=" btn btn-default pull-right modal-submit login-btn btn-large1 btn-large waves-effect waves-light btn-primary">
+                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                                </button>
+                            </div>
+                        </div> -->
+                    </footer>
+
+                    <div class="message">
+                        <i class="fa fa-check"></i>
+                        <p>
+                            Thank you for your registration!
+                        </p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

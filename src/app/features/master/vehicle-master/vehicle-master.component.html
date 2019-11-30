@@ -1,0 +1,43 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+
+ 
+  <!-- widget grid -->
+  <sa-widgets-grid>
+
+
+    <div class="row">
+      <article class="col-sm-12">
+
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+
+            <h2>Vehicle Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <div class="form-group  pull-right">
+                            <a routerLink="/master/vehicle" class="btn btn-block btn-primary get_details">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add Vehicle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+      
+
+      </article>
+
+     
+    </div>
+  
+  </sa-widgets-grid>
+</div>

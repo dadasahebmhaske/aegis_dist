@@ -106,7 +106,13 @@ const routes: Routes = [
         loadChildren:
           "./features/widgets/widgets-showcase.module#WidgetsShowcaseModule",
         data: { pageTitle: "Widgets" }
-      }
+      },
+
+      {
+        path: "master",
+        loadChildren: "./features/master/master.module#MasterModule",
+        data: { pageTitle: "Master" }
+      },
     ]
   },
 

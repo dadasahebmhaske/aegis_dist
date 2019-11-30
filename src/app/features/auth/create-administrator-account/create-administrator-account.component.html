@@ -1,0 +1,195 @@
+<header id="header" class="animated fadeInDown">
+    
+      <div id="logo-group">
+        <span id="logo"> <img src="assets/img/logo.gif" alt="AEGIS"> </span>
+      </div>
+      <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
+          <div  class="text-center toll">
+              <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
+          </div>
+        </div>
+        <span id="extr-page-header-space">
+          <span class="hidden-mobile hiddex-xs">Already registered?</span> <a routerLink="/auth/login" class="btn btn-danger">Sign In</a> </span>
+    </header>
+    <div id="main" role="main" class="animated fadeInDown">
+    
+      <div id="content" class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 hidden-xs hidden-sm">
+              <h1 class="txt-color-red login-header-big">Create Administrator Account</h1>
+            
+                  <div class="pull-left ">
+                      <p>Create administrator account and later create respective user account and assign required access to specific forms and to users.</p>
+                  </div>
+
+              <br />
+              <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                      <h5 class="about-heading">What is Role?</h5>
+                      <p>
+                          Default role should be ‘Owner’ and other role accounts can be created after successful registration.
+                      </p>
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                      <h5 class="about-heading">What is default Language?</h5>
+                      <p>
+                          Select your desired application language preference.
+                      </p>
+                  </div>
+              </div>
+              <br />
+              <div class="row">
+                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                      <h5 class="about-heading">Which email address to be entered?</h5>
+                      <p>
+                          Preferably, enter Agencies registered email id provided by company.
+                      </p>
+                  </div>
+              </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <div class="distri_auth well no-padding">
+                  <form id="smart-form-register" name="DistAuthForm" class="smart-form client-form">
+                      <header>
+                          Create Administrator Account
+                      </header>
+                      <fieldset>
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">Role</label>
+                                  <label class="input">
+                                      <!-- <i class="icon-append fa fa-shield"></i> -->
+                                      <select class="cleanSelect form-control" name="distributor_role" ng-model="DistAdmin.RoleCode" ng-options="r.RoleCode as r.RoleDesc for r in GetRoles" title="Select your role" required >
+                                                                             </select>
+                                  </label>
+                              </section>
+                              <!-- <section class="col col-6">
+                                  <label class="label">Default Language<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <i class="icon-append fa fa-shield"></i>
+                                      <select class="cleanSelect form-control" name="distributor_language" ng-model="DistAdmin.LangCode" ng-options="l.LangCode as l.LangDesc for l in GetLanguage" title="Select your language" required>
+                                          <option value="" selected>--Select Language--</option>
+                                      </select>
+                                  </label>
+                              </section> -->
+                          </div>
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">First Name<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <input type="text" class="form-control" ng-model="DistAdmin.FirstName" title="Enter your first name" alphaonly required />
+                                  </label>
+                              </section>
+                              <section class="col col-6">
+                                  <label class="label">Last Name<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <input type="text" class="form-control" ng-model="DistAdmin.LastName" title="Enter your last name" alphaonly required />
+                                  </label>
+                              </section>
+                          </div>
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">Gender<span class="errorMessage">*</span></label>
+                                  <select class="form-control" ng-model="DistAdmin.Gender" ng-options="g.GenderCode as g.GenderType for g in GetGender" title="Select your gender" required>
+                                      <option value="" selected> -- Select Gender -- </option>
+                                  </select>
+                              </section>
+                              <section class="col col-6">
+                                  <label class="label">Birth Date<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <i class="icon-append fa fa-calendar"></i>
+                                      <input type="text" id="bday" name="distributor_bday" ng-model="DistAdmin.BirthDate" title="Select your birth date" birthdatepicker required />
+                                  </label>
+                              </section>
+                          </div>
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">Mobile No.<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <input type="text" class="form-control" ng-model="DistAdmin.MobileNo" ng-pattern="/^(?:\s*\d{10}\s*(?:,|$))+$/" minlength="10" maxlength="10" title="Enter your mobile number"
+                                             oninvalid="this.setCustomValidity('Enter 10 digit mobile number')" onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                                  </label>
+                              </section>
+                              <section class="col col-6">
+                                  <label class="label">Mobile No. (Optional)</label>
+                                  <label class="input">
+                                      <input type="text" class="form-control" ng-model="DistAdmin.MobileNoe" ng-pattern="/^(?:\s*\d{10}\s*(?:,|$))+$/" minlength="10" maxlength="10" title="Enter your mobile number"
+                                             oninvalid="this.setCustomValidity('Enter 10 digit mobile number')" onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly />
+                                  </label>
+                              </section>
+                          </div>
+                         <section class="col-sm-12">
+                            <label class="label">Email Address<span class="errorMessage">*</span></label>
+                            <label class="input">
+                                <input type="email" id="loginemail" name="emailid" class="form-control" ng-blur="myFunction()" ng-model="DistAdmin.EmailAddress" pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+                                        required />                                    
+                            </label>
+                          </section>
+
+                          <div class="row">
+                              <section class="col col-6">
+                                  <label class="label">New Password<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <input type="{{inputTypeOne}}" name="pqr" class="form-control" ng-model="DistAdmin.UserPwd" title="Password must be minimum 6 characters long with alphabets or numbers"
+                                             ng-change="PasswordToValidate(DistAdmin)" oninvalid="this.setCustomValidity('Password must be minimum 6 characters long with alphabets or numbers')"
+                                             onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" alphanumericonly required />
+                                      <span class="icon-append showPass glyphicon {{classNameOne}} form-control-feedback" (click)="HideShowPasswordOne()"
+                                            style="cursor: pointer; pointer-events: all;">
+                                      </span>
+                                      <!-- <span class="errorMessage">
+                                          <span class="errorMsg" ng-show="validerror">Password must be minimum 6 characters long</span>
+                                      </span> -->
+                                  </label>
+                              </section>
+                              <section class="col col-6">
+                                  <label class="label">Re-enter Password<span class="errorMessage">*</span></label>
+                                  <label class="input">
+                                      <input type="{{inputTypeTwo}}" class="form-control" ng-model="DistAdmin.confirmpwd"  ng-change="ConfirmPassword(DistAdmin)" title="Password must be minimum 6 characters long with alphabets or numbers"
+                                             oninvalid="this.setCustomValidity('Password must be minimum 6 characters long with alphabets or numbers')"
+                                             onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" alphanumericonly required />
+                                      <span class="icon-append showPass glyphicon {{classNameTwo}} form-control-feedback" (click)="HideShowPasswordTwo()"
+                                            style="cursor: pointer; pointer-events: all;">
+                                      </span>
+                                      <!-- <span class="errorMessage">
+                                          <span class="errorMsg" ng-show="error">Password does not match</span>
+                                      </span> -->
+                                  </label>
+                              </section>
+                          </div>
+
+
+                      
+                        
+                           
+                      </fieldset>
+                      <footer>
+                          <div >
+                             <a routerLink="/auth/login">
+                              <button class="btn btn-primary" >
+                                  Finish
+                              </button></a>
+                          </div>
+                          <!-- <div class="row" >
+                              <div class="col-sm-12 ">
+                                  <button type="button" name="" class=" btn btn-default pull-right modal-submit login-btn btn-large1 btn-large waves-effect waves-light btn-primary">
+                                      <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                                  </button>
+                              </div>
+                          </div> -->
+                      </footer>
+  
+                      <div class="message">
+                          <i class="fa fa-check"></i>
+                          <p>
+                              Thank you for your registration!
+                          </p>
+                      </div>
+                  </form>
+  
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
