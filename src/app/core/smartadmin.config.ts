@@ -38,7 +38,7 @@ export const config: any = {
       logo: "assets/img/logo.gif",
       skinBtnClass: "btn btn-xs btn-block txt-color-darken margin-top-5",
       style: {
-        background: '#fff'
+        background: 'red'
       },
       label: "Ultra Light"
     },
