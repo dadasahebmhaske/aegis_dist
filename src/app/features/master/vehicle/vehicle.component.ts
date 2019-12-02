@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle.component.css']
 })
 export class VehicleComponent implements OnInit {
-
+public insurance:boolean;
   constructor() { }
 
   ngOnInit() {

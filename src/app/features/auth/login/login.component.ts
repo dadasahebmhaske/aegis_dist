@@ -20,18 +20,13 @@ export class LoginComponent implements OnInit {
           {
             title: 'Title 1',
             text: 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
-            src: 'assets/img/demo/m3.jpg',
+            src: 'assets/img/banner1.jpg',
           },
           {
             title: 'Title 2',
             text: 'Dolores justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
-            src: 'assets/img/demo/m2.jpg',
-          },
-          {
-            title: 'Title 3',
-            text: 'Lorem justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
-            src: 'assets/img/demo/m1.jpg',
-          },
+            src: 'assets/img/banner1.jpg',
+          }
         ]
       }
     }

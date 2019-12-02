@@ -42,4 +42,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/miscellaneous/search']);
 
   }
+  logout(){
+    this.router.navigate(['/auth/login']);
+  }
 }

@@ -1,99 +1,195 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-    
-     
-      <!-- widget grid -->
-      <sa-widgets-grid>
-    
-    
+    <!-- widget grid -->
+    <sa-widgets-grid>
         <div class="row">
-          <article class="col-sm-12">
-    
-            <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-              <header>
-                <span class="widget-icon"> <i class="fa fa-table"></i> </span>
-    
-                <h2>Vehicle Master</h2>
-              </header>
-              <div>
-                <div class="widget-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label >Vehicle Type<span class="errorMessage">*</span></label>
-                                <select class="form-control">
-                                    <option selected hidden>Select Vehicle Type</option>
-                                    <option>2 wheeler</option>
-                                    <option>4 wheeler </option>
-                                </select>
+            <article class="col-sm-12">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header>
+                        <span class="widget-icon">
+                            <i class="fa fa-table"></i>
+                        </span>
+                        <h2>Vehicle Master</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label><strong class="text-primary">Vehicle Details : </strong></label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Vehicle Type
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                    <option selected hidden>Select Vehicle Type</option>
+                                                    <option>2 wheeler</option>
+                                                    <option>4 wheeler </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Vehicle No.
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Vehicle No." required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Cylinder Capacity
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Cylinder Capacity" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Last Fitness Date
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Last Fitness Date" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label style="margin-top:27px;">
+                                                <input type="checkbox" [(ngModel)]="insurance" /> Insurance Done ?
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>Insurance Renewal Date
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control"  placeholder="Enter Renewal Date" [disabled]="!insurance"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>
+                                                    <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                                                </label>
+                                            </div>                                          
+                                        </div>
+                                </div>
+                                <div class="col-sm-6">
+                                        <label><strong class="text-primary">Vehicle Documents : </strong></label>
+                                        <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label>Document Type
+                                                            <span class="errorMessage">*</span>
+                                                        </label>
+                                                        <select class="form-control">
+                                                            <option selected hidden>Select Document Type</option>
+                                                            <option>Vehicle Document</option>
+                                                            <option>Insurance Document </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Select File
+                                                            <span class="errorMessage">*</span>
+                                                        </label>
+                                                        <input type="file" class="form-control"  placeholder="Enter Vehicle No." required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                                <label>&nbsp;
+                                                                    </label>
+                                                            <button class="btn btn-block btn-primary get_details">
+                                                                <i class="glyphicon glyphicon-plus"></i>
+                                                                Add 
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                        <div class="table-responsive">
+                                                                
+                                                                                <table class="table table-hover">
+                                                                                  <thead>
+                                                                                  <tr>
+                                                                                    <th>#</th>
+                                                                                    <th>Doc Type</th>
+                                                                                    <th>Document</th>
+                                                                                    <th>View</th>
+                                                                                    <th>Remove</th>
+                                                                                  </tr>
+                                                                                  </thead>
+                                                                                  <tbody>
+                                                                                  <tr>
+                                                                                    <td>1</td>
+                                                                                    <td>Vehicle Doc</td>
+                                                                                    <td>4 wheeler Registration </td>
+                                                                                    <td><a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a></td>
+                                                                                    <td><button class="btn btn-xs btn-danger">Remove</button></td>
+                                                                                  </tr>
+                                                                                  <tr>
+                                                                                    <td>2</td>
+                                                                                    <td>Insurance Doc</td>
+                                                                                    <td>Renewal Insurance Doc</td>
+                                                                                    <td><a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a></td>
+                                                                                    <td><button class="btn btn-xs btn-danger">Remove</button></td>
+                                                                                  </tr>
+                                                                             
+                                                                                  </tbody>
+                                                                                </table>
+                                                                
+                                                                              </div>
+                                                </div>
+                                            </div>
+                                
+                                
+                                    </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Vehicle No.<span class="errorMessage">*</span></label>
-                                <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Vehicle No." required />
-                            </div>
-                        </div>
-                    </div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Cylinder Capacity<span class="errorMessage">*</span></label>
-                        <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Cylinder Capacity" required />
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label>Last Fitness Date<span class="errorMessage">*</span></label>
-                        <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Last Fitness Date" required />
-                    </div>
-                </div>
-            </div>
-         
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <label>
-                                <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.Insurance" /> Insurance Done ?
-                            </label>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label>Insurance Renewal Date<span class="errorMessage">*</span></label>
-                                <input type="text" class="form-control" ng-model="Area.AreaName" placeholder="Enter Last Fitness Date" ng-disabled="Area.Insurance==undefined || Area.Insurance=='N'" />
-                            </div>
-                        </div>
-                    </div>
-                    <footer>
-                        <div class="row">
-                            <div class="col-sm-12 ">
-                                <hr />
-                                <a class="pull-right btn btn-default" routerLink="/master/vehicle-master">
-                                    <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Cancel
-                                </a>
-                                <button class="pull-right btn btn-primary marg-right" type="submit">
-                                    <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                                </button>
-                            </div>
-                            <!-- <div class="col-sm-12 " ng-show="divhide">
+
+
+
+
+
+
+                            <footer>
+                                <div class="row">
+                                    <div class="col-sm-12 ">
+                                        <hr />
+                                        <a class="pull-right btn btn-default" routerLink="/master/vehicle-master">
+                                            <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Cancel
+                                        </a>
+                                        <button class="pull-right btn btn-primary marg-right" type="submit">
+                                            <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                                        </button>
+                                    </div>
+                                    <!-- <div class="col-sm-12 " ng-show="divhide">
                                 <button type="button" name="" class="pull-right btn btn-primary marg-right">
                                     <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
                                 </button>
                             </div> -->
+                                </div>
+                            </footer>
+
                         </div>
-                    </footer>
-    
+                    </div>
                 </div>
-              </div>
-            </div>
-    
-          
-    
-          </article>
-    
-         
+
+
+
+            </article>
+
+
         </div>
-      
-      </sa-widgets-grid>
-    </div>
-    
+
+    </sa-widgets-grid>
+</div>
