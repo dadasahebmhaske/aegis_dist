@@ -66,6 +66,16 @@
     border-left-color: #fff;
     color:#534d81;
 }
+@media (max-width: 979px)
+{
+.menu-on-top aside#left-panel nav>ul>li{
+    background: #ececec;
+    }
+    .menu-on-top aside#left-panel nav {
+       
+        BACKGROUND: #ececec;
+    }
+}
 .smart-style-2.menu-on-top aside#left-panel nav>ul>li:hover>a {
     color: #534d81!important;
     border-left: 1px solid transparent;
@@ -96,6 +106,7 @@
 .smart-style-2 .jarviswidget-color-blueDark>header {
     background: #534d81!important;
     border-color: #2C3742!important;
+    z-index: -9999;
 }
 .smart-style-2.menu-on-top aside#left-panel 
 {
