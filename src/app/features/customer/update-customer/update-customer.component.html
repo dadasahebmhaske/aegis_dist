@@ -1,0 +1,299 @@
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+
+      <!-- NEW WIDGET START -->
+      <article class="col-sm-12 ">
+
+        <!-- Widget ID (each widget will need unique ID)-->
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-table"></i>
+            </span>
+            <h2>Update Customer</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+
+              <div class="row">
+                <form novalidate="novalidate">
+                  <div class="col-sm-12">
+                    <div class="form-bootstrapWizard clearfix">
+                      <ul class="bootstrapWizard">
+                        <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                          <a (click)="setActiveStep(pane)">
+                            <span class="step">
+                              <span *ngIf="!pane.checked">{{i + 1}}</span>
+                              <i class="fa fa-check" *ngIf="pane.checked"></i>
+                            </span>
+                            <span class="title">{{pane.title}}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="tab-content">
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                        <br>
+
+                        <h3>
+                          <strong>Step 1 </strong> - Customer information</h3>
+
+                        <div class="row">
+
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Customer No.
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Customer No." ng-model="consumer.ConsNo" disabled required />
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="form-group">
+                              <label for="sel1">Salutation</label>
+                              <select class="form-control" ng-options="s.scode as s.sdesc for s in SalutationData" ng-model="consumer.Salutation" required>
+                                <option value="" selected hidden>--Select Salutation--</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">First Name
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter First Name" ng-model="consumer.FirstName" alphaonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Middle Name</label>
+                              <input type="text" class="form-control" placeholder="Enter Middle Name" ng-model="consumer.MiddleName" alphaonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Last Name
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Last Name" ng-model="consumer.LastName" alphaonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Area
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <select ng-options="a.AreaCode as a.AreaName for a in GetArea" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.AreaCode" required>
+                                <option value="" selected hidden>--Select Area--</option>
+                              </select>
+                            </div>
+                          </div>
+                          <!--<div class="col-sm-3">
+                                                                                      <div class="form-group">
+                                                                                          <label for="sel1">Retailer</label>
+                                                                                          <select ng-options="a.UserCode as a.FullName for a in Rdata" class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.RetailerCode">
+                                                                                              <option value="" selected hidden>--Select Retailer--</option>
+                                                                                          </select>
+                                                                                      </div>
+                                                                                  </div>-->
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Product
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.ItemCode" required>
+                                <option value="" selected hidden>--Select Product--</option>
+                              </select>
+                            </div>
+
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Registration No.</label>
+                              <input type="text" class="form-control" placeholder="Enter Registration No." ng-model="consumer.ResNo" />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Mobile No.
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <!--<input type="text" class="form-control" name="mobile" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10" oninvalid="this.setCustomValidity('Enter 10 digits Mobile number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')"  required />-->
+                              <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" maxlength="10"
+                                pattern="[7-9]{1}[0-9]{9}" title="Phone number with 7-9 and remaing 9 digit with 0-9" oninvalid="this.setCustomValidity('Enter 10 digits Mobile number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" required />
+
+
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Email Id</label>
+                              <input type="text" class="form-control" placeholder="Enter Email Id" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                ng-model="consumer.Email" oninvalid="this.setCustomValidity('Enter Valid Email ID')" onchange="setCustomValidity('')"
+                                oninput="setCustomValidity(' ')" />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Office No.</label>
+                              <input type="text" class="form-control" placeholder="Enter Office No." ng-model="consumer.OfficeNo" minlength="11" maxlength="11"
+                                oninvalid="this.setCustomValidity('Enter Office phone number')" onchange="setCustomValidity('')"
+                                oninput="setCustomValidity(' ')" numericonly />
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                        <br>
+
+                        <h3>
+                          <strong>Step 2</strong> - Address Details</h3>
+                        <div class="row">
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">State
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <select ng-options="s.StateCode as s.StateDesc for s in Sdata" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.StateCode" ng-change="GetDistrict(consumer.StateCode)"
+                                required>
+                                <option value="" selected hidden>--Select State--</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">District
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <select ng-options="d.DistrictCode as d.DistrictName for d in Ddata" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.DistrictCode" ng-change="GetCity(consumer.StateCode,consumer.DistrictCode)"
+                                required>
+                                <option value="" selected hidden>--Select District--</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">City
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <select ng-options="c.TalukaCode as c.TalukaName for c in Cdata" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.CityCode" required>
+                                <option value="" selected hidden>--Select Area--</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="sel1">Address Line 1
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <label for="sel1">Address Line 2</label>
+                              <input type="text" class="form-control" placeholder="Enter Address Line 2" ng-model="consumer.AddressLine2" />
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <label for="sel1">Address Line 3</label>
+                              <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Pin Code
+                                <span class="errorMessage" style="color:red;">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" oninvalid="this.setCustomValidity('Enter 6 digits PIN number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
+                        <br>
+
+                        <h3>
+                          <strong>Step 3</strong> -Bank Details</h3>
+                        <div class="row">
+
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Bank Name</label>
+                              <input type="text" class="form-control" placeholder="Enter Bank Name" ng-model="consumer.BankName" alphaonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">IFSC Code</label>
+                              <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" ng-model="consumer.IfscCode"
+                                oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')"
+                                oninput=" setCustomValidity(' ')" alphanumericonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">MICR No.</label>
+                              <input type="text" class="form-control" placeholder="Enter MICR No." ng-model="consumer.MicrNo" pattern="[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid MICR Number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Account No.</label>
+                              <input type="text" class="form-control" placeholder="Enter Account No." ng-model="consumer.AccountNo" minlength="9" maxlength="17"
+                                oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')"
+                                oninput="setCustomValidity(' ')" numericonly />
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <div class="form-actions">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <ul class="pager wizard no-margin">
+                              <li class="previous">
+                                <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                </a>
+                              </li>
+                              <li class="next">
+                                <a (click)="nextStep()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                  Next
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+
+  </sa-widgets-grid>
+</div>

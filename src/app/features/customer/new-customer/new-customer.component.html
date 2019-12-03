@@ -1,0 +1,251 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header>
+            <span class="widget-icon">
+              <i class="fa fa-user"></i>
+            </span>
+            <h2>New Customer</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row">
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="sel1">Customer No.
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Customer No." ng-model="consumer.ConsNo" maxlength="8" oninvalid="this.setCustomValidity('Enter consumer number')"
+                      onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required disabled/>
+                  </div>
+                </div>
+                <div class="col-sm-1">
+                  <div class="form-group">
+                    <label for="sel1">Salutation
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <select class="form-control" ng-options="s.scode as s.sdesc for s in SalutationData" ng-model="consumer.Salutation" required>
+                      <option value="" selected hidden>-Select-</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Owner First Name
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter First Name" ng-model="consumer.FirstName" alphaonly required />
+                  </div>
+                </div>
+                <!--<div class="col-sm-3">
+                          <div class="form-group">
+                              <label for="sel1">Middle Name</label>
+                              <input type="text" class="form-control" placeholder="Enter Middle Name" ng-model="consumer.MiddleName" alphaonly />
+                          </div>
+                      </div>-->
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Owner Last Name
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Last Name" ng-model="consumer.LastName" alphaonly required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Firm Name
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Firm Name" ng-model="consumer.LastName" alphaonly required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Area
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <select ng-options="a.AreaCode as a.AreaName for a in GetArea" class="form-control" data-toggle="tooltip" data-placement="top"
+                      title="Select area" ng-model="consumer.AreaCode" required>
+                      <option value="" selected hidden>--Select Area--</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Route
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
+                      title="Select area" ng-model="consumer.ItemCode" required>
+                      <option value="" selected hidden>--Select Route--</option>
+                    </select>
+                  </div>
+
+                </div>
+                <!--<div class="col-sm-3">
+                          <div class="form-group">
+                              <label for="sel1">Product<span class="errorMessage" style="color:red;">*</span></label>
+                              <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.ItemCode" required>
+                                  <option value="" selected hidden>--Select Product--</option>
+                              </select>
+                          </div>
+                        
+                      </div>-->
+                <!--<div class="col-sm-3">
+                          <div class="form-group">
+                              <label for="sel1">Retailer</label>
+                              <select ng-options="a.UserCode as a.FullName for a in Rdata" class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.RetailerCode">
+                                  <option value="" selected hidden>--Select Retailer--</option>
+                              </select>
+                          </div>
+                      </div>-->
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Owner Mobile No.
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                      pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
+                      onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Owner Email Id</label>
+                    <input type="text" class="form-control" placeholder="Enter Email Id" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                      ng-model="consumer.Email" />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Incharge Name
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Incharge Name" ng-model="consumer.LastName" alphaonly required
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Incharge Mobile No.
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                      pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
+                      onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Salesman Incharge
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Salesman Incharge " ng-model="consumer.LastName" alphaonly required
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">GST No.
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter GST No. " ng-model="consumer.LastName" alphaonly required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Manifold Certificate No.
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Certificate No." ng-model="consumer.LastName" alphaonly required
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Address Line 1
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Address Line 2</label>
+                    <input type="text" class="form-control" placeholder="Enter Address Line 2" ng-model="consumer.AddressLine2" />
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Address Line 3</label>
+                    <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div class="form-group">
+                    <label for="sel1">Pin Code
+                      <span class="errorMessage" style="color:red;">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" numericonly
+                      required />
+                  </div>
+                </div>
+                <!--<div class="col-sm-2 " ng-show="divshow">
+
+                          <button class="btn-marg-top btn btn-primary">
+                              <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                          </button>
+                      </div>
+                      <div class="col-sm-2 " ng-show="divhide">
+                          <button type="button" name="" class="btn-marg-top btn btn-primary">
+                              <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                          </button>
+                      </div>-->
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <label>
+                    <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                  </label>
+                </div>
+
+              </div>
+
+
+              <footer>
+                <div class="row">
+                  <div class="col-sm-12 ">
+                    <hr />
+                    <a class="pull-right btn btn-default" routerLink="/customer/customer-master">
+                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Cancel
+                    </a>
+                    <button class="pull-right btn btn-primary marg-right" type="submit">
+                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                    </button>
+                  </div>
+                  <!-- <div class="col-sm-12 " ng-show="divhide">
+                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
+                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                              </button>
+                          </div> -->
+                </div>
+              </footer>
+
+            </div>
+          </div>
+        </div>
+
+
+
+      </article>
+
+
+    </div>
+
+  </sa-widgets-grid>
+</div>
