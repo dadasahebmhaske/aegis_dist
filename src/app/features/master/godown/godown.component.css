@@ -1,0 +1,11 @@
+.vehicle-cart{
+    border: 1px solid #534d81;
+    padding: 15px 10px;
+    min-height: 361px;
+}
+.vehicle-cart:hover{
+    border: 1px solid #534d81;
+    padding: 15px 10px;
+    min-height: 361px;
+    box-shadow: 0 0 5px #534d81;
+}

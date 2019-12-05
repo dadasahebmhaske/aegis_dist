@@ -52,6 +52,13 @@ export class UpdateCustomerComponent implements OnInit {
     },
     {
       key: 'step3',
+      title: 'Customer Product Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    },
+    {
+      key: 'step4',
       title: 'Customer Bank Details',
       valid: false,
       checked: false,

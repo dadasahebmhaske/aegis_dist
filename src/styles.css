@@ -172,3 +172,15 @@
 .get_details {
     min-width: 108px;
 }
+
+@media  (min-width: 768px)
+{
+    .jarviswidget>header h2 {
+        
+           display: inline-block;
+           font-size: 14px;
+           position: absolute;
+           margin: 0;
+           text-align: center;
+       }
+}

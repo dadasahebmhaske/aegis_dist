@@ -35,29 +35,42 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-          <form class="smart-form client-form">
+          <form class="smart-form client-form" name="loginForm" #loginForm="ngForm" (ngSubmit)="login($event,loginForm)" ngNativeValidate>
             <header>
               Sign In
             </header>
             <fieldset>
                 <section>
-                    <label class="label">Dist Code</label>
+                    <label class="label">Distributor  Code</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
-                      <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">
+                      <input type="text" name="DistCode" data-smart-validate-input="" data-required=""  data-message-required="Please enter Dist Code" data-message-email="Please enter a VALID Distributor  Code"
+                      ngModel
+                      
+                       >
                       <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
-                        Please enter dist code</b></label>
+                        Please enter Distributor  code</b></label>
                   </section>
               <section>
                 <label class="label">E-mail</label>
-                <label class="input"> <i class="icon-append fa fa-user"></i>
-                  <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">
+                <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                  <input type="email" name="EmailAddress" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"
+                  ngModel
+                  minlength="6"
+                  autocomplete="on"
+                  email
+                  >
                   <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
                     Please enter email address/username</b></label>
               </section>
               <section>
                 <label class="label">Password</label>
                 <label class="input"> <i class="icon-append fa fa-lock"></i>
-                  <input type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password">
+                  <input type="password" name="UserPwd" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"
+                  ngModel
+                  minlength="6"
+                  autocomplete="off"
+                  
+                  >
                   <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
                     your password</b> </label>
 
@@ -72,7 +85,7 @@
               </section> -->
             </fieldset>
             <footer>
-              <button (click)="login($event)" class="btn btn-primary">
+              <button  class="btn btn-primary">
                 Sign in
               </button>
             </footer>

@@ -9,6 +9,10 @@ import { CustomerCategoryMasterComponent } from './customer-category-master/cust
 import { CustomerCategoryComponent } from './customer-category/customer-category.component';
 import { GodownMasterComponent } from './godown-master/godown-master.component';
 import { GodownComponent } from './godown/godown.component';
+import { TransportMasterComponent } from './transport-master/transport-master.component';
+import { TransportComponent } from './transport/transport.component';
+import { SubAreaMasterComponent } from './sub-area-master/sub-area-master.component';
+import { SubAreaComponent } from './sub-area/sub-area.component';
 const routes: Routes = [
   {
     path:'vehicle-master',
@@ -42,8 +46,25 @@ const routes: Routes = [
  {
    path:'godown',
    component:GodownComponent
- }
-];
+ },
+ {
+  path:'transport-master',
+  component:TransportMasterComponent
+},
+{
+  path:'transport',
+  component:TransportComponent
+}
+,
+{
+ path:'sub-area-master',
+ component:SubAreaMasterComponent
+},
+{
+ path:'sub-area',
+ component:SubAreaComponent
+}
+];   
 
 // @NgModule({
 //   imports: [RouterModule.forChild(routes)],
@@ -51,4 +72,4 @@ const routes: Routes = [
 // })
 export const routing=[RouterModule.forChild(routes)]
 //export class MasterRoutingModule { }
-export const componentArray=[GodownComponent,GodownMasterComponent,CustomerCategoryComponent,CustomerCategoryMasterComponent,RouteComponent,RouteMasterComponent,VehicleComponent,VehicleMasterComponent];
+export const componentArray=[SubAreaComponent,SubAreaMasterComponent,TransportComponent,TransportMasterComponent,GodownComponent,GodownMasterComponent,CustomerCategoryComponent,CustomerCategoryMasterComponent,RouteComponent,RouteMasterComponent,VehicleComponent,VehicleMasterComponent];

@@ -8,8 +8,10 @@
         <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
     </div>
   </div>
-  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/auth/register" class="btn btn-danger">Create account</a> </span>
-
+  <span id="extr-page-header-space">
+      <span class="hidden-mobile hiddex-xs">Already registered?</span>
+      <a routerLink="/auth/login" class="btn btn-danger">Sign In</a>
+  </span>
 </header>
 <div id="main" role="main" class="animated fadeInDown">
 
@@ -24,11 +26,11 @@
                        [active]="slide.active" style="height:382px;">
                   <img [src]="slide.src" style="margin:auto;">
 
-                  <div class="carousel-caption">
+                  <!-- <div class="carousel-caption">
                     <h4>Slide {{i}}</h4>
 
                     <p>{{slide.text}}</p>
-                  </div>
+                  </div> -->
                 </slide>
               </carousel>
 
@@ -44,14 +46,14 @@
 
             <fieldset>
                 <section>
-                    <label class="label">Your Dist Code</label>
+                    <label class="label">Your Distributor  Code</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
                       <input type="text" name="Dist Code">
-                      <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Enter your dist code</b> </label>
+                      <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Enter your distributor  code</b> </label>
                 
                   </section>
               <section>
-                <label class="label">Enter your email address</label>
+                <label class="label">Enter Your Email Address</label>
                 <label class="input"> <i class="icon-append fa fa-envelope"></i>
                   <input type="email" name="email">
                   <b class="tooltip tooltip-top-right"><i class="fa fa-envelope txt-color-teal"></i> Please enter email address for password reset</b></label>
@@ -74,7 +76,7 @@
 
         </div>
 
-        <h5 class="text-center"> - Or sign in using -</h5>
+        <!-- <h5 class="text-center"> - Or sign in using -</h5>
 
         <ul class="list-inline text-center">
           <li>
@@ -86,7 +88,7 @@
           <li>
             <a (click)="(null)" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
           </li>
-        </ul>
+        </ul> -->
 
       </div>
     </div>
