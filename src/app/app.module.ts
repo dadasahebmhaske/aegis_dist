@@ -7,10 +7,12 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UpgradeModule } from '@angular/upgrade/static';
+import { UiGridDirective } from './core/directive/uigrid.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,UiGridDirective
   ],
   imports: [
     BrowserModule,
@@ -18,9 +20,11 @@ import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/commo
     AppRoutingModule,
     SharedModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    UpgradeModule
   ],
   providers: [],
+  exports:[UiGridDirective],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

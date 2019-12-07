@@ -18,6 +18,9 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <ui-grid [data]="custData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                        </div>
                     </div>    
                 </div>
               </div>

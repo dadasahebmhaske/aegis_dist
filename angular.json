@@ -23,9 +23,16 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/angular-ui-grid/ui-grid.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/lodash.min.js",
+              "src/assets/js/jszip.min.js",
+              "src/assets/js/excel-builder.dist.js",
+              "node_modules/angular/angular.min.js",              
+              "node_modules/angular-ui-grid/ui-grid.min.js" 
+            ]
           },
           "configurations": {
             "production": {
