@@ -1,0 +1,11 @@
+.transfer-card{
+    border: 1px solid #534d81;
+    padding: 15px;
+    min-height: 292px;
+}
+.transfer-card:hover{
+    border: 1px solid #534d81;
+    padding: 15px;
+    min-height: 292px;
+    box-shadow: 0 0 5px #534d81;
+}

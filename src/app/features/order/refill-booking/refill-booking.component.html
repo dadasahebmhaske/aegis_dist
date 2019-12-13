@@ -1,0 +1,211 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <!-- widget grid -->
+    <sa-widgets-grid>
+      <div class="row">
+        <article class="col-sm-12">
+          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+            <header class="text-center">
+  
+              <h2>
+                <i class="fa fa-table"></i> Refill Booking</h2>
+            </header>
+            <div>
+              <div class="widget-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="logincDeatils">
+                            <label class="text-primary"><strong>Customer Verification Details : </strong></label>
+                      <div class="row">                       
+                              <div class="col-sm-2">
+                                <div class="form-group pull-right label-center">
+                                  <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span>
+                                  </label>                                
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">                                
+                                  <input type="text" class="form-control" placeholder="Enter Customer/Mobile No. " />
+                                </div>
+                              </div>
+                              <div class="col-sm-1">
+                                  <div class="form-group">
+                                      <button type="submit" class="btn btn-block btn-success get_details">
+                                        <i class="fa fa-search"></i> Get Details</button>
+                  
+                                    </div>
+                              </div>
+                              <div class="col-sm-3 col-sm-offset-1">
+                                <div class="form-group label-center">
+                                  <label ><strong>   <i class="fa fa-user"></i>
+                                    Customer Name : Atul Purkar</strong>  
+                                   
+                                  </label>
+                                 
+                                </div>
+                              </div>
+                            </div>
+                      </div>
+                    </div>
+              
+                  <div class="col-sm-12">
+                    <div class="refill">
+                      <label>
+                        <strong class="text-primary"> Booking Details : </strong>
+                      </label>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label>Product Category
+                              <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control">
+                              <option selected hidden>Select Product Category</option>
+                              <option>Category 1 </option>
+                              <option>Category 2 </option>
+                              <option>Category 3 </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label>Product 
+                              <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control">
+                              <option selected hidden>Select Product </option>
+                              <option>14 Kg Cylinder </option>
+                              <option>19 kg  Cylinder</option>
+                            </select>
+                          </div>
+                        </div>                      
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                              <label>Price
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Price"  disabled/>
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="form-group">
+                              <label>Quantity  <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Qty"  />
+                            </div>
+                          </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label>&nbsp;
+                            </label>
+                            <button class="btn btn-block btn-warning ">
+                              <i class="glyphicon glyphicon-plus"></i>
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="table-responsive">
+  
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Product Category</th>
+                                  <th>Product</th>
+                                  <th>Price</th>
+                                  <th>Quantity</th>
+                                  <th>Remove</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>1</td>
+                                  <td>Category 1</td>
+                                  <td>14 Kg cylinder</td>
+                                  <td>699</td>
+                                  <td>
+                                   1
+                                  </td>
+                                  <td>
+                                    <button class="btn btn-xs btn-danger">Remove</button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>2</td>
+                                  <td>Category 1</td>
+                                  <td>19 Kg cylinder</td>
+                                  <td>1299</td>
+                                  <td>
+                                   1
+                                  </td>
+                                  <td>
+                                    <button class="btn btn-xs btn-danger">Remove</button>
+                                  </td>
+                                </tr>
+                                              </tbody>
+                            </table>
+  
+                          </div>
+                        </div>
+                      </div>
+
+  
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3 col-sm-offset-5">
+                    <div class="form-group">
+                      <label>Delivery Boy
+                        <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control">
+                        <option selected hidden>Select Delivery Boy</option>
+                        <option>Aajay J Adwani </option>
+                        <option>Mohan k Gandhiwala </option>
+                        <option>D K Bhos </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Total Amount        </label>
+                      <input type="text" class="form-control" placeholder="Enter Amount"  disabled/>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Discount        </label>
+                      <input type="text" class="form-control" placeholder="Enter Discount"  />
+                    </div>
+                  </div>
+                </div> 
+  
+  
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
+                      </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit">
+                        <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Book Now
+                      </button>
+                    </div>
+                    <!-- <div class="col-sm-12 " ng-show="divhide">
+                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
+                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                                </button>
+                            </div> -->
+                  </div>
+                </footer>  
+              </div>
+            </div>
+          </div>  
+        </article>
+      </div>
+    </sa-widgets-grid>
+  </div>
