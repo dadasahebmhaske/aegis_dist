@@ -122,6 +122,11 @@ const routes: Routes = [
         loadChildren: "./features/order/order.module#OrderModule",
         data: { pageTitle: "Order" }
       },
+      {
+        path: "settings",
+        loadChildren: "./features/settings/settings.module#SettingsModule",
+        data: { pageTitle: "settings" }
+      },
     ]
   },
 

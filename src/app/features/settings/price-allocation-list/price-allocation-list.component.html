@@ -1,0 +1,119 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+            <header class="text-center"> 
+                      <h2> <i class="fa fa-table"></i> Price Allocation List</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                  <div class="col-sm-2 col-xs-4">
+                      <div class="form-group">
+                          <select class="form-control">
+                              <option selected hidden>Select Product Category</option>
+                              <option>Category 1 </option>
+                              <option>Category 2</option>
+                              <option>Category 3 </option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-4">
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option selected hidden>Select Product</option>
+                            <option>5 Kg </option>
+                            <option>14.5 Kg</option>
+                            <option>19 Kg </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                      <select class="form-control">
+                          <option selected hidden>Select Price Status</option>
+                          <option>Current </option>
+                          <option>Previous</option>
+                          <option>Future </option>
+                      </select>
+                  </div>
+              </div>
+            
+                <div class="col-sm-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button>
+
+                  </div>
+                </div>
+                <div class="col-sm-2 pull-right">                     
+                  <div class="form-group pull-right">
+                    <a routerLink="/settings/price-allocation"  class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      Add Price
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product Category</th>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>From Date</th>
+                          <th>To Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Category 1</td>
+                          <td>14 Kg cylinder</td>
+                          <td>699</td>
+                          <td>
+                          12-Nov-2019
+                          </td>
+                          <td>
+                            12-Nov-2020
+                            </td>
+                       
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Category 1</td>
+                          <td>19 Kg cylinder</td>
+                          <td>1299</td>
+                          <td>
+                            11-Aug-2019
+                            </td>
+                            <td>
+                              26-Jan-2020
+                              </td>
+                        </tr>
+                                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </article>
+
+
+    </div>
+
+  </sa-widgets-grid>
+</div>

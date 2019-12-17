@@ -29,46 +29,19 @@ export class CustomerCategoryMasterComponent implements OnInit {
   onSubmit(){
     this.custData =  [{
       "ID": 1,
-      "Name": "Kevin",
-      "City": "Santa Clara",
-      "Address": "Longmen",
-      "Designation": "VP Marketing"
+      "Category Name": "Category 1",
+      "Discount": "10",
+      "IsActive": "Y"
     }, {
       "ID": 2,
-      "Name": "Tina",
-      "City": "São Bartolomeu",
-      "Address": "Bojongloa",
-      "Designation": "Computer Systems Analyst III"
+      "Category Name": "Category 2",
+      "Discount": "20",
+      "IsActive": "Y"
     }, {
       "ID": 3,
-      "Name": "Kevin",
-      "City": "Cilolohan",
-      "Address": "Tai’an",
-      "Designation": "Paralegal"
-    }, {
-      "ID": 4,
-      "Name": "Rebecca",
-      "City": "Runović",
-      "Address": "Tessaoua",
-      "Designation": "Human Resources Manager"
-    }, {
-      "ID": 5,
-      "Name": "Nancy",
-      "City": "Merritt",
-      "Address": "Yur’yevets",
-      "Designation": "Assistant Manager"
-    }, {
-      "ID": 6,
-      "Name": "Anne",
-      "City": "Pio Duran",
-      "Address": "Kuala Lumpur",
-      "Designation": "Sales Representative"
-    }, {
-      "ID": 7,
-      "Name": "Scott",
-      "City": "Xiamao",
-      "Address": "Banjarmasin",
-      "Designation": "Computer Systems Analyst II"
+      "Category Name": "Category 3",
+      "Discount": "15",
+      "IsActive": "Y"
     }];
  
   // this.http.get(`${AppComponent.BaseUrl}Admin/GetCustomerDetails?CustId=&CustName&CompanyName=&IsActive=Y`,{headers:AppComponent.headers}).subscribe(
