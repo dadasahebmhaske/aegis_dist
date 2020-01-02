@@ -8,16 +8,17 @@ import { environment } from '@env/environment';
 })
 export class AppComponent {
   title = 'sa';
-  static headers:HttpHeaders;
   static BaseUrl;
-  static ImagePath;
+  static headers:HttpHeaders;
+  static ImagePath;  
+  static Router:Router; 
   static secureKey;
-  static router:Router;
+
   constructor(public router:Router){
     AppComponent.headers=new HttpHeaders({
       'content-Type':'application/json',Authorization:'Basic'+btoa(environment.authKey)
     });
     AppComponent.BaseUrl=environment.BaseUrl;  
-    AppComponent.router=router;
+    AppComponent.Router=router;
   }
 }

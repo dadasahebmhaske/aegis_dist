@@ -1,12 +1,12 @@
 .vehicle-cart{
     border: 1px solid #534d81;
     padding: 15px 10px;
-    min-height: 514px;
+    min-height: 583px;
 }
 .vehicle-cart:hover{
     border: 1px solid #534d81;
     padding: 15px 10px;
-    min-height: 514px;
+    min-height: 583px;
     box-shadow: 0 0 5px #534d81;
 }
 .logincDeatils {

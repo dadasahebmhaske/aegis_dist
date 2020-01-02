@@ -36,6 +36,22 @@
                                                     <input type="text" class="form-control" placeholder="Enter Capacity" alphaonly required />
                                                 </div>
                                             </div>
+                                                    <div class="col-sm-9">
+                                                <div class="form-group">
+                                                    <label for="sel1">Contact Person
+                                                        <span class="errorMessage" style="color:red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Contact Person"  required />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Contact No.
+                                                        <span class="errorMessage" style="color:red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Contact No."  required />
+                                                </div>
+                                            </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label for="sel1">Address Line 1
@@ -89,7 +105,7 @@
                                                     <label for="sel1">License Expiry Date
                                                         <span class="errorMessage" style="color:red;">*</span>
                                                     </label>
-                                                    <input type="text" class="form-control" placeholder="Enter License Expiry Date" alphaonly required />
+                                                    <input type="text" class="form-control" placeholder="Enter License Expiry Date"  required />
                                                 </div>
                                             </div>
                                             <div class="col-sm-4">
@@ -100,6 +116,43 @@
                                                     <input type="text" class="form-control" placeholder="Enter Last Audit Date" required />
                                                 </div>
                                             </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Godown Type
+                                                        <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <select class="form-control">
+                                                        <option selected hidden>Select  Type</option>
+                                                        <option>Owned</option>
+                                                        <option>Leased </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Start Date
+                                                        <span class="errorMessage" style="color:red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Start Date" disabled required />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">End Date
+                                                        <span class="errorMessage" style="color:red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter End Date" disabled required />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Lease Period
+                                                        <span class="errorMessage" style="color:red;">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Lease Period" disabled required />
+                                                </div>
+                                            </div>
+                                    
                                             <div class="col-sm-6">
                                                 <label>
                                                     <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
@@ -125,7 +178,7 @@
                                                         <option>License Document</option>
                                                         <option>Insurance Document </option>
                                                     </select>
-                                                </div>S
+                                                </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
