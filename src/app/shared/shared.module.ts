@@ -20,7 +20,7 @@ import {InlineGraphsModule} from "./graphs/inline/inline-graphs.module";
 import {SmartadminFormsLiteModule} from "./forms/smartadmin-forms-lite.module";
 import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
 import { CalendarComponentsModule } from "@app/shared/calendar/calendar-components.module";
-
+import {CommonDirDirective} from '../core/directive/common-dir.directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { CalendarComponentsModule } from "@app/shared/calendar/calendar-componen
     SmartadminLayoutModule,
     BootstrapModule
   ],
-  declarations: [],
+  declarations: [CommonDirDirective],
   exports: [
     CommonModule,
     FormsModule,
@@ -60,6 +60,7 @@ import { CalendarComponentsModule } from "@app/shared/calendar/calendar-componen
     VoiceControlModule,
 
     CalendarComponentsModule,
+    CommonDirDirective
   ]
 })
 export class SharedModule {}

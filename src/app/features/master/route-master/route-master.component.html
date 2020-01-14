@@ -24,6 +24,9 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                          <ui-grid [data]="routeData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                      </div>
                     </div>
     
                 </div>

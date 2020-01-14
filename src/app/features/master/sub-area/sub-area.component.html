@@ -1,77 +1,73 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-    
-     
-      <!-- widget grid -->
-      <sa-widgets-grid>
-    
-    
+    <sa-widgets-grid>
         <div class="row">
-                <article class="col-sm-6 col-sm-offset-3">
-    
-            <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-              <header class="text-center">
-                <h2><i class="fa fa-table"></i> Sub Area Master</h2>
-              </header>
-              <div>
-                <div class="widget-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Route<span class="errorMessage">*</span></label>
-                                <select class="form-control">
-                                  <option value="" selected>Select Route</option>
-                                </select>
+            <article class="col-sm-6 col-sm-offset-3">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-table"></i> Sub Area Master</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                                <form name="subAreaForm" #subAreaForm="ngForm" (ngSubmit)="onSubmit()" ngNativeValidate>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Route
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <select class="form-control" id="sel" name="RouteID" [(ngModel)]="subArea.RouteID" required>
+                                            <option value="" selected hidden>Select Route</option>
+                                            <option [value]="rou.RouteID" *ngFor="let rou of route">{{rou.RouteName}}</option>                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Sub Area Name
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter Sub Area Name" name="SubAreaName" [(ngModel)]="subArea.SubAreaName" saCommonDir dirType="alphanumeric" required />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Sub Area Name<span class="errorMessage">*</span></label>
-                                <input type="text" class="form-control" placeholder="Enter Sub Area Name" required />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>
+                                            <input type="checkbox"  name="IsActive" [(ngModel)]='subArea.IsActive' /> Is Active
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-
-            <div class="row">
-                <div class="col-sm-6">
-                    <label>
-                        <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
-                    </label>
-                </div>
-              
-            </div>
-         
-                 
-                    <footer>
-                        <div class="row">
-                            <div class="col-sm-12 ">
-                                <hr />
-                                <a class="pull-right btn btn-default" routerLink="/master/sub-area-master">
-                                    <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                                </a>
-                                <button class="pull-right btn btn-primary marg-right" type="submit">
-                                    <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                                </button>
-                            </div>
-                            <!-- <div class="col-sm-12 " ng-show="divhide">
+                            <footer>
+                                <div class="row">
+                                    <div class="col-sm-12 ">
+                                        <hr />
+                                        <a class="pull-right btn btn-default" routerLink="/master/sub-area-master">
+                                            <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
+                                        </a>
+                                        <button class="pull-right btn btn-primary marg-right" type="submit">
+                                            <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                                        </button>
+                                    </div>
+                                    <!-- <div class="col-sm-12 " ng-show="divhide">
                                 <button type="button" name="" class="pull-right btn btn-primary marg-right">
                                     <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
                                 </button>
                             </div> -->
+                                </div>
+                            </footer>
+</form>
                         </div>
-                    </footer>
-    
+                    </div>
                 </div>
-              </div>
-            </div>
-    
-          
-    
-          </article>
-    
-         
+
+
+
+            </article>
+
+
         </div>
-      
-      </sa-widgets-grid>
-    </div>
-    
+
+    </sa-widgets-grid>
+</div>

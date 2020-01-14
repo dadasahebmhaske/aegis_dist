@@ -15,6 +15,7 @@ import {services, AuthTokenFactory, AuthTokenService, TokenInterceptor} from '@a
 import { throwIfAlreadyLoaded } from './guards/module-import.guard';
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -47,7 +48,8 @@ import { throwIfAlreadyLoaded } from './guards/module-import.guard';
       useClass: TokenInterceptor,
       multi: true
     }
-  ]
+  ],
+  declarations: []
 })
 export class CoreModule {
   constructor( @Optional() @SkipSelf() parentModule: CoreModule) {

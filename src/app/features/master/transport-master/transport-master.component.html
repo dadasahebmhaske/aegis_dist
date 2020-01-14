@@ -1,6 +1,5 @@
 <!-- MAIN CONTENT -->
 <div id="content">  
-      <!-- widget grid -->
       <sa-widgets-grid>
         <div class="row">
           <article class="col-sm-12">    
@@ -19,19 +18,15 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <ui-grid [data]="transportData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                        </div>
                     </div>
-    
                 </div>
               </div>
             </div>
-    
-          
-    
           </article>
-    
-         
         </div>
-      
       </sa-widgets-grid>
     </div>
     
