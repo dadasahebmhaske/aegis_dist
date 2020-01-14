@@ -1,0 +1,53 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Delivery Man Wise Refill Order Summary</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                    <select class="form-control">
+                      <option selected hidden>Select Delivery Man</option>
+                      <option>All</option>
+                      <option>Amir khan</option>
+                      <option>Salman Khan </option>
+                      <option>Saifu Khan </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-8">
+                  <div class="form-group">
+                    <input type="text" placeholder="Enter Start Date." class="form-control" required />
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-8">
+                  <div class="form-group">
+                    <input type="text" placeholder="Enter End Date." class="form-control" required />
+                  </div>
+                </div>
+                <div class="col-sm-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button>
+                  </div>
+                </div>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="unDeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </sa-widgets-grid>
+</div>
+

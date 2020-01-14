@@ -1,0 +1,123 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Undelivered Orders</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                    <select class="form-control">
+                      <option selected hidden>Select Delivery Man</option>
+                      <option>All</option>
+                      <option>Amir khan</option>
+                      <option>Salman Khan </option>
+                      <option>Saifu Khan </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-8">
+                  <div class="form-group">
+                    <input type="text" placeholder="Enter Start Date." class="form-control" required />
+                  </div>
+                </div>
+                <div class="col-sm-2 col-xs-8">
+                  <div class="form-group">
+                    <input type="text" placeholder="Enter End Date." class="form-control" required />
+                  </div>
+                </div>
+                <div class="col-sm-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button>
+                  </div>
+                </div>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="unDeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </sa-widgets-grid>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Products Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="refill">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product Category</th>
+                          <th>Product</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Category 1</td>
+                          <td>14 Kg cylinder</td>
+                          <td>699</td>
+                          <td>
+                            1
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Category 1</td>
+                          <td>19 Kg cylinder</td>
+                          <td>1299</td>
+                          <td>
+                            5
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

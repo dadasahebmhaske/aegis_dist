@@ -5,6 +5,11 @@ import { RefillBookingComponent } from './refill-booking/refill-booking.componen
 import { CashMemoAndRefillDeliveryComponent } from './cash-memo-and-refill-delivery/cash-memo-and-refill-delivery.component';
 import { DeliverRefillComponent } from './deliver-refill/deliver-refill.component';
 import { UndeliverRefillComponent } from './undeliver-refill/undeliver-refill.component';
+import { DeliveredOrdersComponent } from './delivered-orders/delivered-orders.component';
+import { UndeliveredOrdersComponent } from './undelivered-orders/undelivered-orders.component';
+import { DeliveryManWiseRefillOrderSummaryComponent } from './delivery-man-wise-refill-order-summary/delivery-man-wise-refill-order-summary.component';
+import { AreaWiseRefillOrderSummaryComponent } from './area-wise-refill-order-summary/area-wise-refill-order-summary.component';
+import { CustomerWiseTransactionsComponent } from './customer-wise-transactions/customer-wise-transactions.component';
 const routes: Routes = [
   { path:'refill-booking-list',
    component:RefillBookingListComponent},
@@ -16,8 +21,28 @@ const routes: Routes = [
    component:DeliverRefillComponent},
    { path:'undeliver-refill',
    component:UndeliverRefillComponent},
-
+   { path:'delivered-orders',
+   component:DeliveredOrdersComponent},
+   { path:'undelivered-orders',
+   component:UndeliveredOrdersComponent},
+   { path:'delivery-man-wise-refill-order-summary',
+   component:DeliveryManWiseRefillOrderSummaryComponent},
+   { path:'area-wise-refill-order-summary',
+   component:AreaWiseRefillOrderSummaryComponent},
+   { path:'customer-wise-transactions',
+   component:CustomerWiseTransactionsComponent},
 ];
 
 export const routing=[RouterModule.forChild(routes)];
-export const compArray=[UndeliverRefillComponent,DeliverRefillComponent,CashMemoAndRefillDeliveryComponent,RefillBookingListComponent,RefillBookingComponent]
+export const compArray=[
+  AreaWiseRefillOrderSummaryComponent,
+  CashMemoAndRefillDeliveryComponent,
+  CustomerWiseTransactionsComponent,
+  DeliveredOrdersComponent,
+  DeliverRefillComponent,
+  DeliveryManWiseRefillOrderSummaryComponent,
+  RefillBookingListComponent,
+  RefillBookingComponent,
+  UndeliveredOrdersComponent,
+  UndeliverRefillComponent,
+]

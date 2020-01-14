@@ -123,6 +123,11 @@ const routes: Routes = [
         data: { pageTitle: "Order" }
       },
       {
+        path: "stock",
+        loadChildren: "./features/stock/stock.module#StockModule",
+        data: { pageTitle: "Stock" }
+      },
+      {
         path: "settings",
         loadChildren: "./features/settings/settings.module#SettingsModule",
         data: { pageTitle: "settings" }
