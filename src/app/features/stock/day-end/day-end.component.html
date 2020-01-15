@@ -1,0 +1,93 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <sa-widgets-grid>
+      <div class="row">
+        <article class="col-sm-12">
+          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+              <header class="text-center"> 
+                        <h2> <i class="fa fa-table"></i> Day End</h2>
+            </header>
+            <div>
+              <div class="widget-body">
+                <div class="row ">                 
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Day End" class="form-control" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                      <div class="form-group">
+                        <input type="text" placeholder="Enter Current Date" class="form-control" required />
+                      </div>
+                    </div>
+                  
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-success get_details">
+                        <i class="fa fa-search"></i> Get Details</button>
+  
+                    </div>
+                  </div>
+                <div class="col-sm-12">
+                    <ul id="myTab1" class="nav nav-tabs bordered">
+                        <li [class.active]="state.tabs.demo1 == 0">
+                          <a (click)="state.tabs.demo1 = 0"> Sound </a>
+                        </li>
+                        <li [class.active]="state.tabs.demo1 == 1">
+                          <a (click)="state.tabs.demo1 = 1"> Empty</a>
+                        </li>
+                        <li [class.active]="state.tabs.demo1 == 2">
+                            <a (click)="state.tabs.demo1 = 2"> Defective</a>
+                          </li>
+                        <li class="pull-right">
+                          <!-- <a (click)="(null)">
+                            <div class="sparkline txt-color-pinkDark text-align-right" data-sparkline-height="18px"
+                                 data-sparkline-width="90px" data-sparkline-barwidth="7">
+                              5,10,6,7,4,3
+                            </div>
+                          </a> -->
+                          <form name="processform">
+                              <div>
+                                  <label class="stock-check"><input type="checkbox"  required> All stock values are correct </label>
+                                  <button class=" btn btn-danger pull-right dayend-btn" type="submit">
+                                      <span class="hidden-xs">Process</span>  Day End
+                                  </button>
+                              </div>
+                          </form>
+                        </li>
+                      </ul>
+        
+                      <tabset class="padding-10">
+                        <tab [active]="state.tabs.demo1 == 0">
+                          <p>
+                           Sound Data
+                          </p>
+                        </tab>
+                        <tab [active]="state.tabs.demo1 == 1">
+                          <p>
+                          Empty Data
+                          </p>
+                        </tab>
+                        <tab [active]="state.tabs.demo1 == 2">
+                          <p>
+                        Defective Data
+                          </p>
+                        </tab>
+                     
+                      </tabset>
+        
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+  
+  
+        </article>
+  
+  
+      </div>
+  
+    </sa-widgets-grid>
+  </div>

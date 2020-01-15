@@ -1,0 +1,123 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-8 col-sm-offset-2">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-table"></i> Imbalance </h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>Date<span class="errorMessage">*</span></label>                                            
+                                                <input type="text" id="td" class="form-control" placeholder="dd-mmm-yyyy" required />
+                                                                                   </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="sel1">Product Segment<span class="errorMessage" style="color:red;">*</span></label>
+                                            <select class="form-control"  required>
+                                                <option value="" selected hidden>--Select Segment--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label for="sel1">Product<span class="errorMessage" style="color:red;">*</span></label>
+                                            <select class="form-control"  required>
+                                                <option value="" selected hidden>--Select Product--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+
+                                        <label> <strong>Imbalance</strong> ( Adjust Balance Stock )</label>
+
+                                    </div>
+                           
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Sound <i class="fa fa-plus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Sound" ng-model="imbal.SoundQtyPlus" numericonly />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Sound <i class="fa fa-minus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Sound" ng-model="imbal.SoundQtyMinus" numericonly  />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Empty <i class="fa fa-plus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Empty" ng-model="imbal.EmptyQtyPlus" numericonly  />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Empty <i class="fa fa-minus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Empty" ng-model="imbal.EmptyQtyMinus" numericonly  />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Defective <i class="fa fa-plus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Defective" ng-model="imbal.DeffectiveQtyPlus" numericonly  />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Defective <i class="fa fa-minus-circle"></i></label>
+                                                <input type="text" class="form-control" placeholder="Enter Defective" ng-model="imbal.DeffectiveQtyMinus" numericonly  />
+                                            </div>
+                                        </div>
+
+                          
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="sel1">Remark</label>
+                                            <textarea class="form-control" placeholder="Enter Remark" ng-model="imbal.Remark"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="checkbox" name="IsActive" /> Is Active
+                                        </label>
+                                    </div>
+                                </div>
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-sm-12 ">
+                                            <hr />
+                                            <a class="pull-right btn btn-default" routerLink="/stock/add-imbalance">
+                                                <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
+                                            </a>
+                                            <button class="pull-right btn btn-primary marg-right" type="submit">
+                                                <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                                            </button>
+                                        </div>
+                                        <!-- <div class="col-sm-12 " ng-show="divhide">
+                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
+                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                                </button>
+                            </div> -->
+                                    </div>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
+</div>

@@ -18,3 +18,10 @@
     border-bottom: 1px solid #534d81;
     background: #534c7f0f;
 }
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding-left: 0;
+}

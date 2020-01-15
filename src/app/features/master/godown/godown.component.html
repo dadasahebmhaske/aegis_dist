@@ -6,12 +6,296 @@
             <article class="col-sm-12">
                 <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
                     <header class="text-center">
-                     
-                        <h2><i class="fa fa-table"></i> Godown Master</h2>
+                        <h2>
+                            <i class="fa fa-table"></i> Godown Master</h2>
                     </header>
                     <div>
                         <div class="widget-body">
                             <div class="row">
+                                <form novalidate="novalidate">
+                                    <div class="col-sm-12">
+                                        <div class="form-bootstrapWizard clearfix">
+                                            <ul class="bootstrapWizard">
+                                                <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                                                    <a (click)="setActiveStep(pane)">
+                                                        <span class="step">
+                                                            <span *ngIf="!pane.checked">{{i + 1}}</span>
+                                                            <i class="fa fa-check" *ngIf="pane.checked"></i>
+                                                        </span>
+                                                        <span class="title">{{pane.title}}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                                                <br>
+
+                                                <h3>
+                                                    <strong>Step 1 </strong> - Godown Details</h3>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Godown Name
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Godown Name" ng-model="consumer.LastName" alphaonly required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Godown Capacity
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Capacity" alphaonly required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Contact Person
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Contact Person" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Contact No.
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Contact No." required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 1
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 2</label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 2" ng-model="consumer.AddressLine2" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 3</label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Pin Code
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" numericonly
+                                                                required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Godown License No.
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter License No." alphaonly required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">License Issue Date
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter License Issue Date" alphaonly required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">License Expiry Date
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter License Expiry Date" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Last Audit Date
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Last Audit Date" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Godown Type
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <select class="form-control">
+                                                                <option selected hidden>Select Type</option>
+                                                                <option>Owned</option>
+                                                                <option>Leased </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Start Date
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Start Date" disabled required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">End Date
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter End Date" disabled required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Lease Period
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Lease Period" disabled required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <label>
+                                                            <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                                                <br>
+                                                <h3>
+                                                    <strong>Step 2</strong> - Document Details</h3>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Document Type
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <select class="form-control">
+                                                                <option selected hidden>Select Document Type</option>
+                                                                <option>License Document</option>
+                                                                <option>Insurance Document </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label>Select File
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <input type="file" class="form-control" placeholder="Enter Vehicle No." required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <div class="form-group">
+                                                            <label>&nbsp;
+                                                            </label>
+                                                            <button class="btn btn-block btn-warning ">
+                                                                <i class="glyphicon glyphicon-plus"></i>
+                                                                Add
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="table-responsive">
+
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Document Type</th>
+                                                                        <th>Document</th>
+                                                                        <th>View</th>
+                                                                        <th>Remove</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>License Document</td>
+                                                                        <td>Godown License Document </td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Insurance Document</td>
+                                                                        <td>Godown Insurance Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Noc Document</td>
+                                                                        <td>Godown Noc Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>Property Document</td>
+                                                                        <td>Godown Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                         
+                                            <div class="form-actions">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <ul class="pager wizard no-margin">
+                                                            <li class="previous">
+                                                                <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                                                </a>
+                                                            </li>
+                                                            <li class="next">
+                                                                <a (click)="nextStep()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                                    Next
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- <div class="row">
                                 <div class="col-sm-6">
                                     <div class="vehicle-cart">
                                         <label>
@@ -269,11 +553,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-
                             <footer>
                                 <div class="row">
                                     <div class="col-sm-12 ">
@@ -285,13 +564,9 @@
                                             <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
                                         </button>
                                     </div>
-                                    <!-- <div class="col-sm-12 " ng-show="divhide">
-                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                                </button>
-                            </div> -->
+                                  
                                 </div>
-                            </footer>
+                            </footer> -->
 
                         </div>
                     </div>

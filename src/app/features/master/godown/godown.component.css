@@ -1,11 +1,7 @@
-.vehicle-cart{
-    border: 1px solid #534d81;
-    padding: 15px 10px;
-    min-height: 500px;
-}
-.vehicle-cart:hover{
-    border: 1px solid #534d81;
-    padding: 15px 10px;
-   
-    box-shadow: 0 0 5px #534d81;
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    width: 50%;
+    text-align: center;
+    padding-left: 0;
 }

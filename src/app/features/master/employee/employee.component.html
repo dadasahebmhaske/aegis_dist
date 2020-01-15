@@ -6,13 +6,395 @@
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
-
             <h2>
               <i class="fa fa-table"></i> Employee Master</h2>
           </header>
           <div>
             <div class="widget-body">
-              <div class="row">
+                <div class="row">
+                    <form novalidate="novalidate">
+                        <div class="col-sm-12">
+                            <div class="form-bootstrapWizard clearfix">
+                                <ul class="bootstrapWizard">
+                                    <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                                        <a (click)="setActiveStep(pane)">
+                                            <span class="step">
+                                                <span *ngIf="!pane.checked">{{i + 1}}</span>
+                                                <i class="fa fa-check" *ngIf="pane.checked"></i>
+                                            </span>
+                                            <span class="title">{{pane.title}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                                    <br>
+                                    <h3>
+                                        <strong>Step 1 </strong> - Employee Details</h3>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Designation
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                  <option selected hidden>-- Select Designation --</option>
+                                                  <option>Operator</option>
+                                                  <option>Delivery Man</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">First Name
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter First Name" alphaonly required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Last Name
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Last Name" alphaonly required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Gender
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                  <option selected hidden>-- Select Gender --</option>
+                                                  <option>Male</option>
+                                                  <option>Female</option>
+                                                  <option>Transgender</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Date of Birth
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Date of Birth" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Mobile No.
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Mobile No." required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Optional Mobile No. </label>
+                                                <input type="text" class="form-control" placeholder="Enter Mobile No." required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Edu. Qualification
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Qualification" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Salary/Month
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Salary" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Date of Joining
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Date of Joining" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Marital Status
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                  <option selected hidden>-- Select Status --</option>
+                                                  <option>Single</option>
+                                                  <option>Married</option>
+                                                  <option>Divorced</option>
+                                                  <option>Widowed </option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Marriage Date
+                      
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Anniversary Date" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Blood Group
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                  <option selected hidden>-- Select Group --</option>
+                                                  <option>A +ve</option>
+                                                  <option>A -ve</option>
+                                                  <option>B +ve</option>
+                                                  <option>B -ve</option>
+                                                  <option>AB +ve</option>
+                                                  <option>AB -ve</option>
+                                                  <option>O +ve</option>
+                                                  <option>O -ve</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                              <div class="form-group">
+                                                <label for="sel1">Emergency Contact Person
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Contact Person" required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label for="sel1">Contact No.
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Contact No." required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                  <label for="sel1">Address Line 1
+                                                    <span class="errorMessage">*</span>
+                                                  </label>
+                                                  <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-4">
+                                                <div class="form-group">
+                                                  <label for="sel1">Address Line 2</label>
+                                                  <input type="text" class="form-control" placeholder="Enter Address Line 2" ng-model="consumer.AddressLine2" />
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-4">
+                                                <div class="form-group">
+                                                  <label for="sel1">Address Line 3</label>
+                                                  <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
+                                                </div>
+                                              </div>
+                                              <div class="col-sm-3">
+                                                <div class="form-group">
+                                                  <label for="sel1">Pin Code
+                                                    <span class="errorMessage">*</span>
+                                                  </label>
+                                                  <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" numericonly
+                                                    required />
+                                                </div>
+                                              </div>
+                                            <div class="col-sm-12">
+                                              <div class="logincDeatils">
+                                                <label class="text-danger">Login Details : </label>
+                                                <div class="row">
+                                                  <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                      <label for="sel1">Email ID
+                                                        <span class="errorMessage">*</span>
+                                                      </label>
+                                                      <input type="text" class="form-control" placeholder="Enter Email ID " />
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                      <label for="sel1">Password
+                                                        <span class="errorMessage">*</span>
+                                                      </label>
+                                                      <input type="password" class="form-control" placeholder="Enter Password" required />
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                      <label for="sel1">Re-enter Password
+                                                        <span class="errorMessage">*</span>
+                                                      </label>
+                                                      <input type="password" class="form-control" placeholder="Enter Password" required />
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>                                            
+                                            <div class="col-sm-3">
+                                              <label >
+                                                <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                                              </label>
+                                            </div>
+                                          </div>
+                                </div>
+                                <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                                    <br>
+                                    <h3>
+                                        <strong>Step 2</strong> - Document Details</h3>
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label>Document Type
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control">
+                                                  <option selected hidden>Select Type</option>
+                                                  <option>License Document</option>
+                                                  <option>PAN Document </option>
+                                                  <option>Passport Document </option>
+                                                  <option>ID Proof Document </option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                              <div class="form-group">
+                                                <label>Select File
+                                                  <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="file" class="form-control" placeholder="Enter Vehicle No." required />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                              <div class="form-group">
+                                                <label>Document No.
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Doc  No." />
+                                              </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                              <div class="form-group">
+                                                <label>&nbsp;
+                                                </label>
+                                                <button class="btn btn-block btn-warning ">
+                                                  <i class="glyphicon glyphicon-plus"></i>
+                                                  Add
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-sm-12">
+                                              <div class="table-responsive">
+                      
+                                                <table class="table table-hover">
+                                                  <thead>
+                                                    <tr>
+                                                      <th>#</th>
+                                                      <th>Document Type</th>
+                                                      <th>Document</th>
+                                                      <th>Document No.</th>
+                                                      <th>View</th>
+                                                      <th>Remove</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>1</td>
+                                                      <td>License Document</td>
+                                                      <td>Driving License </td>
+                                                      <td>952 852 852 954</td>
+                                                      <td>
+                                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                      </td>
+                                                      <td>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                      </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>2</td>
+                                                      <td>PAN Document</td>
+                                                      <td>PAN Card Document</td>
+                                                      <td>COZPM8165M</td>
+                                                      <td>
+                                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                      </td>
+                                                      <td>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                      </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>3</td>
+                                                      <td>Aadhar</td>
+                                                      <td>Aadhar Document</td>
+                                                      <td>952 852 852 954</td>
+                                                      <td>
+                                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                      </td>
+                                                      <td>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                      </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>4</td>
+                                                      <td>Passport </td>
+                                                      <td>Passport Document</td>
+                                                      <td>95252 85254</td>
+                                                      <td>
+                                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                      </td>
+                                                      <td>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                      </td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>5</td>
+                                                      <td>Educational </td>
+                                                      <td>Gratuation Document</td>
+                                                      <td>PUN 95252 85254</td>
+                                                      <td>
+                                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                      </td>
+                                                      <td>
+                                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            </div>
+                                          </div>
+                                </div>
+                           
+                                <div class="form-actions">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <ul class="pager wizard no-margin">
+                                                <li class="previous">
+                                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                                    </a>
+                                                </li>
+                                                <li class="next">
+                                                    <a (click)="nextStep()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                        Next
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+              <!-- <div class="row">
                 <div class="col-sm-6">
                   <div class="vehicle-cart">
                     <label>
@@ -82,7 +464,6 @@
                           <input type="text" class="form-control" placeholder="Enter Mobile No." required />
                         </div>
                       </div>
-
                       <div class="col-sm-3">
                         <div class="form-group">
                           <label for="sel1">Edu. Qualification
@@ -123,8 +504,8 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label for="sel1">Marriage  Date
-                            
+                          <label for="sel1">Marriage Date
+
                           </label>
                           <input type="text" class="form-control" placeholder="Enter Anniversary Date" required />
                         </div>
@@ -144,14 +525,12 @@
                             <option>AB -ve</option>
                             <option>O +ve</option>
                             <option>O -ve</option>
-                         
-                   
                           </select>
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
-                          <label for="sel1">Emergency Contact Person 
+                          <label for="sel1">Emergency Contact Person
                             <span class="errorMessage">*</span>
                           </label>
                           <input type="text" class="form-control" placeholder="Enter Contact Person" required />
@@ -165,40 +544,37 @@
                           <input type="text" class="form-control" placeholder="Enter Contact No." required />
                         </div>
                       </div>
-                
                       <div class="col-sm-12">
-                          <div class="logincDeatils">
-                              <label class="text-danger">Login Details : </label>
-                        <div class="row">
-                         
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label for="sel1">Email ID
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter Email ID " />
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Password
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="password" class="form-control" placeholder="Enter Password" required />
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Re-enter Password
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="password" class="form-control" placeholder="Enter Password" required />
-                                  </div>
-                                </div>
+                        <div class="logincDeatils">
+                          <label class="text-danger">Login Details : </label>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <label for="sel1">Email ID
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Email ID " />
                               </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Password
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Re-enter Password
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                     
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label for="sel1">Address Line 1
@@ -228,15 +604,11 @@
                             required />
                         </div>
                       </div>
-
-
-
                       <div class="col-sm-3">
                         <label class="chekbox-margin">
                           <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
                         </label>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -269,12 +641,12 @@
                         </div>
                       </div>
                       <div class="col-sm-3">
-                          <div class="form-group">
-                            <label>Document No.
-                            </label>
-                            <input type="text" class="form-control" placeholder="Enter Doc  No."  />
-                          </div>
+                        <div class="form-group">
+                          <label>Document No.
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Doc  No." />
                         </div>
+                      </div>
                       <div class="col-sm-2">
                         <div class="form-group">
                           <label>&nbsp;
@@ -364,20 +736,12 @@
                               </tr>
                             </tbody>
                           </table>
-
                         </div>
                       </div>
                     </div>
-
-
                   </div>
                 </div>
               </div>
-
-
-
-
-
               <footer>
                 <div class="row">
                   <div class="col-sm-12 ">
@@ -389,24 +753,12 @@
                       <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
                     </button>
                   </div>
-                  <!-- <div class="col-sm-12 " ng-show="divhide">
-                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                              </button>
-                          </div> -->
                 </div>
-              </footer>
-
+              </footer> -->
             </div>
           </div>
         </div>
-
-
-
       </article>
-
-
     </div>
-
   </sa-widgets-grid>
 </div>

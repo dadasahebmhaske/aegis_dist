@@ -4,6 +4,9 @@ import { SharedModule } from '@app/shared/shared.module';
 import { routing, compArray } from './stock-routing.module';
 
 
+
+
+
 @NgModule({
   declarations: [compArray],
   imports: [

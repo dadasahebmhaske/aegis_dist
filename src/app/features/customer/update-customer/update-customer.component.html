@@ -7,8 +7,9 @@
 
         <!-- Widget ID (each widget will need unique ID)-->
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-            <header class="text-center"> 
-            <h2> <i class="fa fa-user"></i> Update Customer</h2>
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-user"></i> Update Customer</h2>
           </header>
           <div>
             <div class="widget-body">
@@ -41,7 +42,7 @@
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Customer No.
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
                               <input type="text" class="form-control" placeholder="Enter Customer No." ng-model="consumer.ConsNo" disabled required />
                             </div>
@@ -57,7 +58,7 @@
                           <div class="col-sm-3">
                             <div class="form-group">
                               <label for="sel1">First Name
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
                               <input type="text" class="form-control" placeholder="Enter First Name" ng-model="consumer.FirstName" alphaonly required />
                             </div>
@@ -71,192 +72,186 @@
                           <div class="col-sm-3">
                             <div class="form-group">
                               <label for="sel1">Last Name
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
                               <input type="text" class="form-control" placeholder="Enter Last Name" ng-model="consumer.LastName" alphaonly required />
                             </div>
                           </div>
                           <div class="col-sm-3">
-                              <div class="form-group">
-                                <label for="sel1">Mobile No.
-                                  <span class="errorMessage" >*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
-                                  pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
-                                  onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
-                              </div>
+                            <div class="form-group">
+                              <label for="sel1">Mobile No.
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                                pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
                             </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                  <label for="sel1">Optional Mobile No.
-                                    
-                                  </label>
-                                  <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
-                                    pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
-                                    onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
-                                </div>
-                              </div>
-                              <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Customer Type
-                                      <span class="errorMessage" >*</span>
-                                    </label>
-                                    <select class="form-control"   required>
-                                      <option value="" selected hidden>-- Select --</option>
-                                      <option value="">Domestic</option>
-                                      <option value="">Industrial</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                      <label for="sel1">Consumption Type
-                                        <span class="errorMessage" >*</span>
-                                      </label>
-                                      <select class="form-control"  ng-model="consumer.AreaCode"
-                                        required>
-                                        <option value="" selected hidden>-- Select Type --</option>                                       
-                                      </select>
-                                    </div>
-                                  </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Volume Type
-                                      <span class="errorMessage" >*</span>
-                                    </label>
-                                    <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.AreaCode"
-                                      required>
-                                      <option value="" selected hidden>-- Select Volume --</option>
-                                      <option value="">0 - 5 Cylinder</option>
-                                      <option value="">6 - 10 Cylinder</option>
-                                      <option value="">11 - 15 Cylinder</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                      <label for="sel1">Service Type
-                                        <span class="errorMessage" >*</span>
-                                      </label>
-                                      <select class="form-control"   required>
-                                        <option value="" selected hidden>-- Select Service Type --</option>                                       
-                                      </select>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                      <div class="form-group">
-                                        <label for="sel1">Contractual / Non-Contractual
-                                          <span class="errorMessage" >*</span>
-                                        </label>
-                                        <select class="form-control"   required>
-                                          <option value="" selected hidden>-- Select --</option>                                       
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                          <label for="sel1">Opening Balance Quantity
-                                            <span class="errorMessage" >*</span>
-                                          </label>
-                                          <input type="text" class="form-control" placeholder="Enter Quantity" ng-model="consumer.LastName" alphaonly required />
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-3">
-                                        <div class="form-group">
-                                          <label for="sel1">Opening Balance Amount
-                                            <span class="errorMessage" >*</span>
-                                          </label>
-                                          <input type="text" class="form-control" placeholder="Enter Amount" ng-model="consumer.LastName" alphaonly required />
-                                        </div>
-                                      </div>
-                      
-                                      <div class="col-sm-3">
-                                        <div class="form-group">
-                                          <label for="sel1">Customer Category
-                                            <span class="errorMessage" >*</span>
-                                          </label>
-                                          <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" required>
-                                            <option value="" selected hidden>-- Select Category --</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      <div class="col-sm-3">
-                                          <div class="form-group">
-                                            <label for="sel1">Route
-                                              <span class="errorMessage" >*</span>
-                                            </label>
-                                            <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
-                                              title="Select area" ng-model="consumer.ItemCode" required>
-                                              <option value="" selected hidden>-- Select Route --</option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                          <div class="form-group">
-                                            <label for="sel1">Sub Area
-                                              <span class="errorMessage" >*</span>
-                                            </label>
-                                            <select  class="form-control"  required>
-                                              <option value="" selected hidden>-- Select Sub Area --</option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-                                              <label for="sel1">Email ID</label>
-                                              <input type="text" class="form-control" placeholder="Enter Email ID" />
-                                            </div>
-                                          </div>
-                                          <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <label for="sel1">Incharge Name
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Enter Incharge Name" ng-model="consumer.LastName" alphaonly required
-                                                />
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <label for="sel1">Incharge Mobile No.
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
-                                                  pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
-                                                  onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <label for="sel1">GST No.
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Enter GST No. " ng-model="consumer.LastName" alphaonly required />
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <label for="sel1">Manifold Certificate No.
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Enter Certificate No." ng-model="consumer.LastName" alphaonly required
-                                                />
-                                              </div>
-                                            </div>
-                        
-                      
-                      
-                        </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Optional Mobile No.
 
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                                pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Customer Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>-- Select --</option>
+                                <option value="">Domestic</option>
+                                <option value="">Industrial</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Consumption Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" ng-model="consumer.AreaCode" required>
+                                <option value="" selected hidden>-- Select Type --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Volume Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.AreaCode"
+                                required>
+                                <option value="" selected hidden>-- Select Volume --</option>
+                                <option value="">0 - 5 Cylinder</option>
+                                <option value="">6 - 10 Cylinder</option>
+                                <option value="">11 - 15 Cylinder</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Service Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>-- Select Service Type --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Contractual / Non-Contractual
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>-- Select --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Opening Balance Quantity
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Quantity" ng-model="consumer.LastName" alphaonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Opening Balance Amount
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Amount" ng-model="consumer.LastName" alphaonly required />
+                            </div>
+                          </div>
+
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Customer Category
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" required>
+                                <option value="" selected hidden>-- Select Category --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Route
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
+                                title="Select area" ng-model="consumer.ItemCode" required>
+                                <option value="" selected hidden>-- Select Route --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Sub Area
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>-- Select Sub Area --</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Email ID</label>
+                              <input type="text" class="form-control" placeholder="Enter Email ID" />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Incharge Name
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Incharge Name" ng-model="consumer.LastName" alphaonly required
+                              />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Incharge Mobile No.
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                                pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
+                                onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">GST No.
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter GST No. " ng-model="consumer.LastName" alphaonly required />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Manifold Certificate No.
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Certificate No." ng-model="consumer.LastName" alphaonly required
+                              />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
                         <br>
-
                         <h3>
                           <strong>Step 2</strong> - Address Details</h3>
                         <div class="row">
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Address Type
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
-                              <select  class="form-control"  required>
+                              <select class="form-control" required>
                                 <option value="" selected hidden>--Select Type--</option>
                               </select>
                             </div>
@@ -264,7 +259,7 @@
                           <div class="col-sm-3">
                             <div class="form-group">
                               <label for="sel1">Address Line 1
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
                               <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
                             </div>
@@ -284,275 +279,308 @@
                           <div class="col-sm-1">
                             <div class="form-group">
                               <label for="sel1">Pin Code
-                                <span class="errorMessage" >*</span>
+                                <span class="errorMessage">*</span>
                               </label>
                               <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" oninvalid="this.setCustomValidity('Enter 6 digits PIN number')"
                                 onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
                             </div>
                           </div>
                           <div class="col-sm-1">
-                              <div class="form-group">
-                                  <label>&nbsp;
-                                  </label>
-                                  <button class="btn btn-block btn-warning ">
-                                      <i class="glyphicon glyphicon-plus"></i>
-                                      Add
-                                  </button>
-                              </div>
+                            <div class="form-group">
+                              <label>&nbsp;
+                              </label>
+                              <button class="btn btn-block btn-warning ">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                              </button>
+                            </div>
                           </div>
 
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="table-responsive">
+                          <div class="col-sm-12">
+                            <div class="table-responsive">
 
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Address Type</th>
-                                                <th>Address Line 1</th>
-                                                <th>Address Line 2</th>
-                                                <th>Address Line 3</th>
-                                                <th>Pin Code</th>
-                                                <th>Remove</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Delivery</td>
-                                                <td>Sr no.65/6 B New Gajara Society </td>
-                                                <td>Savarkar Marg, Bibewadi</td>
-                                                <td>Pune, Maharashtra</td>
-                                                <td>411037</td>
-                                                <td>
-                                                    <button class="btn btn-xs btn-danger">Remove</button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Residential</td>
-                                                <td>Sr no.65/6 B New Gajara Society </td>
-                                                <td>Savarkar Marg, Bibewadi</td>
-                                                <td>Pune, Maharashtra</td>
-                                                <td>411037</td>
-                                                <td>
-                                                    <button class="btn btn-xs btn-danger">Remove</button>
-                                                </td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                    </table>
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Address Type</th>
+                                    <th>Address Line 1</th>
+                                    <th>Address Line 2</th>
+                                    <th>Address Line 3</th>
+                                    <th>Pin Code</th>
+                                    <th>Remove</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Delivery</td>
+                                    <td>Sr no.65/6 B New Gajara Society </td>
+                                    <td>Savarkar Marg, Bibewadi</td>
+                                    <td>Pune, Maharashtra</td>
+                                    <td>411037</td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Residential</td>
+                                    <td>Sr no.65/6 B New Gajara Society </td>
+                                    <td>Savarkar Marg, Bibewadi</td>
+                                    <td>Pune, Maharashtra</td>
+                                    <td>411037</td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
 
-                                </div>
+                                </tbody>
+                              </table>
+
                             </div>
+                          </div>
                         </div>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
-                          <br>
-  
-                          <h3>
-                            <strong>Step 3</strong> -Product Details</h3>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Product
-                                      <span class="errorMessage" >*</span>
-                                    </label>
-                                    <select  class="form-control"  required>
-                                      <option value="" selected hidden>--Select Product--</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Monthly Consumption
-                                      <span class="errorMessage" >*</span>
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter Consumption" required />
-                                  </div>
-                                </div>                               
-                                <div class="col-sm-1">
-                                    <div class="form-group">
-                                        <label>&nbsp;
-                                        </label>
-                                        <button class="btn btn-block btn-warning ">
-                                            <i class="glyphicon glyphicon-plus"></i>
-                                            Add
-                                        </button>
-                                    </div>
-                                </div>
-      
-                              </div>
-                              <div class="row">
-                                  <div class="col-sm-12">
-                                      <div class="table-responsive">
-      
-                                          <table class="table table-hover">
-                                              <thead>
-                                                  <tr>
-                                                      <th>#</th>
-                                                      <th>Product Name</th>
-                                                      <th>Monthly Consumption</th>
-                                                      <th>Remove</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <tr>
-                                                      <td>1</td>
-                                                      <td>Domestic 5kg Cylinder</td>
-                                                      <td>12 </td>                                                   
-                                                      <td>
-                                                          <button class="btn btn-xs btn-danger">Remove</button>
-                                                      </td>
-                                                  </tr>
-                                                  <tr>
-                                                      <td>1</td>
-                                                      <td>Domestic 14kg Cylinder</td>
-                                                      <td>5 </td>                                                   
-                                                      <td>
-                                                          <button class="btn btn-xs btn-danger">Remove</button>
-                                                      </td>
-                                                  </tr>
-                                                  <tr>
-                                                      <td>1</td>
-                                                      <td>Commercial 19kg Cylinder</td>
-                                                      <td>18 </td>                                                   
-                                                      <td>
-                                                          <button class="btn btn-xs btn-danger">Remove</button>
-                                                      </td>
-                                                  </tr>
-                                              
-                                              </tbody>
-                                          </table>
-      
-                                      </div>
-                                  </div>
-                              </div>
-  
-                        </div>
-  
-                      <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
                         <br>
 
                         <h3>
-                          <strong>Step 4</strong> -Bank Details</h3>
-
-                          <div class="row">
-                              <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Bank Name   <span class="errorMessage" >*</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter Bank Name"  alphaonly />
-                                  </div>
+                          <strong>Step 3</strong> -Product Details</h3>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Product Segment
+                                    <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" required>
+                                    <option value="" selected hidden>--Select Segment--</option>
+                                  </select>
                                 </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                      <label for="sel1">Branch Name   <span class="errorMessage" >*</span></label>
-                                      <input type="text" class="form-control" placeholder="Enter Branch Name" alphaonly />
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-2">
-                                      <div class="form-group">
-                                        <label for="sel1">IFSC Code</label>
-                                        <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" ng-model="consumer.IfscCode"
-                                          oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')"
-                                          oninput=" setCustomValidity(' ')" alphanumericonly />
-                                      </div>
-                                    </div>
-                                  <div class="col-sm-2">
-                                      <div class="form-group">
-                                        <label for="sel1">Account Type
-                                          <span class="errorMessage" >*</span>
-                                        </label>
-                                        <select  class="form-control"  required>
-                                          <option value="" selected hidden>--Select Product--</option>
-                                          <option value="" >Saving</option>
-                                          <option value="" >Current</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                          <label for="sel1">Account Holder Name   <span class="errorMessage" >*</span></label>
-                                          <input type="text" class="form-control" placeholder="Enter Holder Name" alphaonly />
-                                        </div>
-                                      </div>
-                                <div class="col-sm-2">
-                                  <div class="form-group">
-                                    <label for="sel1">Account No.   <span class="errorMessage" >*</span></label>
-                                    <input type="text" class="form-control" placeholder="Enter Account No." ng-model="consumer.AccountNo" minlength="9" maxlength="17"
-                                      oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')"
-                                      oninput="setCustomValidity(' ')" numericonly />
-                                  </div>
-                                </div>                              
-                              <div class="col-sm-1">
-                                  <div class="form-group">
-                                      <label>&nbsp;
-                                      </label>
-                                      <button class="btn btn-block btn-warning ">
-                                          <i class="glyphicon glyphicon-plus"></i>
-                                          Add
-                                      </button>
-                                  </div>
                               </div>
-    
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Product
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>--Select Product--</option>
+                              </select>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="table-responsive">
-    
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Bank Name</th>
-                                                    <th>Branch Name</th>
-                                                    <th>IFSC Code</th>
-                                                    <th>Account Type</th>
-                                                    <th>Account Holder Name</th>
-                                                    <th>Account No.</th>
-                                                    <th>Remove</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Canara Bank</td>
-                                                    <td>Bibwewadi </td>  
-                                                    <td>CNRB0002566 </td>    
-                                                    <td>Saving </td> 
-                                                    <td>Atul Purkar </td>      
-                                                    <td>2566101017072 </td>                                              
-                                                    <td>
-                                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>SBI </td>
-                                                    <td>Bibwewadi </td>  
-                                                    <td>SBIB0001166 </td>    
-                                                    <td>Saving </td> 
-                                                    <td>Atul Purkar </td>      
-                                                    <td>1166101017777 </td>                                              
-                                                    <td>
-                                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                                    </td>
-                                                </tr>
-                                                                                          
-                                            </tbody>
-                                        </table>
-    
-                                    </div>
+                          </div>
+                          <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Deposite Amount
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Amount" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Purchase Quantity
+                                    <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Quantity" required />
                                 </div>
+                              </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Monthly Consumption
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Consumption" required />
                             </div>
-
-                      
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="form-group">
+                              <label>&nbsp;
+                              </label>
+                              <button class="btn btn-block btn-warning ">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Product Segment</th>
+                                    <th>Product Name</th>
+                                    <th>Deposite</th>
+                                    <th>Quantity</th>
+                                    <th>Monthly Consumption</th>
+                                    <th>Remove</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Segment 1</td>
+                                    <td>Domestic 5kg Cylinder</td>
+                                    <td>1200 </td>
+                                    <td>15</td>
+                                    <td>12 </td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>2</td>
+                                    <td>Segment 1</td>
+                                    <td>Domestic 14kg Cylinder</td>
+                                    <td>1400 </td>
+                                   
+                                    <td>10</td>
+                                    <td>5 </td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>3</td>
+                                    <td>Segment 1</td>                                   
+                                    <td>Commercial 19kg Cylinder</td>
+                                    <td>2000 </td>
+                                    <td>12</td>
+                                    <td>18 </td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <button class="btn btn-success pull-right">Download SV</button>
+                          </div>
+                        </div>
                       </div>
-
-
-
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
+                        <br>
+                        <h3>
+                          <strong>Step 4</strong> -Bank Details</h3>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Bank Name
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Bank Name" alphaonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Branch Name
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Branch Name" alphaonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">IFSC Code</label>
+                              <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" ng-model="consumer.IfscCode"
+                                oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')"
+                                oninput=" setCustomValidity(' ')" alphanumericonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Account Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>--Select Product--</option>
+                                <option value="">Saving</option>
+                                <option value="">Current</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Account Holder Name
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Holder Name" alphaonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Account No.
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Account No." ng-model="consumer.AccountNo" minlength="9" maxlength="17"
+                                oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')"
+                                oninput="setCustomValidity(' ')" numericonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-1">
+                            <div class="form-group">
+                              <label>&nbsp;
+                              </label>
+                              <button class="btn btn-block btn-warning ">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Bank Name</th>
+                                    <th>Branch Name</th>
+                                    <th>IFSC Code</th>
+                                    <th>Account Type</th>
+                                    <th>Account Holder Name</th>
+                                    <th>Account No.</th>
+                                    <th>Remove</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>Canara Bank</td>
+                                    <td>Bibwewadi </td>
+                                    <td>CNRB0002566 </td>
+                                    <td>Saving </td>
+                                    <td>Atul Purkar </td>
+                                    <td>2566101017072 </td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>1</td>
+                                    <td>SBI </td>
+                                    <td>Bibwewadi </td>
+                                    <td>SBIB0001166 </td>
+                                    <td>Saving </td>
+                                    <td>Atul Purkar </td>
+                                    <td>1166101017777 </td>
+                                    <td>
+                                      <button class="btn btn-xs btn-danger">Remove</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="form-actions">
                         <div class="row">
                           <div class="col-sm-12">
