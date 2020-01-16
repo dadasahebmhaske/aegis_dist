@@ -6,6 +6,7 @@ import { UpdateCustomerComponent } from './update-customer/update-customer.compo
 import { TransferCustomerComponent } from './transfer-customer/transfer-customer.component';
 import { TerminateCustomerComponent } from './terminate-customer/terminate-customer.component';
 import { SvCreationPrintingComponent } from './sv-creation-printing/sv-creation-printing.component';
+import { TransferCustomerInComponent } from './transfer-customer-in/transfer-customer-in.component';
 
 const routes: Routes = [
   {
@@ -31,14 +32,13 @@ const routes: Routes = [
   {
     path:'sv-creation-printing',
     component:SvCreationPrintingComponent
-  }
-  
+  },
+  {
+    path:'transfer-customer-in',
+    component:TransferCustomerInComponent
+  },
+   
 ]; 
 
-// @NgModule({
-//   imports: [RouterModule.forChild(routes)],
-//   exports: [RouterModule]
-// })
-// export class CustomerRoutingModule { }
 export const routing=[RouterModule.forChild(routes)];
-export const componentArray=[SvCreationPrintingComponent,TerminateCustomerComponent,TransferCustomerComponent,UpdateCustomerComponent,CustomerMasterComponent,NewCustomerComponent];
+export const componentArray=[TransferCustomerInComponent,SvCreationPrintingComponent,TerminateCustomerComponent,TransferCustomerComponent,UpdateCustomerComponent,CustomerMasterComponent,NewCustomerComponent];

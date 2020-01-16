@@ -59,19 +59,25 @@
         
                       <tabset class="padding-10">
                         <tab [active]="state.tabs.demo1 == 0">
-                          <p>
-                           Sound Data
-                          </p>
+                         <div class="row">
+                            <div class="col-sm-12 table-responsive">
+                                <ui-grid [data]="soundData" [gridOptions]="gridOptions" ></ui-grid>
+                              </div>
+                         </div>
                         </tab>
                         <tab [active]="state.tabs.demo1 == 1">
-                          <p>
-                          Empty Data
-                          </p>
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <ui-grid [data]="emptyData" [gridOptions]="gridEmptyOptions" ></ui-grid>
+                                  </div>
+                             </div>
                         </tab>
                         <tab [active]="state.tabs.demo1 == 2">
-                          <p>
-                        Defective Data
-                          </p>
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions" ></ui-grid>
+                                  </div>
+                             </div>
                         </tab>
                      
                       </tabset>

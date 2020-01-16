@@ -354,6 +354,3 @@
        bottom: 1px;
        right: 9px;
    }
-   .jarviswidget-color-blueDark .nav-tabs li:not(.active) a, .jarviswidget-color-blueDark>header>.jarviswidget-ctrls a {
-    color: #060606!important;
-}
