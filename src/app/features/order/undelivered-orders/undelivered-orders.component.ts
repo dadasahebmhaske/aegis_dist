@@ -30,7 +30,7 @@ export class UndeliveredOrdersComponent implements OnInit {
       { name: 'UnDeliveredDate', displayName: 'Undelivery Date', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'RefillQuantity', displayName: 'Refill Quantity', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'RefillAmount', displayName: 'Refill Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'unDelAttempts', displayName: 'Undel Attempts', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'unDelAttempts', displayName: 'Undelivery Attempts', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'Reason', displayName: 'Reason', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', width: "160", cellTooltip: true, filterCellFiltered: true },

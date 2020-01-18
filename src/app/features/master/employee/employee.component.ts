@@ -38,7 +38,7 @@ export class EmployeeComponent implements OnInit {
   public steps = [
     {
       key: 'step1',
-      title: 'Godown Details',
+      title: 'Employee Details',
       valid: true,
       checked: false,
       submitted: false,

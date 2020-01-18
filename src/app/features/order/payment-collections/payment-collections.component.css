@@ -1,0 +1,12 @@
+strong>span{
+    color: #534d81;
+}
+hr.simple {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    border-style: dashed;
+    border-color: #534d8161;
+}
+.label-center{
+    margin-top: 7px;
+}

@@ -10,15 +10,15 @@
 
     <ul saSmartMenu>
       <li>
-        <a title="Dashboard">
+        <a title="Dashboard" routerLink="/dashboard/analytics">
           <i class="fa fa-lg fa-fw fa-home"></i>
           <span class="menu-item-parent">{{'Dashboard' | i18n}}</span>
         </a>
-        <ul>
+        <!-- <ul>
           <li routerLinkActive="active">
             <a routerLink="/dashboard/analytics">{{'Analytics Dashboard' | i18n}}</a>
           </li>
-        </ul>
+        </ul> -->
       </li>
       <li>
         <a title="Master">
@@ -92,6 +92,9 @@
               <a routerLink="/order/undelivered-orders">Undelivered Orders</a>
             </li>    
             <li routerLinkActive="active">
+              <a routerLink="/order/cash-flow-register">Cash Flow & Payment Collections</a>
+            </li> 
+            <li routerLinkActive="active">
               <a routerLink="/order/delivery-man-wise-refill-order-summary">Delivery Man Wise Refill Order Summary</a>
             </li>    
             <li routerLinkActive="active">
@@ -121,6 +124,9 @@
                 <a routerLink="/stock/daily-stock-register">Daily Stock Register</a>
             </li> 
             <li routerLinkActive="active">
+              <a routerLink="/stock/customer-daily-stock-register">Customer Daily Stock Register</a>
+          </li> 
+            <li routerLinkActive="active">
                 <a routerLink="/stock/day-end">Day End</a>
             </li>           
           
@@ -135,9 +141,9 @@
             <li routerLinkActive="active">
               <a routerLink="/settings/price-allocation-list">Price Allocation</a>
             </li>    
-            <!-- <li routerLinkActive="active">
-              <a routerLink="/order/cash-memo-and-refill-delivery">Cash Memo & Refill Delivery</a>
-            </li>         -->
+        <li routerLinkActive="active">
+              <a routerLink="/settings/category-wise-discount-allocation-list">Category Wise Discount Allocation List</a>
+            </li>        
           </ul>
         </li>
   

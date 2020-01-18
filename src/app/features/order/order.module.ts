@@ -5,7 +5,7 @@ import { routing,compArray } from './order-routing.module';
 import { UigridordersDirective } from '../../core/directive/uigridorders.directive';
 
 @NgModule({
-  declarations: [compArray,UigridordersDirective],
+  declarations: [compArray,UigridordersDirective ],
   imports: [
     CommonModule,
     routing,

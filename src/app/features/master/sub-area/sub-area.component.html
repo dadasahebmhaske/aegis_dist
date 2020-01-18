@@ -15,10 +15,10 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Route
-                                            <span class="errorMessage">*</span>
+                                            <span class="errorMessage">*</span>{{subArea.RouteID}}
                                         </label>
-                                        <select class="form-control" id="sel" name="RouteID" [(ngModel)]="subArea.RouteID" required>
-                                            <option value="" selected hidden>Select Route</option>
+                                        <select class="form-control" id="RouteID" name="RouteID" #RouteID="ngModel" [(ngModel)]="subArea.RouteID" required>
+                                            <option value="undefined" [attr.selected]="slect"  >Select Route</option>
                                             <option [value]="rou.RouteID" *ngFor="let rou of route">{{rou.RouteName}}</option>                                            
                                         </select>
                                     </div>

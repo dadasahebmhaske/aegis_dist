@@ -35,14 +35,14 @@ export class DayEndComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
        { name: 'ProductName', displayName: 'Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Empty', cellClass: 'grid-align', width: "*", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Empty Qty', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockOut', displayName: 'Empty Return', width: "*", cellClass: 'grid-align', cellTooltip: true },
-     // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Empty +', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Empty -', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'grid-align', width: "*", cellTooltip: true }
+      { name: 'OpeningBal', displayName: 'Opening Bal Empty',  width: "160", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Empty Qty', width: "100",  cellTooltip: true },
+      { name: 'StockOut', displayName: 'Empty Return', width: "130",  cellTooltip: true },
+     // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
+      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "180",  cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Empty +', width: "100",  cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Empty -', width: "100",  cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Sound',  width: "250", cellTooltip: true }
       ]
     this.gridEmptyOptions.columnDefs = columnDefs;
   
@@ -54,14 +54,14 @@ export class DayEndComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
        { name: 'ProductName', displayName: 'Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Defective', cellClass: 'grid-align', width: "*", cellTooltip: true },
-      //{ name: 'StockIn', displayName: 'Inward Qty', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockOut', displayName: 'Defective Return', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      //{ name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Defective +', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Defective -', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'grid-align', width: "*", cellTooltip: true }
+      { name: 'OpeningBal', displayName: 'Opening Balance Defective',  width: "170", cellTooltip: true },
+      //{ name: 'StockIn', displayName: 'Inward Qty', width: "*",  cellTooltip: true },
+      { name: 'StockOut', displayName: 'Defective Return', width: "130",  cellTooltip: true },
+      //{ name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
+      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170",  cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Defective +', width: "120",  cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Defective -', width: "120",  cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Sound',  width: "300", cellTooltip: true }
       ]
     this.gridDefectiveOptions.columnDefs = columnDefs;
   
@@ -73,14 +73,14 @@ export class DayEndComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
        { name: 'ProductName', displayName: 'Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Sound', cellClass: 'grid-align', width: "*", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Inward Qty', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockOut', displayName: 'Delivery Qty', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Sound +', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Sound -', width: "*", cellClass: 'grid-align', cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'grid-align', width: "*", cellTooltip: true }
+       { name: 'OpeningBal', displayName: 'Opening Balance Sound',  width: "170", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Inward Qty', width: "120",  cellTooltip: true },
+      { name: 'StockOut', displayName: 'Delivery Qty', width: "130",  cellTooltip: true },
+      { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170",  cellTooltip: true },
+      { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170",  cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Sound +', width: "100",  cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Sound -', width: "100",  cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Sound',  width: "200", cellTooltip: true }
       ]
     this.gridOptions.columnDefs = columnDefs;
   
@@ -100,7 +100,7 @@ export class DayEndComponent implements OnInit {
     },];
 
     this.emptyData=[{
-      'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas' ,
+      'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas' ,     
       'OpeningBal': 755 ,
       'StockIn': 0 ,
       'StockOut': 0,
@@ -112,6 +112,7 @@ export class DayEndComponent implements OnInit {
        },];
        this.defectiveData=[{
         'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas' ,
+     
         'OpeningBal': 755 ,
         'StockIn': 0 ,
         'StockOut': 0,

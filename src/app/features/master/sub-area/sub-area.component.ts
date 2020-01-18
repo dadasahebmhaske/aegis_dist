@@ -11,7 +11,8 @@ import {SubareaService} from './subarea.service';
 })
 export class SubAreaComponent implements OnInit, OnDestroy { 
   private route:any=[];
-  public subArea:any={RouteID:''};
+  public subArea:any={};
+  private slect:boolean=true;
     constructor(private datashare:DatashareService,private subarea:SubareaService,private masters:MasterService) { }
     ngOnInit() {
       this.getRoutes();

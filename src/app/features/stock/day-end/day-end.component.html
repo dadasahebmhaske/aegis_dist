@@ -60,21 +60,21 @@
                       <tabset class="padding-10">
                         <tab [active]="state.tabs.demo1 == 0">
                          <div class="row">
-                            <div class="col-sm-12 table-responsive">
+                            <div class="col-sm-12 ">
                                 <ui-grid [data]="soundData" [gridOptions]="gridOptions" ></ui-grid>
                               </div>
                          </div>
                         </tab>
                         <tab [active]="state.tabs.demo1 == 1">
                             <div class="row">
-                                <div class="col-sm-12 table-responsive">
+                                <div class="col-sm-12 ">
                                     <ui-grid [data]="emptyData" [gridOptions]="gridEmptyOptions" ></ui-grid>
                                   </div>
                              </div>
                         </tab>
                         <tab [active]="state.tabs.demo1 == 2">
                             <div class="row">
-                                <div class="col-sm-12 table-responsive">
+                                <div class="col-sm-12 ">
                                     <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions" ></ui-grid>
                                   </div>
                              </div>
