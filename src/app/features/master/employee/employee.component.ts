@@ -45,6 +45,13 @@ export class EmployeeComponent implements OnInit {
     },
     {
       key: 'step2',
+      title: 'Address Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    }
+    {
+      key: 'step3',
       title: 'Document Details',
       valid: false,
       checked: false,

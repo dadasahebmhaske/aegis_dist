@@ -24,15 +24,16 @@
     border: 2px solid #ffb20e;
     font-size: 17px;
 }
-.color-orange {
-    color: #ffb20e;
-}
+
 .toll_number {
     font-size: 18px;
 }
 .login_toll {
    
     color: #b3b3b3!important;
+}
+.color-orange {
+    color: #ffb20e;
 }
 .errorMessage{color:red;}
 .marg-right {

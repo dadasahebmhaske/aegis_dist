@@ -29,5 +29,4 @@ private route:any={};
   ngOnDestroy(){
     this.datashare.updateShareData(null);    
   }
-
 }

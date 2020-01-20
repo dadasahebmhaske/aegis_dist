@@ -3,7 +3,7 @@
   <!-- widget grid -->
   <sa-widgets-grid>
     <div class="row">
-      <article class="col-sm-12">
+      <article class="col-sm-8 col-sm-offset-2">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
             <h2>
@@ -15,15 +15,12 @@
                 <div class="col-sm-12">
                 
                     <div class="row">
-                      <div class="col-sm-2">
-                        <div class="form-group pull-right label-center">
-                          <label for="sel1">Customer/Mobile No.
-                            <span class="errorMessage">*</span>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-sm-2">
-                        <div class="form-group">
+                  
+                      <div class="col-sm-3 ">
+                        <div class="form-group ">
+                            <label for="sel1">Customer/Mobile No.
+                                <span class="errorMessage">*</span>
+                              </label>
                           <input type="text" class="form-control" placeholder="Enter Customer/Mobile No. " />
                         </div>
                       </div>
@@ -34,21 +31,26 @@
 
                         </div>
                       </div>
-                      <div class="col-sm-6 col-sm-offset-1">
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-12">
+                              <hr class="simple">
+                              </div>
+                      <div class="col-sm-12 text-center ">
                         <div class="form-group label-center">
                           <label>
                             <strong>
                               <i class="fa fa-user"></i>
-                              Customer Name : <span>Atul Purkar</span></strong>
+                              Customer Name : <span class="text-custname">Atul Purkar</span></strong>
 
                           </label>
                           <label>
                             <strong style="margin-left:20px">                            
-                              Advance Balance : <span>15000</span></strong>
+                              Advance Balance : <span class="text-success">15000</span></strong>
                           </label>
                           <label>
                             <strong style="margin-left:20px">                              
-                              Pending Balance : <span>00</span></strong>
+                              Pending Balance : <span class="text-danger">00</span></strong>
                           </label>
 
                         </div>
@@ -90,7 +92,7 @@
                           <input type="text" class="form-control" placeholder="Enter Cheque No." disabled/>
                         </div>
                       </div>
-                      <div class="col-sm-2">
+                      <div class="col-sm-3">
                         <div class="form-group">
                           <label>Cheque Date                           
                           </label>

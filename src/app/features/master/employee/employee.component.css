@@ -21,7 +21,10 @@
 .bootstrapWizard li {
     display: block;
     float: left;
-    width: 50%;
+    width: 33%;
     text-align: center;
     padding-left: 0;
+}
+.btn-marg{
+    margin-top: 27px;
 }

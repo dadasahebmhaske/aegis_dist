@@ -33,7 +33,7 @@ export class CashFlowRegisterComponent implements OnInit {
       { name: 'ReceivedAmount', displayName: 'Received Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'PendingAmount', displayName: 'Pending Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'AdvancedAmount', displayName: 'Advanced Amount', width: "155", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PaymentMode', displayName: 'PaymentMode', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'PaymentMode', displayName: 'Payment Mode', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CheqNo', displayName: 'Cheque No.', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CheqDate', displayName: 'Cheque Date', width: "130", cellTooltip: true, filterCellFiltered: true },
     ]
