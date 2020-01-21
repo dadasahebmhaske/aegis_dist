@@ -67,6 +67,9 @@
     border-left-color: #fff;
     color:#534d81;
 }
+.smart-style-2.menu-on-top aside {
+    background: linear-gradient(to right,#f7f7f7 99%,#cacaca 100%);
+}
 @media (max-width: 979px)
 {
 .menu-on-top aside#left-panel nav>ul>li{

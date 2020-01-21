@@ -35,7 +35,7 @@
                         <br>
 
                         <h3>
-                          <strong>Step 1 </strong> - Customer information</h3>
+                          <strong>Step 1 </strong> - Customer Details</h3>
 
                         <div class="row">
 
@@ -350,16 +350,16 @@
                         <h3>
                           <strong>Step 3</strong> -Product Details</h3>
                         <div class="row">
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <label for="sel1">Product Segment
-                                    <span class="errorMessage">*</span>
-                                  </label>
-                                  <select class="form-control" required>
-                                    <option value="" selected hidden>--Select Segment--</option>
-                                  </select>
-                                </div>
-                              </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Product Segment
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>--Select Segment--</option>
+                              </select>
+                            </div>
+                          </div>
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Product
@@ -371,21 +371,21 @@
                             </div>
                           </div>
                           <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Deposite Amount
-                                  <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Amount" required />
-                              </div>
+                            <div class="form-group">
+                              <label for="sel1">Deposite Amount
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Amount" required />
                             </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <label for="sel1">Purchase Quantity
-                                    <span class="errorMessage">*</span>
-                                  </label>
-                                  <input type="text" class="form-control" placeholder="Enter Quantity" required />
-                                </div>
-                              </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Purchase Quantity
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Quantity" required />
+                            </div>
+                          </div>
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Monthly Consumption
@@ -437,7 +437,7 @@
                                     <td>Segment 1</td>
                                     <td>Domestic 14kg Cylinder</td>
                                     <td>1400 </td>
-                                   
+
                                     <td>10</td>
                                     <td>5 </td>
                                     <td>
@@ -446,7 +446,7 @@
                                   </tr>
                                   <tr>
                                     <td>3</td>
-                                    <td>Segment 1</td>                                   
+                                    <td>Segment 1</td>
                                     <td>Commercial 19kg Cylinder</td>
                                     <td>2000 </td>
                                     <td>12</td>
@@ -465,10 +465,167 @@
                         </div>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
+                          <br>
+                          <h3>
+                            <strong>Step 4</strong> -  Document Details</h3>
+                          <div class="row">
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>Document Type
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control">
+                                  <option selected hidden>Select Type</option>
+                                  <option>License Document</option>
+                                  <option>PAN Document </option>
+                                  <option>Passport Document </option>
+                                  <option>ID Proof Document </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label>Select File
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="file" class="form-control" placeholder="Enter Vehicle No." required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>Document No.
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Doc  No." />
+                              </div>
+                            </div>
+                            <div class="col-sm-1">
+                              <div class="form-group">
+                                <label>&nbsp;
+                                </label>
+                                <button class="btn btn-block btn-warning ">
+                                  <i class="glyphicon glyphicon-plus"></i>
+                                  Add
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="table-responsive">
+  
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Document Type</th>
+                                      <th>Document</th>
+                                      <th>Document No.</th>
+                                      <th>View</th>
+                                      <th>Remove</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>License Document</td>
+                                      <td>Driving License </td>
+                                      <td>952 852 852 954</td>
+                                      <td>
+                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>2</td>
+                                      <td>PAN Document</td>
+                                      <td>PAN Card Document</td>
+                                      <td>COZPM8165M</td>
+                                      <td>
+                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>3</td>
+                                      <td>Aadhar</td>
+                                      <td>Aadhar Document</td>
+                                      <td>952 852 852 954</td>
+                                      <td>
+                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>4</td>
+                                      <td>Passport </td>
+                                      <td>Passport Document</td>
+                                      <td>95252 85254</td>
+                                      <td>
+                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>5</td>
+                                      <td>Educational </td>
+                                      <td>Gratuation Document</td>
+                                      <td>PUN 95252 85254</td>
+                                      <td>
+                                        <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step5'">
                         <br>
                         <h3>
-                          <strong>Step 4</strong> -Bank Details</h3>
+                          <strong>Step 5</strong> -Bank Details</h3>
                         <div class="row">
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Account Type
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control" required>
+                                <option value="" selected hidden>--Select Product--</option>
+                                <option value="">Saving</option>
+                                <option value="">Current</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                              <label for="sel1">Account No.
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Account No." ng-model="consumer.AccountNo" minlength="9" maxlength="17"
+                                oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')"
+                                oninput="setCustomValidity(' ')" numericonly />
+                            </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                              <label for="sel1">Account Holder Name
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <input type="text" class="form-control" placeholder="Enter Holder Name" alphaonly />
+                            </div>
+                          </div>
                           <div class="col-sm-3">
                             <div class="form-group">
                               <label for="sel1">Bank Name
@@ -491,36 +648,6 @@
                               <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" ng-model="consumer.IfscCode"
                                 oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')"
                                 oninput=" setCustomValidity(' ')" alphanumericonly />
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="form-group">
-                              <label for="sel1">Account Type
-                                <span class="errorMessage">*</span>
-                              </label>
-                              <select class="form-control" required>
-                                <option value="" selected hidden>--Select Product--</option>
-                                <option value="">Saving</option>
-                                <option value="">Current</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-sm-3">
-                            <div class="form-group">
-                              <label for="sel1">Account Holder Name
-                                <span class="errorMessage">*</span>
-                              </label>
-                              <input type="text" class="form-control" placeholder="Enter Holder Name" alphaonly />
-                            </div>
-                          </div>
-                          <div class="col-sm-2">
-                            <div class="form-group">
-                              <label for="sel1">Account No.
-                                <span class="errorMessage">*</span>
-                              </label>
-                              <input type="text" class="form-control" placeholder="Enter Account No." ng-model="consumer.AccountNo" minlength="9" maxlength="17"
-                                oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')"
-                                oninput="setCustomValidity(' ')" numericonly />
                             </div>
                           </div>
                           <div class="col-sm-1">

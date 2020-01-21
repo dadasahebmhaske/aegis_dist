@@ -59,6 +59,13 @@ export class UpdateCustomerComponent implements OnInit {
     },
     {
       key: 'step4',
+      title: 'Customer Document Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    },
+    {
+      key: 'step5',
       title: 'Customer Bank Details',
       valid: false,
       checked: false,

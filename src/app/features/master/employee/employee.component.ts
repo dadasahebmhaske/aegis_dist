@@ -49,7 +49,7 @@ export class EmployeeComponent implements OnInit {
       valid: true,
       checked: false,
       submitted: false,
-    }
+    },
     {
       key: 'step3',
       title: 'Document Details',
