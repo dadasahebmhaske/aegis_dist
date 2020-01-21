@@ -113,6 +113,11 @@ const routes: Routes = [
         data: { pageTitle: "Master" }
       },
       {
+        path: "crm",
+        loadChildren: "./features/crm/crm.module#CrmModule",
+        data: { pageTitle: "CRM" }
+      },
+      {
         path: "customer",
         loadChildren: "./features/customer/customer.module#CustomerModule",
         data: { pageTitle: "Customer" }
