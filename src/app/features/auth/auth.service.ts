@@ -4,12 +4,13 @@ import {HttpClient} from '@angular/common/http';
 import { pipe,throwError, Subject, BehaviorSubject } from 'rxjs';
 import{catchError,tap} from 'rxjs/operators';
 import { AppComponent } from '../../../app/app.component';
+import { User } from '../../core/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
+  user =  new BehaviorSubject<User>(null);
   constructor(private httpClient:HttpClient) { }
   logIn(loginData) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Distributor/GetDistlogin`, {params: loginData}).pipe(catchError(errorRes=>{

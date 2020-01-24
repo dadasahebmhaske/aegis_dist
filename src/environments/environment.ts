@@ -20,6 +20,7 @@ export const environment = {
     db: 'smartadmin-angular'
   },
   BaseUrl:'http://192.168.1.216:8080/digLpg/api/',
-  authKey:'diglpg:diglpg@12345?'
+  authKey:'diglpg:diglpg@12345?',
+  secureKey:'AEGISDT@72%12!#$',
 
 };

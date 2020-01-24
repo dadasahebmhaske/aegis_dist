@@ -51,7 +51,7 @@
                             <div class="form-group">
                               <label for="sel1">Salutation</label>
                               <select class="form-control" ng-options="s.scode as s.sdesc for s in SalutationData" ng-model="consumer.Salutation" required>
-                                <option value="" selected hidden>--Select Salutation--</option>
+                                <option value="" selected hidden>Select Salutation</option>
                               </select>
                             </div>
                           </div>
@@ -103,7 +103,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>-- Select --</option>
+                                <option value="" selected hidden> Select </option>
                                 <option value="">Domestic</option>
                                 <option value="">Industrial</option>
                               </select>
@@ -115,7 +115,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" ng-model="consumer.AreaCode" required>
-                                <option value="" selected hidden>-- Select Type --</option>
+                                <option value="" selected hidden> Select Type </option>
                               </select>
                             </div>
                           </div>
@@ -126,7 +126,7 @@
                               </label>
                               <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.AreaCode"
                                 required>
-                                <option value="" selected hidden>-- Select Volume --</option>
+                                <option value="" selected hidden> Select Volume </option>
                                 <option value="">0 - 5 Cylinder</option>
                                 <option value="">6 - 10 Cylinder</option>
                                 <option value="">11 - 15 Cylinder</option>
@@ -139,7 +139,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>-- Select Service Type --</option>
+                                <option value="" selected hidden> Select Service Type </option>
                               </select>
                             </div>
                           </div>
@@ -149,7 +149,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>-- Select --</option>
+                                <option value="" selected hidden> Select </option>
                               </select>
                             </div>
                           </div>
@@ -176,7 +176,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" required>
-                                <option value="" selected hidden>-- Select Category --</option>
+                                <option value="" selected hidden> Select Category </option>
                               </select>
                             </div>
                           </div>
@@ -187,7 +187,7 @@
                               </label>
                               <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
                                 title="Select area" ng-model="consumer.ItemCode" required>
-                                <option value="" selected hidden>-- Select Route --</option>
+                                <option value="" selected hidden> Select Route </option>
                               </select>
                             </div>
                           </div>
@@ -197,7 +197,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>-- Select Sub Area --</option>
+                                <option value="" selected hidden> Select Sub Area </option>
                               </select>
                             </div>
                           </div>
@@ -252,7 +252,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>--Select Type--</option>
+                                <option value="" selected hidden>Select Type</option>
                               </select>
                             </div>
                           </div>
@@ -276,6 +276,31 @@
                               <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
                             </div>
                           </div>
+                          <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>State
+                                    <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control">
+                                    <option selected hidden>Select State</option>
+                                    <option>Maharashtra</option>
+                                    <option>Goa </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>City
+                                    <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control">
+                                    <option selected hidden>Select City</option>
+                                    <option>Pune</option>
+                                    <option>Mumbai </option>
+                                    <option>Nagpur </option>
+                                </select>
+                            </div>
+                        </div>
                           <div class="col-sm-1">
                             <div class="form-group">
                               <label for="sel1">Pin Code
@@ -356,7 +381,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>--Select Segment--</option>
+                                <option value="" selected hidden>Select Segment</option>
                               </select>
                             </div>
                           </div>
@@ -366,7 +391,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>--Select Product--</option>
+                                <option value="" selected hidden>Select Product</option>
                               </select>
                             </div>
                           </div>
@@ -460,7 +485,7 @@
                             </div>
                           </div>
                           <div class="col-sm-12">
-                            <button class="btn btn-success pull-right">Download SV</button>
+                            <a class="btn btn-success pull-right" href="assets/img/AEGIS_Self_Carbon.pdf" download>Download SV</a>
                           </div>
                         </div>
                       </div>
@@ -602,7 +627,7 @@
                                 <span class="errorMessage">*</span>
                               </label>
                               <select class="form-control" required>
-                                <option value="" selected hidden>--Select Product--</option>
+                                <option value="" selected hidden>Select Product</option>
                                 <option value="">Saving</option>
                                 <option value="">Current</option>
                               </select>

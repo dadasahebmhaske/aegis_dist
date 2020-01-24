@@ -9,6 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { UiGridDirective } from './core/directive/uigrid.directive';
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { UiGridDirective } from './core/directive/uigrid.directive';
     SharedModule,
     CoreModule,
     HttpClientModule,
-    UpgradeModule
+    UpgradeModule,
+  
   ],
   providers: [],
   exports:[UiGridDirective],

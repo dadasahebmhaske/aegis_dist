@@ -21,6 +21,7 @@ import {SmartadminFormsLiteModule} from "./forms/smartadmin-forms-lite.module";
 import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
 import { CalendarComponentsModule } from "@app/shared/calendar/calendar-components.module";
 import {CommonDirDirective} from '../core/directive/common-dir.directive';
+import { TrueFalseValueDirective } from '../core/directive/true-false-value.directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +31,7 @@ import {CommonDirDirective} from '../core/directive/common-dir.directive';
     SmartadminLayoutModule,
     BootstrapModule
   ],
-  declarations: [CommonDirDirective],
+  declarations: [CommonDirDirective,TrueFalseValueDirective],
   exports: [
     CommonModule,
     FormsModule,
@@ -60,7 +61,8 @@ import {CommonDirDirective} from '../core/directive/common-dir.directive';
     VoiceControlModule,
 
     CalendarComponentsModule,
-    CommonDirDirective
+    CommonDirDirective,
+    TrueFalseValueDirective
   ]
 })
 export class SharedModule {}

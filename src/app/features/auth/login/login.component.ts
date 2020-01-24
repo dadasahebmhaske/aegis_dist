@@ -3,6 +3,9 @@ import {Router} from "@angular/router";
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AppComponent } from '../../../app.component';
+import { AppService } from '@app/core/custom-services/app.service';
+//import { User } from '../../../../models/user.model';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
@@ -33,20 +36,27 @@ export class LoginComponent implements OnInit {
       }
     }
   };
-  constructor(private router: Router,private authservice:AuthService) { }
+  constructor(private router: Router,private authservice:AuthService,private appService:AppService) { }
 
   ngOnInit() {
   }
-
   login(event,form:NgForm){
+    //this.appService.doEncryptionOf({name:'dadsa',id:1001});
+  
     event.preventDefault();
     // if(!form.valid){
     //   return;
     // }
-    this.router.navigate(['/dashboard'])
-form.value.AppType='DI'
+   // this.router.navigate(['/dashboard'])
+    form.value.AppType='DI'
     this.authservice.logIn(form.value).subscribe(resData=>{
-      console.log(resData);   
+    if(resData.StatusCode==1) {
+      this.appService.doEncryptionOf(resData.Data[0]);
+         console.log(resData); 
+         this.router.navigate(['/dashboard']) }
+         else{
+           AppComponent.SmartAlert.Errmsg(resData.Message);
+         }
     //   if(resData.StatusCode==1)
     //   {AppComponent.router.navigate(['/dashboard/analytics']);
     //   //this.toastr.success( 'Login','Successfully!');            

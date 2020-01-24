@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {Store}from "@ngrx/store";
+import {getUser,AuthState} from './../../../core/store/auth';
+import {pipe} from 'rxjs';
+import { AppService } from '@app/core/custom-services/app.service';
+
 
 declare var $: any;
 
@@ -22,11 +27,14 @@ declare var $: any;
 :16px 0;}`]
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(private router: Router) {
+private distInfo:any;
+  constructor(private router: Router,private appService:AppService) {
   }
 
   ngOnInit() {
+  //   this.userval=this.store.pipe(getUser);
+  // alert(this.userval);
+  this.appService.getAppData().subscribe(data=>{this.distInfo=data});
   }
 
 

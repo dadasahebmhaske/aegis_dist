@@ -31,11 +31,11 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
       { name: 'CustName', displayName: 'Customer Name ', width: "280", cellTooltip: true, filterCellFiltered: true },
       { name: 'Date', displayName: 'Date', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'Product', displayName: 'Product', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OpeningBalance', displayName: 'Opening Balance', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SoundQty', displayName: 'Sound Qty ', width: "115", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OpeningBalance', displayName: 'Opening Quantity', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SoundQty', displayName: 'Refill Qty ', width: "115", cellTooltip: true, filterCellFiltered: true },
 
       { name: 'ReturnQty', displayName: 'Return Qty', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CloseingBalance', displayName: 'Closeing Balance', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CloseingBalance', displayName: 'Closing Quantity', width: "*", cellTooltip: true, filterCellFiltered: true },
       ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
@@ -50,10 +50,10 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
       'CustName': 'Ajay Narayanurthy',
       'Date': '10-01-2020',
       'Product': 'Comm. Cylinder 19 KG',
-      'OpeningBalance': 10000,
+      'OpeningBalance': 77,
       'SoundQty': 20,
       'ReturnQty':12,
-      'CloseingBalance': 0,     }];
+      'CloseingBalance': 85,     }];
     // this.masters.getVehicles().subscribe(resData:any=>{      
     //   if(resData.StatusCode!=0){
     // this.vehicleData=resData.Data;

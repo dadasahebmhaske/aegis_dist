@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as CryptoJs from '../../node_modules/crypto-js';
 import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '@env/environment';
@@ -22,5 +23,6 @@ export class AppComponent {
     AppComponent.BaseUrl=environment.BaseUrl;  
     AppComponent.Router=router;
     AppComponent.SmartAlert=SmartAlert;
+    AppComponent.secureKey=CryptoJs.enc.Utf8.parse(environment.secureKey);
   }
 }

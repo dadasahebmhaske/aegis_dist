@@ -30,9 +30,13 @@ export class StockOrdersListComponent implements OnInit {
         , width: "71",exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
+      { name: 'OrderType', displayName: 'Order Type', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'DocRefDate', displayName: 'Order Date', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'PlantName', displayName: 'Plant Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SoundQty', displayName: 'Quantity', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RefillQty', displayName: 'Refill Qty', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'EmptyQty', displayName: 'Empty Qty', width: "110", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
+      { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
       { name: 'Amount', displayName: 'Amount', width: "100", cellTooltip: true, filterCellFiltered: true },
       { name: 'OrderStatus', displayName: 'OrderStatus', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
@@ -48,24 +52,46 @@ export class StockOrdersListComponent implements OnInit {
   }
   onLoad() {
     this.stockOrdersData = [{
+      'OrderType':'Refill Order',
     'DocRefDate': '12-01-2020' ,
     'PlantName': 'Plant 1' ,
-    'SoundQty': 4600 ,
+    'RefillQty': 4600 ,
+    'EmptyQty': null,
+    'DefecQty': null,
+    'NewConn': null,
     'Amount': 174000,
     'OrderStatus': 'Pending' ,
     'DocRefCode': 8123456,
     'VehicleNo': 'Mh12 KK2365' ,
     'Remark': 'Emergency Required'
     },{
+      'OrderType':'Return Empty',
       'DocRefDate': '15-01-2020' ,
       'PlantName': 'Plant 2' ,
-      'SoundQty': 600 ,
-      'Amount': 63000,
+      'RefillQty': null ,
+      'EmptyQty': 450,
+      'DefecQty': null,
+      'NewConn': null,
+      'Amount': null,
       'OrderStatus': 'Pending' ,
       'DocRefCode': 9874562,
       'VehicleNo': 'Mh12KP9859' ,
       'Remark': 'Delivered before 30 Jan'
-      }];
+      },
+      {
+        'OrderType':'New Connection',
+        'DocRefDate': '15-01-2020' ,
+        'PlantName': 'Plant 2' ,
+        'RefillQty': null ,
+        'EmptyQty': null,
+        'DefecQty': null,
+        'NewConn': 120,
+        'Amount': 24000,
+        'OrderStatus': 'Pending' ,
+        'DocRefCode': 9874562,
+        'VehicleNo': 'Mh12KP9859' ,
+        'Remark': 'Delivered before 30 Jan'
+        }];
     // this.masters.getVehicles().subscribe(resData:any=>{      
     //   if(resData.StatusCode!=0){
     // this.vehicleData=resData.Data;

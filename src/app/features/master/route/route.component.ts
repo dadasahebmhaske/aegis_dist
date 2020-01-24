@@ -2,6 +2,7 @@ import { Component, OnInit,OnDestroy } from '@angular/core';
 import {DatashareService} from '../../../core/custom-services/datashare.service';
 import {AppComponent} from '../../../app.component';
 import { RouteService } from './route.service';
+import { AppService } from '@app/core/custom-services/app.service';
 @Component({
   selector: 'sa-route',
   templateUrl: './route.component.html',
@@ -9,11 +10,13 @@ import { RouteService } from './route.service';
 })
 export class RouteComponent implements OnInit, OnDestroy {
 private route:any={};
-  constructor(private datashare:DatashareService,private routeService:RouteService) { }
+private distInfo:any;
+  constructor(private appService:AppService,private datashare:DatashareService,private routeService:RouteService) { }
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.route = data==null?{}:data);
     //this.route==null?this.route={}:this.route;
     console.log(this.route);
+    this.appService.getAppData().subscribe(data=>{this.distInfo=data});
   }
   private onSubmit(){
     this.route.Flag=this.route.RouteId==null?'IN':'UP';

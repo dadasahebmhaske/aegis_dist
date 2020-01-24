@@ -12,7 +12,7 @@
                       <div class="widget-body">
                               <form name="subAreaForm" #subAreaForm="ngForm"  ngNativeValidate>
                           <div class="row">
-                              <div class="col-sm-2 col-sm-offset-3">
+                              <div class="col-sm-2 col-sm-offset-2">
                                   <div class="form-group">
                                       <label>Order Date
                                           <span class="errorMessage">*</span>
@@ -43,12 +43,36 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Vehicle
+                                                <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" id="sel" name="RouteID" required>
+                                                <option value="" selected hidden>Select Vehicle</option>                                                                                         
+                                            </select>
+                                        </div>
+                                    </div>
                                 <div class="col-sm-12">
                                         <hr class="simple">
                                    </div>
                               </div>
-                              <div class="row">                             
-                              <div class="col-sm-3">
+                              <div class="row"> 
+                                    <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Order Type
+                                                    <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control" id="sel" name="RouteID" >
+                                                    <option value="" selected hidden>Select Type</option>
+                                                    <option>Refill Order</option>    
+                                                    <option>New Connection</option>                                   
+                                                    <option>Return Empty</option>     
+                                                    <option>Return Defective</option>    
+                                                </select>
+                                            </div>
+                                        </div>                            
+                              <div class="col-sm-2">
                                     <div class="form-group">
                                         <label>Product Segment
                                             <span class="errorMessage">*</span>
@@ -68,14 +92,30 @@
                                       </select>
                                   </div>
                               </div>
-                              <div class="col-sm-2">
+                              <div class="col-sm-1">
+                                    <div class="form-group">
+                                        <label>Rate
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Rate" name="SubAreaName"  saCommonDir dirType="number" disabled required />
+                                    </div>
+                                </div> 
+                              <div class="col-sm-1">
                                   <div class="form-group">
-                                      <label>Sound Quantity
+                                      <label> Quantity
                                           <span class="errorMessage">*</span>
                                       </label>
-                                      <input type="text" class="form-control" placeholder="Enter Quantity" name="SubAreaName"  saCommonDir dirType="number" required />
+                                      <input type="text" class="form-control" placeholder="Enter Qty" name="SubAreaName"  saCommonDir dirType="number" required />
                                   </div>
-                              </div>                         
+                              </div> 
+                              <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label> Amount
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="Enter Amount" name="SubAreaName"  saCommonDir dirType="number" required />
+                                    </div>
+                                </div>                         
                               <div class="col-sm-1">
                                     <div class="form-group">
                                       <label>&nbsp;
@@ -94,9 +134,10 @@
                                         <thead>
                                           <tr>
                                             <th>#</th>
-                                            <th>Plant</th>
+                                            <th>Order Type</th>
                                             <th>Product Segment</th>
-                                            <th>Product Name</th>                                            
+                                            <th>Product Name</th>  
+                                            <th>Rate</th>                                          
                                             <th>Quantity</th>
                                             <th>Amount</th>
                                             <th>Remove</th>
@@ -106,9 +147,10 @@
                                         <tbody>
                                           <tr>
                                             <td>1</td>
-                                            <td>Plant 1</td>
+                                            <td>Refill Order</td>
                                             <td>Segment 1</td>
                                             <td>Domestic 5kg Cylinder</td>
+                                            <td>1000</td>
                                             <td>1200 </td>
                                             <td>120000</td>                                           
                                             <td>
@@ -117,9 +159,10 @@
                                           </tr>
                                           <tr>
                                             <td>2</td>
-                                            <td>Plant 2</td>
+                                            <td>Return Empty</td>
                                             <td>Segment 2</td>
                                             <td>Domestic 14kg Cylinder</td>
+                                            <td>100</td>
                                             <td>1400 </td>                                           
                                             <td>14000</td>
                                             <td>
@@ -128,17 +171,18 @@
                                           </tr>
                                           <tr>
                                             <td>3</td>
-                                            <td>Plant 1</td>  
+                                            <td>New Connection</td>  
                                             <td>Segment 1</td>                                   
                                             <td>Commercial 19kg Cylinder</td>
+                                            <td>2000</td>
                                             <td>2000 </td>
-                                            <td>40000</td>                                           
+                                            <td>400000</td>                                           
                                             <td>
                                               <button class="btn btn-xs btn-danger">Remove</button>
                                             </td>
                                           </tr>
                                           <tr>
-                                              <td colspan="4" style="text-align:right;"><strong>Total</strong> :</td>
+                                              <td colspan="5" style="text-align:right;"><strong>Total</strong> :</td>
                                               <td><strong>4600</strong></td>
                                               <td colspan="2"><strong>174000</strong></td>
                                           </tr>
