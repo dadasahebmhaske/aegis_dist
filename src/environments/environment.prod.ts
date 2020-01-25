@@ -14,7 +14,8 @@ export const environment = {
     api: null,
     db: 'smartadmin-angular'
   },
-  BaseUrl:'http://192.168.1.216:8080/digLpg/api/',
-  authKey:'diglpg:diglpg@12345?'
+  BaseUrl:'http://192.168.1.198/AEGISAdmin/api/',
+  authKey:'Aegis:Aegis@12345?',
+  secureKey:'AEGIS11223344556',
 
 };

@@ -5,15 +5,17 @@ import { pipe,throwError, Subject, BehaviorSubject } from 'rxjs';
 import{catchError,tap} from 'rxjs/operators';
 import { AppComponent } from '../../../app/app.component';
 import { User } from '../../core/models/user.model';
+import { AppService } from '@app/core/custom-services/app.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private distInfo:any;
   user =  new BehaviorSubject<User>(null);
-  constructor(private httpClient:HttpClient) { }
+  constructor(private appserive:AppService,private httpClient:HttpClient) { }
   logIn(loginData) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Distributor/GetDistlogin`, {params: loginData}).pipe(catchError(errorRes=>{
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Authentication/GetEmpLogin`, {data: loginData}).pipe(catchError(errorRes=>{
           let errorMessage="An error Occured";
           if(!errorRes.error || errorRes.error.message){
             return throwError(errorMessage);
@@ -24,6 +26,16 @@ export class AuthService {
           }
           return throwError(errorMessage);
         }))
+}
+isLoggedIn(){  
+  this.appserive.getAppData().subscribe(data=>{
+    this.distInfo=data;
+  });
+  if(this.distInfo!=null){   
+    return true;
+  }else{
+    return false;
+  } 
 }
 
 

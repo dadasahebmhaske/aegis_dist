@@ -7,14 +7,18 @@ import {RouteService} from './route/route.service';
 import {SubareaService} from './sub-area/subarea.service';
 import { TransportService } from './transport/transport.service';
 import {VehicleService} from './vehicle/vehicle.service';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { GodownService } from '@app/features/master/godown/godown.service';
 @NgModule({
   declarations: [componentArray,UigridmasterDirective],
   imports: [
     CommonModule,
     SharedModule,
-    routing
+    routing,
+    
+    BsDatepickerModule.forRoot(),
   ],
   exports:[UigridmasterDirective],
-  providers:[RouteService,SubareaService,TransportService,VehicleService]
+  providers:[GodownService,RouteService,SubareaService,TransportService,VehicleService]
 })
 export class MasterModule { }

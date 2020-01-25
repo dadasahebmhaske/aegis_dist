@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AppComponent } from '../../../app.component';
 import { AppService } from '@app/core/custom-services/app.service';
+import * as CryptoJs from 'crypto-js';
 //import { User } from '../../../../models/user.model';
 
 @Component({
@@ -41,15 +42,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   login(event,form:NgForm){
-    //this.appService.doEncryptionOf({name:'dadsa',id:1001});
-  
     event.preventDefault();
-    // if(!form.valid){
-    //   return;
-    // }
-   // this.router.navigate(['/dashboard'])
-    form.value.AppType='DI'
-    this.authservice.logIn(form.value).subscribe(resData=>{
+    if(!form.valid){
+      return;
+    }
+    form.value.Appflag='DI'
+    form.value.IsActive='Y';
+   JSON.stringify(form.value);
+    let encrypted=CryptoJs.AES.encrypt(
+      JSON.stringify(form.value),
+      AppComponent.secureKey,{iv:AppComponent.secureKey});
+    let ciphertext=encrypted.ciphertext.toString(CryptoJs.enc.Base64);
+    this.authservice.logIn(ciphertext).subscribe(resData=>{
     if(resData.StatusCode==1) {
       this.appService.doEncryptionOf(resData.Data[0]);
          console.log(resData); 

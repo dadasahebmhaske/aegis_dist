@@ -7,7 +7,7 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AppService {
-  private AppData = new ReplaySubject<any>(1);
+  private AppData = new ReplaySubject<any>(null);
   constructor() {
     let appData = localStorage.getItem('appData');
     if (appData){
@@ -16,8 +16,7 @@ export class AppService {
 }
   doEncryptionOf(data: any) {   
       const encdata= CryptoJs.AES.encrypt(JSON.stringify(data), AppComponent.secureKey, {iv:AppComponent.secureKey}).ciphertext.toString(CryptoJs.enc.Base64);
-        console.log(encdata);  
-    localStorage.appData=encdata;   
+         localStorage.appData=encdata;   
     this.setProperty(this. getDecryptedData()) ;
   }
   getDecryptedData() {
@@ -32,5 +31,6 @@ export class AppService {
 }
 getAppData() {
     return this.AppData;
-} 
+}
+
 }

@@ -60,7 +60,7 @@
     "jquery.maskedinput": "1.4.1",
     "markdown": "0.5.0",
     "morris.js": "0.5.0",
-    "ngx-bootstrap": "3.1.2",
+    "ngx-bootstrap": "^5.3.0",
     "nouislider": "10.1.0",
     "raphael": "2.2.7",
     "rxjs": "^6.0.0",

@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",  
               "node_modules/angular-ui-grid/ui-grid.min.css",
               "src/styles.css"
             ],
@@ -51,6 +52,23 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },
@@ -62,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "smartadmin-angular-seed:build:production"
+            },
+            "staging": {
+              "browserTarget": "smartadmin-angular-seed:build:staging"
             }
           }
         },

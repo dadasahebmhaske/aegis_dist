@@ -3,6 +3,9 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { MainLayoutComponent } from "./shared/layout/app-layouts/main-layout.component";
 import { AuthLayoutComponent } from "./shared/layout/app-layouts/auth-layout.component";
+import {AuthenticationGuard} from '../app/core/guards/authentication.guard';
+import { LoggedInGuard} from '../app/core/guards/loggedIn.guard';
+
 
 const routes: Routes = [
 
@@ -41,6 +44,7 @@ const routes: Routes = [
       {
         path: "dashboard",
         loadChildren: "./features/dashboard/dashboard.module#DashboardModule",
+        canActivate: [AuthenticationGuard],
         data: { pageTitle: "Dashboard" }
       },
 
@@ -110,6 +114,7 @@ const routes: Routes = [
       {
         path: "master",
         loadChildren: "./features/master/master.module#MasterModule",
+        canActivate: [AuthenticationGuard],
         data: { pageTitle: "Master" }
       },
       {
@@ -143,7 +148,8 @@ const routes: Routes = [
   {
     path: "auth",
     component: AuthLayoutComponent,
-    loadChildren: "./features/auth/auth.module#AuthModule"
+    loadChildren: "./features/auth/auth.module#AuthModule",
+    canActivate: [LoggedInGuard],
   },
   { path: "**", redirectTo: "miscellaneous/error404" }
 ];

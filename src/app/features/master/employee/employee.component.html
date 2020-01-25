@@ -184,44 +184,60 @@
                               <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
                             </label>
                           </div>
-                          </div>
-                       
-                            <div class="logincDeatils">
-                              <label class="text-danger">Login Details : </label>
-                              <div class="row">
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <label for="sel1">Email ID
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="text" class="form-control" placeholder="Enter Email ID " />
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Password
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="password" class="form-control" placeholder="Enter Password" required />
-                                  </div>
-                                </div>
-                                <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <label for="sel1">Re-enter Password
-                                      <span class="errorMessage">*</span>
-                                    </label>
-                                    <input type="password" class="form-control" placeholder="Enter Password" required />
-                                  </div>
-                                </div>
+                        </div>
+
+                        <div class="logincDeatils">
+                          <label class="text-danger">Login Details : </label>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="form-group">
+                                <label for="sel1">Email ID
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Email ID " />
                               </div>
                             </div>
-                        
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Password
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Re-enter Password
+                                  <span class="errorMessage">*</span>
+                                </label>
+                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-actions">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <ul class="pager wizard no-margin">
+                                      <li class="previous">
+                                          <a routerLink="/master/employee-master" class="btn btn-lg btn-default"> Previous
+                                          </a>
+                                      </li>
+                                      <li class="next">
+                                          <a (click)="nextToAddress()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                              Next
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
                         <br>
                         <h3>
                           <strong>Step 2</strong> - Address Details</h3>
-                      
+
                         <div class="row">
                           <div class="col-sm-4">
                             <div class="form-group">
@@ -245,29 +261,29 @@
                           </div>
                           <div class="col-sm-2">
                             <div class="form-group">
-                                <label>State
-                                    <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control">
-                                    <option selected hidden>Select State</option>
-                                    <option>Maharashtra</option>
-                                    <option>Goa </option>
-                                </select>
+                              <label>State
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control">
+                                <option selected hidden>Select State</option>
+                                <option>Maharashtra</option>
+                                <option>Goa </option>
+                              </select>
                             </div>
-                        </div>
-                        <div class="col-sm-2">
+                          </div>
+                          <div class="col-sm-2">
                             <div class="form-group">
-                                <label>City
-                                    <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control">
-                                    <option selected hidden>Select City</option>
-                                    <option>Pune</option>
-                                    <option>Mumbai </option>
-                                    <option>Nagpur </option>
-                                </select>
+                              <label>City
+                                <span class="errorMessage">*</span>
+                              </label>
+                              <select class="form-control">
+                                <option selected hidden>Select City</option>
+                                <option>Pune</option>
+                                <option>Mumbai </option>
+                                <option>Nagpur </option>
+                              </select>
                             </div>
-                        </div>
+                          </div>
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Pin Code
@@ -276,9 +292,26 @@
                               <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" numericonly
                                 required />
                             </div>
+                          </div>
                         </div>
+                        <div class="form-actions">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <ul class="pager wizard no-margin">
+                                      <li class="previous">
+                                          <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                          </a>
+                                      </li>
+                                      <li class="next">
+                                          <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                              Next
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
                       </div>
-                    </div>
+                      </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
                         <br>
                         <h3>
@@ -405,9 +438,26 @@
                             </div>
                           </div>
                         </div>
+                        <div class="form-actions">
+                          <div class="row">
+                              <div class="col-sm-12">
+                                  <ul class="pager wizard no-margin">
+                                      <li class="previous">
+                                          <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                          </a>
+                                      </li>
+                                      <li class="next">
+                                          <a (click)="nextToSave()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                              Save & Submit
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
                       </div>
 
-                      <div class="form-actions">
+                      <!-- <div class="form-actions">
                         <div class="row">
                           <div class="col-sm-12">
                             <ul class="pager wizard no-margin">
@@ -423,7 +473,7 @@
                             </ul>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                     </div>
                   </div>

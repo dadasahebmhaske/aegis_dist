@@ -92,7 +92,16 @@ export class EmployeeComponent implements OnInit {
       }
     }
   
-  
+   
+    nextToAddress(){
+      this.nextStep();
+    }
+    nextToDocumentDeatils(){
+      this.nextStep();
+    }
+    nextToSave(){
+      this.nextStep();
+    }
     onWizardComplete(data) {
       console.log('basic wizard complete', data)
     }

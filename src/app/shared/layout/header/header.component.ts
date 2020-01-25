@@ -27,14 +27,14 @@ declare var $: any;
 :16px 0;}`]
 })
 export class HeaderComponent implements OnInit {
-private distInfo:any;
+private cpInfo:any;
   constructor(private router: Router,private appService:AppService) {
   }
 
   ngOnInit() {
   //   this.userval=this.store.pipe(getUser);
   // alert(this.userval);
-  this.appService.getAppData().subscribe(data=>{this.distInfo=data});
+  this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
   }
 
 
@@ -51,6 +51,9 @@ private distInfo:any;
 
   }
   logout(){
+    localStorage.clear();
+    this.appService.setProperty(null,false);
     this.router.navigate(['/auth/login']);
+   
   }
 }

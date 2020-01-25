@@ -4,23 +4,24 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
-
-  firebase: {},
-
-
-  debug: true,
-  log: {
-    auth: false,
-    store: false,
-  },
-
-  smartadmin: {
-    api: null,
-    db: 'smartadmin-angular'
-  },
-  BaseUrl:'http://192.168.1.198/AEGISAdmin/api/',
-  authKey:'Aegis:Aegis@12345?',
-  secureKey:'AEGIS11223344556',
-
-};
+    production: false,
+  
+    firebase: {},
+  
+  
+    debug: true,
+    log: {
+      auth: false,
+      store: false,
+    },
+  
+    smartadmin: {
+      api: null,
+      db: 'smartadmin-angular'
+    },
+    BaseUrl:'http://192.168.1.198/AEGISAdmin/api/',
+    authKey:'Aegis:Aegis@12345?',
+    secureKey:'AEGIS11223344556',
+  
+  };
+  

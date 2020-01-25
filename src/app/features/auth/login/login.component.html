@@ -41,33 +41,34 @@
             </header>
             <fieldset>
                 <section>
-                    <label class="label">Distributor  Code</label>
+                    <label class="label">Channel Partner Code</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
-                      <input type="text" name="DistCode" data-smart-validate-input="" data-required=""  data-message-required="Please enter Dist Code" data-message-email="Please enter a VALID Distributor  Code"
+                      <input type="text" name="SAPId" data-smart-validate-input="" data-required=""  data-message-required="Please enter Dist Code" data-message-email="Please enter a VALID Distributor  Code"
                       ngModel
-                      
+                      required
                        >
                       </label>
                   </section>
               <section>
                 <label class="label">E-mail</label>
                 <label class="input"> <i class="icon-append fa fa-envelope"></i>
-                  <input type="email" name="EmailAddress" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"
+                  <input type="email" name="EmailId" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"
                   ngModel
                   minlength="6"
                   autocomplete="on"
                   email
+                  required
                   >
                  </label>
               </section>
               <section>
                 <label class="label">Password</label>
                 <label class="input"> <i class="icon-append fa fa-lock"></i>
-                  <input type="password" name="UserPwd" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"
+                  <input type="password" name="Password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"
                   ngModel
                   minlength="6"
                   autocomplete="off"
-                  
+                  required
                   >
                </label>
 

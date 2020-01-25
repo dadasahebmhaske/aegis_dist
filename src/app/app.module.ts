@@ -9,6 +9,9 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { UiGridDirective } from './core/directive/uigrid.directive';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import {AuthenticationGuard} from '../app/core/guards/authentication.guard';
+import {LoggedInGuard} from '../app/core/guards/loggedIn.guard';
 import { environment } from '../environments/environment';
 
 
@@ -24,9 +27,10 @@ import { environment } from '../environments/environment';
     CoreModule,
     HttpClientModule,
     UpgradeModule,
+    BsDatepickerModule.forRoot(),
   
   ],
-  providers: [],
+  providers: [AuthenticationGuard,LoggedInGuard],
   exports:[UiGridDirective],
   bootstrap: [AppComponent]
 })
