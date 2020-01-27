@@ -8,7 +8,10 @@ export class MasterService {
   constructor(private httpClient:HttpClient) { }
   public getCity(statecode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
+  } public getDocumentType() {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
   }
+
   public getGodowns() {
     return <any>[{
       "RouteID": 1,
@@ -25,40 +28,14 @@ export class MasterService {
     }];
     // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
   }
-  public getRoutes() {
-    return <any>[{
-      "RouteID": 1,
-      "RouteName": "Route 1",
-      "IsActive": "Y"
-    }, {
-      "RouteID": 2,
-      "RouteName": "Route 2",
-      "IsActive": "Y"
-    }, {
-      "RouteID": 3,
-      "RouteName": "Route 3",
-      "IsActive": "N"
-    }];
-    // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
+  public getRoutes() { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
   }
   public getState() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=SM&IsActive=Y`);
   }
   public getSubArea() {
-    return <any>[{
-      "RouteID": 1,
-      "RouteName": "Route 1",
-      "SubAreaID":1,
-      "SubAreaName":"Bibewadi",
-      "IsActive": "Y"
-    }, {
-      "RouteID": 2,
-      "RouteName": "Route 2",
-      "SubAreaID":1,
-      "SubAreaName":"KK Market",
-      "IsActive": "Y"
-    }];
-    // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
+         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
   }
   public getTransport() {
     return <any>[{

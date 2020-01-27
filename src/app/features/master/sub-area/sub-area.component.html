@@ -14,12 +14,13 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Route
-                                            <span class="errorMessage">*</span>{{subArea.RouteID}}
+                                        <label>Route 
+                                            <span class="errorMessage">*</span>
                                         </label>
-                                        <select class="form-control" id="RouteID" name="RouteID" #RouteID="ngModel" [(ngModel)]="subArea.RouteID" required>
-                                            <option value="undefined" [attr.selected]="slect"  >Select Route</option>
-                                            <option [value]="rou.RouteID" *ngFor="let rou of route">{{rou.RouteName}}</option>                                            
+                                        <select class="form-control" id="RouteID" name="RouteID" #RouteId="ngModel" [(ngModel)]="subArea.RouteId" required>
+                                         
+                                            <option [value]="rou.RouteId" *ngFor="let rou of route">{{rou.RouteName}}</option>   
+                                             <option [value]="''" [attr.selected]="setd" selected hidden>Select Route</option>                                           
                                         </select>
                                     </div>
                                 </div>
@@ -36,7 +37,7 @@
                                 <div class="col-sm-6">
                                     <label>
                                             <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='subArea.IsActive' /> Is Active
-                                    </label>  {{subArea.IsActive }}
+                                    </label> 
                                 </div>
                             </div>
                             <footer>
@@ -45,16 +46,12 @@
                                         <hr />
                                         <a class="pull-right btn btn-default" routerLink="/master/sub-area-master">
                                             <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                                        </a>
-                                        <button class="pull-right btn btn-primary marg-right" type="submit">
-                                            <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                                        </button>
+                                        </a>                                    
+                                        <button class="pull-right btn btn-primary marg-right" type="submit"  [disabled]="!loaderbtn">    
+                                                <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                                            {{loaderbtn==true? 'Submit':'Loading'}}</button>
                                     </div>
-                                    <!-- <div class="col-sm-12 " ng-show="divhide">
-                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                                </button>
-                            </div> -->
+                             
                                 </div>
                             </footer>
 </form>

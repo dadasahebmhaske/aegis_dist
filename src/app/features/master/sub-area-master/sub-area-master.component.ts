@@ -27,29 +27,26 @@ export class SubAreaMasterComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'RouteID', displayName: 'Route ID', width: "*", cellTooltip: true, filterCellFiltered: true,visible:false },
-      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'RouteName', displayName: 'Route Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaId', displayName: 'Sub Area Id', width: "*", cellTooltip: true, filterCellFiltered: true,visible:false },
       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = ($event) => {
-   // console.log($event.row);
 this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/sub-area']);
   }
   onLoad() {
-    this.subAreaData=this.masters.getSubArea();
-    AppComponent.SmartAlert.Success('2 records found successfully');
-    // this.masters.getSubArea().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-     // this.subAreaData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.masters.getSubArea().subscribe((resData:any)=>{      
+      if(resData.StatusCode!=0){
+     this.subAreaData=resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+    }
+      else{AppComponent.SmartAlert.Errmsg(resData.Message);}
+    }); 
   }
 
 }

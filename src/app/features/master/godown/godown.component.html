@@ -39,7 +39,8 @@
                                                             <label for="sel1">Godown Name
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Godown Name"  [(ngModel)]="godown.GoName" name="GoName" saCommonDir dirType="alphanumeric" required />
+                                                            <input type="text" class="form-control" placeholder="Enter Godown Name" [(ngModel)]="godown.GoName" name="GoName" saCommonDir
+                                                                dirType="alphanumeric" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
@@ -47,7 +48,8 @@
                                                             <label for="sel1">Godown Capacity
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Capacity"   [(ngModel)]="godown.GoCapacity" name="GoCapacity" saCommonDir dirType="number" required />
+                                                            <input type="text" class="form-control" placeholder="Enter Capacity" [(ngModel)]="godown.GoCapacity" name="GoCapacity" saCommonDir
+                                                                dirType="number" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
@@ -55,7 +57,8 @@
                                                             <label for="sel1">Contact Person
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Contact Person"  [(ngModel)]="godown.ContactName" name="ContactName" saCommonDir dirType="alphaonly" required />
+                                                            <input type="text" class="form-control" placeholder="Enter Contact Person" [(ngModel)]="godown.ContactName" name="ContactName"
+                                                                saCommonDir dirType="alphaonly" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
@@ -63,16 +66,18 @@
                                                             <label for="sel1">Contact No.
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Contact No."  [(ngModel)]="godown.ContactNo" name="ContactNo" saCommonDir dirType="number" required />
+                                                            <input type="text" class="form-control" placeholder="Enter Contact No." [(ngModel)]="godown.ContactNo" name="ContactNo" saCommonDir
+                                                                dirType="number" required />
                                                         </div>
                                                     </div>
-                                                   
+
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <label for="sel1">Godown License No.
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter License No."  [(ngModel)]="godown.GoLicNo" name="GoLicNo" saCommonDir dirType="alphanumeric" required />
+                                                            <input type="text" class="form-control" placeholder="Enter License No." [(ngModel)]="godown.GoLicNo" name="GoLicNo" saCommonDir
+                                                                dirType="alphanumeric" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -80,7 +85,9 @@
                                                             <label for="sel1">License Issue Date
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter License Issue Date"  [(ngModel)]="godown.LicIssuDate" name="LicIssuDate"  bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig" required />
+                                                            <input type="text" class="form-control" placeholder="Enter License Issue Date" [(ngModel)]="godown.LicIssuDate" name="LicIssuDate"
+                                                                bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -88,7 +95,8 @@
                                                             <label for="sel1">License Expiry Date
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter License Expiry Date"  [(ngModel)]="godown.LicExpDate" name="LicExpDate" bsDatepicker required />
+                                                            <input type="text" class="form-control" placeholder="Enter License Expiry Date" [(ngModel)]="godown.LicExpDate" name="LicExpDate"
+                                                                bsDatepicker required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -96,7 +104,8 @@
                                                             <label for="sel1">Last Audit Date
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Last Audit Date"  [(ngModel)]="godown.LAuditDate" name="LAuditDate" required />
+                                                            <input type="text" class="form-control" placeholder="Enter Last Audit Date" [(ngModel)]="godown.LAuditDate" name="LAuditDate"
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -104,7 +113,7 @@
                                                             <label>Godown Type
                                                                 <span class="errorMessage">*</span>
                                                             </label>
-                                                            <select class="form-control"  [(ngModel)]="godown.GoType" name="GoType">
+                                                            <select class="form-control" [(ngModel)]="godown.GoType" name="GoType">
                                                                 <option selected hidden>Select Type</option>
                                                                 <option>Owned</option>
                                                                 <option>Leased </option>
@@ -116,7 +125,8 @@
                                                             <label for="sel1">Start Date
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker  [(ngModel)]="godown.SartDate" name="SartDate" disabled required />
+                                                            <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.SartDate" name="SartDate"
+                                                                disabled required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -124,7 +134,8 @@
                                                             <label for="sel1">End Date
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter End Date"  [(ngModel)]="godown.EndDate" name="EndDate" disabled required />
+                                                            <input type="text" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate" disabled
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -132,13 +143,14 @@
                                                             <label for="sel1">Lease Period
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="number"  [(ngModel)]="godown.LeasePeriod" name="LeasePeriod" disabled required />
+                                                            <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="number" [(ngModel)]="godown.LeasePeriod"
+                                                                name="LeasePeriod" disabled required />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <label>
-                                                            <input type="checkbox"  trueFalseValue trueValue="Y" falseValue="N"  [(ngModel)]="godown.IsActive" name="IsActive"/> Is Active
+                                                            <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" [(ngModel)]="godown.IsActive" name="IsActive" /> Is Active
                                                         </label>
                                                     </div>
                                                 </div>
@@ -165,198 +177,210 @@
                                                 <br>
                                                 <h3>
                                                     <strong>Step 2</strong> - Address Details</h3>
-                                                    <div class="row">
-                                                            <div class="col-sm-4">
-                                                                    <div class="form-group">
-                                                                        <label for="sel1">Address Line 1
-                                                                            <span class="errorMessage" style="color:red;">*</span>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine1" name="AddressLine1" required />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="form-group">
-                                                                        <label for="sel1">Address Line 2</label>
-                                                                        <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric"  [(ngModel)]="godown.AddressLine2" name="AddressLine2" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="form-group">
-                                                                        <label for="sel1">Address Line 3</label>
-                                                                        <input type="text" class="form-control" placeholder="Enter Address Line 3"  saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine3" name="AddressLine3" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label>State
-                                                                            <span class="errorMessage">*</span>
-                                                                        </label>
-                                                                        <select class="form-control"  name="StateCode" [(ngModel)]="godown.StateCode" (change)="getCityData()">
-                                                                            <option selected hidden>Select State</option>
-                                                                            <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
-                                                                          
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label>City
-                                                                            <span class="errorMessage">*</span>
-                                                                        </label>
-                                                                        <select class="form-control"  [(ngModel)]="godown.CityCode" name="CityCode">
-                                                                            <option selected hidden>Select City</option>
-                                                                            <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
-                                                                        
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-2">
-                                                                    <div class="form-group">
-                                                                        <label for="sel1">Pin Code
-                                                                            <span class="errorMessage" style="color:red;">*</span>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number"  [(ngModel)]="godown.Pin" name="Pin" minlength="6" maxlength="6" numericonly
-                                                                            required />
-                                                                    </div>
-                                                                </div>
-                                                             
-                                                    </div>
-                                                    <div class="form-actions">
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <ul class="pager wizard no-margin">
-                                                                    <li class="previous">
-                                                                        <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="next">
-                                                                        <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
-                                                                            Next
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 1
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine1"
+                                                                name="AddressLine1" required />
                                                         </div>
                                                     </div>
-                                            </div>   
-                                            <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
-                                                    <br>
-                                                    <h3>
-                                                        <strong>Step 3</strong> - Document Details</h3>
-                                                    <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group">
-                                                                <label>Document Type
-                                                                    <span class="errorMessage">*</span>
-                                                                </label>
-                                                                <select class="form-control"  [(ngModel)]="godown.DocType" name="DocType">
-                                                                    <option selected hidden>Select Document Type</option>
-                                                                    <option>License Document</option>
-                                                                    <option>Insurance Document </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label>Select File
-                                                                    <span class="errorMessage">*</span>
-                                                                </label>
-                                                                <input type="file" class="form-control" placeholder="Enter Vehicle No." required />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-1">
-                                                            <div class="form-group">
-                                                                <label>&nbsp;
-                                                                </label>
-                                                                <button class="btn btn-block btn-warning ">
-                                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                                    Add
-                                                                </button>
-                                                            </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 2</label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine2"
+                                                                name="AddressLine2" />
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Address Line 3</label>
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine3"
+                                                                name="AddressLine3" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label>State
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <select class="form-control" name="StateCode" [(ngModel)]="godown.StateCode" (change)="getCityData()">
+                                                                <option selected hidden>Select State</option>
+                                                                <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label>City
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <select class="form-control" [(ngModel)]="godown.CityCode" name="CityCode">
+                                                                <option selected hidden>Select City</option>
+                                                                <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="form-group">
+                                                            <label for="sel1">Pin Code
+                                                                <span class="errorMessage" style="color:red;">*</span>
+                                                            </label>
+                                                            <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="godown.Pin" name="Pin"
+                                                                minlength="6" maxlength="6" numericonly required />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-actions">
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <div class="table-responsive">
-    
-                                                                <table class="table table-hover">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>#</th>
-                                                                            <th>Document Type</th>
-                                                                            <th>Document</th>
-                                                                            <th>View</th>
-                                                                            <th>Remove</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>License Document</td>
-                                                                            <td>Godown License Document </td>
-                                                                            <td>
-                                                                                <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-xs btn-danger">Remove</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>2</td>
-                                                                            <td>Insurance Document</td>
-                                                                            <td>Godown Insurance Document</td>
-                                                                            <td>
-                                                                                <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-xs btn-danger">Remove</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>3</td>
-                                                                            <td>Noc Document</td>
-                                                                            <td>Godown Noc Document</td>
-                                                                            <td>
-                                                                                <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-xs btn-danger">Remove</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>4</td>
-                                                                            <td>Property Document</td>
-                                                                            <td>Godown Document</td>
-                                                                            <td>
-                                                                                <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
-                                                                            </td>
-                                                                            <td>
-                                                                                <button class="btn btn-xs btn-danger">Remove</button>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                            <ul class="pager wizard no-margin">
+                                                                <li class="previous">
+                                                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                                                    </a>
+                                                                </li>
+                                                                <li class="next">
+                                                                    <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                                        Next
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="form-actions">
-                                                        <div class="row">
-                                                            <div class="col-sm-12">
-                                                                <ul class="pager wizard no-margin">
-                                                                    <li class="previous">
-                                                                        <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
-                                                                        </a>
-                                                                    </li>
-                                                                    <li class="next">
-                                                                        <a (click)="nextToSave()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
-                                                                            Save & Submit
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
+                                                <br>
+                                                <h3>
+                                                    <strong>Step 3</strong> - Document Details</h3>
+                                                    <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" ngNativeValidate>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <label>Document Type
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <select class="form-control" [(ngModel)]="document.DocTypId" name="DocTypeId" required>
+                                                                <option [value]="undefined" [selected]="true" hidden>Select Document Type</option>
+                                                                <option [value]="doc.DocTypId" *ngFor="let doc of docTypeData">{{doc.DocType}}</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </div>                                            
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label>Select File
+                                                                <span class="errorMessage">*</span>
+                                                            </label>
+                                                            <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                            <div class="form-group">
+                                                                <label>Document No.
+                                                                    <span class="errorMessage">*</span>
+                                                                </label>
+                                                                <input type="text" class="form-control"  name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir dirType="number" required />
+                                                            </div>
+                                                        </div>
+                                                    <div class="col-sm-1">
+                                                        <div class="form-group">
+                                                            <label>&nbsp;
+                                                            </label>
+                                                            <button class="btn btn-block btn-warning ">
+                                                                <i class="glyphicon glyphicon-plus"></i>
+                                                                Add
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="table-responsive">
+
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Document Type</th>
+                                                                        <th>Document</th>
+                                                                        <th>View</th>
+                                                                        <th>Remove</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>License Document</td>
+                                                                        <td>Godown License Document </td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Insurance Document</td>
+                                                                        <td>Godown Insurance Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Noc Document</td>
+                                                                        <td>Godown Noc Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>Property Document</td>
+                                                                        <td>Godown Document</td>
+                                                                        <td>
+                                                                            <a href="assets/img/logo.gif" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <ul class="pager wizard no-margin">
+                                                                <li class="previous">
+                                                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
+                                                                    </a>
+                                                                </li>
+                                                                <li class="next">
+                                                                    <a (click)="nextToSave()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                                        Save & Submit
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- <div class="form-actions">
                                                 <div class="row">
                                                     <div class="col-sm-12">

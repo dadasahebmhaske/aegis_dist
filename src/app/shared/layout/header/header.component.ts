@@ -32,9 +32,10 @@ private cpInfo:any;
   }
 
   ngOnInit() {
-  //   this.userval=this.store.pipe(getUser);
-  // alert(this.userval);
-  this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
+  this.appService.getAppData().subscribe(data=>{this.cpInfo=data;
+  if(this.cpInfo==null)
+  this.cpInfo.CPName='';
+  });
   }
 
 

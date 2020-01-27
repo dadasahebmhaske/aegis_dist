@@ -83,9 +83,12 @@
               </section> -->
             </fieldset>
             <footer>
-              <button  class="btn btn-primary">
+              <!-- <button  class="btn btn-primary">
                 Sign in
-              </button>
+              </button> -->
+              <button class="btn btn-primary" type="submit"  [disabled]="!loaderbtn"> 
+                  <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i>                       
+               {{loaderbtn==true? 'Sign In':'Loading'}}</button>
             </footer>
           </form>
         </div>

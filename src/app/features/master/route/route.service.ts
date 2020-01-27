@@ -4,8 +4,7 @@ import {AppComponent} from '../../../app.component';
 @Injectable()
 export class RouteService {
   constructor(private httpClient:HttpClient) { }
- public postRoute(data:any) {
-    return this.httpClient.post<any>(`${AppComponent.BaseUrl}`,
-     data);      
+ public postRoute(route:string) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Master/IUDCPRoute`,{data:route},AppComponent.httpOptions);      
   }
 }

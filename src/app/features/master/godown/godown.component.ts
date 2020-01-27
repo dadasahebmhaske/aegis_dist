@@ -26,26 +26,28 @@ import { HttpClient } from '@angular/common/http';
   ]
 })
 export class GodownComponent implements OnInit {
+
   private bsValue = new Date();
+  public bdata:any=[];
   public CityData:any=[];
   private cpInfo:any;
-  private godown:any={StateCode:''};
+  public  docTypeData: any=[];
+  public DocFileName:string;
+  public document:any={};
+  public fd = new FormData();
+  private godown:any={StateCode:'',DocTypId:''};
   public StateData:any=[];
-
+  public selectedFile: File = null;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   constructor(private httpClient:HttpClient,private appService:AppService,private datashare:DatashareService,private godownService:GodownService, private masterService:MasterService) { 
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true,isAnimated: true });
   }
 
 
-  ngOnInit() {
-
-    
+  ngOnInit() {    
     this.datashare.GetSharedData.subscribe(data => this.godown = data==null?{}:data);
-    this.masterService.getState().subscribe(
-      (res : any)=>{
-        this.StateData = res.Data;
-    });
+    this.allOnloadMethods();
+  
         this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
   }
 
@@ -125,10 +127,52 @@ export class GodownComponent implements OnInit {
       this.nextStep();
     }
     nextToSave(){
+
+
+
+
       this.nextStep();
     }
     onWizardComplete(data) {
       console.log('basic wizard complete', data)
+    }
+    allOnloadMethods(){
+      this.masterService.getState().subscribe(
+        (res : any)=>{
+          this.StateData = res.Data;
+      });
+      this.masterService.getDocumentType().subscribe(
+        (resData : any)=>{
+          this.docTypeData = resData.Data;
+      });
+    }
+    onFileSelected(event) {
+      var reader = new FileReader();
+      this.selectedFile = <File>event.target.files[0];
+      this.DocFileName = event.target.files[0].name;
+      reader.onload = (event: ProgressEvent) => {
+       // this.filepreview = (<FileReader>event.target).result;
+        var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
+        f1 = f1.toString().toLowerCase();
+        let docobj;
+        docobj=this.godownService.filterData(this.docTypeData,this.document.DocTypId);
+      if(`.${docobj[0].DocType}`==f1){}
+        // if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp') {
+        
+        // }
+        else {
+          $("#fileControl").val('');
+          //this.filepreview = 'assets/img/avatars/Product.png';
+          AppComponent.SmartAlert.Errmsg(`Choose only .${docobj[0].DocType} file `);
+        }
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    onSubmitDoc(){
+      this.document.DocId='';
+      this.document.DocFileName=this.DocFileName;
+      this.bdata.push(this.document);
+      this.fd.append(`image${this.bdata.length}`, this.selectedFile, this.DocFileName);
     }
    getCityData(){
     this.masterService.getCity(this.godown.StateCode).subscribe((res)=>{

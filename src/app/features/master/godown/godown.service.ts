@@ -8,4 +8,9 @@ export class GodownService {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}`,
      data);      
   }
+  public  filterData(data,DocTypId) {
+    return data.filter(object => {
+      return object['DocTypId'] == DocTypId;
+    });
+  }
 }

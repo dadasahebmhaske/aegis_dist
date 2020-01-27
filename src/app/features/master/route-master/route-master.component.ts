@@ -28,7 +28,7 @@ export class RouteMasterComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'RouteID', displayName: 'Route ID', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RouteId', displayName: 'Route ID', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'RouteName', displayName: 'Route', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
@@ -41,14 +41,13 @@ this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/route']);
   }
   onLoad() {
-    this.routeData=this.masters.getRoutes();
-    // this.masters.getRoutes().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-     // this.routeData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.masters.getRoutes().subscribe((resData:any)=>{      
+      if(resData.StatusCode!=0){
+     this.routeData=resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+    }
+      else{AppComponent.SmartAlert.Errmsg(resData.Message);}
+    }); 
   }
 
 }

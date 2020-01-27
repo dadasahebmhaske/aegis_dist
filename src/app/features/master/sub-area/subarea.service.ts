@@ -4,8 +4,7 @@ import {AppComponent} from '../../../app.component';
 @Injectable()
 export class SubareaService {
   constructor(private httpClient:HttpClient) { }
-  public postSubArea(data:any) {
-     return this.httpClient.post<any>(`${AppComponent.BaseUrl}`,
-      data);      
+  public postSubArea(data:string) {
+     return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Master/IUDCPSubArea`,{data:data},AppComponent.httpOptions);      
    }
 }

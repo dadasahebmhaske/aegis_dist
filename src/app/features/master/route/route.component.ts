@@ -10,21 +10,27 @@ import { AppService } from '@app/core/custom-services/app.service';
 })
 export class RouteComponent implements OnInit, OnDestroy {
 private route:any={};
-private distInfo:any;
+private cpInfo:any;
+public loaderbtn:boolean=true;
   constructor(private appService:AppService,private datashare:DatashareService,private routeService:RouteService) { }
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.route = data==null?{}:data);
     //this.route==null?this.route={}:this.route;
     console.log(this.route);
-    this.appService.getAppData().subscribe(data=>{this.distInfo=data});
+    this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
   }
-  private onSubmit(){
+  private onSubmit(){  
+    this.loaderbtn=false;
     this.route.Flag=this.route.RouteId==null?'IN':'UP';
-    this.route.IsActive = this.route.IsActive == false ? 'N' : 'Y';
-    this.routeService.postRoute(this.route).subscribe(resData=>{
+    this.route.RouteId=this.route.RouteId==null?'':this.route.RouteId;
+    this.route.CPCode=this.cpInfo.CPCode;
+    this.route.UserCode=this.cpInfo.EmpId; 
+    let ciphertext=this.appService.getEncrypted(this.route);
+    this.routeService.postRoute(ciphertext).subscribe((resData:any)=>{
+      this.loaderbtn=true;
       if(resData.StatusCode!=0){
         AppComponent.SmartAlert.Success(resData.Message);
-      //  AppComponent.Router.navigate(['/master/bank-grid']);
+      AppComponent.Router.navigate(['/master/route-master']);
     }
       else{AppComponent.SmartAlert.Errmsg(resData.Message);}
     }); 

@@ -35,16 +35,11 @@
                                         <hr />
                                         <a class="pull-right btn btn-default" routerLink="/master/route-master">
                                             <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                                        </a>
-                                        <button class="pull-right btn btn-primary marg-right" type="submit">
-                                            <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                                        </button>
+                                        </a>                                                                          
+                                        <button class="pull-right btn btn-primary marg-right" type="submit"  [disabled]="!loaderbtn">    
+                                                <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                                            {{loaderbtn==true? 'Submit':'Loading'}}</button>
                                     </div>
-                                    <!-- <div class="col-sm-12 " ng-show="divhide">
-                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                                </button>
-                            </div> -->
                                 </div>
                             </footer>
                         </form>

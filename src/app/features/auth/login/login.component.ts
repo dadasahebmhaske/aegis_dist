@@ -12,6 +12,7 @@ import * as CryptoJs from 'crypto-js';
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
+  public loaderbtn:boolean=true;
   public state: any = {
     tabs: {
       demo1: 0,
@@ -42,33 +43,34 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
   login(event,form:NgForm){
+    this.loaderbtn=false;
     event.preventDefault();
     if(!form.valid){
       return;
     }
     form.value.Appflag='DI'
     form.value.IsActive='Y';
-   JSON.stringify(form.value);
-    let encrypted=CryptoJs.AES.encrypt(
-      JSON.stringify(form.value),
-      AppComponent.secureKey,{iv:AppComponent.secureKey});
-    let ciphertext=encrypted.ciphertext.toString(CryptoJs.enc.Base64);
+    let ciphertext = this.appService.getEncrypted(form.value);
     this.authservice.logIn(ciphertext).subscribe(resData=>{
-    if(resData.StatusCode==1) {
+      this.loaderbtn=true;
+    if(resData.StatusCode==1) {      
       this.appService.doEncryptionOf(resData.Data[0]);
          console.log(resData); 
-         this.router.navigate(['/dashboard']) }
+        AppComponent.SmartAlert.bigBox({
+          title: `Welcome  ${resData.Data[0].EmpName}`,
+          content: "Logged in successfully!",
+          color: "#296191",
+          icon: "fa fa-thumbs-up animated bounce ",
+          number: "1",
+          timeout: 6000
+        });
+         this.router.navigate(['/dashboard']); }
          else{
            AppComponent.SmartAlert.Errmsg(resData.Message);
          }
-    //   if(resData.StatusCode==1)
-    //   {AppComponent.router.navigate(['/dashboard/analytics']);
-    //   //this.toastr.success( 'Login','Successfully!');            
-    // } else{ alert(resData.Message +'Failure !');     }    
-      },errorMessage=>{
+         },errorMessage=>{
         console.log(errorMessage);
-        // this.error=errorMessage;      
-        // this.isLoading=false;
+     
       }
       );
   }

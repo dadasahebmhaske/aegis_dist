@@ -12,17 +12,22 @@ import {NotificationService} from './../app/core/services/notification.service';
 export class AppComponent {
   title = 'sa';
   static BaseUrl;
+  static BaseUrlDist;
   static headers:HttpHeaders;
+  static httpOptions;
   static ImagePath;  
   static Router:Router; 
   static secureKey;
   static SmartAlert:NotificationService;
   constructor(public router:Router,public SmartAlert:NotificationService){
-  
-    AppComponent.headers=new HttpHeaders({
-      'content-Type':'application/json',Authorization:'Basic'+btoa(environment.authKey)
-    });
+  AppComponent.httpOptions={headers:new HttpHeaders({
+    'content-Type':'application/json',Authorization:'Basic '+btoa(environment.authKey)
+  })};
+    // AppComponent.headers=new HttpHeaders({
+    //   'content-Type':'application/json',Authorization:'Basic '+btoa(environment.authKey)
+    // });
     AppComponent.BaseUrl=environment.BaseUrl;  
+    AppComponent.BaseUrlDist=environment.BaseUrlDist;
     AppComponent.Router=router;
     AppComponent.SmartAlert=SmartAlert;
     AppComponent.secureKey=CryptoJs.enc.Utf8.parse(environment.secureKey);
