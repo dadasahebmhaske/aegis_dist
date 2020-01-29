@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./return-stock-list.component.css']
 })
 export class ReturnStockListComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private stockOrdersData: any=[];
+  public gridOptions: IGridoption;
+  public stockOrdersData: any=[];
   constructor() {
   }
   ngOnInit() {

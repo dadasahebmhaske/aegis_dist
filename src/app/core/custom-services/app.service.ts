@@ -9,7 +9,7 @@ import { ReplaySubject } from 'rxjs';
 export class AppService {
   private AppData = new ReplaySubject<any>(1);
   constructor() {
-    let appData = localStorage.getItem('appData');
+    let appData = localStorage.getItem('appData'); 
     if (appData){
         const decData=this.getDecryptedData();
         this.setProperty(decData, false);}

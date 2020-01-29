@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./add-imbalance.component.css']
 })
 export class AddImbalanceComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private imbalanceData: any = [];
+  public gridOptions: IGridoption;
+  public imbalanceData: any = [];
   constructor() {
   }
   ngOnInit() {

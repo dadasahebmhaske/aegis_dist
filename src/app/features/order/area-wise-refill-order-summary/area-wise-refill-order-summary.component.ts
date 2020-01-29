@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./area-wise-refill-order-summary.component.css']
 })
 export class AreaWiseRefillOrderSummaryComponent implements OnInit {
-  private areaOrderData: any=[];
-  private gridOptions: IGridoption;
+  public areaOrderData: any=[];
+  public gridOptions: IGridoption;
   constructor() {
   }
   ngOnInit() {

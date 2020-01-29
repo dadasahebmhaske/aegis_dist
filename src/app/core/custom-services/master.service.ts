@@ -6,8 +6,13 @@ import {AppComponent} from '../../app.component';
 })
 export class MasterService {
   constructor(private httpClient:HttpClient) { }
-  public getCity(statecode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
+  public  filterData(data,DocTypId,para) {
+    return data.filter(object => {
+      return object[para] == DocTypId;
+    });
+  }
+  public getCity(statecode) {                               
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
   } public getDocumentType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
   }
@@ -31,8 +36,8 @@ export class MasterService {
   public getRoutes() { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
   }
-  public getState() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=SM&IsActive=Y`);
+  public getState() {                                       
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=SM&IsActive=Y`);
   }
   public getSubArea() {
          return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
@@ -77,5 +82,8 @@ export class MasterService {
         "IsActive": "Y"
       }];
     // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
+  }
+  public postBulkDoc(fd:any){
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageDocumentDtls`,fd);          
   }
 }

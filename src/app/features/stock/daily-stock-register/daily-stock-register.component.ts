@@ -7,12 +7,12 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./daily-stock-register.component.css']
 })
 export class DailyStockRegisterComponent implements OnInit {
-  private defectiveData: any=[];
-  private emptyData: any=[];
-  private gridDefectiveOptions: IGridoption;
-  private gridEmptyOptions: IGridoption;
-  private gridOptions: IGridoption;
-  private soundData: any=[];
+  public defectiveData: any=[];
+  public emptyData: any=[];
+  public gridDefectiveOptions: IGridoption;
+  public gridEmptyOptions: IGridoption;
+  public gridOptions: IGridoption;
+  public soundData: any=[];
   public state: any = {
     tabs: {
       demo1: 0,

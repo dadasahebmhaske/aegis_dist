@@ -19,12 +19,12 @@ export class GodownMasterComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Route list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Godown list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {
         name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Edit&nbsp;</button> '
-        , width: "48",
+        , width: "48",exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
       { name: 'RouteID', displayName: 'Godown ID', width: "*", cellTooltip: true, filterCellFiltered: true },

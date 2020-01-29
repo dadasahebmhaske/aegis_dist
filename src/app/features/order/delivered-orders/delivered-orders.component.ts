@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./delivered-orders.component.css']
 })
 export class DeliveredOrdersComponent implements OnInit {
-  private DeliveredOrderData: any=[];
-  private gridOptions: IGridoption;
+  public DeliveredOrderData: any=[];
+  public gridOptions: IGridoption;
   constructor() {
   }
   ngOnInit() {

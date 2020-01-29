@@ -10,9 +10,9 @@ import {MasterService} from '../../../core/custom-services/master.service';
   styleUrls: ['./route-master.component.css']
 })
 export class RouteMasterComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private routeData: any;
-  constructor(private datashare:DatashareService,private masters:MasterService) {
+  public gridOptions: IGridoption;
+  public routeData: any;
+  constructor(public datashare:DatashareService,public masters:MasterService) {
   }
   ngOnInit() {   
     this.configureGrid();   
@@ -25,7 +25,7 @@ export class RouteMasterComponent implements OnInit {
     columnDefs = [
       {
         name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Edit&nbsp;</button> '
-        , width: "48",
+        , width: "48",exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
       { name: 'RouteId', displayName: 'Route ID', width: "*", cellTooltip: true, filterCellFiltered: true },

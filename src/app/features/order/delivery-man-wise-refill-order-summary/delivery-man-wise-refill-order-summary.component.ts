@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./delivery-man-wise-refill-order-summary.component.css']
 })
 export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
-  private unDeliveredOrderData: any=[];
-  private gridOptions: IGridoption;
+  public unDeliveredOrderData: any=[];
+  public gridOptions: IGridoption;
   constructor() {
   }
   ngOnInit() {

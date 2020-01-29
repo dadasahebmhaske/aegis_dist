@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./stock-orders-list.component.css']
 })
 export class StockOrdersListComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private stockOrdersData: any=[];
+  public gridOptions: IGridoption;
+  public stockOrdersData: any=[];
   constructor() {
   }
   ngOnInit() {

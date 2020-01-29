@@ -9,17 +9,17 @@ import { AppService } from '@app/core/custom-services/app.service';
   styleUrls: ['./route.component.css']
 })
 export class RouteComponent implements OnInit, OnDestroy {
-private route:any={};
-private cpInfo:any;
+public route:any={};
+public cpInfo:any;
 public loaderbtn:boolean=true;
-  constructor(private appService:AppService,private datashare:DatashareService,private routeService:RouteService) { }
+  constructor(public appService:AppService,public datashare:DatashareService,public routeService:RouteService) { }
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.route = data==null?{}:data);
     //this.route==null?this.route={}:this.route;
     console.log(this.route);
     this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
   }
-  private onSubmit(){  
+  public onSubmit(){  
     this.loaderbtn=false;
     this.route.Flag=this.route.RouteId==null?'IN':'UP';
     this.route.RouteId=this.route.RouteId==null?'':this.route.RouteId;

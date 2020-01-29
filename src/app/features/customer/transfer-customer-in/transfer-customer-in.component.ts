@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./transfer-customer-in.component.css']
 })
 export class TransferCustomerInComponent implements OnInit {
-  private customerInData: any=[];
-  private gridOptions: IGridoption;
+  public customerInData: any=[];
+  public gridOptions: IGridoption;
     constructor() {
   }
   ngOnInit() {

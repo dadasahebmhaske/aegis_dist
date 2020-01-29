@@ -13,22 +13,23 @@ import { AppService } from '@app/core/custom-services/app.service';
 export class SubAreaComponent implements OnInit, OnDestroy { 
   public cpInfo:any;
   public loaderbtn:boolean=true;
-  private route:any=[];
-  public subArea:any={RouteId:''};
-  private setd:boolean=true;
-    constructor(private appService:AppService,private datashare:DatashareService,private subarea:SubareaService,private masters:MasterService) { }
+  public route:any=[];
+  public subArea:any={RouteId:null};
+  public setd:boolean=true;
+    constructor(public appService:AppService,public datashare:DatashareService,public subarea:SubareaService,public masters:MasterService) { }
     ngOnInit() {
       this.getRoutes();
       this.datashare.GetSharedData.subscribe(data => this.subArea = data==null?{}:data);
       this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
     }
-    private getRoutes(){
+    public getRoutes(){
       this.masters.getRoutes().subscribe((resData:any)=>{      
         if(resData.StatusCode!=0)
        this.route=resData.Data;  
+       //this.route.unshift({RouteId:null,RouteName:"Selecxt route"});
       }); 
     }
-    private onSubmit(){
+    public onSubmit(){
       this.loaderbtn=false;
       this.subArea.Flag=this.subArea.SubAreaId==null?'IN':'UP';
       this.subArea.CPCode=this.cpInfo.CPCode;

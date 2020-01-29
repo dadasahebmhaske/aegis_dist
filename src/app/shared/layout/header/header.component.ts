@@ -27,7 +27,7 @@ declare var $: any;
 :16px 0;}`]
 })
 export class HeaderComponent implements OnInit {
-private cpInfo:any;
+public cpInfo:any;
   constructor(private router: Router,private appService:AppService) {
   }
 

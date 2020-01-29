@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./cash-flow-register.component.css']
 })
 export class CashFlowRegisterComponent implements OnInit {
-  private cashFlowData: any=[];
-  private gridOptions: IGridoption;
+  public cashFlowData: any=[];
+  public gridOptions: IGridoption;
   constructor() {
   }
   ngOnInit() {

@@ -9,9 +9,9 @@ import { MasterService } from '../../../core/custom-services/master.service';
   styleUrls: ['./transport-master.component.css']
 })
 export class TransportMasterComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private transportData: any;
-  constructor(private datashare: DatashareService, private masters: MasterService) {
+  public gridOptions: IGridoption;
+  public transportData: any;
+  constructor(public datashare: DatashareService, public masters: MasterService) {
   }
   ngOnInit() {
     this.configureGrid();

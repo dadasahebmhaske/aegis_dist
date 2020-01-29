@@ -8,12 +8,12 @@ import {VehicleService} from './vehicle.service';
   styleUrls: ['./vehicle.component.css']
 })
 export class VehicleComponent implements OnInit {
-private vehicle:any={};
-constructor(private datashare:DatashareService,private vehicleService:VehicleService) { }
+public vehicle:any={};
+constructor(public datashare:DatashareService,public vehicleService:VehicleService) { }
 ngOnInit() {
   this.datashare.GetSharedData.subscribe(data => this.vehicle = data==null?{}:data);
 }
-private onSubmit(){
+public onSubmit(){
   alert('vehicle');
   this.vehicle.Flag=this.vehicle.VehicleId==null?'IN':'UP';
   this.vehicle.IsActive = this.vehicle.IsActive == false ? 'N' : 'Y';
@@ -25,7 +25,7 @@ private onSubmit(){
     else{AppComponent.SmartAlert.Errmsg(resData.Message);}
   }); 
 }
-private onSubmitDocs(){
+public onSubmitDocs(){
   alert('docs');
 }
 ngOnDestroy(){

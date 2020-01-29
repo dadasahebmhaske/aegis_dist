@@ -9,9 +9,9 @@ import { MasterService } from '../../../core/custom-services/master.service';
   styleUrls: ['./vehicle-master.component.css']
 })
 export class VehicleMasterComponent implements OnInit {
-  private gridOptions: IGridoption;
-  private vehicleData: any;
-  constructor(private datashare: DatashareService, private masters: MasterService) {
+  public gridOptions: IGridoption;
+  public vehicleData: any;
+  constructor(public datashare: DatashareService, public masters: MasterService) {
   }
   ngOnInit() {
     this.configureGrid();

@@ -20,8 +20,8 @@ export class SendGreetingsComponent implements OnInit {
       demo9: 'A1',
       demo10: 'is1'
     }}
-    private customerData: any=[];
-    private gridOptions: IGridoption;
+    public customerData: any=[];
+    public gridOptions: IGridoption;
       constructor() {
     }
     ngOnInit() {

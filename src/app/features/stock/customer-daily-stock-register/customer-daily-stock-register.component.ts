@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./customer-daily-stock-register.component.css']
 })
 export class CustomerDailyStockRegisterComponent implements OnInit {
-  private customerDailyStockData: any = [];
-  private gridOptions: IGridoption;
+  public customerDailyStockData: any = [];
+  public gridOptions: IGridoption;
 
   constructor() {
   }

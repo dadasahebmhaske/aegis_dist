@@ -20,7 +20,7 @@
                                         <select class="form-control" id="RouteID" name="RouteID" #RouteId="ngModel" [(ngModel)]="subArea.RouteId" required>
                                          
                                             <option [value]="rou.RouteId" *ngFor="let rou of route">{{rou.RouteName}}</option>   
-                                             <option [value]="''" [attr.selected]="setd" selected hidden>Select Route</option>                                           
+                                             <!-- <option [value]="''" [attr.selected]="setd" selected hidden>Select Route</option>                                            -->
                                         </select>
                                     </div>
                                 </div>

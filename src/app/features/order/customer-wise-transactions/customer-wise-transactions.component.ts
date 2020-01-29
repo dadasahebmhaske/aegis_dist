@@ -7,8 +7,8 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./customer-wise-transactions.component.css']
 })
 export class CustomerWiseTransactionsComponent implements OnInit {
-  private areaOrderData: any=[];
-  private gridOptions: IGridoption;
+  public areaOrderData: any=[];
+  public gridOptions: IGridoption;
   constructor() {
   }
   ngOnInit() {

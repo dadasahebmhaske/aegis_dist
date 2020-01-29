@@ -8,12 +8,12 @@ import {TransportService} from './transport.service';
   styleUrls: ['./transport.component.css']
 })
 export class TransportComponent implements OnInit {
-  private transport:any={};
-  constructor(private datashare:DatashareService,private transportService:TransportService) { }
+  public transport:any={};
+  constructor(public datashare:DatashareService,public transportService:TransportService) { }
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.transport = data==null?{}:data);
   }
-  private onSubmit(){
+  public onSubmit(){
     this.transport.Flag=this.transport.TransportId==null?'IN':'UP';
     this.transport.IsActive = this.transport.IsActive == false ? 'N' : 'Y';
     this.transportService.postTransport(this.transport).subscribe(resData=>{

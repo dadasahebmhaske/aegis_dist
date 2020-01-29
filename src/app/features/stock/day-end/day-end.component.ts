@@ -7,12 +7,12 @@ import { AppComponent } from '../../../app.component';
   styleUrls: ['./day-end.component.css']
 })
 export class DayEndComponent implements OnInit {
-  private defectiveData: any=[];
-  private emptyData: any=[];
-  private gridDefectiveOptions: IGridoption;
-  private gridEmptyOptions: IGridoption;
-  private gridOptions: IGridoption;
-  private soundData: any=[];
+  public defectiveData: any=[];
+  public emptyData: any=[];
+  public gridDefectiveOptions: IGridoption;
+  public gridEmptyOptions: IGridoption;
+  public gridOptions: IGridoption;
+  public soundData: any=[];
   public state: any = {
     tabs: {
       demo1: 0,
