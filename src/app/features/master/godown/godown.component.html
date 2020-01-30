@@ -30,7 +30,6 @@
                                         <div class="tab-content">
                                             <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
                                                 <br>
-
                                                 <h3>
                                                     <strong>Step 1 </strong> - Godown Details</h3>
                                                     <form name="godownForm" #godownForm="ngForm" (ngSubmit)="nextToAddress()" autocomplete="off" ngNativeValidate>
@@ -68,10 +67,9 @@
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter Contact No." [(ngModel)]="godown.ContactNo" name="ContactNo" saCommonDir
-                                                                dirType="number" required />
+                                                              maxlength="15"  dirType="number" required />
                                                         </div>
                                                     </div>
-
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <label for="sel1">Godown License No.
@@ -87,7 +85,7 @@
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter License Issue Date" [(ngModel)]="godown.LicIssueDate" name="LicIssueDate"
-                                                                bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"
+                                                            (blur)="resetEndDate($event,'LI')" bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"
                                                                 onkeydown="return false" required />
                                                         </div>
                                                     </div>
@@ -97,7 +95,7 @@
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter License Expiry Date" [(ngModel)]="godown.LicExpDate" name="LicExpDate"
-                                                            onkeydown="return false" [minDate]="godown.LicIssueDate" bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  required />
+                                                            onkeydown="return false"  [minDate]="godown.LicIssueDate" bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -115,7 +113,7 @@
                                                                 <span class="errorMessage">*</span>
                                                             </label>
                                                             <select class="form-control" [(ngModel)]="godown.GodownTypeId" (change)="CheckGodownType()" name="GodownTypeId">
-                                                                <option selected hidden>Select Type</option>
+                                                                <option value="" selected hidden>Select Type</option>
                                                                 <option [value]="go.Id" *ngFor="let go of GodownTypeData">{{go.Name}}</option>
                                                             </select>
                                                         </div>
@@ -126,7 +124,7 @@
                                                                 <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
-                                                            onkeydown="return false"   bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
+                                                            (blur)="resetEndDate($event,'LP')" onkeydown="return false"   bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -135,12 +133,12 @@
                                                                 <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate" [disabled]="GodownType=='O'" [required]="GodownType!='O'"
-                                                            onkeydown="return false" [minDate]="godown.Startdate" bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  />
+                                                            (bsValueChange)="calculateMonths($event)" onkeydown="return false" [minDate]="godown.Startdate" bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"  />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="sel1">Lease Period
+                                                            <label for="sel1">Lease Period ( In Months)
                                                                 <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                             </label>
                                                             <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="number" [(ngModel)]="godown.LeasePeriod"
@@ -179,27 +177,28 @@
                                                 <br>
                                                 <h3>
                                                     <strong>Step 2</strong> - Address Details</h3>
+                                                    <form name="addressForm" #addressForm="ngForm" (ngSubmit)="nextToDocumentDeatils()" autocomplete="off" ngNativeValidate>
                                                 <div class="row">
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label for="sel1">Address Line 1
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine1"
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineOne"
                                                                 name="AddressLine1" required />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label for="sel1">Address Line 2</label>
-                                                            <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine2"
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineTwo"
                                                                 name="AddressLine2" />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <label for="sel1">Address Line 3</label>
-                                                            <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLine3"
+                                                            <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineThree"
                                                                 name="AddressLine3" />
                                                         </div>
                                                     </div>
@@ -209,7 +208,7 @@
                                                                 <span class="errorMessage">*</span>
                                                             </label>
                                                             <select class="form-control" name="StateCode" [(ngModel)]="godown.StateCode" (change)="getCityData()">
-                                                                <option selected hidden>Select State</option>
+                                                                <option value="" selected hidden>Select State</option>
                                                                 <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
                                                             </select>
                                                         </div>
@@ -220,7 +219,7 @@
                                                                 <span class="errorMessage">*</span>
                                                             </label>
                                                             <select class="form-control" [(ngModel)]="godown.CityCode" name="CityCode">
-                                                                <option selected hidden>Select City</option>
+                                                                <option value="" selected hidden>Select City</option>
                                                                 <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
                                                             </select>
                                                         </div>
@@ -230,7 +229,7 @@
                                                             <label for="sel1">Pin Code
                                                                 <span class="errorMessage" style="color:red;">*</span>
                                                             </label>
-                                                            <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="godown.Pin" name="Pin"
+                                                            <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="godown.PinCode" name="Pin"
                                                                 minlength="6" maxlength="6" numericonly required />
                                                         </div>
                                                     </div>
@@ -244,14 +243,18 @@
                                                                     </a>
                                                                 </li>
                                                                 <li class="next">
-                                                                    <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                                    <!-- <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
                                                                         Next
-                                                                    </a>
+                                                                    </a> -->
+                                                                    <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"  [disabled]="!loaderbtn">    
+                                                                        <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn" ></i>          
+                                                                    {{loaderbtn==true? 'Next':'Loading'}}</button>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </form>
                                             </div>
                                             <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
                                                 <br>

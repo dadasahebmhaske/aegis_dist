@@ -28,3 +28,10 @@
 .btn-marg{
     margin-top: 27px;
 }
+.next_button{
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    float:right;
+}

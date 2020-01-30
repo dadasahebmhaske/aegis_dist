@@ -35,18 +35,18 @@ export class AppComponent implements OnInit{
   }
   ngOnInit(){
     window.addEventListener('storage', (event) => {
-      if(event.oldValue !=  event.newValue){
-        AppComponent.SmartAlert.bigBox({
-          title: `Something went wrong`,
-          content: "Security reason please sign in!",
-          color: "#C46A69",
-          icon: "fa fa-thumbs-up animated bounce ",
-          number: "1",
-          timeout: 6000
-        });
-        localStorage.clear();
-        AppComponent.Router.navigate(['/auth/login']);
-      }
+      // if(event.oldValue !=  event.newValue){
+      //   AppComponent.SmartAlert.bigBox({
+      //     title: `Something went wrong`,
+      //     content: "Security reason please sign in!",
+      //     color: "#C46A69",
+      //     icon: "fa fa-thumbs-up animated bounce ",
+      //     number: "1",
+      //     timeout: 6000
+      //   });
+      //   localStorage.clear();
+      //   AppComponent.Router.navigate(['/auth/login']);
+      // }
       if (event.storageArea == localStorage) {
         let appData = localStorage.getItem('appData');
         if(appData == undefined) { 

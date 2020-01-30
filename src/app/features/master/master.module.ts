@@ -9,6 +9,7 @@ import { TransportService } from './transport/transport.service';
 import {VehicleService} from './vehicle/vehicle.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { GodownService } from '@app/features/master/godown/godown.service';
+import { EmployeeService } from '@app/features/master/employee/employee.service';
 @NgModule({
   declarations: [componentArray,UigridmasterDirective],
   imports: [
@@ -19,6 +20,6 @@ import { GodownService } from '@app/features/master/godown/godown.service';
     BsDatepickerModule.forRoot(),
   ],
   exports:[UigridmasterDirective],
-  providers:[GodownService,RouteService,SubareaService,TransportService,VehicleService]
+  providers:[GodownService,EmployeeService,RouteService,SubareaService,TransportService,VehicleService]
 })
 export class MasterModule { }

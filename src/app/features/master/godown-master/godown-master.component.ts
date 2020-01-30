@@ -3,18 +3,23 @@ import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
 import {DatashareService} from '../../../core/custom-services/datashare.service';
 import {MasterService} from '../../../core/custom-services/master.service';
+import { AppService } from '@app/core/custom-services/app.service';
 @Component({
   selector: 'sa-godown-master',
   templateUrl: './godown-master.component.html',
   styleUrls: ['./godown-master.component.css']
 })
 export class GodownMasterComponent implements OnInit {
+  public cpInfo:any;
   public gridOptions: IGridoption;
   public godownData: any;
-  constructor(private datashare:DatashareService,private masters:MasterService) {
+  constructor(private appService:AppService,private datashare:DatashareService,private masters:MasterService) {
+
   }
   ngOnInit() {   
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();   
+  
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -27,9 +32,27 @@ export class GodownMasterComponent implements OnInit {
         , width: "48",exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'RouteID', displayName: 'Godown ID', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RouteName', displayName: 'Godown', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'GodownId', displayName: 'Godown ID', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'GodownName', displayName: 'Godown', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Capacity', displayName: 'Capacity', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ContactName', displayName: 'Contact Name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ContactNo', displayName: 'Contact No.', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LicNo', displayName: 'License No.', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LicIssueDate', displayName: 'LicIssueDate', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LicExpDate', displayName: 'LicExpDate', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LastAuditDate', displayName: 'LastAuditDate', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'LeasePeriod', displayName: 'LeasePeriod', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Startdate', displayName: 'Startdate', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'EndDate', displayName: 'EndDate', width: "*", cellTooltip: true, filterCellFiltered: true },
+
       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+   
+     
+ 
+      // GodownTypeId: 1045
+    
+ 
+   
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
@@ -40,14 +63,13 @@ this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/godown']);
   }
   onLoad() {
-    this.godownData=this.masters.getGodowns();
-    // this.masters.getRoutes().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-     // this.routeData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.masters.getGodowns(this.cpInfo.CPCode).subscribe((resData:any)=>{      
+      if(resData.StatusCode!=0){
+     this.godownData=resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+    }
+      else{AppComponent.SmartAlert.Errmsg(resData.Message);}
+    }); 
   }
 
 }

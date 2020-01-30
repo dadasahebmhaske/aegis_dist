@@ -32,16 +32,17 @@
                         <br>
                         <h3>
                           <strong>Step 1 </strong> - Employee Details</h3>
+                          <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="nextToAddress()" autocomplete="off" ngNativeValidate>
                         <div class="row">
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Designation
                                 <span class="errorMessage">*</span>
                               </label>
-                              <select class="form-control">
-                                <option selected hidden> Select Designation </option>
-                                <option>Operator</option>
-                                <option>Delivery Man</option>
+                              <select class="form-control"  [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                <option value="" selected hidden> Select Designation </option>
+                                <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}</option>
+                            
                               </select>
                             </div>
                           </div>
@@ -50,7 +51,9 @@
                               <label for="sel1">First Name
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter First Name" alphaonly required />
+                              <input type="text" class="form-control" placeholder="Enter First Name"  [(ngModel)]="employee.FirstName" name="FirstName"
+                              saCommonDir
+                              dirType="alphaonly" required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -58,7 +61,9 @@
                               <label for="sel1">Last Name
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Last Name" alphaonly required />
+                              <input type="text" class="form-control" placeholder="Enter Last Name"  [(ngModel)]="employee.LastName" name="LastName"
+                              saCommonDir
+                              dirType="alphaonly"  required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -66,7 +71,8 @@
                               <label for="sel1">Date of Birth
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Date of Birth" required />
+                              <input type="text" class="form-control" placeholder="Enter Date of Birth"  [(ngModel)]="employee.DateOfBirth" name="DateOfBirth" 
+                              bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false" required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -74,11 +80,11 @@
                               <label for="sel1">Gender
                                 <span class="errorMessage">*</span>
                               </label>
-                              <select class="form-control">
-                                <option selected hidden> Select Gender </option>
-                                <option>Male</option>
-                                <option>Female</option>
-                                <option>Transgender</option>
+                              <select class="form-control"  [(ngModel)]="employee.Gender" name="Gender" required>
+                                <option value="" selected hidden> Select Gender </option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Transgender">Transgender</option>
                               </select>
                             </div>
                           </div>
@@ -87,13 +93,15 @@
                               <label for="sel1">Mobile No.
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Mobile No." required />
+                              <input type="text" class="form-control" placeholder="Enter Mobile No."  [(ngModel)]="employee.MobileNo" name="MobileNo" minlength="10" maxlength="10" 
+                              saCommonDir dirType="number" required />
                             </div>
                           </div>
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Alternative Mobile No. </label>
-                              <input type="text" class="form-control" placeholder="Enter Mobile No." required />
+                              <input type="text" class="form-control" placeholder="Enter Mobile No."  [(ngModel)]="employee.AltrMobileNo" name="AltrMobileNo" minlength="10" maxlength="10" 
+                              saCommonDir dirType="number"  />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -101,16 +109,16 @@
                               <label for="sel1">Blood Group
                                 <span class="errorMessage">*</span>
                               </label>
-                              <select class="form-control">
-                                <option selected hidden> Select Group </option>
-                                <option>A +ve</option>
-                                <option>A -ve</option>
-                                <option>B +ve</option>
-                                <option>B -ve</option>
-                                <option>AB +ve</option>
-                                <option>AB -ve</option>
-                                <option>O +ve</option>
-                                <option>O -ve</option>
+                              <select class="form-control"  [(ngModel)]="employee.BloodGrp" name="BloodGrp" required>
+                                <option value="" selected hidden> Select Group </option>
+                                <option value="A +ve">A +ve</option>
+                                <option value="A -ve">A -ve</option>
+                                <option value="B +ve">B +ve</option>
+                                <option value="B -ve">B -ve</option>
+                                <option value="AB +ve">AB +ve</option>
+                                <option value="AB -ve">AB -ve</option>
+                                <option value="O +ve">O +ve</option>
+                                <option value="O -ve">O -ve</option>
                               </select>
                             </div>
                           </div>
@@ -119,21 +127,22 @@
                               <label for="sel1">Marital Status
                                 <span class="errorMessage">*</span>
                               </label>
-                              <select class="form-control">
-                                <option selected hidden> Select Status </option>
-                                <option>Single</option>
-                                <option>Married</option>
-                                <option>Divorced</option>
-                                <option>Widowed </option>
+                              <select class="form-control"  [(ngModel)]="employee.MaritalStatus" name="MaritalStatus" required>
+                                <option value="" selected hidden> Select Status </option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widowed">Widowed </option>
                               </select>
                             </div>
                           </div>
                           <div class="col-sm-2">
                             <div class="form-group">
                               <label for="sel1">Marriage Date
-
+                                <span class="errorMessage" [hidden]="employee.MaritalStatus=='Single'">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Anniversary Date" required />
+                              <input type="text" class="form-control" placeholder="Enter Anniversary Date"  [(ngModel)]="employee.MarriageAnniversaryDate" name="MarriageAnniversaryDate"                            
+                              bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false" [required]="employee.MaritalStatus!='Single'" />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -141,7 +150,8 @@
                               <label for="sel1">Edu. Qualification
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Qualification" required />
+                              <input type="text" class="form-control" placeholder="Enter Qualification"  [(ngModel)]="employee.Qualification" name="Qualification"
+                              saCommonDir dirType="alphanumeric" required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -149,7 +159,8 @@
                               <label for="sel1">Date of Joining
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Date of Joining" required />
+                              <input type="text" class="form-control" placeholder="Enter Date of Joining"  [(ngModel)]="employee.DateOfJoining" name="DateOfJoining"                            
+                              bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false" required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -157,7 +168,8 @@
                               <label for="sel1">Salary/Month
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Salary" required />
+                              <input type="text" class="form-control" placeholder="Enter Salary"  [(ngModel)]="employee.Salary" name="Salary"
+                              saCommonDir dirType="number" required />
                             </div>
                           </div>
 
@@ -168,7 +180,8 @@
                               <label for="sel1">Emergency Contact Person
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Contact Person" required />
+                              <input type="text" class="form-control" placeholder="Enter Contact Person"  [(ngModel)]="employee.ContactPerson" name="ContactPerson"
+                              saCommonDir dirType="alphaonly"  required />
                             </div>
                           </div>
                           <div class="col-sm-2">
@@ -176,14 +189,16 @@
                               <label for="sel1">Contact No.
                                 <span class="errorMessage">*</span>
                               </label>
-                              <input type="text" class="form-control" placeholder="Enter Contact No." required />
+                              <input type="text" class="form-control" placeholder="Enter Contact No." minlength="10" maxlength="15"  [(ngModel)]="employee.EmergencyContactNo" name="EmergencyContactNo" 
+                              saCommonDir dirType="number" required />
                             </div>
                           </div>
                           <div class="col-sm-3 btn-marg">
                             <label>
-                              <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                              <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" [(ngModel)]="employee.IsActive" name="IsActive" /> Is Active
                             </label>
                           </div>
+                     
                         </div>
 
                         <div class="logincDeatils">
@@ -194,7 +209,7 @@
                                 <label for="sel1">Email ID
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Email ID " />
+                                <input type="text" class="form-control" placeholder="Enter Email ID " [(ngModel)]="employee.EmailId" #EmailId="ngModel" name="EmailId" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required/>
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -202,7 +217,7 @@
                                 <label for="sel1">Password
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                                <input type="password" class="form-control" placeholder="Enter Password" [(ngModel)]="employee.Password" (change)="checkingPassword()" minlength="6" name="Password" required />
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -210,7 +225,7 @@
                                 <label for="sel1">Re-enter Password
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="password" class="form-control" placeholder="Enter Password" required />
+                                <input type="password" class="form-control" placeholder="Enter Password" [(ngModel)]="employee.ReTypePassword" (change)="checkingPassword()" minlength="6" name="IsActive" required />
                               </div>
                             </div>
                           </div>
@@ -224,14 +239,18 @@
                                           </a>
                                       </li>
                                       <li class="next">
-                                          <a (click)="nextToAddress()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                          <!-- <a (click)="nextToAddress()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
                                               Next
-                                          </a>
+                                          </a> -->
+                                          <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"  [disabled]="!loaderbtn">    
+                                            <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn" ></i>          
+                                        {{loaderbtn==true? 'Next':'Loading'}}</button>
                                       </li>
                                   </ul>
                               </div>
                           </div>
                       </div>
+                      </form>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
                         <br>

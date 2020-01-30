@@ -13,13 +13,13 @@ import { AppService } from '@app/core/custom-services/app.service';
 export class SubAreaComponent implements OnInit, OnDestroy { 
   public cpInfo:any;
   public loaderbtn:boolean=true;
-  public route:any=[];
-  public subArea:any={RouteId:null};
+  public route:any=[]; 
+  public subArea:any={RouteId:""};
   public setd:boolean=true;
     constructor(public appService:AppService,public datashare:DatashareService,public subarea:SubareaService,public masters:MasterService) { }
     ngOnInit() {
       this.getRoutes();
-      this.datashare.GetSharedData.subscribe(data => this.subArea = data==null?{}:data);
+      this.datashare.GetSharedData.subscribe(data => this.subArea = data==null?{RouteId:""}:data);
       this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
     }
     public getRoutes(){

@@ -6,10 +6,24 @@ import {AppComponent} from '../../app.component';
 })
 export class MasterService {
   constructor(private httpClient:HttpClient) { }
+  public getDiffMonths(dt2, dt1) 
+  {    var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+     diff /= (60 * 60 * 24 * 7 * 4);
+    return Math.abs(Math.round(diff));   
+  }
   public  filterData(data,DocTypId,para) {
-    return data.filter(object => {
+     return data.filter(object => {
       return object[para] == DocTypId;
     });
+  }
+  getAddressDetails(formFlag,RefId){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=ADD&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
+  }
+  getDocumentDetails(formFlag,RefId){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DOC&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
+  }
+  public getDesignation() {                               
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DGM&IsActive=Y`);
   }
   public getCity(statecode) {                               
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
@@ -17,21 +31,8 @@ export class MasterService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
   }
 
-  public getGodowns() {
-    return <any>[{
-      "RouteID": 1,
-      "RouteName": "Route 1",
-      "IsActive": "Y"
-    }, {
-      "RouteID": 2,
-      "RouteName": "Route 2",
-      "IsActive": "Y"
-    }, {
-      "RouteID": 3,
-      "RouteName": "Route 3",
-      "IsActive": "N"
-    }];
-    // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
+  public getGodowns(cpcode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=GDWN&CPCode=${cpcode}&IsActive=Y`);     
   }
   public getRoutes() { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
@@ -85,5 +86,8 @@ export class MasterService {
   }
   public postBulkDoc(fd:any){
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageDocumentDtls`,fd);          
+  }
+  public postBulkAddress(fd:any){
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageAddressDtls`,fd);          
   }
 }
