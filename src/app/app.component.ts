@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   static BaseUrlDist;
   static headers:HttpHeaders;
   static httpOptions;
-  static ImagePath;  
+  static ImageUrl;  
   static Router:Router; 
   static secureKey;
   static SmartAlert:NotificationService;
@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
     // });
     AppComponent.BaseUrl=environment.BaseUrl;  
     AppComponent.BaseUrlDist=environment.BaseUrlDist;
+    AppComponent.ImageUrl=environment.ImageUrl;
     AppComponent.Router=router;
     AppComponent.SmartAlert=SmartAlert;
     AppComponent.secureKey=CryptoJs.enc.Utf8.parse(environment.secureKey);

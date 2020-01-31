@@ -7,9 +7,10 @@ import {AppComponent} from '../../app.component';
 export class MasterService {
   constructor(private httpClient:HttpClient) { }
   public getDiffMonths(dt2, dt1) 
-  {    var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+  {   if(dt2!=null && dt1!=null){
+     var diff =(dt2.getTime() - dt1.getTime()) / 1000;
      diff /= (60 * 60 * 24 * 7 * 4);
-    return Math.abs(Math.round(diff));   
+    return Math.abs(Math.round(diff));   }
   }
   public  filterData(data,DocTypId,para) {
      return data.filter(object => {
@@ -30,18 +31,20 @@ export class MasterService {
   } public getDocumentType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
   }
-
+  public getEmpoyees(cpcode,roleCode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&RoleCode=${roleCode}&IsActive=Y`);     
+  }
   public getGodowns(cpcode) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=GDWN&CPCode=${cpcode}&IsActive=Y`);     
   }
-  public getRoutes() { 
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
+  public getRoutes(cpcode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`,AppComponent.httpOptions);          
   }
   public getState() {                                       
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=SM&IsActive=Y`);
   }
-  public getSubArea() {
-         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=&IsActive=Y`,AppComponent.httpOptions);          
+  public getSubArea(cpcode) {
+         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=${cpcode}&IsActive=Y`,AppComponent.httpOptions);          
   }
   public getTransport() {
     return <any>[{

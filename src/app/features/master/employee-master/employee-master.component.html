@@ -11,28 +11,32 @@
           <div>
             <div class="widget-body">
               <div class="row ">
+                  <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
                 <div class="col-sm-2 col-xs-8">
                   <div class="form-group">
-                    <select class="form-control">
-                      <option selected hidden> Select Designation </option>
-                      <option>Operator</option>
-                      <option>Delivery Man</option>
-                    </select>                   
+                      <select class="form-control"  [(ngModel)]="designation" name="designation" required>
+                          <option value="" selected hidden> Select Designation </option>
+                          <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}</option>
+                       </select>                 
                   </div>
                 </div>
                 <div class="col-sm-1 col-xs-4">
                   <div class="form-group">
                     <button type="submit" class="btn btn-block btn-success get_details">
                       <i class="fa fa-search"></i> Get Details</button>
-
                   </div>
                 </div>
-
-                <div class="form-group  pull-right" style="margin-right:20px;">
-                  <a routerLink="/master/employee" class="btn btn-block btn-warning get_details">
+                </form>
+                <div class="col-sm-9 ">
+                <div class="form-group  pull-right">
+                  <a routerLink="/master/employee" class="btn btn-block btn-warning get_details pull-right">
                     <i class="glyphicon glyphicon-plus"></i>
                     Add Employee
                   </a>
+                </div>
+              </div>
+                <div class="col-sm-12  table-responsive">
+                    <ui-grid [data]="empData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                 </div>
               </div>
             </div>

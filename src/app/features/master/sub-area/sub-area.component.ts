@@ -23,7 +23,7 @@ export class SubAreaComponent implements OnInit, OnDestroy {
       this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
     }
     public getRoutes(){
-      this.masters.getRoutes().subscribe((resData:any)=>{      
+      this.masters.getRoutes(this.cpInfo.CPCode).subscribe((resData:any)=>{      
         if(resData.StatusCode!=0)
        this.route=resData.Data;  
        //this.route.unshift({RouteId:null,RouteName:"Selecxt route"});
