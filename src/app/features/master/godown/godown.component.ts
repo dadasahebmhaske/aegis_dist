@@ -35,7 +35,7 @@ export class GodownComponent implements OnInit {
   public cpInfo: any;
   public docTypeData: any = [];
   public DocFileName: string;
-  public document: any = {};
+  public document: any = {DocTypId:''};
   public fd = new FormData();
   public filepreview: any;
   public godown: any = {};
@@ -56,9 +56,10 @@ export class GodownComponent implements OnInit {
       this.godown = data == null ? { StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data
     });
 
-    console.log(this.godown);
     this.allOnloadMethods();
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.godown.StateCode= this.godown.StateCode==null?'': this.godown.StateCode;
+    this.godown.CityCode= this.godown.CityCode==null?'': this.godown.CityCode;
   }
   public model = {
     email: '',
@@ -162,6 +163,7 @@ export class GodownComponent implements OnInit {
         AppComponent.SmartAlert.Success(resData.Message);
         this.godown.GodownId = resData.Data[0].GodownId;
         this.nextStep();
+        this.getGOdownAddressDetails();
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
@@ -193,6 +195,7 @@ export class GodownComponent implements OnInit {
         this.godown.AddressId = resData.Data[0].AddressId
         AppComponent.SmartAlert.Success(resData.Message);
         this.nextStep();
+        this.getGodownDocumentDetails();
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
@@ -201,8 +204,8 @@ export class GodownComponent implements OnInit {
     //this.nextStep();
   }
   nextToSave() {
-    this.bulkDoc.flag='UP'; // this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
-    this.bulkDoc.RefId = this.godown.GodownId;    //  this.godown.GodownId;
+   this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
+    this.bulkDoc.RefId = this.godown.GodownId;   
     this.bulkDoc.FormFlag = 'GDWN';
     this.bulkDoc.UserCode = this.cpInfo.EmpId;
     if(this.removeDocUpdate.length>0){
@@ -220,9 +223,6 @@ export class GodownComponent implements OnInit {
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
-
-
-
     // this.nextStep();
   }
   onWizardComplete(data) {
@@ -247,7 +247,7 @@ export class GodownComponent implements OnInit {
     var reader = new FileReader();
     this.selectedFile = <File>event.target.files[0];
     this.DocFileName = event.target.files[0].name;
-    this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
+    //this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
     reader.onload = (event: ProgressEvent) => {
       this.filepreview = (<FileReader>event.target).result;
       var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));

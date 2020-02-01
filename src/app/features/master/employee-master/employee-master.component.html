@@ -11,7 +11,7 @@
           <div>
             <div class="widget-body">
               <div class="row ">
-                  <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="onSelectDesignation()" autocomplete="off" ngNativeValidate>
                 <div class="col-sm-2 col-xs-8">
                   <div class="form-group">
                       <select class="form-control"  [(ngModel)]="designation" name="designation" required>

@@ -31,8 +31,8 @@ export class MasterService {
   } public getDocumentType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
   }
-  public getEmpoyees(cpcode,roleCode) { 
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&RoleCode=${roleCode}&IsActive=Y`);     
+  public getEmpoyees(cpcode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&RoleCode=&IsActive=Y`);     
   }
   public getGodowns(cpcode) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=GDWN&CPCode=${cpcode}&IsActive=Y`);     
