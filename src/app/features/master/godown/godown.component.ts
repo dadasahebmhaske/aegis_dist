@@ -204,25 +204,32 @@ export class GodownComponent implements OnInit {
     //this.nextStep();
   }
   nextToSave() {
-   this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
-    this.bulkDoc.RefId = this.godown.GodownId;   
-    this.bulkDoc.FormFlag = 'GDWN';
-    this.bulkDoc.UserCode = this.cpInfo.EmpId;
-    if(this.removeDocUpdate.length>0){
-      this.bdata=this.bdata.concat(this.removeDocUpdate); 
-    }
-    this.bulkDoc.bdata = this.bdata;
-    let ciphertext = this.appService.getEncrypted(this.bulkDoc);
-    this.fd.append('CipherText', ciphertext);
-    this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
-      this.loaderbtn = true;
-      if (resData.StatusCode != 0) {
-        this.godown.DocId = resData.Data[0].DocId;
-        AppComponent.SmartAlert.Success(resData.Message);
-        AppComponent.Router.navigate(['/master/godown-master']);
+    if(this.bdata.length>0 || this.removeDocUpdate.length>0){
+      this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
+      this.bulkDoc.RefId = this.godown.GodownId;   
+      this.bulkDoc.FormFlag = 'GDWN';
+      this.bulkDoc.UserCode = this.cpInfo.EmpId;
+      if(this.removeDocUpdate.length>0){
+        this.bdata=this.bdata.concat(this.removeDocUpdate); 
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    });
+      this.bulkDoc.bdata = this.bdata;
+      let ciphertext = this.appService.getEncrypted(this.bulkDoc);
+      this.fd.append('CipherText', ciphertext);
+      this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          this.bdata=[];this.removeDocUpdate=[];
+          if(resData.Data.length!=0)
+          this.godown.DocId = resData.Data[0].DocId;
+          AppComponent.SmartAlert.Success(resData.Message);
+          AppComponent.Router.navigate(['/master/godown-master']);
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    }else{
+      AppComponent.SmartAlert.Errmsg(`Please Add atleast one document.`);
+    }
+  
     // this.nextStep();
   }
   onWizardComplete(data) {
@@ -276,12 +283,12 @@ export class GodownComponent implements OnInit {
     if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
-      this.document = {};
+      this.document ={DocTypId:''};
     } else {
       this.bdata.push(this.document);
       this.fd.append(`image${this.bdata.length}`, this.selectedFile, this.DocFileName);
       $("#fileControl").val('');
-      this.document = {};
+      this.document = {DocTypId:''};
     }
   }
   onRemoveDoc(data, index) {
@@ -305,15 +312,13 @@ export class GodownComponent implements OnInit {
       console.log(response.Data[0]);
     });
   }
-  getGOdownAddressDetails() {
-   
+  getGOdownAddressDetails() {   
     this.masterService.getAddressDetails('GDWN', this.godown.GodownId).subscribe((resp: any) => {
       if (resp.StatusCode != 0)
         this.godown = Object.assign(this.godown, resp.Data[0]);
         this. getCityData();
     });
-   
-  }
+     }
 
   //godown
   CheckGodownType() {

@@ -199,25 +199,32 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   
     }
     nextToSave() {
-      this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
-       this.bulkDoc.RefId = this.employee.EmpId;  
-       this.bulkDoc.FormFlag = 'EMP';
-       this.bulkDoc.UserCode = this.cpInfo.EmpId;
-       if(this.removeDocUpdate.length>0){
-         this.bdata=this.bdata.concat(this.removeDocUpdate); 
-       }
-       this.bulkDoc.bdata = this.bdata;
-       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
-       this.fd.append('CipherText', ciphertext);
-       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
-         this.loaderbtn = true;
-         if (resData.StatusCode != 0) {
-           this.employee.DocId = resData.Data[0].DocId;
-           AppComponent.SmartAlert.Success(resData.Message);
-           AppComponent.Router.navigate(['/master/employee-master']);
-         }
-         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-       });  
+      if(this.bdata.length>0 || this.removeDocUpdate.length>0){
+        this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
+        this.bulkDoc.RefId = this.employee.EmpId;  
+        this.bulkDoc.FormFlag = 'EMP';
+        this.bulkDoc.UserCode = this.cpInfo.EmpId;
+        if(this.removeDocUpdate.length>0){
+          this.bdata=this.bdata.concat(this.removeDocUpdate); 
+        }
+        this.bulkDoc.bdata = this.bdata;
+        let ciphertext = this.appService.getEncrypted(this.bulkDoc);
+        this.fd.append('CipherText', ciphertext);
+        this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
+          this.loaderbtn = true;
+          if (resData.StatusCode != 0) {
+           this.bdata=[];this.removeDocUpdate=[];
+           if(resData.Data.length!=0)
+            this.employee.DocId = resData.Data[0].DocId;
+            AppComponent.SmartAlert.Success(resData.Message);
+            AppComponent.Router.navigate(['/master/employee-master']);
+          }
+          else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+        });  
+      }else{
+        AppComponent.SmartAlert.Errmsg(`Please Add atleast one document.`);
+      }
+  
      }
     onWizardComplete(data) {
       console.log('basic wizard complete', data)
@@ -262,12 +269,12 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
         AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
         $("#fileControl").val('');
-        this.document = {};
+        this.document = {DocTypId:''};
       } else {
         this.bdata.push(this.document);
         this.fd.append(`image${this.bdata.length}`, this.selectedFile, this.DocFileName);
         $("#fileControl").val('');
-        this.document = {};
+        this.document = {DocTypId:''};
       }
     }
     onRemoveDoc(data, index) {

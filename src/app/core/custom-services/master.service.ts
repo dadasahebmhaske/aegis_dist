@@ -46,46 +46,12 @@ export class MasterService {
   public getSubArea(cpcode) {
          return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=${cpcode}&IsActive=Y`,AppComponent.httpOptions);          
   }
-  public getTransport() {
-    return <any>[{
-      "TransportID": 1,
-      "TransportName": "Two Wheeler",
-      "IsActive": "Y"
-    }, {
-      "TransportID": 2,
-      "TransportName": "Four Wheeler",
-      "IsActive": "Y"
-    }, {
-      "TransportID": 3,
-      "TransportName": "Ship",
-      "IsActive": "N"
-    }, {
-      "TransportID": 4,
-      "TransportName": "Train",
-      "IsActive": "N"
-    }];
+  public getTransport(cpcode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VTM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);     
   }
-    public getVehicles() {
-      return <any>[{
-        "VehicleID": 1,
-        "VehicleNo": "MH12QL9337",
-        "VehicleType":"4 Wheeler",
-        "CylCapacity":112,
-        "LastFitnessDate":"12-12-2019",
-        "Insurance": "Y",
-        "InsuranceRenewalDate":"11-11-2020",
-        "IsActive": "Y"
-      }, {
-        "VehicleID": 2,
-        "VehicleNo": "MH14JK1313",
-        "VehicleType":"6 Wheeler",
-        "CylCapacity":147,
-        "LastFitnessDate":"10-10-2019",
-        "Insurance": "Y",
-        "InsuranceRenewalDate": "10-08-2020",
-        "IsActive": "Y"
-      }];
-    // return this.httpClient.get<any>(`${AppComponent.BaseUrl}`);          
+    public getVehicles(cpcode) {
+     
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);         
   }
   public postBulkDoc(fd:any){
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageDocumentDtls`,fd);          

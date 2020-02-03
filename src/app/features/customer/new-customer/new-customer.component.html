@@ -16,8 +16,7 @@
                     <label for="sel1">Customer No.
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Customer No." ng-model="consumer.ConsNo" maxlength="8" oninvalid="this.setCustomValidity('Enter consumer number')"
-                      onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required disabled/>
+                    <input type="text" class="form-control" placeholder="Enter Customer No." [(ngModel)]="customer.ConsNo" name="ConsNo"     required disabled/>
                   </div>
                 </div>
                 <div class="col-sm-1">
@@ -25,7 +24,7 @@
                     <label for="sel1">Salutation
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select class="form-control" ng-options="s.scode as s.sdesc for s in SalutationData" ng-model="consumer.Salutation" required>
+                    <select class="form-control" ng-options="s.scode as s.sdesc for s in SalutationData"[(ngModel)]="customer.Salutation" name="Salutation" required>
                       <option value="" selected hidden>-Select-</option>
                     </select>
                   </div>
@@ -35,7 +34,7 @@
                     <label for="sel1">First Name
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter First Name" ng-model="consumer.FirstName" alphaonly required />
+                    <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="customer.FirstName" name="FirstName" required />
                   </div>
                 </div>
                 <!--<div class="col-sm-3">
@@ -49,7 +48,7 @@
                     <label for="sel1">Last Name
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Last Name" ng-model="consumer.LastName" alphaonly required />
+                    <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="customer.LatName" name="LatName" required />
                   </div>
                 </div>
                 <div class="col-sm-3">
@@ -57,7 +56,7 @@
                     <label for="sel1">Mobile No.
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Mobile No." ng-model="consumer.MobileNo" minlength="10" maxlength="10"
+                    <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="customer.MobileNo" name="MobileNo" minlength="10" maxlength="10"
                       pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')"
                       onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly required />
                   </div>
@@ -67,8 +66,7 @@
                     <label for="sel1">Customer Type
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.AreaCode"
-                      required>
+                    <select class="form-control" [(ngModel)]="customer.CustTypeId" name="CustTypeId"    required>
                       <option value="" selected hidden> Select </option>
                       <option value="">Domestic</option>
                       <option value="">Industrial</option>
@@ -80,8 +78,7 @@
                     <label for="sel1">Volume Type
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" ng-model="consumer.AreaCode"
-                      required>
+                    <select class="form-control" [(ngModel)]="customer.VolumeTypeId" name="VolumeTypeId"   required>
                       <option value="" selected hidden> Select Volume </option>
                       <option value="">0 - 5 Cylinder</option>
                       <option value="">6 - 10 Cylinder</option>
@@ -91,11 +88,31 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
+                    <label for="sel1">Consumption Type
+                      <span class="errorMessage">*</span>
+                    </label>
+                    <select class="form-control"  [(ngModel)]="customer.ConsuptionTypeId" name="ConsuptionTypeId"  required>
+                      <option value="" selected hidden> Select Type </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
                     <label for="sel1">Service Type
                       <span class="errorMessage">*</span>
                     </label>
-                    <select class="form-control" required>
+                    <select class="form-control" [(ngModel)]="customer.ServiceTypeId" name="ServiceTypeId" required>
                       <option value="" selected hidden> Select Service Type </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="sel1">Type Of Firm
+                      <span class="errorMessage">*</span>
+                    </label>
+                    <select class="form-control" [(ngModel)]="customer.FirmTypeId" name="FirmTypeId" required>
+                      <option value="" selected hidden> Select  Type of Firm </option>
                     </select>
                   </div>
                 </div>
@@ -104,8 +121,7 @@
                     <label for="sel1">Route
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
-                      title="Select area" ng-model="consumer.ItemCode" required>
+                    <select [(ngModel)]="customer.ConsNo" name="ConsNo" class="form-control" [(ngModel)]="customer.RoutId" name="RoutId" required>
                       <option value="" selected hidden> Select Route </option>
                     </select>
                   </div>
@@ -115,8 +131,7 @@
                     <label for="sel1">Sub Area
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select ng-options="a.ItemCode as a.ItemName for a in Pdata" class="form-control" data-toggle="tooltip" data-placement="top"
-                      title="Select area" ng-model="consumer.ItemCode" required>
+                    <select [(ngModel)]="customer.SubAreaId" name="SubAreaId" class="form-control" required>
                       <option value="" selected hidden> Select Sub Area </option>
                     </select>
                   </div>
@@ -126,7 +141,7 @@
                     <label for="sel1">Opening Balance Quantity
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Quantity" ng-model="consumer.LastName" alphaonly required />
+                    <input type="text" class="form-control" placeholder="Enter Quantity"[(ngModel)]="customer.OpeningCylQty" name="OpeningCylQty" required />
                   </div>
                 </div>
                 <div class="col-sm-3">
@@ -134,7 +149,7 @@
                     <label for="sel1">Opening Balance Amount
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Amount" ng-model="consumer.LastName" alphaonly required />
+                    <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="customer.OpeningBalAmt" name="OpeningBalAmt" required />
                   </div>
                 </div>
 
@@ -143,7 +158,7 @@
                     <label for="sel1">Customer Category
                       <span class="errorMessage" >*</span>
                     </label>
-                    <select class="form-control" data-toggle="tooltip" data-placement="top" title="Select area" required>
+                    <select class="form-control" [(ngModel)]="customer.CustCatId" name="CustCatId" required>
                       <option value="" selected hidden> Select Category </option>
                     </select>
                   </div>
@@ -157,19 +172,19 @@
                     <label for="sel1">Delivery Address Line 1
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Address Line 1" ng-model="consumer.AddressLine1" required />
+                    <input type="text" class="form-control" placeholder="Enter Address Line 1" [(ngModel)]="customer.ConsNo" name="ConsNo" required />
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
                     <label for="sel1">Delivery Address Line 2</label>
-                    <input type="text" class="form-control" placeholder="Enter Address Line 2" ng-model="consumer.AddressLine2" />
+                    <input type="text" class="form-control" placeholder="Enter Address Line 2" [(ngModel)]="customer.ConsNo" name="ConsNo" />
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
                     <label for="sel1">Delivery Address Line 3</label>
-                    <input type="text" class="form-control" placeholder="Enter Address Line 3" ng-model="consumer.AddressLine3" />
+                    <input type="text" class="form-control" placeholder="Enter Address Line 3" [(ngModel)]="customer.ConsNo" name="ConsNo" />
                   </div>
                 </div>
                 <div class="col-sm-3">
@@ -177,7 +192,7 @@
                       <label>State
                           <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control">
+                      <select class="form-control" [(ngModel)]="customer.ConsNo" name="ConsNo">
                           <option selected hidden>Select State</option>
                           <option>Maharashtra</option>
                           <option>Goa </option>
@@ -189,7 +204,7 @@
                       <label>City
                           <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control">
+                      <select class="form-control" [(ngModel)]="customer.ConsNo" name="ConsNo">
                           <option selected hidden>Select City</option>
                           <option>Pune</option>
                           <option>Mumbai </option>
@@ -202,7 +217,7 @@
                     <label for="sel1">Pin Code
                       <span class="errorMessage" >*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin" minlength="6" maxlength="6" numericonly
+                    <input type="text" class="form-control" placeholder="Enter Pin" [(ngModel)]="customer.ConsNo" name="ConsNo" minlength="6" maxlength="6" 
                       required />
                   </div>
                 </div>
@@ -222,7 +237,7 @@
               <div class="row">
                 <div class="col-sm-6">
                   <label>
-                    <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
+                    <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='customer.IsActive'  form="vehicleForm"/> Is Active
                   </label>
                 </div>
 

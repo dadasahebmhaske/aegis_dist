@@ -3,17 +3,20 @@ import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
+import { AppService } from '@app/core/custom-services/app.service';
 @Component({
   selector: 'sa-transport-master',
   templateUrl: './transport-master.component.html',
   styleUrls: ['./transport-master.component.css']
 })
 export class TransportMasterComponent implements OnInit {
+  public cpInfo: any = {};
   public gridOptions: IGridoption;
   public transportData: any;
-  constructor(public datashare: DatashareService, public masters: MasterService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masters: MasterService) {
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
   }
   configureGrid() {
@@ -27,27 +30,26 @@ export class TransportMasterComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'TransportID', displayName: 'Transport ID', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TransportName', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'VehicleTypeId', displayName: 'Vehicle Type Id', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'VehicleType', displayName: 'Transport', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    // console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/transport']);
   }
   onLoad() {
-    this.transportData = this.masters.getTransport();
-    // this.masters.getTransport().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-    // this.transportData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.masters.getTransport(this.cpInfo.CPCode).subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.transportData = resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+
   }
 
 }

@@ -3,17 +3,20 @@ import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { MasterService } from '../../../core/custom-services/master.service';
+import { AppService } from '@app/core/custom-services/app.service';
 @Component({
   selector: 'sa-vehicle-master',
   templateUrl: './vehicle-master.component.html',
   styleUrls: ['./vehicle-master.component.css']
 })
 export class VehicleMasterComponent implements OnInit {
+  public cpInfo: any = {};
   public gridOptions: IGridoption;
   public vehicleData: any;
-  constructor(public datashare: DatashareService, public masters: MasterService) {
+  constructor(private appService: AppService,public datashare: DatashareService, public masters: MasterService) {
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
   }
   configureGrid() {
@@ -32,27 +35,25 @@ export class VehicleMasterComponent implements OnInit {
       { name: 'VehicleType', displayName: 'Vehicle Type', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'CylCapacity', displayName: 'Cylinder Capacity', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'LastFitnessDate', displayName: 'Last Fitness Date', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Insurance', displayName: 'Insurance Done', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'InsuranceRenewalDate', displayName: 'Insurance Renewal Date', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsInsurance', displayName: 'Insurance Done', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'InsRenewalDate', displayName: 'Insurance Renewal Date', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    // console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
-    this.vehicleData = this.masters.getVehicles();
-    // this.masters.getVehicles().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-    // this.vehicleData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.masters.getVehicles(this.cpInfo.CPCode).subscribe((resData:any)=>{      
+      if(resData.StatusCode!=0){
+    this.vehicleData=resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+    }
+      else{AppComponent.SmartAlert.Errmsg(resData.Message);}
+    }); 
   }
 
 }
