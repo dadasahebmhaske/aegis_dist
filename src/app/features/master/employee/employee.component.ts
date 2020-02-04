@@ -23,8 +23,7 @@ import { AppComponent } from '@app/app.component';
     ])
   ]
 })
-export class EmployeeComponent implements OnInit, OnDestroy {
- 
+export class EmployeeComponent implements OnInit, OnDestroy { 
   public addArray: any = [];
   public bsValue = new Date();
   public bdata: any = [];
@@ -50,7 +49,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? {RoleCode: '',Gender:'',MaritalStatus:'',BloodGrp:'', StateCode: '', CityCode: '' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? {RoleCode: '',Gender:'',MaritalStatus:'',BloodGrp:'', StateCode: '', CityCode: ''} : data);
          this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.getDesignation();
     this.allOnloadMethods();
@@ -97,8 +96,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
 
   public activeStep = this.steps[0];
   
-  setActiveStep(steo) {
-    
+  setActiveStep(steo) {    
         switch (steo.key) {
           case 'step1':
           this.activeStep = steo;
@@ -183,7 +181,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       this.bulkAdd.RefId = this.employee.EmpId;
       this.bulkAdd.FormFlag = 'EMP';
       this.bulkAdd.AddressType = 'H';
-      this.bulkAdd.UserId = this.cpInfo.EmpId;
+      this.bulkAdd.UserCode = this.cpInfo.EmpId;
       //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
       // this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {

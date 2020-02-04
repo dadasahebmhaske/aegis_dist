@@ -186,7 +186,7 @@ export class GodownComponent implements OnInit {
     this.bulkAdd.RefId = this.godown.GodownId;
     this.bulkAdd.FormFlag = 'GDWN';
     this.bulkAdd.AddressType = 'H';
-    this.bulkAdd.UserId = this.cpInfo.EmpId;
+    this.bulkAdd.UserCode = this.cpInfo.EmpId;
     //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
     // this.fd.append('CipherText', ciphertext);
     this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {

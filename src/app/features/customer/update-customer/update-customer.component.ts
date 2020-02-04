@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition,  animate} from '@angular/animations';
+import { AppService } from '@app/core/custom-services/app.service';
+import { CustomerService } from '../customer.service';
+import { MasterService } from '@app/core/custom-services/master.service';
+import { DatashareService } from '@app/core/custom-services/datashare.service';
+import { AppComponent } from '@app/app.component';
 @Component({
   selector: 'sa-update-customer',
   templateUrl: './update-customer.component.html',
@@ -19,11 +24,29 @@ import { trigger, state, style, transition,  animate} from '@angular/animations'
 })
 export class UpdateCustomerComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
+  public addArray: any = [];
+  public bulkAdd: any = {};
+  public customer: any = {};
+  public CustTypeData: any = [];
+  public ConsumptionData: any = [];
+  public ContractData:any=[];
+  public CityData:any=[];
+  public cpInfo: any;
+  public FirmData:any=[];
+  public loaderbtn: boolean = true;
+  public RouteData:any=[];
+  public ServiceData:any=[];
+  public StateData:any=[];
+  public SubAreaData:any=[];
+  public SubAreaArray:any=[];
+  public VolumeData: any = [];
+  constructor(private appService: AppService, private customerService: CustomerService,private datashare: DatashareService, private masterService: MasterService) {
   }
-
+  ngOnInit() {
+    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '',FirmTypeId:'',ContractualId:'',RoutId:'',SubAreaId:'',CustCatId:'',StateCode:'',CityCode:'' } : data);
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.allOnloadMethods();
+  }
   public model = {
     email: '',
     firstname: '',
@@ -34,7 +57,6 @@ export class UpdateCustomerComponent implements OnInit {
     wphone: '',
     hphone: ''
   };
-
   public steps = [
     {
       key: 'step1',
@@ -67,7 +89,7 @@ export class UpdateCustomerComponent implements OnInit {
     {
       key: 'step5',
       title: 'Customer Bank Details',
-      valid: false,
+      valid: true,
       checked: false,
       submitted: false,
     },
@@ -105,13 +127,86 @@ export class UpdateCustomerComponent implements OnInit {
         }
       }
     }
-  
+    nextToAddress(){
+      this.loaderbtn = false;
+      this.customer.Flag = 'UP';
+      this.customer.CPCode = this.cpInfo.CPCode;
+      this.customer.UserCode = this.cpInfo.EmpId;
+      this.customer.ConsId = '';
+      let ciphertext = this.appService.getEncrypted(this.customer);
+      this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
+        this.loaderbtn = true;
+        if (resp.StatusCode != 0) {
+          if (resp.Data.length != 0)
+            this.customer.ConsId = resp.Data[0].ConsId;
+            this.nextStep();
+            AppComponent.SmartAlert.Success(resp.Message);
+        } else {
+          AppComponent.SmartAlert.Errmsg(resp.Message);
+          this.loaderbtn = true;
+        }
+      });
+     
+    }
+    nextToProductDeatils(){
+      this.nextStep();
+    }
+    nextToDocumentDetails(){
+      this.nextStep();
+    }
+    nextToBankDetails(){
+      this.nextStep();
+    }
+    onSubmitBankDetails(){
+      this.nextStep();
+    }
   
     onWizardComplete(data) {
       console.log('basic wizard complete', data)
     }
-  
-  
+    allOnloadMethods() {
+      this.customerService.getCustomerType().subscribe((respCt) => {
+        if (respCt.StatusCode != 0)
+          this.CustTypeData = respCt.Data;
+      });
+      this.customerService.getVolumeType().subscribe((respV) => {
+        if (respV.StatusCode != 0)
+          this.VolumeData = respV.Data;
+      });
+      this.customerService.getConsumptionType().subscribe((respC) => {
+        if (respC.StatusCode != 0)
+          this.ConsumptionData = respC.Data;
+      });
+      this.customerService.getServiceType().subscribe((respS) => {
+        if (respS.StatusCode != 0)
+          this.ServiceData = respS.Data;
+      });
+      this.customerService.getFirmType().subscribe((respF) => {
+        if (respF.StatusCode != 0)
+          this.FirmData = respF.Data;
+      });
+      this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR:any)=>{      
+        if(resR.StatusCode!=0)
+       this.RouteData=resR.Data;  
+      }); 
+      this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA:any)=>{      
+        if(reSA.StatusCode!=0){
+       this.SubAreaArray=reSA.Data;
+      }     
+      }); 
+      this.masterService.getState().subscribe((resSt: any) => {
+          if(resSt.StatusCode!=0)
+          this.StateData = resSt.Data;
+        });
+        this.customerService.getContraType().subscribe((resCo) => {
+          if (resCo.StatusCode != 0)
+            {this.ContractData = resCo.Data;
+            this.getSubArea();}
+        });
+    }
+    getSubArea(){
+      this.SubAreaData= this.masterService.filterData( this.SubAreaArray,this.customer.RoutId,'RouteId');
+    }
     private lastModel;
   
     //custom change detection

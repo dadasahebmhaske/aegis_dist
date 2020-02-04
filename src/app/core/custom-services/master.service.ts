@@ -26,6 +26,9 @@ export class MasterService {
   public getDesignation() {                               
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DGM&IsActive=Y`);
   }
+  public getCustomer(cpcode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&IsActive=Y`);     
+  }
   public getCity(statecode) {                               
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
   } public getDocumentType() {

@@ -10,20 +10,24 @@
           <div>
             <div class="widget-body">
               <div class="row ">
+                <form name="custForm" #custForm="ngForm" (ngSubmit)="getCustomer()" ngNativeValidate>
                 <div class="col-sm-2 col-xs-8">
                   <div class="form-group">
-                    <input type="text" placeholder="Enter Customer No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                      onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly ng-model="ConsumerNo"
+                    <input type="text" placeholder="Enter Customer No." class="form-control" oninvalid="this.setCustomValidity('Enter Customer Number')"
+                      onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" aCommonDir dirType="number" [(ngModel)]="ConsNo"
                       maxlength="8" required />
                   </div>
                 </div>
                 <div class="col-sm-1 col-xs-4">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success get_details">
-                      <i class="fa fa-search"></i> Get Details</button>
-
+                    <!-- <button type="submit" class="btn btn-block btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button> -->
+                      <button class="btn btn-block btn-success get_details" type="submit"  [disabled]="!loaderbtn">    
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                    {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                   </div>
                 </div>
+              </form>
                 <div class="col-sm-9">
                     <div class="form-group  pull-right">
                         <a routerLink="/customer/update-customer"  class="btn btn-block btn-info get_details">
@@ -38,17 +42,14 @@
                     </a>
                   </div>
                 </div>
+                <div class="col-sm-12  table-responsive">
+                  <ui-grid [data]="custData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+              </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </article>
-
-
     </div>
-
   </sa-widgets-grid>
 </div>

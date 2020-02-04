@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from './../../shared/shared.module';
 import { routing,componentArray } from './customer-routing.module';
 import { UigridcustomerDirective } from '../../core/directive/uigridcustomer.directive';
+import { CustomerService } from './customer.service';
 
 @NgModule({
   declarations: [componentArray,UigridcustomerDirective],
@@ -11,6 +12,7 @@ import { UigridcustomerDirective } from '../../core/directive/uigridcustomer.dir
     routing,
     SharedModule
   ],
+  providers:[CustomerService],
   exports:[UigridcustomerDirective]
 })
 export class CustomerModule { }
