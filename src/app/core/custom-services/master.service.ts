@@ -40,6 +40,12 @@ export class MasterService {
   public getGodowns(cpcode) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=GDWN&CPCode=${cpcode}&IsActive=Y`);     
   }
+  getProductSegmentDetails(){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&IsActive=Y`);
+  }
+  public getProducts(Pscode) { 
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y`);     
+  }
   public getRoutes(cpcode) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`,AppComponent.httpOptions);          
   }
@@ -52,8 +58,7 @@ export class MasterService {
   public getTransport(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VTM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);     
   }
-    public getVehicles(cpcode) {
-     
+  public getVehicles(cpcode) {     
       return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);         
   }
   public postBulkDoc(fd:any){

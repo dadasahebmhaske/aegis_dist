@@ -168,6 +168,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       this.loaderbtn = false;
       this.addArray.push({
         "AddressId": "",
+        "this.bulkAdd": 'H',
         "StateCode": this.employee.StateCode,
         "CityCode": this.employee.CityCode,
         "PinCode": this.employee.PinCode,
@@ -180,7 +181,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       this.bulkAdd.data = this.addArray;
       this.bulkAdd.RefId = this.employee.EmpId;
       this.bulkAdd.FormFlag = 'EMP';
-      this.bulkAdd.AddressType = 'H';
+      //this.bulkAdd.AddressType = 'H';
       this.bulkAdd.UserCode = this.cpInfo.EmpId;
       //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
       // this.fd.append('CipherText', ciphertext);

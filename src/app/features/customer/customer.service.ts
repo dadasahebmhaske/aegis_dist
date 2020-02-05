@@ -25,4 +25,23 @@ export class CustomerService {
   public getContraType(){
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CNCM&IsActive=Y`);
   }
+  public getAddressType(){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=ADDT&IsActive=Y`);
+  }
+  public getAccountType(){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=ACT&IsActive=Y`);
+  }
+  public postBulkBank(fd:any){
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageBankAcDetails`,fd);          
+  }  
+  getBankDetails(formFlag,RefId){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=BM&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
+  }
+  public postBulkProduct(fd:any){
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCustProd`,fd);          
+  }  
+  getProductDetails(){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&IsActive=Y`);
+  }
+  
 }

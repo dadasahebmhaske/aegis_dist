@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, state, style, transition,  animate} from '@angular/animations';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppService } from '@app/core/custom-services/app.service';
 import { CustomerService } from '../customer.service';
 import { MasterService } from '@app/core/custom-services/master.service';
@@ -23,29 +23,54 @@ import { AppComponent } from '@app/app.component';
   ]
 })
 export class UpdateCustomerComponent implements OnInit {
-
+  public address: any = { AddressType: '', StateCode: '', CityCode: '' };
+  public AccountTypeData:any=[];
   public addArray: any = [];
+  public addressTypeData: any = [];
+  public bank:any={AccountType:''};
+  public bankArray:any=[];
   public bulkAdd: any = {};
+  public bulkBank:any={};
+  public bulkProd:any={};
+  public bdata: any = [];
+  public bulkDoc: any = {};
   public customer: any = {};
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
-  public ContractData:any=[];
-  public CityData:any=[];
+  public ContractData: any = [];
+  public CityData: any = [];
   public cpInfo: any;
-  public FirmData:any=[];
+  public DocFileName: string;
+  public document: any = { DocTypId: '' };
+  public docTypeData: any = [];
+  public fd = new FormData();
+  public filepreview: any;
+  public FirmData: any = [];
+  public imgUrl: string;
   public loaderbtn: boolean = true;
-  public RouteData:any=[];
-  public ServiceData:any=[];
-  public StateData:any=[];
-  public SubAreaData:any=[];
-  public SubAreaArray:any=[];
+  public removeDocUpdate: any = [];
+  public RouteData: any = [];
+  public product:any={ProdSegId:'',ProdId:''};
+  public productSegmentData:any=[];
+  public prodArray:any=[];
+  public productDataSelected:any=[];
+  public removeProductUpdate:any=[];
+  public removeAddressUpdate: any = [];
+  public removeBankUpdate:any=[];
+  public selectedFile: File = null;
+  public ServiceData: any = [];
+  public StateData: any = [];
+  public SubAreaData: any = [];
+  public SubAreaArray: any = [];
   public VolumeData: any = [];
-  constructor(private appService: AppService, private customerService: CustomerService,private datashare: DatashareService, private masterService: MasterService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService) {
   }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '',FirmTypeId:'',ContractualId:'',RoutId:'',SubAreaId:'',CustCatId:'',StateCode:'',CityCode:'' } : data);
+    this.imgUrl=`${AppComponent.ImageUrl}CustDocs/`;
+    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' } : data);
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allOnloadMethods();
+   //this.customer.RouteId!=null &&  this.customer.RouteId!=''? this.getSubArea():'';
   }
   public model = {
     email: '',
@@ -96,132 +121,514 @@ export class UpdateCustomerComponent implements OnInit {
   ];
 
   public activeStep = this.steps[0];
-  
-    setActiveStep(steo) {
-      this.activeStep = steo
-    }
-  
-    prevStep() {
-      let idx = this.steps.indexOf(this.activeStep);
-      if (idx > 0) {
-        this.activeStep = this.steps[idx - 1]
-      }
-    }
-  
-    nextStep() {
-      this.activeStep.submitted = true;
-      if(!this.activeStep.valid){
-        return;
-      }
-      this.activeStep.checked = true;
-      if (this.steps.every(it=>(it.valid && it.checked))) {
-        this.onWizardComplete(this.model)
-      } else {
-        let idx = this.steps.indexOf(this.activeStep);
-        this.activeStep = null;
-        while (!this.activeStep) {
-          idx = idx == this.steps.length - 1 ? 0 : idx + 1;
-          if (!this.steps[idx].valid || !this.steps[idx].checked ) {
-            this.activeStep = this.steps[idx]
-          }
-        }
-      }
-    }
-    nextToAddress(){
-      this.loaderbtn = false;
-      this.customer.Flag = 'UP';
-      this.customer.CPCode = this.cpInfo.CPCode;
-      this.customer.UserCode = this.cpInfo.EmpId;
-      this.customer.ConsId = '';
-      let ciphertext = this.appService.getEncrypted(this.customer);
-      this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
-        this.loaderbtn = true;
-        if (resp.StatusCode != 0) {
-          if (resp.Data.length != 0)
-            this.customer.ConsId = resp.Data[0].ConsId;
-            this.nextStep();
-            AppComponent.SmartAlert.Success(resp.Message);
+
+  setActiveStep(steo) {
+    // this.activeStep = steo
+    switch (steo.key) {
+      case 'step1':
+        this.activeStep = steo;
+        break;
+      case 'step2':
+        if (steo.key == "step2" && this.customer.ConsId != null) {
+          this.activeStep = steo;
+          this.getCustomerAddressDetails();
         } else {
-          AppComponent.SmartAlert.Errmsg(resp.Message);
-          this.loaderbtn = true;
+          AppComponent.SmartAlert.Errmsg(`Please add customer details first`)
         }
-      });
-     
+        break;
+      case 'step3':
+        this.activeStep = steo;this.getCustomerProductDetails();
+        if (steo.key == "step3" && this.customer.ConsId != null && this.customer.AddressId != null) {
+          this.activeStep = steo;
+          this.getCustomerProductDetails();
+        } else {
+          AppComponent.SmartAlert.Errmsg(`Please add address details first`)
+        }
+        break;
+      case 'step4':
+        this.activeStep = steo;  this.getCustomerDocumentDetails();
+        if (steo.key == "step4" && this.customer.ConsId != null && this.customer.AddressId != null) {
+          this.activeStep = steo;
+          this.getCustomerDocumentDetails();
+        } else {
+          AppComponent.SmartAlert.Errmsg(`Please add product details first`)
+        }
+        break;
+      case 'step5':
+        this.activeStep = steo; this.getCustomerBankDetails();
+        if (steo.key == "step5" && this.customer.ConsId != null && this.customer.ProductId != null) {
+          this.activeStep = steo;
+          this.getCustomerBankDetails();
+        } else {
+          AppComponent.SmartAlert.Errmsg(`Please add document details first`)
+        }
+        break;
     }
-    nextToProductDeatils(){
-      this.nextStep();
+  }
+
+  prevStep() {
+    let idx = this.steps.indexOf(this.activeStep);
+    if (idx > 0) {
+      this.activeStep = this.steps[idx - 1]
     }
-    nextToDocumentDetails(){
-      this.nextStep();
+  }
+
+  nextStep() {
+    this.activeStep.submitted = true;
+    if (!this.activeStep.valid) {
+      return;
     }
-    nextToBankDetails(){
-      this.nextStep();
-    }
-    onSubmitBankDetails(){
-      this.nextStep();
-    }
-  
-    onWizardComplete(data) {
-      console.log('basic wizard complete', data)
-    }
-    allOnloadMethods() {
-      this.customerService.getCustomerType().subscribe((respCt) => {
-        if (respCt.StatusCode != 0)
-          this.CustTypeData = respCt.Data;
-      });
-      this.customerService.getVolumeType().subscribe((respV) => {
-        if (respV.StatusCode != 0)
-          this.VolumeData = respV.Data;
-      });
-      this.customerService.getConsumptionType().subscribe((respC) => {
-        if (respC.StatusCode != 0)
-          this.ConsumptionData = respC.Data;
-      });
-      this.customerService.getServiceType().subscribe((respS) => {
-        if (respS.StatusCode != 0)
-          this.ServiceData = respS.Data;
-      });
-      this.customerService.getFirmType().subscribe((respF) => {
-        if (respF.StatusCode != 0)
-          this.FirmData = respF.Data;
-      });
-      this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR:any)=>{      
-        if(resR.StatusCode!=0)
-       this.RouteData=resR.Data;  
-      }); 
-      this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA:any)=>{      
-        if(reSA.StatusCode!=0){
-       this.SubAreaArray=reSA.Data;
-      }     
-      }); 
-      this.masterService.getState().subscribe((resSt: any) => {
-          if(resSt.StatusCode!=0)
-          this.StateData = resSt.Data;
-        });
-        this.customerService.getContraType().subscribe((resCo) => {
-          if (resCo.StatusCode != 0)
-            {this.ContractData = resCo.Data;
-            this.getSubArea();}
-        });
-    }
-    getSubArea(){
-      this.SubAreaData= this.masterService.filterData( this.SubAreaArray,this.customer.RoutId,'RouteId');
-    }
-    private lastModel;
-  
-    //custom change detection
-    ngDoCheck() {
-      if (!this.lastModel) {
-        // backup model to compare further with
-        this.lastModel = Object.assign({}, this.model)
-      } else {
-        if (Object.keys(this.model).some(it=>this.model[it] != this.lastModel[it])) {
-          // change detected
-          this.steps.find(it=>it.key == 'step1').valid = !!(this.model.email && this.model.firstname && this.model.lastname);
-          this.steps.find(it=>it.key == 'step2').valid = !!(this.model.country && this.model.city && this.model.postal);
-          this.lastModel = Object.assign({}, this.model)
+    this.activeStep.checked = true;
+    if (this.steps.every(it => (it.valid && it.checked))) {
+      this.onWizardComplete(this.model)
+    } else {
+      let idx = this.steps.indexOf(this.activeStep);
+      this.activeStep = null;
+      while (!this.activeStep) {
+        idx = idx == this.steps.length - 1 ? 0 : idx + 1;
+        if (!this.steps[idx].valid || !this.steps[idx].checked) {
+          this.activeStep = this.steps[idx]
         }
       }
     }
+  }
+  nextToAddress() {
+    this.loaderbtn = false;
+    this.customer.Flag = 'UP';
+    this.customer.CPCode = this.cpInfo.CPCode;
+    this.customer.UserCode = this.cpInfo.EmpId;
+    let ciphertext = this.appService.getEncrypted(this.customer);
+    this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
+      this.loaderbtn = true;
+      if (resp.StatusCode != 0) {
+        if (resp.Data.length != 0)
+          this.customer.ConsId = resp.Data[0].ConsId;
+        this.nextStep();
+        this.getCustomerAddressDetails();
+        AppComponent.SmartAlert.Success(resp.Message);
+      } else {
+        AppComponent.SmartAlert.Errmsg(resp.Message);
+        this.loaderbtn = true;
+      }
+    });
+
+  }
+  nextToProductDeatils() {
+    if (this.addArray.length > 0 || this.removeAddressUpdate.length > 0) {
+      this.loaderbtn = false;
+      this.bulkAdd.Flag = this.address.AddressId == null ? "IN" : "UP";
+      if (this.removeAddressUpdate.length > 0) {
+        this.addArray = this.addArray.concat(this.removeAddressUpdate);
+      }
+      this.bulkAdd.data = this.addArray;
+      this.bulkAdd.RefId = this.customer.ConsId;
+      this.bulkAdd.FormFlag = 'CUSTM';
+      //this.bulkAdd.AddressType = 'H';
+      this.bulkAdd.UserCode = this.cpInfo.EmpId;
+      this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          this.address.AddressId = resData.Data[0].AddressId
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.getCustomerProductDetails();
+          this.addArray = [];
+          this.nextStep();
+          // this. this.getCustomerAddressDetails();();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    }else{
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one product.`);
+    }
+  }
+  nextToDocumentDetails() {
+    if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
+      this.loaderbtn = false;
+    this.bulkProd.Flag = "IN";
+    if (this.removeProductUpdate.length > 0) {
+      this.prodArray = this.prodArray.concat(this.removeProductUpdate);
+    }
+    this.bulkProd.data = this.prodArray;
+    this.bulkProd.RefId = this.customer.ConsId;
+    //this.bulkBank.FormFlag = 'CUSTM';
+    this.bulkProd.UserCode = this.cpInfo.EmpId;
+    this.customerService.postBulkProduct(this.bulkProd).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        //this.bank.AddressId = resData.Data[0].AddressId
+        AppComponent.SmartAlert.Success(resData.Message);
+        this.prodArray = [];
+        this.getCustomerDocumentDetails();
+        this.nextStep();
+        // this. this.getCustomerAddressDetails();();
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+    }else{
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one product.`);
+    }
+    
+    
+    //this.nextStep();
+  }
+  nextToBankDetails() {
+    if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
+      this.bulkDoc.flag = this.customer.DocId == null ? 'IN' : 'UP';
+      this.bulkDoc.RefId = this.customer.ConsId;
+      this.bulkDoc.FormFlag = 'CUSTM';
+      this.bulkDoc.UserCode = this.cpInfo.EmpId;
+      if (this.removeDocUpdate.length > 0) {
+        this.bdata = this.bdata.concat(this.removeDocUpdate);
+      }
+      this.bulkDoc.bdata = this.bdata;
+      let ciphertext = this.appService.getEncrypted(this.bulkDoc);
+      this.fd.append('CipherText', ciphertext);
+      this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          this.bdata = []; this.removeDocUpdate = [];
+          if (resData.Data.length != 0)
+            this.customer.DocId = resData.Data[0].DocId;
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.getCustomerBankDetails();
+          this.nextStep();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one document.`);
+    }
+
+  }
+  onSubmitBankDetails() {
+    if (this.bankArray.length > 0 || this.removeBankUpdate.length > 0) {
+      this.loaderbtn = false;
+      this.bulkBank.Flag = "IN";
+      if (this.removeBankUpdate.length > 0) {
+        this.bankArray = this.bankArray.concat(this.removeBankUpdate);
+      }
+      this.bulkBank.data = this.bankArray;
+      this.bulkBank.RefId = this.customer.ConsId;
+      this.bulkBank.FormFlag = 'CUSTM';
+      this.bulkBank.UserCode = this.cpInfo.EmpId;
+      this.customerService.postBulkBank(this.bulkBank).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          //this.bank.AddressId = resData.Data[0].AddressId
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.bankArray = [];
+          AppComponent.Router.navigate(['/customer/customer-master']);
+          this.nextStep();
+          // this. this.getCustomerAddressDetails();();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    }else{
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one bank.`);
+    }
+  
+  }
+
+  onWizardComplete(data) {
+    console.log('basic wizard complete', data)
+  }
+  allOnloadMethods() {
+    this.customerService.getCustomerType().subscribe((respCt) => {
+      if (respCt.StatusCode != 0)
+        this.CustTypeData = respCt.Data;
+    });
+    this.customerService.getVolumeType().subscribe((respV) => {
+      if (respV.StatusCode != 0)
+        this.VolumeData = respV.Data;
+    });
+    this.customerService.getConsumptionType().subscribe((respC) => {
+      if (respC.StatusCode != 0)
+        this.ConsumptionData = respC.Data;
+    });
+    this.customerService.getServiceType().subscribe((respS) => {
+      if (respS.StatusCode != 0)
+        this.ServiceData = respS.Data;
+    });
+    this.customerService.getFirmType().subscribe((respF) => {
+      if (respF.StatusCode != 0)
+        this.FirmData = respF.Data;
+    });
+    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteData = resR.Data;
+    });
+    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaArray = reSA.Data;
+      }
+    });
+    this.masterService.getState().subscribe((resSt: any) => {
+      if (resSt.StatusCode != 0)
+        this.StateData = resSt.Data;
+    });
+    this.customerService.getContraType().subscribe((resCo) => {
+      if (resCo.StatusCode != 0) {
+      this.ContractData = resCo.Data;
+        this.getSubArea();
+      }
+    });
+    this.masterService.getDocumentType().subscribe(
+      (resDoc: any) => {
+        if (resDoc.StatusCode != 0)
+          this.docTypeData = resDoc.Data;
+      });
+    this.customerService.getAddressType().subscribe((resAdd: any) => {
+      if (resAdd.StatusCode != 0)
+        this.addressTypeData = resAdd.Data;
+    });
+    this.customerService.getAccountType().subscribe((resACT: any) => {
+      if (resACT.StatusCode != 0)
+        this.AccountTypeData = resACT.Data;
+    });
+    this.masterService.getProductSegmentDetails().subscribe((resPS: any) => {
+      if (resPS.StatusCode != 0)
+        this.productSegmentData = resPS.Data;
+    });
+   
+  }
+  getSubArea() {
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
+  }
+  //product
+  onProductSubmit(){
+    if (this.prodArray.some(obj => obj.ProdId === this.product.ProdId)) {
+      AppComponent.SmartAlert.Errmsg("Product is already added in list.");
+      this.product={ProdSegId:'',ProdId:''};
+    }else{
+      let docobj;
+      docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
+      let ProdSegName = docobj[0].ProdSeg;
+      docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
+      let ProdName = docobj[0].Product;
+      this.prodArray.push(
+        {"CustProdId":"",
+        "CPCode":this.cpInfo.CPCode,
+        "ConsId":this.customer.ConsId,
+        "ProdId":this.product.ProdId,
+        "ProdSegId":this.product.ProdSegId,
+        "PurchaseQty":this.product.PurchaseQty,
+        "DepositAmt":this.product.DepositAmt,
+        "MonthlyConsumption":this.product.MonthlyConsumption,
+        "IsActive":"Y",
+        "RefundableAmt":0,
+        "TotalDepositAmt":0,
+        "TotalRefundableAmt":0,
+        "ProdSegName":ProdSegName,
+        "Product":ProdName
+      }
+       );
+      this.product={ProdSegId:'',ProdId:''};
+    }   
+  }
+  onRemoveProduct(data, index) {
+    if (data.CustProdId != '' && data.CustProdId != null) {
+      data.IsActive = 'N';
+      this.removeProductUpdate.push(data);
+    } 
+    this.prodArray.splice(index, 1);
+  }
+  getCustomerProductDetails() {
+    this.customerService.getProductDetails().subscribe((resprod: any) => {
+      if (resprod.StatusCode != 0)
+        this.prodArray = resprod.Data;
+      for (let i = 0; i < this.prodArray.length; i++) {
+        let docobj;
+        docobj = this.masterService.filterData(this.productSegmentData, this.prodArray[i].ProdSegId, 'ProdSegId');
+        this.prodArray[i].ProdSegName = docobj[0].ProdSeg;   
+        // docobj = this.masterService.filterData(this.productDataSelected, this.prodArray[i].ProdId, 'ProdId');
+        // this.prodArray[i].ProdName = docobj[0].Product;    
+      }
+    });
+  }
+  onSelectProdSegment(){
+    this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
+      if (resPT.StatusCode != 0){
+        this.productDataSelected = resPT.Data;
+      }else{this.productDataSelected=[];}
+    });  
+  }
+  // bank
+  onSubmitBankData(){
+    if (this.bankArray.some(obj => obj.AccountNo === this.bank.AccountNo)) {
+      AppComponent.SmartAlert.Errmsg("Bank Account is already added in list.");
+      this.bank = { AccountType: '' };
+    }else{
+      let docobj;
+      docobj = this.masterService.filterData(this.AccountTypeData, this.bank.AccountType, 'MstFlag');
+      let AccountTypeName = docobj[0].Name;
+      this.bankArray.push({
+        "BankId":'',
+        "AccountNo":this.bank.AccountNo,
+        "AccountType":this.bank.AccountType,
+        "AccountHolderName":this.bank.AccountHolderName,
+        "BankName":this.bank.BankName,
+        "BranchName":this.bank.BranchName,
+        "IFSCCode":this.bank.IFSCCode,
+        "IsActive": "Y",
+        "AccountTypeName":AccountTypeName  
+      });
+      this.bank={AccountType:''};
+    }  
+  }
+  onRemoveBank(data, index) {
+    if (data.BankId != '' && data.BankId != null) {
+      data.IsActive = 'N';
+      this.removeBankUpdate.push(data);
+    } 
+    this.bankArray.splice(index, 1)
+  }
+  getCustomerBankDetails() {
+    this.customerService.getBankDetails('CUSTM', this.customer.ConsId).subscribe((resp: any) => {
+      if (resp.StatusCode != 0)
+        this.bankArray = resp.Data;
+      for (let i = 0; i < this.bankArray.length; i++) {
+        let docobj;
+        docobj = this.masterService.filterData(this.AccountTypeData, this.bankArray[i].AccountType, 'MstFlag');
+        this.bankArray[i].AccountTypeName = docobj[0].Name;      
+      }
+    });
+  }
+  //address
+  onSubmitAddress() {
+    let docobj;
+    docobj = this.masterService.filterData(this.addressTypeData, this.address.AddressType, 'MstFlag');
+    let AddressTypeName = docobj[0].Name;
+    docobj = this.masterService.filterData(this.StateData, this.address.StateCode, 'StateCode');
+    let StateName = docobj[0].StateDesc;
+    docobj = this.masterService.filterData(this.CityData, this.address.CityCode, 'CityCode');
+    let CityName = docobj[0].CityName;
+    this.addArray.push({
+      "AddressId": "",
+      "AddressType": this.address.AddressType,
+      "StateCode": this.address.StateCode,
+      "CityCode": this.address.CityCode,
+      "PinCode": this.address.PinCode,
+      "AddressLineOne": this.address.AddressLineOne,
+      "AddressLineTwo": this.address.AddressLineTwo,
+      "AddressLineThree": this.address.AddressLineThree,
+      "IsActive": "Y",
+      "AddressTypeName": AddressTypeName,
+      "StateName": StateName,
+      "CityName": CityName
+    });
+    this.address = { AddressType: '', StateCode: '', CityCode: '' };
+  }
+  onRemoveAddress(data, index) {
+    if (data.AddressId != '' && data.AddressId != null) {
+      data.IsActive = 'N';
+      this.removeAddressUpdate.push(data);
+    }
+    this.addArray.splice(index - 1, 1)
+  }
+  getCustomerAddressDetails() {
+    this.masterService.getAddressDetails('CUSTM', this.customer.ConsId).subscribe((resp: any) => {
+      if (resp.StatusCode != 0)
+        this.addArray = resp.Data;
+      for (let i = 0; i < this.addArray.length; i++) {
+        this.masterService.getCity( this.addArray[i].StateCode).subscribe((res) => {
+          if (res.StatusCode != 0) {
+          this.CityData = res.Data;
+            let docobj;
+            docobj = this.masterService.filterData(this.addressTypeData, this.addArray[i].AddressType, 'MstFlag');
+            this.addArray[i].AddressTypeName = docobj[0].Name;
+            docobj = this.masterService.filterData(this.StateData, this.addArray[i].StateCode, 'StateCode');
+            this.addArray[i].StateName = docobj[0].StateDesc;
+            docobj = this.masterService.filterData(this.CityData, this.addArray[i].CityCode, 'CityCode');
+            this.addArray[i].CityName = docobj[0].CityName;
+
+          } else { this.CityData = []; }
+        });
+      }
+    });
+  }
+  getCityData() {
+    this.masterService.getCity(this.address.StateCode).subscribe((res) => {
+      if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
+    });
+  }
+  //document
+  onFileSelected(event) {
+    var reader = new FileReader();
+    this.selectedFile = <File>event.target.files[0];
+    this.DocFileName = event.target.files[0].name;
+    //this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
+    reader.onload = (event: ProgressEvent) => {
+      this.filepreview = (<FileReader>event.target).result;
+      var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
+      f1 = f1.toString().toLowerCase();
+
+      if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
+      }
+      else {
+        $("#fileControl").val('');
+        this.filepreview = 'assets/img/avatars/male.png'
+        AppComponent.SmartAlert.Errmsg(`Choose only valid file `);
+      }
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+  onSubmitDoc() {
+    let docobj;
+    docobj = this.masterService.filterData(this.docTypeData, this.document.DocTypId, 'DocTypId');
+    this.document.DocType = docobj[0].DocType;
+    this.document.DocId = '';
+
+    this.document.DocFileName = this.DocFileName;
+    this.document.IsActive = "Y";
+    this.document.filepreview = this.filepreview;
+
+    if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
+      AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
+      $("#fileControl").val('');
+      this.document = { DocTypId: '' };
+    } else {
+      this.bdata.push(this.document);
+      this.fd.append(`image${this.bdata.length}`, this.selectedFile, this.DocFileName);
+      $("#fileControl").val('');
+      this.document = { DocTypId: '' };
+    }
+  }
+  onRemoveDoc(data, index) {
+    if (data.DocId != '' && data.DocId != null) {
+      data.IsActive = 'N';
+      this.removeDocUpdate.push(data);
+    } else {
+      this.fd.delete(`image${index}`);
+    }
+    this.bdata.splice(index - 1, 1)
+  }
+  viewDocument(base64URL) {
+    var win = window.open();
+    win.document.write(`<iframe src="${base64URL}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+  }
+getCustomerDocumentDetails() {
+    this.masterService.getDocumentDetails('CUSTM', this.customer.ConsId).subscribe((response: any) => {
+      if (response.StatusCode != 0)
+        this.bdata = response.Data;
+      console.log(response.Data[0]);
+    });
+  }
+
+  private lastModel;
+
+  //custom change detection
+  ngDoCheck() {
+    if (!this.lastModel) {
+      // backup model to compare further with
+      this.lastModel = Object.assign({}, this.model)
+    } else {
+      if (Object.keys(this.model).some(it => this.model[it] != this.lastModel[it])) {
+        // change detected
+        this.steps.find(it => it.key == 'step1').valid = !!(this.model.email && this.model.firstname && this.model.lastname);
+        this.steps.find(it => it.key == 'step2').valid = !!(this.model.country && this.model.city && this.model.postal);
+        this.lastModel = Object.assign({}, this.model)
+      }
+    }
+  }
 
 }

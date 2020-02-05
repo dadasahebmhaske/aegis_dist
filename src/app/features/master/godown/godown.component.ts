@@ -173,6 +173,7 @@ export class GodownComponent implements OnInit {
     this.loaderbtn = false;
     this.addArray.push({
       "AddressId": "",
+     "this.bulkAdd": 'H',
       "StateCode": this.godown.StateCode,
       "CityCode": this.godown.CityCode,
       "PinCode": this.godown.PinCode,
@@ -184,8 +185,8 @@ export class GodownComponent implements OnInit {
     this.bulkAdd.Flag = this.godown.AddressId == null ? "IN" : "UP";
     this.bulkAdd.data = this.addArray;
     this.bulkAdd.RefId = this.godown.GodownId;
-    this.bulkAdd.FormFlag = 'GDWN';
-    this.bulkAdd.AddressType = 'H';
+    this.bulkAdd.FormFlag = 'CUSTM';
+    //this.bulkAdd.AddressType = 'H';
     this.bulkAdd.UserCode = this.cpInfo.EmpId;
     //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
     // this.fd.append('CipherText', ciphertext);
@@ -227,7 +228,7 @@ export class GodownComponent implements OnInit {
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
     }else{
-      AppComponent.SmartAlert.Errmsg(`Please Add atleast one document.`);
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one document.`);
     }
   
     // this.nextStep();

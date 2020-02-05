@@ -61,7 +61,7 @@
                                 <label for="sel1">First Name
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter First Name"
+                                <input type="text" class="form-control" placeholder="Enter First Name" 
                                   [(ngModel)]="customer.FirstName" name="FirstName" saCommonDir dirType="alphaonly"
                                   required />
                               </div>
@@ -308,7 +308,7 @@
                         <br>
                         <h3>
                           <strong>Step 2</strong> - Address Details</h3>
-                        <form name="addressForm" #addressForm="ngForm" (ngSubmit)="nextToProductDeatils()"
+                        <form name="addressForm" #addressForm="ngForm" (ngSubmit)="onSubmitAddress()"
                           autocomplete="off" ngNativeValidate>
                           <div class="row">
                             <div class="col-sm-2">
@@ -316,8 +316,9 @@
                                 <label for="sel1">Address Type
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" required>
+                                <select class="form-control" [(ngModel)]="address.AddressType" name="AddressType" required>
                                   <option value="" selected hidden>Select Type</option>
+                                  <option [value]="add.MstFlag" *ngFor="let add of addressTypeData">{{add.Name}}</option>
                                 </select>
                               </div>
                             </div>
@@ -326,22 +327,22 @@
                                 <label for="sel1">Address Line 1
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 1"
-                                  ng-model="consumer.AddressLine1" required />
+                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="address.AddressLineOne"
+                                                                    name="AddressLine1" required />
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <label for="sel1">Address Line 2</label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 2"
-                                  ng-model="consumer.AddressLine2" />
+                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="address.AddressLineTwo"
+                                name="AddressLine2" />
                               </div>
                             </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Address Line 3</label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 3"
-                                  ng-model="consumer.AddressLine3" />
+                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="address.AddressLineThree"
+                                name="AddressLine3" />
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -349,11 +350,10 @@
                                 <label>State
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control">
-                                  <option selected hidden>Select State</option>
-                                  <option>Maharashtra</option>
-                                  <option>Goa </option>
-                                </select>
+                                <select class="form-control" name="StateCode" [(ngModel)]="address.StateCode" (change)="getCityData()">
+                                  <option value="" selected hidden>Select State</option>
+                                  <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                              </select>
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -361,12 +361,10 @@
                                 <label>City
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control">
-                                  <option selected hidden>Select City</option>
-                                  <option>Pune</option>
-                                  <option>Mumbai </option>
-                                  <option>Nagpur </option>
-                                </select>
+                                <select class="form-control" [(ngModel)]="address.CityCode" name="CityCode">
+                                  <option value="" selected hidden>Select City</option>
+                                  <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
+                              </select>
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -374,11 +372,9 @@
                                 <label for="sel1">Pin Code
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Pin" ng-model="consumer.Pin"
-                                  minlength="6" maxlength="6"
-                                  oninvalid="this.setCustomValidity('Enter 6 digits PIN number')"
-                                  onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly
-                                  required />
+                                <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="address.PinCode"
+                                                                    name="Pin" minlength="6" maxlength="6" numericonly required
+                                                                />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -405,33 +401,27 @@
                                       <th>Address Line 1</th>
                                       <th>Address Line 2</th>
                                       <th>Address Line 3</th>
+                                      <th>State</th>
+                                      <th>City</th>
                                       <th>Pin Code</th>
                                       <th>Remove</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Delivery</td>
-                                      <td>Sr no.65/6 B New Gajara Society </td>
-                                      <td>Savarkar Marg, Bibewadi</td>
-                                      <td>Pune, Maharashtra</td>
-                                      <td>411037</td>
+                                    <tr *ngFor="let add of addArray;index as i">
+                                      <td>{{i+1}}</td>
+                                      <td>{{add.AddressTypeName}}</td>
+                                      <td>{{add.AddressLineOne}} </td>
+                                      <td>{{add.AddressLineTwo}}</td>
+                                      <td>{{add.AddressLineThree}}</td>
+                                      <td>{{add.StateName}}</td>
+                                      <td>{{add.CityName}}</td>
+                                      <td>{{add.PinCode}}</td>
                                       <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveAddress(add,i+1)>Remove</button>
                                       </td>
                                     </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td>Residential</td>
-                                      <td>Sr no.65/6 B New Gajara Society </td>
-                                      <td>Savarkar Marg, Bibewadi</td>
-                                      <td>Pune, Maharashtra</td>
-                                      <td>411037</td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
+                                   
 
                                   </tbody>
                                 </table>
@@ -468,16 +458,16 @@
                         <br>
                         <h3>
                           <strong>Step 3</strong> -Product Details</h3>
-                        <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="nextToDocumentDetails()"
-                          ngNativeValidate>
+                        <form name="productForm" #productForm="ngForm" (ngSubmit)="onProductSubmit()"    ngNativeValidate>
                           <div class="row">
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Product Segment
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" required>
+                                <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
                                   <option value="" selected hidden>Select Segment</option>
+                                  <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
                                 </select>
                               </div>
                             </div>
@@ -486,8 +476,9 @@
                                 <label for="sel1">Product
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" required>
+                                <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" required>
                                   <option value="" selected hidden>Select Product</option>
+                                  <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                                 </select>
                               </div>
                             </div>
@@ -496,7 +487,7 @@
                                 <label for="sel1">Deposite Amount
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Amount" required />
+                                <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="product.DepositAmt" name="DepositAmt" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -504,7 +495,7 @@
                                 <label for="sel1">Purchase Quantity
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Quantity" required />
+                                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="product.PurchaseQty" name="PurchaseQty" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -512,7 +503,7 @@
                                 <label for="sel1">Monthly Consumption
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Consumption" required />
+                                <input type="text" class="form-control" placeholder="Enter Consumption" [(ngModel)]="product.MonthlyConsumption" name="MonthlyConsumption" required />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -526,6 +517,7 @@
                               </div>
                             </div>
                           </div>
+                        </form>
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="table-responsive">
@@ -542,40 +534,18 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Segment 1</td>
-                                      <td>Domestic 5kg Cylinder</td>
-                                      <td>1200 </td>
-                                      <td>15</td>
-                                      <td>12 </td>
+                                    <tr *ngFor="let pr of prodArray;index as i">
+                                      <td>{{i+1}}</td>
+                                      <td>{{pr.ProdSegName}}</td>
+                                      <td>{{pr.Product}}</td>
+                                      <td>{{pr.DepositAmt}}</td>
+                                      <td>{{pr.PurchaseQty}}</td>
+                                      <td>{{pr.MonthlyConsumption}}</td>
                                       <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                       </td>
                                     </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td>Segment 1</td>
-                                      <td>Domestic 14kg Cylinder</td>
-                                      <td>1400 </td>
-
-                                      <td>10</td>
-                                      <td>5 </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>3</td>
-                                      <td>Segment 1</td>
-                                      <td>Commercial 19kg Cylinder</td>
-                                      <td>2000 </td>
-                                      <td>12</td>
-                                      <td>18 </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
+                                   
                                   </tbody>
                                 </table>
                               </div>
@@ -585,7 +555,7 @@
                                 download>Download SV</a>
                             </div>
                           </div>
-                        </form>
+                        
                         <div class="form-actions">
                           <div class="row">
                             <div class="col-sm-12">
@@ -613,134 +583,82 @@
                         <br>
                         <h3>
                           <strong>Step 4</strong> - Document Details</h3>
-                        <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="nextToBankDetails()" ngNativeValidate>
-                          <div class="row">
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label>Document Type
-                                  <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control">
-                                  <option selected hidden>Select Type</option>
-                                  <option>License Document</option>
-                                  <option>PAN Document </option>
-                                  <option>Passport Document </option>
-                                  <option>ID Proof Document </option>
-                                </select>
-                              </div>
+                          <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" ngNativeValidate>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Document Type
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <select class="form-control" [(ngModel)]="document.DocTypId" name="DocTypeId" required>
+                                            <option value="" [selected]="true" hidden>Select Document Type</option>
+                                            <option [value]="doc.DocTypId" *ngFor="let doc of docTypeData">{{doc.DocType}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Select File
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Document No.
+                                            <span class="errorMessage">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir
+                                            dirType="alphanumeric" required />
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <div class="form-group">
+                                        <label>&nbsp;
+                                        </label>
+                                        <button class="btn btn-block btn-warning ">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-4">
-                              <div class="form-group">
-                                <label>Select File
-                                  <span class="errorMessage">*</span>
-                                </label>
-                                <input type="file" class="form-control" placeholder="Enter Vehicle No." required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label>Document No.
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Doc  No." />
-                              </div>
-                            </div>
-                            <div class="col-sm-1">
-                              <div class="form-group">
-                                <label>&nbsp;
-                                </label>
-                                <button class="btn btn-block btn-warning ">
-                                  <i class="glyphicon glyphicon-plus"></i>
-                                  Add
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <div class="table-responsive">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
 
-                                <table class="table table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th>#</th>
-                                      <th>Document Type</th>
-                                      <th>Document</th>
-                                      <th>Document No.</th>
-                                      <th>View</th>
-                                      <th>Remove</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>License Document</td>
-                                      <td>Driving License </td>
-                                      <td>952 852 852 954</td>
-                                      <td>
-                                        <a href="assets/img/logo.gif" target="_blank"
-                                          class="btn btn-xs btn-success">View</a>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td>PAN Document</td>
-                                      <td>PAN Card Document</td>
-                                      <td>COZPM8165M</td>
-                                      <td>
-                                        <a href="assets/img/logo.gif" target="_blank"
-                                          class="btn btn-xs btn-success">View</a>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>3</td>
-                                      <td>Aadhar</td>
-                                      <td>Aadhar Document</td>
-                                      <td>952 852 852 954</td>
-                                      <td>
-                                        <a href="assets/img/logo.gif" target="_blank"
-                                          class="btn btn-xs btn-success">View</a>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>4</td>
-                                      <td>Passport </td>
-                                      <td>Passport Document</td>
-                                      <td>95252 85254</td>
-                                      <td>
-                                        <a href="assets/img/logo.gif" target="_blank"
-                                          class="btn btn-xs btn-success">View</a>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>5</td>
-                                      <td>Educational </td>
-                                      <td>Gratuation Document</td>
-                                      <td>PUN 95252 85254</td>
-                                      <td>
-                                        <a href="assets/img/logo.gif" target="_blank"
-                                          class="btn btn-xs btn-success">View</a>
-                                      </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Document Type</th>
+                                                    <th>Document</th>
+                                                    <th>Document No.</th>
+                                                    <th>View</th>
+                                                    <th>Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let docs of bdata;index as i">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{docs.DocType}}</td>
+                                                    <td>{{docs.DocFileName}} </td>
+                                                    <td>{{docs.DocNo}} </td>
+                                                    <td>
+                                                        <a href="{{imgUrl}}{{docs.DocFileName}}" *ngIf="docs.DocId!=null && docs.DocId!=''" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                        <a (click)="viewDocument(docs.filepreview)" *ngIf="docs.DocId==null || docs.DocId==''" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </form>
                         <div class="form-actions">
                           <div class="row">
@@ -768,18 +686,17 @@
                         <br>
                         <h3>
                           <strong>Step 5</strong> -Bank Details</h3>
-                        <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitBankDetails()" ngNativeValidate>
+                        <form name="bankForm" #bankForm="ngForm" (ngSubmit)="onSubmitBankData()" ngNativeValidate>
                           <div class="row">
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Account Type
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" required>
+                                <select class="form-control" [(ngModel)]="bank.AccountType" name="AccountType" required>
                                   <option value="" selected hidden>Select Product</option>
-                                  <option value="">Saving</option>
-                                  <option value="">Current</option>
-                                </select>
+                                  <option [value]="acc.MstFlag" *ngFor="let acc of AccountTypeData">{{acc.Name}}</option>
+                                   </select>
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -788,9 +705,9 @@
                                   <span class="errorMessage">*</span>
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter Account No."
-                                  ng-model="consumer.AccountNo" minlength="9" maxlength="17"
-                                  oninvalid="this.setCustomValidity('Enter Valid Account Number')"
-                                  onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly />
+                                [(ngModel)]="bank.AccountNo" name="AccountNo" minlength="9" maxlength="17"
+                                saCommonDir dirType="number" oninvalid="this.setCustomValidity('Enter Valid Account Number')"
+                                  onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" required />
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -798,7 +715,8 @@
                                 <label for="sel1">Account Holder Name
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Holder Name" alphaonly />
+                                <input type="text" class="form-control" placeholder="Enter Holder Name" [(ngModel)]="bank.AccountHolderName" name="AccountHolderName" 
+                                saCommonDir dirType="alphaonly" required/>
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -806,7 +724,8 @@
                                 <label for="sel1">Bank Name
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Bank Name" alphaonly />
+                                <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="bank.BankName" name="BankName" 
+                                saCommonDir dirType="alphanumeric" required/>
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -814,17 +733,18 @@
                                 <label for="sel1">Branch Name
                                   <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Branch Name" alphaonly />
+                                <input type="text" class="form-control" placeholder="Enter Branch Name" [(ngModel)]="bank.BranchName" name="BranchName" 
+                                saCommonDir dirType="alphanumeric" required/>
                               </div>
                             </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">IFSC Code</label>
                                 <input type="text" class="form-control" placeholder="Enter IFSC Code"
-                                  pattern="[A-Z]{4}[0]{3}[0-9]{4}" ng-model="consumer.IfscCode"
+                                  pattern="[A-Z]{4}[0]{3}[0-9]{4}" [(ngModel)]="bank.IFSCCode" name="IFSCCode"
                                   oninvalid="this.setCustomValidity('Enter valid IFSC Code ')"
                                   onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')"
-                                  alphanumericonly />
+                                  saCommonDir dirType="alphanumeric" />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -838,6 +758,7 @@
                               </div>
                             </div>
                           </div>
+                        </form>
                           <div class="row">
                             <div class="col-sm-12">
                               <div class="table-responsive">
@@ -845,46 +766,35 @@
                                   <thead>
                                     <tr>
                                       <th>#</th>
+                                      <th>Account Type</th>
+                                      <th>Account No.</th>
+                                      <th>Account Holder Name</th>
                                       <th>Bank Name</th>
                                       <th>Branch Name</th>
-                                      <th>IFSC Code</th>
-                                      <th>Account Type</th>
-                                      <th>Account Holder Name</th>
-                                      <th>Account No.</th>
+                                      <th>IFSC Code</th>        
                                       <th>Remove</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>Canara Bank</td>
-                                      <td>Bibwewadi </td>
-                                      <td>CNRB0002566 </td>
-                                      <td>Saving </td>
-                                      <td>Atul Purkar </td>
-                                      <td>2566101017072 </td>
+                                    <tr *ngFor="let ban of bankArray;index as i">
+                                      <td>{{i+1}}</td>
+                                      <td>{{ban.AccountTypeName}}</td>
+                                      <td>{{ban.AccountNo}} </td>
+                                      <td>{{ban.AccountHolderName}} </td>
+                                      <td>{{ban.BankName}} </td>
+                                      <td>{{ban.BranchName}} </td>
+                                      <td>{{ban.IFSCCode}}</td>
+                                   
                                       <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveBank(ban,i)>Remove</button>
                                       </td>
-                                    </tr>
-                                    <tr>
-                                      <td>1</td>
-                                      <td>SBI </td>
-                                      <td>Bibwewadi </td>
-                                      <td>SBIB0001166 </td>
-                                      <td>Saving </td>
-                                      <td>Atul Purkar </td>
-                                      <td>1166101017777 </td>
-                                      <td>
-                                        <button class="btn btn-xs btn-danger">Remove</button>
-                                      </td>
-                                    </tr>
+                                    </tr>                                   
                                   </tbody>
                                 </table>
                               </div>
                             </div>
                           </div>
-                        </form>
+                     
                         <div class="form-actions">
                           <div class="row">
                             <div class="col-sm-12">
