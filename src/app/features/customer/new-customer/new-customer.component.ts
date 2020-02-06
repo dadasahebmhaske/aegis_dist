@@ -11,19 +11,19 @@ import { CustomerService } from '../customer.service';
 export class NewCustomerComponent implements OnInit {
   public addArray: any = [];
   public bulkAdd: any = {};
-  public customer: any = { Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '',FirmTypeId:'',ContractualId:'',RoutId:'',SubAreaId:'',CustCatId:'',StateCode:'',CityCode:'' };
+  public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
-  public ContractData:any=[];
-  public CityData:any=[];
+  public ContractData: any = [];
+  public CityData: any = [];
   public cpInfo: any;
-  public FirmData:any=[];
+  public FirmData: any = [];
   public loaderbtn: boolean = true;
-  public RouteData:any=[];
-  public ServiceData:any=[];
-  public StateData:any=[];
-  public SubAreaData:any=[];
-  public SubAreaArray:any=[];
+  public RouteData: any = [];
+  public ServiceData: any = [];
+  public StateData: any = [];
+  public SubAreaData: any = [];
+  public SubAreaArray: any = [];
   public VolumeData: any = [];
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
@@ -39,52 +39,42 @@ export class NewCustomerComponent implements OnInit {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
     });
-    this.customerService.getVolumeType().subscribe((respV) => {
-      if (respV.StatusCode != 0)
-        this.VolumeData = respV.Data;
-    });
-    this.customerService.getConsumptionType().subscribe((respC) => {
-      if (respC.StatusCode != 0)
-        this.ConsumptionData = respC.Data;
-    });
-    this.customerService.getServiceType().subscribe((respS) => {
-      if (respS.StatusCode != 0)
-        this.ServiceData = respS.Data;
-    });
+
     this.customerService.getFirmType().subscribe((respF) => {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR:any)=>{      
-      if(resR.StatusCode!=0)
-     this.RouteData=resR.Data;  
-    }); 
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA:any)=>{      
-      if(reSA.StatusCode!=0){
-     this.SubAreaArray=reSA.Data;
-    }     
-    }); 
+    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteData = resR.Data;
+    });
+    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaArray = reSA.Data;
+      }
+    });
     this.masterService.getState().subscribe((resSt: any) => {
-        if(resSt.StatusCode!=0)
+      if (resSt.StatusCode != 0)
         this.StateData = resSt.Data;
-      });
-      this.customerService.getContraType().subscribe((resCo) => {
-        if (resCo.StatusCode != 0)
-          this.ContractData = resCo.Data;
-      });
+    });
+    this.customerService.getContraType().subscribe((resCo) => {
+      if (resCo.StatusCode != 0)
+        this.ContractData = resCo.Data;
+    });
   }
   getCityData() {
     this.masterService.getCity(this.customer.StateCode).subscribe((res) => {
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }
-  getSubArea(){
-    this.SubAreaData= this.masterService.filterData( this.SubAreaArray,this.customer.RoutId,'RouteId');
+  getSubArea() {
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
   }
   saveAddressDeatils() {
     //this.loaderbtn = false;
     this.addArray.push({
       "AddressId": "",
+      "AddressType": 'D',
       "StateCode": this.customer.StateCode,
       "CityCode": this.customer.CityCode,
       "PinCode": this.customer.PinCode,
@@ -97,8 +87,8 @@ export class NewCustomerComponent implements OnInit {
     this.bulkAdd.data = this.addArray;
     this.bulkAdd.RefId = this.customer.ConsId;
     this.bulkAdd.FormFlag = 'CUSTM';
-    this.bulkAdd.AddressType = 'H';
-    this.bulkAdd.UserCode= this.cpInfo.EmpId;
+    //this.bulkAdd.AddressType = 'D';
+    this.bulkAdd.UserCode = this.cpInfo.EmpId;
     //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
     // this.fd.append('CipherText', ciphertext);
     this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {
@@ -117,9 +107,9 @@ export class NewCustomerComponent implements OnInit {
     this.customer.CPCode = this.cpInfo.CPCode;
     this.customer.UserCode = this.cpInfo.EmpId;
     this.customer.ConsId = '';
-    this.customer.CustCatId=null;
-    this.customer.ConsNo=1;
-    this.customer.ConsName=`${this.customer.FirstName} ${this.customer.LatName}`;
+    this.customer.CustCatId = null;
+    this.customer.ConsNo = 1;
+    this.customer.ConsName = `${this.customer.FirstName} ${this.customer.LatName}`;
     let ciphertext = this.appService.getEncrypted(this.customer);
     this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
       if (resp.StatusCode != 0) {
@@ -132,5 +122,28 @@ export class NewCustomerComponent implements OnInit {
         this.loaderbtn = true;
       }
     });
+  }
+  onSelectCustomerType() {
+    this.customerService.getVolumeType(this.customer.CustTypeId).subscribe((respV) => {
+      if (respV.StatusCode != 0) { this.VolumeData = respV.Data; } else {
+        this.VolumeData = [];
+      }
+    });
+    this.customerService.getConsumptionType(this.customer.CustTypeId).subscribe((respC) => {
+      if (respC.StatusCode != 0) {
+        this.ConsumptionData = respC.Data;
+      } else {
+        this.ConsumptionData = [];
+      }
+    });
+    this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
+      if (respS.StatusCode != 0) {
+        this.ServiceData = respS.Data;
+      } else {
+        this.ServiceData = [];
+      }
+    });
+
+
   }
 }

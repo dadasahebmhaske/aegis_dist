@@ -8,7 +8,7 @@ export class MasterService {
   constructor(private httpClient:HttpClient) { }
   public getDiffMonths(dt2, dt1) 
   {   if(dt2!=null && dt1!=null){
-     var diff =(dt2.getTime() - dt1.getTime()) / 1000;
+     var diff =(new Date(dt2).getTime() - dt1.getTime()) / 1000;
      diff /= (60 * 60 * 24 * 7 * 4);
     return Math.abs(Math.round(diff));   }
   }
@@ -31,8 +31,8 @@ export class MasterService {
   }
   public getCity(statecode) {                               
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CM&StateCode=${statecode}&IsActive=Y`);
-  } public getDocumentType() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DTM&IsActive=Y`);
+  } public getDocumentType(flag) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DTM&FormFlag=${flag}&IsActive=Y`);
   }
   public getEmpoyees(cpcode) { 
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&RoleCode=&IsActive=Y`);     

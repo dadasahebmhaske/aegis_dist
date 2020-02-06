@@ -31,9 +31,9 @@ export class CustomerMasterComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">&nbsp;Edit&nbsp;</button> '
-        , width: "48",exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Update</button> '
+        , width: "63",exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Update</div>', enableFiltering: false
       },
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true,visible:false },
       { name: 'ConsNo', displayName: 'Customer No.', width: "130", cellTooltip: true, filterCellFiltered: true },
@@ -50,7 +50,7 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'VolumeTypeName', displayName: 'Volume Type', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ServiceTypeName', displayName: 'Service Type', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'FirmTypeName', displayName: 'Firm Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ContractualName', displayName: 'Contractual  Non-Contractual', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ContractualName', displayName: 'Contractual  Non-Contractual', width: "225", cellTooltip: true, filterCellFiltered: true },
       { name: 'RouteName', displayName: 'Rout', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'InchargeName', displayName: 'Incharge Name', width: "160", cellTooltip: true, filterCellFiltered: true },
@@ -72,7 +72,6 @@ export class CustomerMasterComponent implements OnInit {
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    console.log($event.row);
 this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/customer/update-customer']);
   }

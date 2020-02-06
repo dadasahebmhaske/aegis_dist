@@ -2,129 +2,99 @@
 <div id="content">
   <!-- widget grid -->
   <sa-widgets-grid>
-      <div class="row">
-          <article class="col-sm-12">
-              <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-                      <header class="text-center"> 
-                      <h2> <i class="fa fa-user"></i> Transfer Customer</h2>
-                  </header>
-                  <div>
-                      <div class="widget-body">
-                          <div class="row ">
-                              <div class="col-sm-3 col-xs-4">
-                                  <div class="form-group">
-                                      <select class="form-control">
-                                          <option selected hidden>Select Area</option>
-                                          <option>Pune</option>
-                                          <option>Nagpur </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-sm-3 col-xs-4">
-                                <div class="form-group">
-                                  <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                                    onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly ng-model="ConsumerNo"
-                                    maxlength="8" required />
-                                </div>
-                              </div>
-                              <div class="col-sm-1 col-xs-4">
-                                <div class="form-group">
-                                  <button type="submit" class="btn btn-block btn-success get_details">
-                                    <i class="fa fa-search"></i> Get Details</button>
-              
-                                </div>
-                              </div>
-                              </div>
-                          <div class="row">
-                              <div class="col-sm-8">
-                                <div class="transfer-card">
-                                  <label><strong class="text-primary">Customer List : </strong></label>
-                                          <div class="table-responsive">
-                                                  
-                                                                  <table class="table table-hover">
-                                                                    <thead>
-                                                                    <tr>
-                                                                      <th>#</th>
-                                                                      <th>Customer No.</th>
-                                                                      <th>Customer Name</th>
-                                                                      <th>Transfer Date</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <tr>
-                                                                      <td>1</td>
-                                                                      <td>12547898</td>
-                                                                      <td>Pradip LAd </td>
-                                                                      <td>10-12-2017</td>                                                   
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td>2</td>
-                                                                      <td>12547777</td>
-                                                                      <td>Pravin Joshi </td>
-                                                                      <td>22-02-2017</td>                                                   
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td>3</td>
-                                                                      <td>12333898</td>
-                                                                      <td>Narendra Modilwala </td>
-                                                                      <td>10-08-2017</td>                                                   
-                                                                    </tr>
-                                                                    <tr>
-                                                                      <td>4</td>
-                                                                      <td>12333898</td>
-                                                                      <td>GAjendra Poonawala</td>
-                                                                      <td>10-08-2017</td>                                                   
-                                                                    </tr>
-                                                               
-                                                                    </tbody>
-                                                                  </table>
-                                                  
-                                                                </div>
-                                </div>
-                          </div>
-                              <div class="col-sm-4">
-                                      <div class="transfer-card">
-                                      <label><strong class="text-primary">Transfer Details : </strong></label>
-                                      <div class="row">
-                                              <!-- <div class="col-sm-12">
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-user"></i> Transfer Customer</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="custOutForm" #custOutForm="ngForm" (ngSubmit)="onSubmitArea()" ngNativeValidate>
+                <div class="row ">
+                  <div class="col-sm-3 col-xs-4">
+                    <div class="form-group">
+                      <select class="form-control">
+                        <option selected hidden>Select Area</option>
+                        <option>Pune</option>
+                        <option>Nagpur </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-xs-4">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control"
+                        oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" numericonly
+                        ng-model="ConsumerNo" maxlength="8" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-success get_details">
+                        <i class="fa fa-search"></i> Get Details</button>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="transfer-card">
+                    <label><strong class="text-primary">Customer List : </strong></label>
+                    <div class="table-responsive">
+
+                      <ui-grid [data]="custOutData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)">
+                      </ui-grid>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="transfer-card">
+                    <label><strong class="text-primary">Transfer Details : </strong></label>
+                    <div class="row">
+                      <!-- <div class="col-sm-12">
                                                   <div class="form-group">
                                                       <label>New Distributor Code <span class="errorMessage">*</span>
                                                       </label>
                                                       <input type="text" class="form-control"  placeholder="Enter Distributor Code" required />
                                                   </div>
                                               </div> -->
-                                              <div class="col-sm-12">
-                                                  <div class="form-group">
-                                                      <label>Transfer Reason <span class="errorMessage">*</span>
-                                                      </label>
-                                                      <textarea class="form-control" rows="6"  placeholder="Enter Transfer Reason  " required></textarea>
-                                                  </div>
-                                              </div>
-                                              <div class="col-sm-12 text-center">
-                                                <button class="btn btn-primary text-center" type="submit">
-                                                  <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Transfer
-                                              </button>
-                                                  </div>
-                                          </div>
-                                 
-                              
-                              
-                                  </div>
-                              </div>
-                          </div>
-
-
-
+                      <div class="col-sm-12">
+                        <div class="form-group">
+                          <label>Transfer Reason <span class="errorMessage">*</span>
+                          </label>
+                          <textarea class="form-control" rows="6" placeholder="Enter Transfer Reason  "
+                            required></textarea>
+                        </div>
                       </div>
+                      <div class="col-sm-12 text-center">
+                        <button class="btn btn-primary text-center" type="submit">
+                          <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Transfer
+                        </button>
+                      </div>
+                    </div>
+
+
+
                   </div>
+                </div>
               </div>
 
 
 
-          </article>
+            </div>
+          </div>
+        </div>
 
 
-      </div>
+
+      </article>
+
+
+    </div>
 
   </sa-widgets-grid>
 </div>

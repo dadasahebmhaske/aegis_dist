@@ -76,7 +76,7 @@
                     <label for="sel1">Customer Type
                       <span class="errorMessage">*</span>
                     </label>
-                    <select class="form-control" [(ngModel)]="customer.CustTypeId" name="CustTypeId" required>
+                    <select class="form-control" [(ngModel)]="customer.CustTypeId"  (change)="onSelectCustomerType()" name="CustTypeId" required>
                       <option value="" selected hidden> Select Customer Type</option>
                       <option [value]="ct.Id" *ngFor="let ct of CustTypeData">{{ct.Name}}</option>
                     </select>
@@ -89,7 +89,7 @@
                     </label>
                     <select class="form-control" [(ngModel)]="customer.VolumeTypeId" name="VolumeTypeId" required>
                       <option value="" selected hidden> Select Volume Type</option>
-                      <option [value]="v.Id" *ngFor="let v of VolumeData">{{v.Name}}</option>
+                      <option [value]="v.Id" *ngFor="let v of VolumeData">{{v.VolumeTypeName}}</option>
                     </select>
                   </div>
                 </div>
@@ -101,7 +101,7 @@
                     <select class="form-control" [(ngModel)]="customer.ConsuptionTypeId" name="ConsuptionTypeId"
                       required>
                       <option value="" selected hidden> Select Consumption Type </option>
-                      <option [value]="con.Id" *ngFor="let con of ConsumptionData">{{con.Name}}</option>
+                      <option [value]="con.Id" *ngFor="let con of ConsumptionData">{{con.ConsumpName}}</option>
                     </select>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                     </label>
                     <select class="form-control" [(ngModel)]="customer.ServiceTypeId" name="ServiceTypeId" required>
                       <option value="" selected hidden> Select Service Type </option>
-                      <option [value]="sd.Id" *ngFor="let sd of ServiceData">{{sd.Name}}</option>
+                      <option [value]="sd.Id" *ngFor="let sd of ServiceData">{{sd.ServiceTypeName}}</option>
                     </select>
                   </div>
                 </div>

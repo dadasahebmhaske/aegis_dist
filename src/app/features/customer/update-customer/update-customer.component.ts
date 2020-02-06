@@ -24,14 +24,14 @@ import { AppComponent } from '@app/app.component';
 })
 export class UpdateCustomerComponent implements OnInit {
   public address: any = { AddressType: '', StateCode: '', CityCode: '' };
-  public AccountTypeData:any=[];
+  public AccountTypeData: any = [];
   public addArray: any = [];
   public addressTypeData: any = [];
-  public bank:any={AccountType:''};
-  public bankArray:any=[];
+  public bank: any = { AccountType: '' };
+  public bankArray: any = [];
   public bulkAdd: any = {};
-  public bulkBank:any={};
-  public bulkProd:any={};
+  public bulkBank: any = {};
+  public bulkProd: any = {};
   public bdata: any = [];
   public bulkDoc: any = {};
   public customer: any = {};
@@ -50,13 +50,13 @@ export class UpdateCustomerComponent implements OnInit {
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
   public RouteData: any = [];
-  public product:any={ProdSegId:'',ProdId:''};
-  public productSegmentData:any=[];
-  public prodArray:any=[];
-  public productDataSelected:any=[];
-  public removeProductUpdate:any=[];
+  public product: any = { ProdSegId: '', ProdId: '' };
+  public productSegmentData: any = [];
+  public prodArray: any = [];
+  public productDataSelected: any = [];
+  public removeProductUpdate: any = [];
   public removeAddressUpdate: any = [];
-  public removeBankUpdate:any=[];
+  public removeBankUpdate: any = [];
   public selectedFile: File = null;
   public ServiceData: any = [];
   public StateData: any = [];
@@ -66,11 +66,11 @@ export class UpdateCustomerComponent implements OnInit {
   constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService) {
   }
   ngOnInit() {
-    this.imgUrl=`${AppComponent.ImageUrl}CustDocs/`;
-    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' } : data);
+    this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
+    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' } : data);
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allOnloadMethods();
-   //this.customer.RouteId!=null &&  this.customer.RouteId!=''? this.getSubArea():'';
+    this.customer.CustTypeId != null && this.customer.CustTypeId != '' ? this.onSelectCustomerType() : '';
   }
   public model = {
     email: '',
@@ -137,7 +137,7 @@ export class UpdateCustomerComponent implements OnInit {
         }
         break;
       case 'step3':
-        this.activeStep = steo;this.getCustomerProductDetails();
+        //this.activeStep = steo;this.getCustomerProductDetails();
         if (steo.key == "step3" && this.customer.ConsId != null && this.customer.AddressId != null) {
           this.activeStep = steo;
           this.getCustomerProductDetails();
@@ -146,8 +146,8 @@ export class UpdateCustomerComponent implements OnInit {
         }
         break;
       case 'step4':
-        this.activeStep = steo;  this.getCustomerDocumentDetails();
-        if (steo.key == "step4" && this.customer.ConsId != null && this.customer.AddressId != null) {
+        //this.activeStep = steo;  this.getCustomerDocumentDetails();
+        if (steo.key == "step4" && this.customer.ConsId != null && this.customer.CustProdId != null) {
           this.activeStep = steo;
           this.getCustomerDocumentDetails();
         } else {
@@ -155,8 +155,8 @@ export class UpdateCustomerComponent implements OnInit {
         }
         break;
       case 'step5':
-        this.activeStep = steo; this.getCustomerBankDetails();
-        if (steo.key == "step5" && this.customer.ConsId != null && this.customer.ProductId != null) {
+        //this.activeStep = steo; this.getCustomerBankDetails();
+        if (steo.key == "step5" && this.customer.ConsId != null && this.customer.DocId != null) {
           this.activeStep = steo;
           this.getCustomerBankDetails();
         } else {
@@ -237,42 +237,38 @@ export class UpdateCustomerComponent implements OnInit {
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
-    }else{
+    } else {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one product.`);
     }
   }
   nextToDocumentDetails() {
     if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
       this.loaderbtn = false;
-    this.bulkProd.Flag = "IN";
-    if (this.removeProductUpdate.length > 0) {
-      this.prodArray = this.prodArray.concat(this.removeProductUpdate);
-    }
-    this.bulkProd.data = this.prodArray;
-    this.bulkProd.RefId = this.customer.ConsId;
-    //this.bulkBank.FormFlag = 'CUSTM';
-    this.bulkProd.UserCode = this.cpInfo.EmpId;
-    this.customerService.postBulkProduct(this.bulkProd).subscribe((resData: any) => {
-      this.loaderbtn = true;
-      if (resData.StatusCode != 0) {
-        //this.bank.AddressId = resData.Data[0].AddressId
-        AppComponent.SmartAlert.Success(resData.Message);
-        this.prodArray = [];
-        this.getCustomerDocumentDetails();
-        this.nextStep();
-        // this. this.getCustomerAddressDetails();();
+      this.bulkProd.Flag = "IN";
+      if (this.removeProductUpdate.length > 0) {
+        this.prodArray = this.prodArray.concat(this.removeProductUpdate);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    });
-    }else{
+      this.bulkProd.data = this.prodArray;
+      this.bulkProd.RefId = this.customer.ConsId;
+      this.bulkProd.UserCode = this.cpInfo.EmpId;
+      this.customerService.postBulkProduct(this.bulkProd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.prodArray = [];
+          this.getCustomerDocumentDetails();
+          this.nextStep();
+          this.getCustomerProductDetails();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    } else {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one product.`);
     }
-    
-    
-    //this.nextStep();
   }
   nextToBankDetails() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
+      this.loaderbtn = false;
       this.bulkDoc.flag = this.customer.DocId == null ? 'IN' : 'UP';
       this.bulkDoc.RefId = this.customer.ConsId;
       this.bulkDoc.FormFlag = 'CUSTM';
@@ -323,10 +319,10 @@ export class UpdateCustomerComponent implements OnInit {
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
-    }else{
+    } else {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one bank.`);
     }
-  
+
   }
 
   onWizardComplete(data) {
@@ -337,18 +333,7 @@ export class UpdateCustomerComponent implements OnInit {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
     });
-    this.customerService.getVolumeType().subscribe((respV) => {
-      if (respV.StatusCode != 0)
-        this.VolumeData = respV.Data;
-    });
-    this.customerService.getConsumptionType().subscribe((respC) => {
-      if (respC.StatusCode != 0)
-        this.ConsumptionData = respC.Data;
-    });
-    this.customerService.getServiceType().subscribe((respS) => {
-      if (respS.StatusCode != 0)
-        this.ServiceData = respS.Data;
-    });
+
     this.customerService.getFirmType().subscribe((respF) => {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
@@ -368,11 +353,11 @@ export class UpdateCustomerComponent implements OnInit {
     });
     this.customerService.getContraType().subscribe((resCo) => {
       if (resCo.StatusCode != 0) {
-      this.ContractData = resCo.Data;
+        this.ContractData = resCo.Data;
         this.getSubArea();
       }
     });
-    this.masterService.getDocumentType().subscribe(
+    this.masterService.getDocumentType('CUSTM').subscribe(
       (resDoc: any) => {
         if (resDoc.StatusCode != 0)
           this.docTypeData = resDoc.Data;
@@ -389,97 +374,101 @@ export class UpdateCustomerComponent implements OnInit {
       if (resPS.StatusCode != 0)
         this.productSegmentData = resPS.Data;
     });
-   
+
   }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
   }
   //product
-  onProductSubmit(){
+  onProductSubmit() {
     if (this.prodArray.some(obj => obj.ProdId === this.product.ProdId)) {
       AppComponent.SmartAlert.Errmsg("Product is already added in list.");
-      this.product={ProdSegId:'',ProdId:''};
-    }else{
+      this.product = { ProdSegId: '', ProdId: '' };
+    } else {
       let docobj;
       docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
       let ProdSegName = docobj[0].ProdSeg;
       docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
       let ProdName = docobj[0].Product;
       this.prodArray.push(
-        {"CustProdId":"",
-        "CPCode":this.cpInfo.CPCode,
-        "ConsId":this.customer.ConsId,
-        "ProdId":this.product.ProdId,
-        "ProdSegId":this.product.ProdSegId,
-        "PurchaseQty":this.product.PurchaseQty,
-        "DepositAmt":this.product.DepositAmt,
-        "MonthlyConsumption":this.product.MonthlyConsumption,
-        "IsActive":"Y",
-        "RefundableAmt":0,
-        "TotalDepositAmt":0,
-        "TotalRefundableAmt":0,
-        "ProdSegName":ProdSegName,
-        "Product":ProdName
-      }
-       );
-      this.product={ProdSegId:'',ProdId:''};
-    }   
+        {
+          "CustProdId": "",
+          "CPCode": this.cpInfo.CPCode,
+          "ConsId": this.customer.ConsId,
+          "ProdId": this.product.ProdId,
+          "ProdSegId": this.product.ProdSegId,
+          "PurchaseQty": this.product.PurchaseQty,
+          "DepositAmt": this.product.DepositAmt,
+          "MonthlyConsumption": this.product.MonthlyConsumption,
+          "IsActive": "Y",
+          "RefundableAmt": 0,
+          "TotalDepositAmt": 0,
+          "TotalRefundableAmt": 0,
+          "ProdSegName": ProdSegName,
+          "Product": ProdName
+        }
+      );
+      this.product = { ProdSegId: '', ProdId: '' };
+    }
   }
   onRemoveProduct(data, index) {
     if (data.CustProdId != '' && data.CustProdId != null) {
       data.IsActive = 'N';
       this.removeProductUpdate.push(data);
-    } 
+    }
     this.prodArray.splice(index, 1);
   }
   getCustomerProductDetails() {
-    this.customerService.getProductDetails().subscribe((resprod: any) => {
+    this.customerService.getProductDetails('CUSTM', this.customer.ConsId).subscribe((resprod: any) => {
       if (resprod.StatusCode != 0)
         this.prodArray = resprod.Data;
+      if (this.prodArray.length > 0) {
+        this.customer.CustProdId = this.prodArray[0].CustProdId;
+      }
       for (let i = 0; i < this.prodArray.length; i++) {
         let docobj;
         docobj = this.masterService.filterData(this.productSegmentData, this.prodArray[i].ProdSegId, 'ProdSegId');
-        this.prodArray[i].ProdSegName = docobj[0].ProdSeg;   
+        this.prodArray[i].ProdSegName = docobj[0].ProdSeg;
         // docobj = this.masterService.filterData(this.productDataSelected, this.prodArray[i].ProdId, 'ProdId');
         // this.prodArray[i].ProdName = docobj[0].Product;    
       }
     });
   }
-  onSelectProdSegment(){
+  onSelectProdSegment() {
     this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
-      if (resPT.StatusCode != 0){
+      if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
-      }else{this.productDataSelected=[];}
-    });  
+      } else { this.productDataSelected = []; }
+    });
   }
   // bank
-  onSubmitBankData(){
+  onSubmitBankData() {
     if (this.bankArray.some(obj => obj.AccountNo === this.bank.AccountNo)) {
       AppComponent.SmartAlert.Errmsg("Bank Account is already added in list.");
       this.bank = { AccountType: '' };
-    }else{
+    } else {
       let docobj;
       docobj = this.masterService.filterData(this.AccountTypeData, this.bank.AccountType, 'MstFlag');
       let AccountTypeName = docobj[0].Name;
       this.bankArray.push({
-        "BankId":'',
-        "AccountNo":this.bank.AccountNo,
-        "AccountType":this.bank.AccountType,
-        "AccountHolderName":this.bank.AccountHolderName,
-        "BankName":this.bank.BankName,
-        "BranchName":this.bank.BranchName,
-        "IFSCCode":this.bank.IFSCCode,
+        "BankId": '',
+        "AccountNo": this.bank.AccountNo,
+        "AccountType": this.bank.AccountType,
+        "AccountHolderName": this.bank.AccountHolderName,
+        "BankName": this.bank.BankName,
+        "BranchName": this.bank.BranchName,
+        "IFSCCode": this.bank.IFSCCode,
         "IsActive": "Y",
-        "AccountTypeName":AccountTypeName  
+        "AccountTypeName": AccountTypeName
       });
-      this.bank={AccountType:''};
-    }  
+      this.bank = { AccountType: '' };
+    }
   }
   onRemoveBank(data, index) {
     if (data.BankId != '' && data.BankId != null) {
       data.IsActive = 'N';
       this.removeBankUpdate.push(data);
-    } 
+    }
     this.bankArray.splice(index, 1)
   }
   getCustomerBankDetails() {
@@ -489,7 +478,7 @@ export class UpdateCustomerComponent implements OnInit {
       for (let i = 0; i < this.bankArray.length; i++) {
         let docobj;
         docobj = this.masterService.filterData(this.AccountTypeData, this.bankArray[i].AccountType, 'MstFlag');
-        this.bankArray[i].AccountTypeName = docobj[0].Name;      
+        this.bankArray[i].AccountTypeName = docobj[0].Name;
       }
     });
   }
@@ -529,10 +518,13 @@ export class UpdateCustomerComponent implements OnInit {
     this.masterService.getAddressDetails('CUSTM', this.customer.ConsId).subscribe((resp: any) => {
       if (resp.StatusCode != 0)
         this.addArray = resp.Data;
+      if (this.addArray.length > 0) {
+        this.customer.AddressId = this.addArray[0].AddressId;
+      }
       for (let i = 0; i < this.addArray.length; i++) {
-        this.masterService.getCity( this.addArray[i].StateCode).subscribe((res) => {
+        this.masterService.getCity(this.addArray[i].StateCode).subscribe((res) => {
           if (res.StatusCode != 0) {
-          this.CityData = res.Data;
+            this.CityData = res.Data;
             let docobj;
             docobj = this.masterService.filterData(this.addressTypeData, this.addArray[i].AddressType, 'MstFlag');
             this.addArray[i].AddressTypeName = docobj[0].Name;
@@ -606,14 +598,38 @@ export class UpdateCustomerComponent implements OnInit {
     var win = window.open();
     win.document.write(`<iframe src="${base64URL}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
   }
-getCustomerDocumentDetails() {
+  getCustomerDocumentDetails() {
     this.masterService.getDocumentDetails('CUSTM', this.customer.ConsId).subscribe((response: any) => {
       if (response.StatusCode != 0)
         this.bdata = response.Data;
-      console.log(response.Data[0]);
+      if (this.bdata.length > 0) {
+        this.customer.DocId = this.bdata[0].DocId;
+      }
+
     });
   }
+  onSelectCustomerType() {
+    this.customerService.getVolumeType(this.customer.CustTypeId).subscribe((respV) => {
+      if (respV.StatusCode != 0) { this.VolumeData = respV.Data; } else {
+        this.VolumeData = [];
+      }
+    });
+    this.customerService.getConsumptionType(this.customer.CustTypeId).subscribe((respC) => {
+      if (respC.StatusCode != 0) {
+        this.ConsumptionData = respC.Data;
+      } else {
+        this.ConsumptionData = [];
+      }
+    });
+    this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
+      if (respS.StatusCode != 0) {
+        this.ServiceData = respS.Data;
+      } else {
+        this.ServiceData = [];
+      }
+    });
 
+  }
   private lastModel;
 
   //custom change detection

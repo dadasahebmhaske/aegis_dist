@@ -19,7 +19,7 @@ export class SubAreaComponent implements OnInit, OnDestroy {
     constructor(public appService:AppService,public datashare:DatashareService,public subarea:SubareaService,public masters:MasterService) { }
     ngOnInit() {
     
-      this.datashare.GetSharedData.subscribe(data => this.subArea = data==null?{RouteId:""}:data);
+      this.datashare.GetSharedData.subscribe(data => this.subArea = data==null?{IsActive:'Y',RouteId:""}:data);
       this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
       this.getRoutes();
     }

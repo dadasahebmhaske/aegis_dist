@@ -23,15 +23,16 @@ export class VehicleComponent implements OnInit {
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
   public selectedFile: File = null;
-  public vehicle: any = {};
+  public vehicle: any = {VehicleTypeId:''};
   public transportData: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private vehicleService: VehicleService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.imgUrl=`${AppComponent.ImageUrl}VehicleDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { VehicleTypeID: '' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive:'Y',VehicleTypeId: '' } : data);
     this.onLoad();
     if (this.vehicle.VehicleTypeID != '') { this.getVehicleDocumentDetails(); }
   }
@@ -44,7 +45,7 @@ export class VehicleComponent implements OnInit {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
 
-    this.masterService.getDocumentType().subscribe(
+    this.masterService.getDocumentType('VM').subscribe(
       (resD: any) => {
         if (resD.StatusCode != 0) { this.docTypeData = resD.Data; } else { AppComponent.SmartAlert.Errmsg(resD.Message); }
       });

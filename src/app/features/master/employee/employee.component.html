@@ -11,9 +11,9 @@
               <i class="fa fa-database"></i> Employee Master</h2>
           </header>
           <div>
-            <div class="widget-body">
+            <div class="widget-body">              
               <div class="row">
-                <form novalidate="novalidate">
+                <form novalidate="novalidate">                  
                   <div class="col-sm-12">
                     <div class="form-bootstrapWizard clearfix">
                       <ul class="bootstrapWizard">
@@ -33,8 +33,7 @@
                         <br>
                         <h3>
                           <strong>Step 1 </strong> - Employee Details</h3>
-                        <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="nextToAddress()" autocomplete="off"
-                          ngNativeValidate>
+                        <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="nextToAddress()"   ngNativeValidate>                          
                           <div class="row">
                             <div class="col-sm-2">
                               <div class="form-group">
@@ -184,8 +183,6 @@
                               </div>
                             </div>
 
-
-
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <label for="sel1">Emergency Contact Person
@@ -208,11 +205,10 @@
                             </div>
                             <div class="col-sm-3 btn-marg">
                               <label>
-                                <input type="checkbox" [(ngModel)]="employee.IsActive" name="IsActive" trueFalseValue trueValue="Y" falseValue="N"   /> Is Active 
+                                <input type="checkbox" [(ngModel)]="employee.IsActive" *ngIf="employee.IsActive!=null" name="IsActive" trueFalseValue trueValue="Y" falseValue="N"   /> Is Active 
                                </label>
                             </div>
                           </div>
-
                           <div class="logincDeatils">
                             <label class="text-danger">Login Details : </label>
                             <div class="row">
@@ -238,12 +234,12 @@
                               </div>
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <label for="sel1">Re-enter Password
+                                  <label for="sel1">Re-enter Password  
                                     <span class="errorMessage">*</span>
                                   </label>
                                   <input type="password" class="form-control" placeholder="Enter Password"
                                     [(ngModel)]="employee.ReTypePassword" (change)="checkingPassword()" minlength="6"
-                                    name="IsActive" required />
+                                    name="ReTypePassword" required />
                                 </div>
                               </div>
                             </div>

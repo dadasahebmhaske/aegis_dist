@@ -14,7 +14,7 @@ export class TransportComponent implements OnInit {
   public loaderbtn:boolean=true;
   constructor(private appService:AppService,private datashare:DatashareService,private transportService:TransportService) { }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.transport = data==null?{}:data);
+    this.datashare.GetSharedData.subscribe(data => this.transport = data==null?{IsActive:'Y'}:data);
     this.appService.getAppData().subscribe(data=>{this.cpInfo=data});
   }
   public onSubmit(){

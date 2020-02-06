@@ -14,7 +14,7 @@ public cpInfo:any;
 public loaderbtn:boolean=true;
   constructor(public appService:AppService,public datashare:DatashareService,public routeService:RouteService) { }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.route = data==null?{}:data);
+    this.datashare.GetSharedData.subscribe(data => this.route = data==null?{IsActive:'Y'}:data);
     //this.route==null?this.route={}:this.route;
     console.log(this.route);
     this.appService.getAppData().subscribe(data=>{this.cpInfo=data});

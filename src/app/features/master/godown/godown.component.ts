@@ -27,7 +27,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GodownComponent implements OnInit {
   public addArray: any = [];
-  public bsValue = new Date();
+  //public bsValue = new Date();
   public bdata: any = [];
   public bulkDoc: any = {};
   public bulkAdd: any = {};
@@ -35,15 +35,17 @@ export class GodownComponent implements OnInit {
   public cpInfo: any;
   public docTypeData: any = [];
   public DocFileName: string;
-  public document: any = {DocTypId:''};
+  public document: any = { DocTypId: '' };
   public fd = new FormData();
   public filepreview: any;
   public godown: any = {};
   public GodownTypeData: any = [];
   public GodownType: string;
-  public imgUrl:string;
+  public imgUrl: string;
+  public LeaseMinDate: Date;
+  public LicMinDate: Date;
   public loaderbtn: boolean = true;
-  public removeDocUpdate:any=[];
+  public removeDocUpdate: any = [];
   public StateData: any = [];
   public selectedFile: File = null;
   public datePickerConfig: Partial<BsDatepickerConfig>;
@@ -51,15 +53,15 @@ export class GodownComponent implements OnInit {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.imgUrl=`${AppComponent.ImageUrl}GodownDocs/`;
+    this.imgUrl = `${AppComponent.ImageUrl}GodownDocs/`;
     this.datashare.GetSharedData.subscribe((data) => {
-      this.godown = data == null ? { StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data
+      this.godown = data == null ? { IsActive: 'Y', StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data
     });
 
     this.allOnloadMethods();
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.godown.StateCode= this.godown.StateCode==null?'': this.godown.StateCode;
-    this.godown.CityCode= this.godown.CityCode==null?'': this.godown.CityCode;
+    this.godown.StateCode = this.godown.StateCode == null ? '' : this.godown.StateCode;
+    this.godown.CityCode = this.godown.CityCode == null ? '' : this.godown.CityCode;
   }
   public model = {
     email: '',
@@ -102,8 +104,8 @@ export class GodownComponent implements OnInit {
 
     switch (steo.key) {
       case 'step1':
-      this.activeStep = steo;
-      break;
+        this.activeStep = steo;
+        break;
       case 'step2':
         if (steo.key == "step2" && this.godown.GodownId != null) {
           this.activeStep = steo;
@@ -173,7 +175,7 @@ export class GodownComponent implements OnInit {
     this.loaderbtn = false;
     this.addArray.push({
       "AddressId": "",
-     "this.bulkAdd": 'H',
+      "AddressType": 'H',
       "StateCode": this.godown.StateCode,
       "CityCode": this.godown.CityCode,
       "PinCode": this.godown.PinCode,
@@ -205,13 +207,13 @@ export class GodownComponent implements OnInit {
     //this.nextStep();
   }
   nextToSave() {
-    if(this.bdata.length>0 || this.removeDocUpdate.length>0){
+    if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
       this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
-      this.bulkDoc.RefId = this.godown.GodownId;   
+      this.bulkDoc.RefId = this.godown.GodownId;
       this.bulkDoc.FormFlag = 'GDWN';
       this.bulkDoc.UserCode = this.cpInfo.EmpId;
-      if(this.removeDocUpdate.length>0){
-        this.bdata=this.bdata.concat(this.removeDocUpdate); 
+      if (this.removeDocUpdate.length > 0) {
+        this.bdata = this.bdata.concat(this.removeDocUpdate);
       }
       this.bulkDoc.bdata = this.bdata;
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
@@ -219,18 +221,18 @@ export class GodownComponent implements OnInit {
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          this.bdata=[];this.removeDocUpdate=[];
-          if(resData.Data.length!=0)
-          this.godown.DocId = resData.Data[0].DocId;
+          this.bdata = []; this.removeDocUpdate = [];
+          if (resData.Data.length != 0)
+            this.godown.DocId = resData.Data[0].DocId;
           AppComponent.SmartAlert.Success(resData.Message);
           AppComponent.Router.navigate(['/master/godown-master']);
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
-    }else{
+    } else {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one document.`);
     }
-  
+
     // this.nextStep();
   }
   onWizardComplete(data) {
@@ -241,7 +243,7 @@ export class GodownComponent implements OnInit {
       (res: any) => {
         this.StateData = res.Data;
       });
-    this.masterService.getDocumentType().subscribe(
+    this.masterService.getDocumentType('GDWN').subscribe(
       (resData: any) => {
         this.docTypeData = resData.Data;
       });
@@ -249,7 +251,6 @@ export class GodownComponent implements OnInit {
       if (resD.StatusCode != 0)
         this.GodownTypeData = resD.Data;
     });
-
   }
   onFileSelected(event) {
     var reader = new FileReader();
@@ -260,7 +261,6 @@ export class GodownComponent implements OnInit {
       this.filepreview = (<FileReader>event.target).result;
       var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
       f1 = f1.toString().toLowerCase();
-
       if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
       }
       else {
@@ -274,52 +274,48 @@ export class GodownComponent implements OnInit {
   onSubmitDoc() {
     let docobj;
     docobj = this.masterService.filterData(this.docTypeData, this.document.DocTypId, 'DocTypId');
-    this.document.DocType=docobj[0].DocType;
+    this.document.DocType = docobj[0].DocType;
     this.document.DocId = '';
-
     this.document.DocFileName = this.DocFileName;
     this.document.IsActive = "Y";
-    this.document.filepreview=this.filepreview;
-
+    this.document.filepreview = this.filepreview;
     if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
-      this.document ={DocTypId:''};
+      this.document = { DocTypId: '' };
     } else {
       this.bdata.push(this.document);
       this.fd.append(`image${this.bdata.length}`, this.selectedFile, this.DocFileName);
       $("#fileControl").val('');
-      this.document = {DocTypId:''};
+      this.document = { DocTypId: '' };
     }
   }
   onRemoveDoc(data, index) {
-    if(data.DocId!=''&& data.DocId!=null){
-      data.IsActive='N';
+    if (data.DocId != '' && data.DocId != null) {
+      data.IsActive = 'N';
       this.removeDocUpdate.push(data);
-    }else{
+    } else {
       this.fd.delete(`image${index}`);
     }
-    this.bdata.splice(index-1, 1)
+    this.bdata.splice(index - 1, 1)
   }
   viewDocument(base64URL) {
     var win = window.open();
     win.document.write(`<iframe src="${base64URL}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
   }
-
   getGodownDocumentDetails() {
     this.masterService.getDocumentDetails('GDWN', this.godown.GodownId).subscribe((response: any) => {
       if (response.StatusCode != 0)
         this.bdata = response.Data;
-      console.log(response.Data[0]);
     });
   }
-  getGOdownAddressDetails() {   
+  getGOdownAddressDetails() {
     this.masterService.getAddressDetails('GDWN', this.godown.GodownId).subscribe((resp: any) => {
       if (resp.StatusCode != 0)
         this.godown = Object.assign(this.godown, resp.Data[0]);
-        this. getCityData();
+      this.getCityData();
     });
-     }
+  }
 
   //godown
   CheckGodownType() {
@@ -332,17 +328,24 @@ export class GodownComponent implements OnInit {
       this.godown.LeasePeriod = this.masterService.getDiffMonths(this.godown.Startdate, value);
   }
   resetEndDate(val, flag) {
-    if (flag == 'LP' && this.godown.Startdate != undefined) {
-      this.godown.EndDate = null;
-      this.godown.LeasePeriod = null;
+    if (flag == 'LP' && this.godown.Startdate != undefined && val != null && this.godown.EndDate != null) {
+      this.LeaseMinDate = val;
+      if ((new Date(this.godown.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.godown.EndDate = '';
+        this.godown.LeasePeriod = null;
+      }
     }
-    if (flag == 'LI') {
-      this.godown.LicExpDate = null;
+
+    if (flag == 'LI' && val != null && this.godown.LicExpDate != null) {
+      this.LicMinDate = val;
+      if ((new Date(this.godown.LicExpDate).getTime()) < (new Date(val).getTime())) {
+        this.godown.LicExpDate = '';
+      }
+
     }
   }
   getCityData() {
     this.masterService.getCity(this.godown.StateCode).subscribe((res) => {
-      console.log(res);
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }

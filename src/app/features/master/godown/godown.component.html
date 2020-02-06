@@ -85,7 +85,7 @@
                                                                     <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter License Issue Date" [(ngModel)]="godown.LicIssueDate" name="LicIssueDate"
-                                                                    (blur)="resetEndDate($event,'LI')" bsDatepicker [bsValue]="bsValue"
+                                                                    (bsValueChange)="resetEndDate($event,'LI')" bsDatepicker 
                                                                     [bsConfig]="datePickerConfig" onkeydown="return false" required
                                                                 />
                                                             </div>
@@ -96,8 +96,8 @@
                                                                     <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter License Expiry Date" [(ngModel)]="godown.LicExpDate" name="LicExpDate"
-                                                                    onkeydown="return false" [minDate]="godown.LicIssueDate"
-                                                                    bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"
+                                                                    onkeydown="return false" [minDate]="LicMinDate"
+                                                                    bsDatepicker  [bsConfig]="datePickerConfig"
                                                                     required />
                                                             </div>
                                                         </div>
@@ -107,7 +107,7 @@
                                                                     <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Last Audit Date" [(ngModel)]="godown.LastAuditDate" name="LastAuditDate"
-                                                                    onkeydown="return false" bsDatepicker [bsValue]="bsValue"
+                                                                    onkeydown="return false" bsDatepicker 
                                                                     [bsConfig]="datePickerConfig" required />
                                                             </div>
                                                         </div>
@@ -128,8 +128,8 @@
                                                                     <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
-                                                                    (blur)="resetEndDate($event,'LP')" onkeydown="return false"
-                                                                    bsDatepicker [bsValue]="bsValue" [bsConfig]="datePickerConfig"
+                                                                id="startDate"  (bsValueChange)="resetEndDate($event,'LP')" onkeydown="return false"
+                                                                    bsDatepicker  [bsConfig]="datePickerConfig"
                                                                     [disabled]="GodownType=='O'" [required]="GodownType!='O'"
                                                                 />
                                                             </div>
@@ -139,10 +139,10 @@
                                                                 <label for="sel1">End Date
                                                                     <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate" [disabled]="GodownType=='O'"
+                                                                <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate" [disabled]="GodownType=='O'"
                                                                     [required]="GodownType!='O'" (bsValueChange)="calculateMonths($event)"
-                                                                    onkeydown="return false" [minDate]="godown.Startdate" bsDatepicker
-                                                                    [bsValue]="bsValue" [bsConfig]="datePickerConfig" />
+                                                                    onkeydown="return false" [minDate]="LeaseMinDate" bsDatepicker 
+                                                                     [bsConfig]="datePickerConfig" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
