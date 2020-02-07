@@ -13,7 +13,7 @@ export class VehicleMasterComponent implements OnInit {
   public cpInfo: any = {};
   public gridOptions: IGridoption;
   public vehicleData: any;
-  constructor(private appService: AppService,public datashare: DatashareService, public masters: MasterService) {
+  constructor(private appService: AppService, public datashare: DatashareService, public masters: MasterService) {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
@@ -23,6 +23,7 @@ export class VehicleMasterComponent implements OnInit {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Vehicle Master list.xlsx';
+    this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
       {
@@ -30,7 +31,7 @@ export class VehicleMasterComponent implements OnInit {
         , width: "48",
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true,visible:false },
+      { name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'VehicleNo', displayName: 'Vehicle No', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'VehicleType', displayName: 'Vehicle Type', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'CylCapacity', displayName: 'Cylinder Capacity', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -47,13 +48,13 @@ export class VehicleMasterComponent implements OnInit {
     AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
-    this.masters.getVehicles(this.cpInfo.CPCode).subscribe((resData:any)=>{      
-      if(resData.StatusCode!=0){
-    this.vehicleData=resData.Data;
+    this.masters.getVehicles(this.cpInfo.CPCode).subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.vehicleData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
-    }
-      else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    }); 
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
   }
 
 }

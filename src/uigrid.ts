@@ -49,7 +49,7 @@ export function initUiGrid() {
 
         //exporterExcelFilename: 'myFile.xlsx',
         exporterExcelSheetName: 'Sheet1',
-        enableRowSelection: false,
+        selectionRowHeaderWidth: 0,
 
         //for pdf
         // exporterPdfDefaultStyle: {fontSize: 9},

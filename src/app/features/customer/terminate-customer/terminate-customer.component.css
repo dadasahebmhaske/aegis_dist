@@ -9,9 +9,9 @@
     min-height: 292px;
     box-shadow: 0 0 5px #534d81;
 }
-.ui-grid.disable-row-selection {
+/* .ui-grid.disable-row-selection {
   display: block !important;
 }
 #grid>.ui-grid-selection-row-header-buttons {
   display: none !important;
-}
+} */

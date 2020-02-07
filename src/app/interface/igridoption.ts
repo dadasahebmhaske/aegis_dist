@@ -18,7 +18,8 @@ export interface IGridoption {
     multiSelect: boolean,
     enableRowSelection: boolean,
     enableSelectAll: boolean,
-    enableRowHeaderSelection: boolean
+    enableRowHeaderSelection: boolean,
+    selectionRowHeaderWidth: number
 }
 
 export enum IGridHeaderCellClass {

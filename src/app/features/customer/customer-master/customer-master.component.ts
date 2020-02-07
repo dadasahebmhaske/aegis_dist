@@ -28,10 +28,12 @@ export class CustomerMasterComponent implements OnInit {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Customer list.xlsx';
+
     // this.gridOptions.multiSelect = false;
     // this.gridOptions.enableRowSelection = false;
     // this.gridOptions.enableSelectAll = false;
     // this.gridOptions.enableRowHeaderSelection = false;
+    this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
       {

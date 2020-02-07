@@ -4,7 +4,6 @@ import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { AppComponent } from '@app/app.component';
 import { CustomerService } from '../customer.service';
-
 @Component({
   selector: 'sa-terminate-customer',
   templateUrl: './terminate-customer.component.html',
@@ -47,10 +46,11 @@ export class TerminateCustomerComponent implements OnInit {
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Customer list.xlsx';
     let columnDefs = [];
-    this.gridOptions.multiSelect = true;
-    this.gridOptions.enableRowSelection = true;
-    this.gridOptions.enableSelectAll = true;
-    this.gridOptions.enableRowHeaderSelection = true;
+    // this.gridOptions.multiSelect = true;
+    // this.gridOptions.enableRowSelection = true;
+    // this.gridOptions.enableSelectAll = true;
+    // this.gridOptions.enableRowHeaderSelection = true;
+    this.gridOptions.selectionRowHeaderWidth = 35;
     columnDefs = [
       // {
       //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Update</button> '
@@ -97,7 +97,6 @@ export class TerminateCustomerComponent implements OnInit {
     });
   }
   onTerminate() {
-
     this.loaderbtn = false;
     // this.terminateList.Flag = 'IN';
     let forData = [];
@@ -118,9 +117,12 @@ export class TerminateCustomerComponent implements OnInit {
       if (resp.StatusCode != 0) {
         if (resp.Data.length != 0)
           AppComponent.SmartAlert.Success(resp.Message);
+        this.custTermiData = [{}];
+        this.terminateList.ReqRemark = {};
+        this.cust = { RoutId: '', SubAreaId: '' };
       } else {
         AppComponent.SmartAlert.Errmsg(resp.Message);
-
+        this.custTermiData = [{}];
       }
     });
   }

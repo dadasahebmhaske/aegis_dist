@@ -23,6 +23,7 @@ export class TransportMasterComponent implements OnInit {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Transport Master list.xlsx';
+    this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
       {
