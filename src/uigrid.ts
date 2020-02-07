@@ -12,7 +12,7 @@ export function initUiGrid() {
       gridOptions: '='
     },
     transclude: true,
-    controller: ['$scope', 'uiGridConstants', function($scope, uiGridConstants) {
+    controller: ['$scope', 'uiGridConstants', function ($scope, uiGridConstants) {
 
       const ctrl = this;
 
@@ -35,21 +35,22 @@ export function initUiGrid() {
         showColumnFooter: false,
         enableSorting: true,
         treeRowHeaderAlwaysVisible: false,
-       
-        paginationPageSizes: [50,100,200,500],
+
+        paginationPageSizes: [50, 100, 200, 500],
         paginationPageSize: 25,
         headerCellClass: 'white',
-        enableColumnResizing:true,
+        enableColumnResizing: true,
         width: 100,
         exporterMenuPdf: false,
         exporterMenuCsv: true,
         exporterMenuExcel: true,
         enableGridMenu: true,
-        exporterCsvFilename:'data.csv',
+        exporterCsvFilename: 'data.csv',
 
         //exporterExcelFilename: 'myFile.xlsx',
         exporterExcelSheetName: 'Sheet1',
-       
+        enableRowSelection: false,
+
         //for pdf
         // exporterPdfDefaultStyle: {fontSize: 9},
         // exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
@@ -66,16 +67,18 @@ export function initUiGrid() {
         // exporterPdfOrientation: 'portrait',
         // exporterPdfPageSize: 'LETTER',
         // exporterPdfMaxGridWidth: 500,
-        
         exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
         onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
+          gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+            var msg = 'row selected ' + row.isSelected;
+            console.log('slected from grid' + $scope.gridApi.selection.getSelectedRows());
+            sessionStorage.row = JSON.stringify($scope.gridApi.selection.getSelectedRows());
+          });
         },
-       
-       
       };
 
-      $scope.editEmployee = function(row){
+      $scope.editEmployee = function (row) {
         ctrl.onEdit({
           // "City":row.City,
           // "Designation":row.Designation,
@@ -83,7 +86,7 @@ export function initUiGrid() {
           // "Name":row.Name
           row
         });
-      } 
+      }
 
       $scope.toggleFiltering = function () {
         $scope.gridOptions.enableFiltering = !$scope.gridOptions.enableFiltering;
@@ -111,29 +114,29 @@ export function initUiGrid() {
         return colDefs;
       }
 
-      this.$onChanges = function(obj: { data: { currentValue: Array<{}>},gridOptions:{ currentValue:IGridoption }}) {
+      this.$onChanges = function (obj: { data: { currentValue: Array<{}> }, gridOptions: { currentValue: IGridoption } }) {
         if (obj.data.currentValue && obj.data.currentValue.length) {
           const colDefs = makeColDefs(obj.data.currentValue);
           $scope.gridOptions.data = obj.data.currentValue;
-          if(obj.gridOptions && obj.gridOptions !== undefined){
-            Object.keys(obj.gridOptions.currentValue).map(function(key, index) {
+          if (obj.gridOptions && obj.gridOptions !== undefined) {
+            Object.keys(obj.gridOptions.currentValue).map(function (key, index) {
               $scope.gridOptions[key] = obj.gridOptions.currentValue[key];
             });
-            if(obj.gridOptions.currentValue.columnDefs && obj.gridOptions.currentValue.columnDefs !== undefined){
+            if (obj.gridOptions.currentValue.columnDefs && obj.gridOptions.currentValue.columnDefs !== undefined) {
               $scope.gridOptions.columnDefs = obj.gridOptions.currentValue.columnDefs;
             }
-          }else{
-            $scope.gridOptions.columnDefs = colDefs; 
+          } else {
+            $scope.gridOptions.columnDefs = colDefs;
           }
         }
       };
 
-      this.$onInit = function() {}
+      this.$onInit = function () { }
 
     }],
-    template: '<div ui-grid="gridOptions" ui-grid-resize-columns ui-grid-exporter ui-grid-auto-resize ui-grid-pagination class="grid" style="width:100%;"></div>'
+    template: '<div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-exporter ui-grid-auto-resize ui-grid-pagination class="grid" style="width:100%;"></div>'
   };
-  return angular.module('uigridmodule', ['ui.grid',  'ui.grid.selection','ui.grid.exporter','ui.grid.pagination'])
+  return angular.module('uigridmodule', ['ui.grid', 'ui.grid.selection', 'ui.grid.exporter', 'ui.grid.pagination'])
     .component('ui-grid', uiGridComponent)
     .directive('appRoot', downgradeComponent({ component: AppComponent }));
 }

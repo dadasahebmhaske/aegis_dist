@@ -108,7 +108,7 @@ export class NewCustomerComponent implements OnInit {
     this.customer.UserCode = this.cpInfo.EmpId;
     this.customer.ConsId = '';
     this.customer.CustCatId = null;
-    this.customer.ConsNo = 1;
+    this.customer.ConsNo = null;
     this.customer.ConsName = `${this.customer.FirstName} ${this.customer.LatName}`;
     let ciphertext = this.appService.getEncrypted(this.customer);
     this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {

@@ -8,13 +8,17 @@ export interface IGridoption {
     paginationPageSizes: number[],
     paginationPageSize: number,
     headerCellClass: IGridHeaderCellClass,
-    enableColumnResizing:boolean,
+    enableColumnResizing: boolean,
     width: boolean,
     exporterMenuPdf: boolean,
     exporterMenuCsv: boolean,
     exporterMenuExcel: boolean,
-    columnDefs:IGridColumnDefs[],
-    exporterExcelFilename:string
+    columnDefs: IGridColumnDefs[],
+    exporterExcelFilename: string,
+    multiSelect: boolean,
+    enableRowSelection: boolean,
+    enableSelectAll: boolean,
+    enableRowHeaderSelection: boolean
 }
 
 export enum IGridHeaderCellClass {
@@ -24,9 +28,9 @@ export enum IGridHeaderCellClass {
 }
 
 export interface IGridColumnDefs {
-    field:string;
-    width:number;
-    cellTemplate:string;
-    displayName:string;
-    enableSorting:boolean;
+    field: string;
+    width: number;
+    cellTemplate: string;
+    displayName: string;
+    enableSorting: boolean;
 }

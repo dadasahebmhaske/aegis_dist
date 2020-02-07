@@ -1,0 +1,6 @@
+.ui-grid.disable-row-selection {
+  display: none;
+}
+.ui-grid-selection-row-header-buttons {
+  display: none;
+}

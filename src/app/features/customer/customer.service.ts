@@ -43,5 +43,11 @@ export class CustomerService {
   getProductDetails(formFlag, RefId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
   }
+  public getCustomer(cpcode, SubAreaId, ConsNo, MobNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
+  }
+  public postCustomeTerminate(data: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessCustomerTermination`, { data: data });
+  }
 
 }
