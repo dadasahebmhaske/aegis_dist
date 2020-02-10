@@ -258,7 +258,7 @@ export class UpdateCustomerComponent implements OnInit {
           this.prodArray = [];
           this.getCustomerDocumentDetails();
           this.nextStep();
-          this.getCustomerProductDetails();
+          //this.getCustomerProductDetails();
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -381,7 +381,7 @@ export class UpdateCustomerComponent implements OnInit {
   }
   //product
   onProductSubmit() {
-    if (this.prodArray.some(obj => obj.ProdId === this.product.ProdId)) {
+    if (this.prodArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId))) {
       AppComponent.SmartAlert.Errmsg("Product is already added in list.");
       this.product = { ProdSegId: '', ProdId: '' };
     } else {
@@ -419,7 +419,7 @@ export class UpdateCustomerComponent implements OnInit {
     this.prodArray.splice(index, 1);
   }
   getCustomerProductDetails() {
-    this.customerService.getProductDetails('CUSTM', this.customer.ConsId).subscribe((resprod: any) => {
+    this.customerService.getProductDetails(this.cpInfo.CPCode, 'CUSTM', this.customer.ConsId).subscribe((resprod: any) => {
       if (resprod.StatusCode != 0)
         this.prodArray = resprod.Data;
       if (this.prodArray.length > 0) {
@@ -443,7 +443,7 @@ export class UpdateCustomerComponent implements OnInit {
   }
   // bank
   onSubmitBankData() {
-    if (this.bankArray.some(obj => obj.AccountNo === this.bank.AccountNo)) {
+    if (this.bankArray.some(obj => parseInt(obj.AccountNo) === parseInt(this.bank.AccountNo))) {
       AppComponent.SmartAlert.Errmsg("Bank Account is already added in list.");
       this.bank = { AccountType: '' };
     } else {
@@ -574,7 +574,7 @@ export class UpdateCustomerComponent implements OnInit {
     this.document.IsActive = "Y";
     this.document.filepreview = this.filepreview;
 
-    if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
+    if (this.bdata.some(obj => parseInt(obj.DocNo) === parseInt(this.document.DocNo))) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
       this.document = { DocTypId: '' };

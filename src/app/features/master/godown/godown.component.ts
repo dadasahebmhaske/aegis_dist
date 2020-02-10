@@ -279,7 +279,7 @@ export class GodownComponent implements OnInit {
     this.document.DocFileName = this.DocFileName;
     this.document.IsActive = "Y";
     this.document.filepreview = this.filepreview;
-    if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
+    if (this.bdata.some(obj => parseInt(obj.DocNo) === parseInt(this.document.DocNo))) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
       this.document = { DocTypId: '' };

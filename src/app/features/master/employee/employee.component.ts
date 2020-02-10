@@ -265,7 +265,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.document.DocFileName = this.DocFileName;
     this.document.IsActive = "Y";
     this.document.filepreview = this.filepreview;
-    if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
+    if (this.bdata.some(obj => parseInt(obj.DocNo) === parseInt(this.document.DocNo))) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
       this.document = { DocTypId: '' };
@@ -292,8 +292,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   getEmployeeDocumentDetails() {
     this.masterService.getDocumentDetails('EMP', this.employee.EmpId).subscribe((response: any) => {
       if (response.StatusCode != 0)
-        this.bdata = response.Data;
-      console.log(response.Data[0]);
+        if (response.Data != null)
+          this.bdata = response.Data;
     });
   }
   getEmployeeAddressDetails() {

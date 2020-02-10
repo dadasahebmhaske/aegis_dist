@@ -69,7 +69,7 @@ export class GodownMasterComponent implements OnInit {
         this.godownData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.godownData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

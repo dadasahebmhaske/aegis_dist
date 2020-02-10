@@ -71,10 +71,10 @@
                                                 <div class="col-sm-5">
                                                     <div class="form-group">
                                                         <label>Insurance Renewal Date
-                                                            <span class="errorMessage" [hidden]="!vehicle.IsInsurance">*</span>
+                                                            <span class="errorMessage" [hidden]="vehicle.IsInsurance=='N'">*</span>
                                                         </label>
                                                         <input type="text" id="rendate" class="form-control" [(ngModel)]="vehicle.InsRenewalDate" name="InsRenewalDate" placeholder="Enter Renewal Date" form="vehicleForm"
-                                                          [required]="vehicle.IsInsurance"  [disabled]="!vehicle.IsInsurance" 
+                                                          [required]="vehicle.IsInsurance=='Y'"  [disabled]="vehicle.IsInsurance=='N' || vehicle.IsInsurance==null" 
                                                           onkeydown="return false" bsDatepicker     [bsConfig]="datePickerConfig"/>
                                                     </div>
                                                 </div>

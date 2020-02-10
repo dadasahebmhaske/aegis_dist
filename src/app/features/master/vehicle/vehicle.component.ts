@@ -23,16 +23,16 @@ export class VehicleComponent implements OnInit {
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
   public selectedFile: File = null;
-  public vehicle: any = {VehicleTypeId:''};
+  public vehicle: any = { VehicleTypeId: '' };
   public transportData: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private vehicleService: VehicleService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.imgUrl=`${AppComponent.ImageUrl}VehicleDocs/`;
+    this.imgUrl = `${AppComponent.ImageUrl}VehicleDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive:'Y',VehicleTypeId: '' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data);
     this.onLoad();
     if (this.vehicle.VehicleTypeID != '') { this.getVehicleDocumentDetails(); }
   }
@@ -78,7 +78,7 @@ export class VehicleComponent implements OnInit {
     this.document.DocFileName = this.DocFileName;
     this.document.IsActive = "Y";
     this.document.filepreview = this.filepreview;
-    if (this.bdata.some(obj => obj.DocNo === this.document.DocNo)) {
+    if (this.bdata.some(obj => parseInt(obj.DocNo) === parseInt(this.document.DocNo))) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
       this.document = { DocTypId: '' };

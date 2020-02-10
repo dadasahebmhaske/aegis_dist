@@ -18,19 +18,58 @@
           </header>
           <div>
             <div class="widget-body">
-              <form
+             <form
                 name="custListForm"
-                #custOutForm="ngForm"
+                #custListForm="ngForm"
                 (ngSubmit)="onSubmitArea()"
                 ngNativeValidate
               >
-                <div class="row ">
-                  <div class="col-sm-3 col-xs-4">
+                <div class="row">
+                  <div class="col-sm-2">
                     <div class="form-group">
-                      <select class="form-control">
-                        <option selected hidden>Select Area</option>
-                        <option>Pune</option>
-                        <option>Nagpur </option>
+                      <!-- <label for="sel1"
+                        >Route
+                        <span class="errorMessage">*</span>
+                      </label> -->
+                      <select
+                        class="form-control"
+                        [(ngModel)]="cust.RoutId"
+                        name="RoutId"
+                        (change)="getSubArea()"
+                        required
+                      >
+                        <option value="" selected hidden>
+                          Select Route
+                          <span class="errorMessage">*</span></option
+                        >
+                        <option
+                          *ngFor="let rou of RouteData"
+                          value="{{ rou.RouteId }}"
+                          >{{ rou.RouteName }}</option
+                        >
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <!-- <label for="sel1"
+                        >Sub Area
+                        <span class="errorMessage">*</span>
+                      </label> -->
+                      <select
+                        [(ngModel)]="cust.SubAreaId"
+                        name="SubAreaId"
+                        class="form-control"
+                        required
+                      >
+                        <option value="" selected hidden>
+                          Select Sub Area <span class="errorMessage">*</span>
+                        </option>
+                        <option
+                          *ngFor="let sub of SubAreaData"
+                          value="{{ sub.SubAreaId }}"
+                          >{{ sub.SubAreaName }}</option
+                        >
                       </select>
                     </div>
                   </div>
@@ -43,20 +82,29 @@
                         oninvalid="this.setCustomValidity('Enter consumer number')"
                         onchange="this.setCustomValidity('')"
                         oninput="setCustomValidity(' ')"
-                        numericonly
-                        ng-model="ConsumerNo"
-                        maxlength="8"
-                        required
+                        [(ngModel)]="cust.CustNoMob"
+                        name="CustNoMob"
+                        maxlength="10"
+                        saCommonDir
+                        dirType="number"
                       />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button
-                        type="submit"
                         class="btn btn-block btn-success get_details"
+                        type="submit"
+                        [disabled]="!loaderbtn"
                       >
-                        <i class="fa fa-search"></i> Get Details
+                        <i
+                          class="fa fa-fw"
+                          [ngClass]="{
+                            'fa-search': loaderbtn,
+                            'fa-cog fa-spin': !loaderbtn
+                          }"
+                        ></i>
+                        {{ loaderbtn == true ? "Get Details" : "Loading" }}
                       </button>
                     </div>
                   </div>
@@ -65,17 +113,13 @@
               <div class="row">
                 <div class="col-sm-8">
                   <div class="transfer-card">
-                    <label
-                      ><strong class="text-primary"
-                        >Customer List :
-                      </strong></label
-                    >
+                    <label><strong class="text-primary" >Customer List :
+                      </strong></label>
                     <div class="table-responsive">
-                      <ui-grid
-                        [data]="custOutData"
-                        [gridOptions]="gridOptions"
-                        (onEdit)="onEditFunction($event)"
-                      >
+                      <ui-grid   
+                       [data]="custOutData" 
+                      [gridOptions]="gridOptions"
+                        (onEdit)="onEditFunction($event)"  >
                       </ui-grid>
                     </div>
                   </div>
@@ -87,10 +131,10 @@
                         >Transfer Details :
                       </strong></label
                     >
-                    <form
-                      name="custListForm"
-                      #custOutForm="ngForm"
-                      (ngSubmit)="onSubmitArea()"
+                  <form
+                      name="custTermiForm"
+                      #custTermiForm="ngForm"
+                      (ngSubmit)="onTransfer()"
                       ngNativeValidate
                     >
                       <div class="row">
@@ -111,6 +155,7 @@
                               class="form-control"
                               rows="6"
                               placeholder="Enter Transfer Reason  "
+                               [(ngModel)]="terminateList.ReqRemark" name="ReqRemark"
                               required
                             ></textarea>
                           </div>

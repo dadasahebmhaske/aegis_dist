@@ -51,7 +51,7 @@ export class RouteMasterComponent implements OnInit {
         this.routeData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.routeData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

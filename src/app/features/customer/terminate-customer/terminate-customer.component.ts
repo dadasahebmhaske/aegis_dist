@@ -102,9 +102,10 @@ export class TerminateCustomerComponent implements OnInit {
     let forData = [];
     if (sessionStorage.row != null) {
       let data = JSON.parse(sessionStorage.row);
-      for (let i = 0; i < data.length; i++) {
-        forData.push({ Id: '', ConsId: data[i].ConsId, AdminRemark: '' });
-      }
+      if (data != null)
+        for (let i = 0; i < data.length; i++) {
+          forData.push({ Id: '', ConsId: data[i].ConsId, AdminRemark: '' });
+        }
       this.terminateList.data = forData;
       sessionStorage.row = null;
     }
@@ -115,10 +116,9 @@ export class TerminateCustomerComponent implements OnInit {
     this.customerService.postCustomeTerminate(this.terminateList).subscribe((resp: any) => {
       this.loaderbtn = true;
       if (resp.StatusCode != 0) {
-        if (resp.Data.length != 0)
-          AppComponent.SmartAlert.Success(resp.Message);
+        AppComponent.SmartAlert.Success(resp.Message);
         this.custTermiData = [{}];
-        this.terminateList.ReqRemark = {};
+        this.terminateList.ReqRemark = '';
         this.cust = { RoutId: '', SubAreaId: '' };
       } else {
         AppComponent.SmartAlert.Errmsg(resp.Message);

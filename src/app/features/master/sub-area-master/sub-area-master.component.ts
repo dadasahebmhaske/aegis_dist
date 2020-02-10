@@ -49,7 +49,7 @@ export class SubAreaMasterComponent implements OnInit {
         this.subAreaData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.subAreaData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

@@ -40,14 +40,14 @@ export class CustomerService {
   public postBulkProduct(fd: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCustProd`, fd);
   }
-  getProductDetails(formFlag, RefId) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
+  getProductDetails(cpcode, formFlag, ConsId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&CPCode=${cpcode}&FormFlag=${formFlag}&ConsId=${ConsId}&IsActive=Y`);
   }
   public getCustomer(cpcode, SubAreaId, ConsNo, MobNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
   }
   public postCustomeTerminate(data: any) {
-    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessCustomerTermination`, { data: data });
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessCustomerTermination`, data);
   }
 
 }

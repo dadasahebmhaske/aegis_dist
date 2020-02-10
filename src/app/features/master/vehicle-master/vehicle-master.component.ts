@@ -53,7 +53,7 @@ export class VehicleMasterComponent implements OnInit {
         this.vehicleData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.vehicleData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
 

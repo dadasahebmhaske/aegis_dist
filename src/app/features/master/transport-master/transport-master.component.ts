@@ -48,7 +48,7 @@ export class TransportMasterComponent implements OnInit {
         this.transportData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.transportData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
 
   }
