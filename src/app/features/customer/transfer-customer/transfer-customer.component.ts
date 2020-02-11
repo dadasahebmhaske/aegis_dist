@@ -19,9 +19,10 @@ export class TransferCustomerComponent implements OnInit {
   public loaderbtn: boolean = true;
   public RouteData: any = [];
   public reason: string;
+  public selectedRows: any = [];
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
-  public terminateList: any = {};
+  public custOutList: any = {};
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
   ngOnInit() {
@@ -71,6 +72,11 @@ export class TransferCustomerComponent implements OnInit {
     console.log($event.row);
     //this.datashare.updateShareData($event.row);
   }
+  onSelectFunction = ($event) => {
+    console.log($event);
+    this.selectedRows = $event.row;
+    //this.datashare.updateShareData($event.row);
+  }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
   }
@@ -97,33 +103,42 @@ export class TransferCustomerComponent implements OnInit {
     });
   }
   onTransfer() {
-    this.loaderbtn = false;
-    // this.terminateList.Flag = 'IN';
-    let forData = [];
-    if (sessionStorage.row != null) {
-      let data = JSON.parse(sessionStorage.row);
-      if (data != null)
-        for (let i = 0; i < data.length; i++) {
-          forData.push({ Id: '', ConsId: data[i].ConsId, AdminRemark: '' });
+    if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
+      this.loaderbtn = false;
+      // this.terminateList.Flag = 'IN';
+      let forData = [];
+      if (this.selectedRows != null) {
+        for (let i = 0; i < this.selectedRows.length; i++) {
+          forData.push({ Id: '', ConsId: this.selectedRows[i].ConsId, ConsNo: this.selectedRows[i].ConsNo });
         }
-      this.terminateList.data = forData;
-      sessionStorage.row = null;
-    }
-    this.terminateList.CPCode = this.cpInfo.CPCode;
-    this.terminateList.UserCode = this.cpInfo.EmpId;
-    this.terminateList.IsActive = 'Y';
-    this.terminateList.Status = 'P';
-    this.customerService.postCustomeTransfer('').subscribe((resp: any) => {
-      this.loaderbtn = true;
-      if (resp.StatusCode != 0) {
-        AppComponent.SmartAlert.Success(resp.Message);
-        this.custOutData = [{}];
-        this.terminateList.ReqRemark = '';
-        this.cust = { RoutId: '', SubAreaId: '' };
-      } else {
-        AppComponent.SmartAlert.Errmsg(resp.Message);
-        this.custOutData = [{}];
+        this.custOutList.data = forData;
+        this.selectedRows = [];
       }
-    });
+      this.custOutList.OldCPCode = this.cpInfo.CPCode;
+      this.custOutList.UserCode = this.cpInfo.EmpId;
+      this.custOutList.RequestBy = this.cpInfo.EmpName;
+      this.custOutList.IsActive = 'Y';
+      this.custOutList.IsTransfer = 'PE';
+      this.custOutList.AdminRemrk = null;
+      this.custOutList.ApproveBy = null;
+      this.custOutList.NewConsNo = null;
+      this.custOutList.NewCPCode = null;
+      this.custOutList.RejectRemark = null;
+      this.custOutList.AcptRejBy = null;
+      this.customerService.postCustomeTransfer(this.custOutList).subscribe((resp: any) => {
+        this.loaderbtn = true;
+        if (resp.StatusCode != 0) {
+          AppComponent.SmartAlert.Success(resp.Message);
+          this.custOutData = [{}];
+          this.custOutList.ReqRemark = '';
+          this.cust = { RoutId: '', SubAreaId: '' };
+        } else {
+          AppComponent.SmartAlert.Errmsg(resp.Message);
+          this.custOutData = [{}];
+        }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please select atleast one customer`);
+    }
   }
 }

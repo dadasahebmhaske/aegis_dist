@@ -11,24 +11,26 @@
           <div>
             <div class="widget-body">
               <div class="row ">
-
+         <form name="StatusForm" #StatusForm="ngForm" (ngSubmit)="onLoad()" ngNativeValidate>
                 <div class="col-sm-2 col-xs-8">
                   <div class="form-group">
-                    <select class="form-control">
+                    <select class="form-control"  [(ngModel)]="status" name="status" required>
                       <option selected hidden> Select Status </option>
-                      <option> Accepted </option>
-                      <option> Rejected </option>
-                      <option> Pending </option>
+                      <option value="AC"> Accepted </option>
+                      <option value="RJ"> Rejected </option>
+                      <option value="PE"> Pending </option>
                     </select>
                   </div>
                 </div>
                 <div class="col-sm-1 col-xs-4">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success get_details">
-                      <i class="fa fa-search"></i> Get Details</button>
-
+                 
+   <button class="btn btn-block btn-success get_details" type="submit"  [disabled]="!loaderbtn">    
+                      <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                  {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                   </div>
                 </div>
+         </form>
                 <!-- <div class="col-sm-2 pull-right">                     
                     <div class="form-group pull-right">
                       <a routerLink="/stock/stock-orders"  class="btn btn-block btn-warning get_details pull-right">
@@ -38,7 +40,7 @@
                     </div>
                   </div> -->
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="customerInData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  <ui-grid [data]="customerInData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
                 </div>
               </div>
             </div>

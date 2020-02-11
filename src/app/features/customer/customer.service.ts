@@ -46,8 +46,14 @@ export class CustomerService {
   public getCustomer(cpcode, SubAreaId, ConsNo, MobNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
   }
+  public getCustomerIn(cpcode, IsTransfer) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetTransCust?TransferId=&CPCode=${cpcode}&ConsId=&IsTransfer=${IsTransfer}&IsActive=Y`);
+  }
   public postCustomeTerminate(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessCustomerTermination`, data);
+  }
+  public postCustomeTransfer(data: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessTransCustomer`, data);
   }
 
 }

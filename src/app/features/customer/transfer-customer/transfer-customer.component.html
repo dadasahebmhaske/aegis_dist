@@ -111,17 +111,16 @@
                 </div>
               </form>
               <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-8 table-responsive">
                   <div class="transfer-card">
                     <label><strong class="text-primary" >Customer List :
                       </strong></label>
-                    <div class="table-responsive">
                       <ui-grid   
                        [data]="custOutData" 
                       [gridOptions]="gridOptions"
-                        (onEdit)="onEditFunction($event)"  >
-                      </ui-grid>
-                    </div>
+                        (onEdit)="onEditFunction($event)" 
+                        (onSelect)="onSelectFunction($event)" >
+                      </ui-grid>                   
                   </div>
                 </div>
                 <div class="col-sm-4">
@@ -132,19 +131,13 @@
                       </strong></label
                     >
                   <form
-                      name="custTermiForm"
-                      #custTermiForm="ngForm"
+                      name="custTransForm"
+                      #custTransForm="ngForm"
                       (ngSubmit)="onTransfer()"
-                      ngNativeValidate
+                      ngNativeValidate   
                     >
                       <div class="row">
-                        <!-- <div class="col-sm-12">
-                                                  <div class="form-group">
-                                                      <label>New Distributor Code <span class="errorMessage">*</span>
-                                                      </label>
-                                                      <input type="text" class="form-control"  placeholder="Enter Distributor Code" required />
-                                                  </div>
-                                              </div> -->
+                  
                         <div class="col-sm-12">
                           <div class="form-group">
                             <label
@@ -155,19 +148,15 @@
                               class="form-control"
                               rows="6"
                               placeholder="Enter Transfer Reason  "
-                               [(ngModel)]="terminateList.ReqRemark" name="ReqRemark"
+                               [(ngModel)]="custOutList.ReqRemark" name="ReqRemark"
                               required
                             ></textarea>
                           </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                          <button
-                            class="btn btn-primary text-center"
-                            type="submit"
-                          >
-                            <i class="glyphicon glyphicon-send"></i>
-                            &nbsp;&nbsp;Transfer
-                          </button>
+                           <button class="btn btn-primary text-center" type="submit"  [disabled]="!loaderbtn">    
+                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                  {{loaderbtn==true? 'Transfer':'Loading'}}</button>
                         </div>
                       </div>
                     </form>

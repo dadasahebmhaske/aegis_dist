@@ -4,6 +4,7 @@ import { MasterService } from '../../../core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { AppComponent } from '@app/app.component';
 import { CustomerService } from '../customer.service';
+import { MinLengthValidator } from '@angular/forms';
 @Component({
   selector: 'sa-terminate-customer',
   templateUrl: './terminate-customer.component.html',
@@ -19,9 +20,11 @@ export class TerminateCustomerComponent implements OnInit {
   public loaderbtn: boolean = true;
   public RouteData: any = [];
   public reason: string;
+  public selectedRows: any = [];
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
   public terminateList: any = {};
+
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
   ngOnInit() {
@@ -71,6 +74,11 @@ export class TerminateCustomerComponent implements OnInit {
     console.log($event.row);
     //this.datashare.updateShareData($event.row);
   }
+  onSelectFunction = ($event) => {
+    console.log($event);
+    this.selectedRows = $event.row;
+    //this.datashare.updateShareData($event.row);
+  }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
   }
@@ -93,37 +101,42 @@ export class TerminateCustomerComponent implements OnInit {
         this.custTermiData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); this.custTermiData = [{}]; }
+      else {
+        AppComponent.SmartAlert.Errmsg(resData.Message); this.custTermiData = [{}];
+      }
     });
   }
   onTerminate() {
-    this.loaderbtn = false;
-    // this.terminateList.Flag = 'IN';
-    let forData = [];
-    if (sessionStorage.row != null) {
-      let data = JSON.parse(sessionStorage.row);
-      if (data != null)
-        for (let i = 0; i < data.length; i++) {
-          forData.push({ Id: '', ConsId: data[i].ConsId, AdminRemark: '' });
+    if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
+      this.loaderbtn = false;
+      let forData = [];
+      if (this.selectedRows != null) {
+        for (let i = 0; i < this.selectedRows.length; i++) {
+          forData.push({ Id: '', ConsId: this.selectedRows[i].ConsId });
         }
-      this.terminateList.data = forData;
-      sessionStorage.row = null;
-    }
-    this.terminateList.CPCode = this.cpInfo.CPCode;
-    this.terminateList.UserCode = this.cpInfo.EmpId;
-    this.terminateList.IsActive = 'Y';
-    this.terminateList.Status = 'P';
-    this.customerService.postCustomeTerminate(this.terminateList).subscribe((resp: any) => {
-      this.loaderbtn = true;
-      if (resp.StatusCode != 0) {
-        AppComponent.SmartAlert.Success(resp.Message);
-        this.custTermiData = [{}];
-        this.terminateList.ReqRemark = '';
-        this.cust = { RoutId: '', SubAreaId: '' };
-      } else {
-        AppComponent.SmartAlert.Errmsg(resp.Message);
-        this.custTermiData = [{}];
+        this.terminateList.data = forData;
+        this.selectedRows = [];
       }
-    });
+      this.terminateList.CPCode = this.cpInfo.CPCode;
+      this.terminateList.UserCode = this.cpInfo.EmpId;
+      this.terminateList.IsActive = 'Y';
+      this.terminateList.Status = 'P';
+      this.customerService.postCustomeTerminate(this.terminateList).subscribe((resp: any) => {
+        this.loaderbtn = true;
+        if (resp.StatusCode != 0) {
+          AppComponent.SmartAlert.Success(resp.Message);
+          this.custTermiData = [{}];
+          this.terminateList.ReqRemark = '';
+          this.cust = { RoutId: '', SubAreaId: '' };
+        } else {
+          AppComponent.SmartAlert.Errmsg(resp.Message);
+          this.custTermiData = [{}];
+        }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please select atleast one customer`);
+    }
+
+
   }
 }

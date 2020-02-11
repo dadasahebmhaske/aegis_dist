@@ -9,6 +9,8 @@ export function initUiGrid() {
     bindings: {
       data: '<',
       onEdit: '&',
+      onDelete: '&',
+      onSelect: '&',
       gridOptions: '='
     },
     transclude: true,
@@ -71,9 +73,14 @@ export function initUiGrid() {
         onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
           gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            var msg = 'row selected ' + row.isSelected;
-            console.log('slected from grid' + $scope.gridApi.selection.getSelectedRows());
-            sessionStorage.row = JSON.stringify($scope.gridApi.selection.getSelectedRows());
+            ctrl.onSelect({
+              row: $scope.gridApi.selection.getSelectedRows()
+            });
+          });
+          gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+            ctrl.onSelect({
+              row: $scope.gridApi.selection.getSelectedRows()
+            });
           });
         },
       };
@@ -84,6 +91,11 @@ export function initUiGrid() {
           // "Designation":row.Designation,
           // "ID":row.ID,
           // "Name":row.Name
+          row
+        });
+      }
+      $scope.deleteEmployee = function (row) {
+        ctrl.onDelete({
           row
         });
       }

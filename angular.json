@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",  
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/sweetalert2/dist/sweetalert2.css",
               "node_modules/angular-ui-grid/ui-grid.min.css",
               "src/styles.css"
             ],
@@ -31,8 +32,9 @@
               "src/assets/js/lodash.min.js",
               "src/assets/js/jszip.min.js",
               "src/assets/js/excel-builder.dist.js",
-              "node_modules/angular/angular.min.js",              
-              "node_modules/angular-ui-grid/ui-grid.min.js" 
+              "node_modules/angular/angular.min.js",
+              "node_modules/angular-ui-grid/ui-grid.min.js",
+              "node_modules/sweetalert2/dist/sweetalert2.js"
             ]
           },
           "configurations": {

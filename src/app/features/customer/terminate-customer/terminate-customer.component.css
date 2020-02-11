@@ -15,3 +15,27 @@
 #grid>.ui-grid-selection-row-header-buttons {
   display: none !important;
 } */
+/* select >.form-control.ng-pristine.ng-invalid.ng-touched>option>strong {
+color:red!important;
+background: green!important;
+}
+#el01 option {width:20em;
+color:green;}
+[selected]>strong{
+  color:red!important;
+} */
+
+/* #elmen option ~ strong{
+  color:red !important;
+}
+[selected] {
+    color: #f00;
+    font-weight: bold;
+}
+#elmen select[value=""] {
+  color:red !important;
+  background: greenyellow;;
+} */
+ .elmen span {
+  color:red !important;
+}

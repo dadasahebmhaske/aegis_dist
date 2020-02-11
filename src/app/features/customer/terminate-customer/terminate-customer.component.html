@@ -31,17 +31,16 @@
                         >Route
                         <span class="errorMessage">*</span>
                       </label> -->
-                      <select
+                      <select id="elmen"
                         class="form-control"
                         [(ngModel)]="cust.RoutId"
                         name="RoutId"
                         (change)="getSubArea()"
-                        required
-                      >
-                        <option value="" selected hidden>
+                        required  >
+                        <option value="" hidden selected>
                           Select Route
-                          <span class="errorMessage">*</span></option
-                        >
+                          <span id="opt">*</span> </option>
+                         
                         <option
                           *ngFor="let rou of RouteData"
                           value="{{ rou.RouteId }}"
@@ -111,7 +110,7 @@
                 </div>
               </form>
               <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-8 table-responsive">
                   <div class="transfer-card">
                     <label>
                       <strong class="text-primary">Customer List : </strong>
@@ -121,6 +120,7 @@
                         [data]="custTermiData"
                         [gridOptions]="gridOptions"
                         (onEdit)="onEditFunction($event)"
+                         (onSelect)="onSelectFunction($event)"
                       >
                       </ui-grid>
                     </div>
