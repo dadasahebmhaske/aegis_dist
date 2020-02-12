@@ -82,17 +82,7 @@ export class TransferCustomerComponent implements OnInit {
   }
   onSubmitArea() {
     this.loaderbtn = false;
-    this.cust.CustNoMob = this.cust.CustNoMob == null ? '' : this.cust.CustNoMob;
-    if (this.cust.CustNoMob == '') {
-      this.cust.MobileNo = '';
-      this.cust.ConsNo = '';
-    } else if (this.cust.CustNoMob.length == 10) {
-      this.cust.MobileNo = this.cust.CustNoMob;
-      this.cust.ConsNo = '';
-    } else {
-      this.cust.ConsNo = this.cust.CustNoMob;
-      this.cust.MobileNo = '';
-    }
+    this.cust = this.customerService.checkCustOrMobNo(this.cust);
     this.customerService.getCustomer(this.cpInfo.CPCode, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {

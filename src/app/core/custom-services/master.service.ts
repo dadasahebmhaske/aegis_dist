@@ -68,4 +68,7 @@ export class MasterService {
   public postBulkAddress(fd: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageAddressDtls`, fd);
   }
+  // public getProductSegment() {
+  //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
+  // }
 }

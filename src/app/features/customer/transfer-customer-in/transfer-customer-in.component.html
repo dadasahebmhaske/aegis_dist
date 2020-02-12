@@ -18,7 +18,7 @@
                       <option selected hidden> Select Status </option>
                       <option value="AC"> Accepted </option>
                       <option value="RJ"> Rejected </option>
-                      <option value="PE"> Pending </option>
+                      <option value="AP"> Pending </option>
                     </select>
                   </div>
                 </div>
@@ -64,18 +64,22 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title text-center">Reject Details</h4>
       </div>
+      <form name="rejectForm" #rejectForm="ngForm" (ngSubmit)="acceptRejectCustomer('RJ')" ngNativeValidate>
       <div class="modal-body">
         <div class="row">
           <div class="col-sm-12">
-            <label>Reason</label>
-          <textarea class="form-control" placeholder="Enter reason to reject"></textarea>
+            <label>Reason    <span class="errorMessage">*</span></label>
+          <textarea class="form-control" [(ngModel)]="rjRemark" name="rjRemark" placeholder="Enter reason to reject" required></textarea>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" type="submit"  [disabled]="!loaderbtn">    
+                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
+                  {{loaderbtn==true? 'Submit':'Loading'}}</button>
+        <a  class="btn btn-default" data-dismiss="modal">Close</a>
       </div>
+    </form>
     </div>
 
   </div>

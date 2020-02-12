@@ -4,26 +4,14 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div
-          sa-widget
-          [editbutton]="false"
-          [sortable]="false"
-          [deletebutton]="false"
-          [togglebutton]="true"
-          minimize="false"
-          color="blueDark"
-        >
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
           <header class="text-center">
             <h2><i class="fa fa-user"></i> Transfer Customer</h2>
           </header>
           <div>
             <div class="widget-body">
-             <form
-                name="custListForm"
-                #custListForm="ngForm"
-                (ngSubmit)="onSubmitArea()"
-                ngNativeValidate
-              >
+              <form name="custListForm" #custListForm="ngForm" (ngSubmit)="onSubmitArea()" ngNativeValidate>
                 <div class="row">
                   <div class="col-sm-2">
                     <div class="form-group">
@@ -31,22 +19,10 @@
                         >Route
                         <span class="errorMessage">*</span>
                       </label> -->
-                      <select
-                        class="form-control"
-                        [(ngModel)]="cust.RoutId"
-                        name="RoutId"
-                        (change)="getSubArea()"
-                        required
-                      >
-                        <option value="" selected hidden>
-                          Select Route
-                          <span class="errorMessage">*</span></option
-                        >
-                        <option
-                          *ngFor="let rou of RouteData"
-                          value="{{ rou.RouteId }}"
-                          >{{ rou.RouteName }}</option
-                        >
+                      <select class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()"
+                        required>
+                        <option value="" selected hidden> Select Route <span class="errorMessage">*</span></option>
+                        <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
                       </select>
                     </div>
                   </div>
@@ -56,56 +32,27 @@
                         >Sub Area
                         <span class="errorMessage">*</span>
                       </label> -->
-                      <select
-                        [(ngModel)]="cust.SubAreaId"
-                        name="SubAreaId"
-                        class="form-control"
-                        required
-                      >
-                        <option value="" selected hidden>
-                          Select Sub Area <span class="errorMessage">*</span>
+                      <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control" required>
+                        <option value="" selected hidden> Select Sub Area <span class="errorMessage">*</span>
                         </option>
-                        <option
-                          *ngFor="let sub of SubAreaData"
-                          value="{{ sub.SubAreaId }}"
-                          >{{ sub.SubAreaName }}</option
-                        >
+                        <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}
+                        </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-3 col-xs-4">
                     <div class="form-group">
-                      <input
-                        type="text"
-                        placeholder="Enter Customer No. / Mobile No."
-                        class="form-control"
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control"
                         oninvalid="this.setCustomValidity('Enter consumer number')"
-                        onchange="this.setCustomValidity('')"
-                        oninput="setCustomValidity(' ')"
-                        [(ngModel)]="cust.CustNoMob"
-                        name="CustNoMob"
-                        maxlength="10"
-                        saCommonDir
-                        dirType="number"
-                      />
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')"
+                        [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
-                      <button
-                        class="btn btn-block btn-success get_details"
-                        type="submit"
-                        [disabled]="!loaderbtn"
-                      >
-                        <i
-                          class="fa fa-fw"
-                          [ngClass]="{
-                            'fa-search': loaderbtn,
-                            'fa-cog fa-spin': !loaderbtn
-                          }"
-                        ></i>
-                        {{ loaderbtn == true ? "Get Details" : "Loading" }}
-                      </button>
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn, 'fa-cog fa-spin': !loaderbtn }"></i>
+                        {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
                     </div>
                   </div>
                 </div>
@@ -113,50 +60,31 @@
               <div class="row">
                 <div class="col-sm-8 table-responsive">
                   <div class="transfer-card">
-                    <label><strong class="text-primary" >Customer List :
-                      </strong></label>
-                      <ui-grid   
-                       [data]="custOutData" 
-                      [gridOptions]="gridOptions"
-                        (onEdit)="onEditFunction($event)" 
-                        (onSelect)="onSelectFunction($event)" >
-                      </ui-grid>                   
+                    <label><strong class="text-primary">Customer List : </strong></label>
+                    <ui-grid [data]="custOutData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"
+                      (onSelect)="onSelectFunction($event)">
+                    </ui-grid>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="transfer-card">
-                    <label
-                      ><strong class="text-primary"
-                        >Transfer Details :
-                      </strong></label
-                    >
-                  <form
-                      name="custTransForm"
-                      #custTransForm="ngForm"
-                      (ngSubmit)="onTransfer()"
-                      ngNativeValidate   
-                    >
+                    <label><strong class="text-primary">Transfer Details : </strong></label>
+                    <form name="custTransForm" #custTransForm="ngForm" (ngSubmit)="onTransfer()" ngNativeValidate>
                       <div class="row">
-                  
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <label
-                              >Transfer Reason
-                              <span class="errorMessage">*</span>
+                            <label>Transfer Reason <span class="errorMessage">*</span>
                             </label>
-                            <textarea
-                              class="form-control"
-                              rows="6"
-                              placeholder="Enter Transfer Reason  "
-                               [(ngModel)]="custOutList.ReqRemark" name="ReqRemark"
-                              required
-                            ></textarea>
+                            <textarea class="form-control" rows="6" placeholder="Enter Transfer Reason  "
+                              [(ngModel)]="custOutList.ReqRemark" name="ReqRemark" required>
+                            </textarea>
                           </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                           <button class="btn btn-primary text-center" type="submit"  [disabled]="!loaderbtn">    
-                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}" ></i>          
-                  {{loaderbtn==true? 'Transfer':'Loading'}}</button>
+                          <button class="btn btn-primary text-center" type="submit" [disabled]="!loaderbtn">
+                            <i class="fa fa-fw"
+                              [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                            {{loaderbtn==true? 'Transfer':'Loading'}}</button>
                         </div>
                       </div>
                     </form>

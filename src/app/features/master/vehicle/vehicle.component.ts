@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DatashareService } from '../../../core/custom-services/datashare.service';
 import { AppComponent } from '../../../app.component';
 import { VehicleService } from './vehicle.service';
@@ -10,7 +10,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
   templateUrl: './vehicle.component.html',
   styleUrls: ['./vehicle.component.css']
 })
-export class VehicleComponent implements OnInit {
+export class VehicleComponent implements OnInit, OnDestroy {
   public bdata: any = [];
   public bulkDoc: any = {};
   public cpInfo: any = {};

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { AppService } from '@app/core/custom-services/app.service';
 import { CustomerService } from '../customer.service';
@@ -22,7 +22,7 @@ import { AppComponent } from '@app/app.component';
     ])
   ]
 })
-export class UpdateCustomerComponent implements OnInit {
+export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public address: any = { AddressType: '', StateCode: '', CityCode: '' };
   public AccountTypeData: any = [];
   public addArray: any = [];
@@ -646,5 +646,7 @@ export class UpdateCustomerComponent implements OnInit {
       }
     }
   }
-
+  ngOnDestroy() {
+    this.datashare.updateShareData(null);
+  }
 }

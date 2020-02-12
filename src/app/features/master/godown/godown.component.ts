@@ -25,7 +25,7 @@ import { HttpClient } from '@angular/common/http';
     ])
   ]
 })
-export class GodownComponent implements OnInit {
+export class GodownComponent implements OnInit, OnDestroy {
   public addArray: any = [];
   //public bsValue = new Date();
   public bdata: any = [];

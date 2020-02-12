@@ -1,243 +1,220 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-  <sa-widgets-grid>
-      <div class="row">
-          <article class="col-sm-12">
-              <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-                  <header class="text-center">
-                      <h2>
-                          <i class="fa fa-table"></i> Stock Order</h2>
-                  </header>
-                  <div>
-                      <div class="widget-body">
-                              <form name="subAreaForm" #subAreaForm="ngForm"  ngNativeValidate>
-                          <div class="row">
-                              <div class="col-sm-2 col-sm-offset-2">
-                                  <div class="form-group">
-                                      <label>Order Date
-                                          <span class="errorMessage">*</span>
-                                      </label>
-                                      <input type="text" class="form-control" placeholder="Enter Date" name="SubAreaName"   required />
-                                  </div>
-                              </div>
-                              <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label>Order Status
-                                            <span class="errorMessage">*</span>
-                                        </label>
-                                        <select class="form-control" id="sel" name="RouteID" disabled>
-                                            <option value="" selected hidden>Select Status</option>
-                                            <option>Pending</option>    
-                                            <option>Delivered</option>                                   
-                                            <option>Undelivered</option>     
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label>Plant
-                                                <span class="errorMessage">*</span>
-                                            </label>
-                                            <select class="form-control" id="sel" name="RouteID" required>
-                                                <option value="" selected hidden>Select Plant</option>                                                                                         
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label>Vehicle
-                                                <span class="errorMessage">*</span>
-                                            </label>
-                                            <select class="form-control" id="sel" name="RouteID" required>
-                                                <option value="" selected hidden>Select Vehicle</option>                                                                                         
-                                            </select>
-                                        </div>
-                                    </div>
-                                <div class="col-sm-12">
-                                        <hr class="simple">
-                                   </div>
-                              </div>
-                              <div class="row"> 
-                                    <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label>Order Type
-                                                    <span class="errorMessage">*</span>
-                                                </label>
-                                                <select class="form-control" id="sel" name="RouteID" >
-                                                    <option value="" selected hidden>Select Type</option>
-                                                    <option>Refill Order</option>    
-                                                    <option>New Connection</option>                                   
-                                                    <option>Return Empty</option>     
-                                                    <option>Return Defective</option>    
-                                                </select>
-                                            </div>
-                                        </div>                            
-                              <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label>Product Segment
-                                            <span class="errorMessage">*</span>
-                                        </label>
-                                        <select class="form-control" id="sel" name="RouteID"  required>
-                                            <option value="" selected hidden>Select Segment</option>                                          
-                                        </select>
-                                    </div>
-                                </div>
-                              <div class="col-sm-3">
-                                  <div class="form-group">
-                                      <label>Product
-                                          <span class="errorMessage">*</span>
-                                      </label>
-                                      <select class="form-control" id="sel" name="RouteID"  required>
-                                          <option value="" selected hidden>Select Product</option>                                        
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-sm-1">
-                                    <div class="form-group">
-                                        <label>Rate
-                                            <span class="errorMessage">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Rate" name="SubAreaName"  saCommonDir dirType="number" disabled required />
-                                    </div>
-                                </div> 
-                              <div class="col-sm-1">
-                                  <div class="form-group">
-                                      <label> Quantity
-                                          <span class="errorMessage">*</span>
-                                      </label>
-                                      <input type="text" class="form-control" placeholder="Enter Qty" name="SubAreaName"  saCommonDir dirType="number" required />
-                                  </div>
-                              </div> 
-                              <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label> Amount
-                                            <span class="errorMessage">*</span>
-                                        </label>
-                                        <input type="text" class="form-control" placeholder="Enter Amount" name="SubAreaName"  saCommonDir dirType="number" required />
-                                    </div>
-                                </div>                         
-                              <div class="col-sm-1">
-                                    <div class="form-group">
-                                      <label>&nbsp;
-                                      </label>
-                                      <button class="btn btn-block btn-warning ">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        Add
-                                      </button>
-                                    </div>
-                                  </div>
-                              </div>    
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-table"></i> Stock Order</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form name="subAreaForm" #subAreaForm="ngForm" ngNativeValidate>
                                 <div class="row">
-                                  <div class="col-sm-12">
-                                    <div class="table-responsive">
-                                      <table class="table table-hover">
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Order Type</th>
-                                            <th>Product Segment</th>
-                                            <th>Product Name</th>  
-                                            <th>Rate</th>                                          
-                                            <th>Quantity</th>
-                                            <th>Amount</th>
-                                            <th>Remove</th>
-                                           
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <td>1</td>
-                                            <td>Refill Order</td>
-                                            <td>Segment 1</td>
-                                            <td>Domestic 5kg Cylinder</td>
-                                            <td>1000</td>
-                                            <td>1200 </td>
-                                            <td>120000</td>                                           
-                                            <td>
-                                              <button class="btn btn-xs btn-danger">Remove</button>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>2</td>
-                                            <td>Return Empty</td>
-                                            <td>Segment 2</td>
-                                            <td>Domestic 14kg Cylinder</td>
-                                            <td>100</td>
-                                            <td>1400 </td>                                           
-                                            <td>14000</td>
-                                            <td>
-                                              <button class="btn btn-xs btn-danger">Remove</button>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                            <td>3</td>
-                                            <td>New Connection</td>  
-                                            <td>Segment 1</td>                                   
-                                            <td>Commercial 19kg Cylinder</td>
-                                            <td>2000</td>
-                                            <td>2000 </td>
-                                            <td>400000</td>                                           
-                                            <td>
-                                              <button class="btn btn-xs btn-danger">Remove</button>
-                                            </td>
-                                          </tr>
-                                          <tr>
-                                              <td colspan="5" style="text-align:right;"><strong>Total</strong> :</td>
-                                              <td><strong>4600</strong></td>
-                                              <td colspan="2"><strong>174000</strong></td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                                    <div class="col-sm-2 col-sm-offset-2">
+                                        <div class="form-group">
+                                            <label>Order Date <span class="errorMessage">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Date" name="SubAreaName" required />
+                                        </div>
                                     </div>
-                                  </div>
-                              
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Order Status <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" id="sel" name="RouteID" disabled>
+                                                <option value="" selected hidden>Select Status</option>
+                                                <option>Pending</option>
+                                                <option>Delivered</option>
+                                                <option>Undelivered</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Plant <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" id="sel" name="RouteID" required>
+                                                <option value="" selected hidden>Select Plant</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Vehicle <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" id="sel" name="RouteID" required>
+                                                <option value="" selected hidden>Select Vehicle</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <hr class="simple">
+                                    </div>
                                 </div>
-                              <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="form-group">
-                                      <label>Remark
-                                          <span class="errorMessage">*</span>
-                                      </label>
-                                    <textarea class="form-control" placeholder=""></textarea>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-6">
-                                  <label>
-                                          <input type="checkbox"  name="IsActive" /> Is Active
-                                  </label>
-                              </div>
-                          </div>
-                          <footer>
-                              <div class="row">
-                                  <div class="col-sm-12 ">
-                                      <hr />
-                                      <a class="pull-right btn btn-default" routerLink="/stock/stock-orders-list">
-                                          <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                                      </a>
-                                      <button class="pull-right btn btn-primary marg-right" type="submit">
-                                          <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                                      </button>
-                                  </div>
-                                  <!-- <div class="col-sm-12 " ng-show="divhide">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Order Type <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" id="sel" name="RouteID">
+                                                <option value="" selected hidden>Select Type</option>
+                                                <option>Refill Order</option>
+                                                <option>New Connection</option>
+                                                <option>Return Empty</option>
+                                                <option>Return Defective</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                                                <option value="" selected hidden>Select Segment</option>
+                                                <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="sel1">Product <span class="errorMessage">*</span>
+                                            </label>
+                                            <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" required>
+                                                <option value="" selected hidden>Select Product</option>
+                                                <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label>Rate <span class="errorMessage">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Rate" name="SubAreaName" saCommonDir dirType="number" disabled required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label> Quantity <span class="errorMessage">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Qty" name="SubAreaName" saCommonDir dirType="number" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label> Amount <span class="errorMessage">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Amount" name="SubAreaName" saCommonDir dirType="number" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <label>&nbsp; </label>
+                                            <button class="btn btn-block btn-warning ">
+                                                <i class="glyphicon glyphicon-plus"></i> Add </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Order Type</th>
+                                                        <th>Product Segment</th>
+                                                        <th>Product Name</th>
+                                                        <th>Rate</th>
+                                                        <th>Quantity</th>
+                                                        <th>Amount</th>
+                                                        <th>Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Refill Order</td>
+                                                        <td>Segment 1</td>
+                                                        <td>Domestic 5kg Cylinder</td>
+                                                        <td>1000</td>
+                                                        <td>1200 </td>
+                                                        <td>120000</td>
+                                                        <td>
+                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Return Empty</td>
+                                                        <td>Segment 2</td>
+                                                        <td>Domestic 14kg Cylinder</td>
+                                                        <td>100</td>
+                                                        <td>1400 </td>
+                                                        <td>14000</td>
+                                                        <td>
+                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>New Connection</td>
+                                                        <td>Segment 1</td>
+                                                        <td>Commercial 19kg Cylinder</td>
+                                                        <td>2000</td>
+                                                        <td>2000 </td>
+                                                        <td>400000</td>
+                                                        <td>
+                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" style="text-align:right;"><strong>Total</strong> :</td>
+                                                        <td><strong>4600</strong></td>
+                                                        <td colspan="2"><strong>174000</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Remark <span class="errorMessage">*</span>
+                                            </label>
+                                            <textarea class="form-control" placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="checkbox" name="IsActive" /> Is Active </label>
+                                    </div>
+                                </div>
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-sm-12 ">
+                                            <hr />
+                                            <a class="pull-right btn btn-default" routerLink="/stock/stock-orders-list">
+                                                <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                            <button class="pull-right btn btn-primary marg-right" type="submit">
+                                                <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit </button>
+                                        </div>
+                                        <!-- <div class="col-sm-12 " ng-show="divhide">
                               <button type="button" name="" class="pull-right btn btn-primary marg-right">
                                   <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
                               </button>
                           </div> -->
-                              </div>
-                          </footer>
-</form>
-                      </div>
-                  </div>
-              </div>
-
-
-
-          </article>
-
-
-      </div>
-
-  </sa-widgets-grid>
+                                    </div>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
 </div>

@@ -55,5 +55,18 @@ export class CustomerService {
   public postCustomeTransfer(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessTransCustomer`, data);
   }
-
+  public checkCustOrMobNo(cust) {
+    cust.CustNoMob = cust.CustNoMob == null ? '' : cust.CustNoMob;
+    if (cust.CustNoMob == '') {
+      cust.MobileNo = '';
+      cust.ConsNo = '';
+    } else if (cust.CustNoMob.length == 10) {
+      cust.MobileNo = cust.CustNoMob;
+      cust.ConsNo = '';
+    } else {
+      cust.ConsNo = cust.CustNoMob;
+      cust.MobileNo = '';
+    }
+    return cust;
+  }
 }
