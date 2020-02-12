@@ -16,14 +16,14 @@
                                         <div class="form-group">
                                             <label>Order Date <span class="errorMessage">*</span>
                                             </label>
-                                            <input type="text" class="form-control" placeholder="Enter Date" name="SubAreaName" required />
+                                            <input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="stock.PlantId" name="SubAreaName" required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Order Status <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" name="RouteID" disabled>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.PlantId" name="RouteID" disabled>
                                                 <option value="" selected hidden>Select Status</option>
                                                 <option>Pending</option>
                                                 <option>Delivered</option>
@@ -35,8 +35,9 @@
                                         <div class="form-group">
                                             <label>Plant <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" name="RouteID" required>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.PlantId" name="PlantId" required>
                                                 <option value="" selected hidden>Select Plant</option>
+                                                <option [value]="pl.PlantId" *ngFor="let pl of plantData">{{pl.PlantName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -44,8 +45,9 @@
                                         <div class="form-group">
                                             <label>Vehicle <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" name="RouteID" required>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.VehicleId" name="VehicleId" required>
                                                 <option value="" selected hidden>Select Vehicle</option>
+                                                <option [value]="veh.VehicleId" *ngFor="let veh of vehicleData">{{veh.VehicleType}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -53,69 +55,74 @@
                                         <hr class="simple">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label>Order Type <span class="errorMessage">*</span>
-                                            </label>
-                                            <select class="form-control" id="sel" name="RouteID">
-                                                <option value="" selected hidden>Select Type</option>
-                                                <option>Refill Order</option>
-                                                <option>New Connection</option>
-                                                <option>Return Empty</option>
-                                                <option>Return Defective</option>
-                                            </select>
+                                <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()" ngNativeValidate>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label>Order Type <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control" id="sel" [(ngModel)]="product.OrderType" name="RouteID" required>
+                                                    <option value="" selected hidden>Select Type</option>
+                                                    <option value="Refill Order">Refill Order</option>
+                                                    <option value="New Connection">New Connection</option>
+                                                    <option value="Return Empty">Return Empty</option>
+                                                    <option value="Return Defective">Return Defective</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                                                    <option value="" selected hidden>Select Segment</option>
+                                                    <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="sel1">Product <span class="errorMessage">*</span>
+                                                </label>
+                                                <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" (change)="onSelectProduct()" required>
+                                                    <option value="" selected hidden>Select Product</option>
+                                                    <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label>Rate <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir
+                                                    dirType="number" disabled required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label> Quantity <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Qty" name="ProdQty" [(ngModel)]="product.ProdQty" (change)="onSelectProduct()" saCommonDir
+                                                    dirType="number" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">
+                                                <label> Amount <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.ProdAmt" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="form-group">
+                                                <label>&nbsp; </label>
+                                                <button class="btn btn-block btn-warning ">
+                                                    <i class="glyphicon glyphicon-plus"></i> Add </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label for="sel1">Product Segment <span class="errorMessage">*</span>
-                                            </label>
-                                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
-                                                <option value="" selected hidden>Select Segment</option>
-                                                <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="sel1">Product <span class="errorMessage">*</span>
-                                            </label>
-                                            <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" required>
-                                                <option value="" selected hidden>Select Product</option>
-                                                <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label>Rate <span class="errorMessage">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Rate" name="SubAreaName" saCommonDir dirType="number" disabled required />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label> Quantity <span class="errorMessage">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Enter Qty" name="SubAreaName" saCommonDir dirType="number" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label> Amount <span class="errorMessage">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Enter Amount" name="SubAreaName" saCommonDir dirType="number" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="form-group">
-                                            <label>&nbsp; </label>
-                                            <button class="btn btn-block btn-warning ">
-                                                <i class="glyphicon glyphicon-plus"></i> Add </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
@@ -128,51 +135,33 @@
                                                         <th>Product Name</th>
                                                         <th>Rate</th>
                                                         <th>Quantity</th>
+                                                        <th>IGST </th>
+                                                        <th>CGST </th>
+                                                        <th>SGST </th>
                                                         <th>Amount</th>
                                                         <th>Remove</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Refill Order</td>
-                                                        <td>Segment 1</td>
-                                                        <td>Domestic 5kg Cylinder</td>
-                                                        <td>1000</td>
-                                                        <td>1200 </td>
-                                                        <td>120000</td>
+                                                    <tr *ngFor="let pr of ProductArray;index as i">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{pr.OrderType}}</td>
+                                                        <td>{{pr.ProdSeg}}</td>
+                                                        <td>{{pr.Product}}</td>
+                                                        <td>{{pr.ProdRate}}</td>
+                                                        <td>{{pr.ProdQty}}</td>
+                                                        <td>{{pr.IgstAmt}}</td>
+                                                        <td>{{pr.CgstAmt}}</td>
+                                                        <td>{{pr.SgstAmt}}</td>
+                                                        <td>{{pr.GrandTotal}}</td>
                                                         <td>
-                                                            <button class="btn btn-xs btn-danger">Remove</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Return Empty</td>
-                                                        <td>Segment 2</td>
-                                                        <td>Domestic 14kg Cylinder</td>
-                                                        <td>100</td>
-                                                        <td>1400 </td>
-                                                        <td>14000</td>
-                                                        <td>
-                                                            <button class="btn btn-xs btn-danger">Remove</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>New Connection</td>
-                                                        <td>Segment 1</td>
-                                                        <td>Commercial 19kg Cylinder</td>
-                                                        <td>2000</td>
-                                                        <td>2000 </td>
-                                                        <td>400000</td>
-                                                        <td>
-                                                            <button class="btn btn-xs btn-danger">Remove</button>
+                                                            <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="5" style="text-align:right;"><strong>Total</strong> :</td>
-                                                        <td><strong>4600</strong></td>
-                                                        <td colspan="2"><strong>174000</strong></td>
+                                                        <td colspan="4"><strong>{{stock.QtyTotal}}</strong></td>
+                                                        <td colspan="2"><strong>{{stock.GrandTotal}}</strong></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

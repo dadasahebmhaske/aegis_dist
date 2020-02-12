@@ -4,6 +4,9 @@ import { AppComponent } from '@app/app.component';
 @Injectable()
 export class StockService {
     constructor(private httpClient: HttpClient) { }
+    getPlantDetails() {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PLM&IsActive=Y`);
+    }
 
     // getProductDetails(cpcode, formFlag, ConsId) {
     //     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&CPCode=${cpcode}&FormFlag=${formFlag}&ConsId=${ConsId}&IsActive=Y`);
