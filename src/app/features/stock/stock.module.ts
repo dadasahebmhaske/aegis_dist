@@ -5,13 +5,14 @@ import { routing, compArray } from './stock-routing.module';
 import { UigridstockDirective } from '../../core/directive/uigridstock.directive';
 import { StockService } from './stock.service';
 import { CustomerService } from '../customer/customer.service';
-
+import { BsDatepickerModule } from 'ngx-bootstrap';
 @NgModule({
   declarations: [compArray, UigridstockDirective],
   imports: [
     CommonModule,
     routing,
-    SharedModule
+    SharedModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [StockService, CustomerService],
   exports: [UigridstockDirective]

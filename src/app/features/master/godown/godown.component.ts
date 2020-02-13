@@ -175,7 +175,7 @@ export class GodownComponent implements OnInit, OnDestroy {
     this.loaderbtn = false;
     this.addArray.push({
       "AddressId": "",
-      "AddressType": 'H',
+      "AddressType": 'GA',
       "StateCode": this.godown.StateCode,
       "CityCode": this.godown.CityCode,
       "PinCode": this.godown.PinCode,

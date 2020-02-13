@@ -4,3 +4,6 @@ hr.simple {
     border-style: dashed;
     border-color: #534d8161;
 }
+.text-right{
+    text-align: right;
+}

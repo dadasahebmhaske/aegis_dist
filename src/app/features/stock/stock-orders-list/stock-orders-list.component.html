@@ -4,146 +4,123 @@
     <div class="row">
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-            <header class="text-center"> 
-                      <h2> <i class="fa fa-table"></i> Stock Orders</h2>
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Stock Orders</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
-               
-                <div class="col-sm-2 col-xs-8">
-                  <div class="form-group">
-                    <input type="text" placeholder="Enter Start Date." class="form-control" required />
-                  </div>
-                </div>
-                <div class="col-sm-2 col-xs-8">
+                <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onLoad()" ngNativeValidate>
+                  <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter End Date." class="form-control" required />
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="StartDate" name="Startdate" id="startDate" (bsValueChange)="resetEndDate($event)"
+                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
-                <div class="col-sm-1 col-xs-4">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success get_details">
-                      <i class="fa fa-search"></i> Get Details</button>
-
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="EndDate" name="EndDate" required onkeydown="return false" [minDate]="minDate"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-sm-2 pull-right">                     
-                  <div class="form-group pull-right">
-                    <a routerLink="/stock/stock-orders"  class="btn btn-block btn-warning get_details pull-right">
-                      <i class="glyphicon glyphicon-plus"></i>
-                      Add Order
-                    </a>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-block btn-success get_details">
+                        <i class="fa fa-search"></i> Get Details</button>
+                    </div>
                   </div>
-                </div>
+                  <div class="col-sm-2 pull-right">
+                    <div class="form-group pull-right">
+                      <a routerLink="/stock/stock-orders" class="btn btn-block btn-warning get_details pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add Order </a>
+                    </div>
+                  </div>
+                </form>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
-              </div>
+                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </article>
-
-
     </div>
-
   </sa-widgets-grid>
 </div>
-
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="productsModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">Products Details</h4>
-        </div>
-        <div class="modal-body">
-         <div class="row">
+<!-- Modal -->
+<div class=" modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Products Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
           <div class="col-sm-12">
             <div class="refill">
-            
               <div class="row">
                 <div class="col-sm-6">
-                    <label><strong>Order No :</strong> 0123456789</label>
+                  <label><strong>Order No :</strong> {{stock.OrderNo}}</label>
                 </div>
                 <div class="col-sm-6">
-                    <label><strong>Order Date :</strong> 12-01-2020</label>
+                  <label><strong>Order Date :</strong> {{stock.OrderDt}}</label>
                 </div>
                 <div class="col-sm-12">
-                  
                   <div class="table-responsive">
-
                     <table class="table table-hover">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Plant</th>
+                          <th>Order Type</th>
                           <th>Product Segment</th>
-                          <th>Product Name</th>                                            
-                          <th>Quantity</th>
-                          <th>Amount</th>
-                        
-                         
+                          <th>Product Name</th>
+                          <th class="text-right">Rate</th>
+                          <th class="text-right">Quantity</th>
+                          <th class="text-right">Sub Total</th>
+                          <th class="text-right">IGST </th>
+                          <th class="text-right"> CGST </th>
+                          <th class="text-right">SGST </th>
+                          <th class="text-right">Amount</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Plant 1</td>
-                          <td>Segment 1</td>
-                          <td>Domestic 5kg Cylinder</td>
-                          <td>1200 </td>
-                          <td>120000</td>                                           
-                         
+                        <tr *ngFor="let pr of ProductArray;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{pr.OrderType}}</td>
+                          <td>{{pr.ProdSeg}}</td>
+                          <td>{{pr.Product}}</td>
+                          <td class="text-right">{{pr.ProdRate}}</td>
+                          <td class="text-right">{{pr.ProdQty}}</td>
+                          <td class="text-right">{{pr.SubTotal}}</td>
+                          <td class="text-right">{{pr.IgstAmt}}</td>
+                          <td class="text-right">{{pr.CgstAmt}}</td>
+                          <td class="text-right">{{pr.SgstAmt}}</td>
+                          <td class="text-right">{{pr.GrandTotal}}</td>
                         </tr>
                         <tr>
-                          <td>2</td>
-                          <td>Plant 2</td>
-                          <td>Segment 2</td>
-                          <td>Domestic 14kg Cylinder</td>
-                          <td>1400 </td>                                           
-                          <td>14000</td>
-                        
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Plant 1</td>  
-                          <td>Segment 1</td>                                   
-                          <td>Commercial 19kg Cylinder</td>
-                          <td>2000 </td>
-                          <td>40000</td>                                           
-                         
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="text-align:right;"><strong>Total</strong> :</td>
-                            <td><strong>4600</strong></td>
-                            <td ><strong>174000</strong></td>
+                          <td colspan="5" class="text-right"><strong>Total</strong> :</td>
+                          <td class="text-right"><strong>{{stock.QtyTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.SubTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.IgstTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
-         </div>
-        </div>
-        <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
-      
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
+</div>

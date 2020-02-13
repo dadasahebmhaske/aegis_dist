@@ -36,17 +36,15 @@
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="sel1">Godown Name
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Godown Name <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Godown Name" [(ngModel)]="godown.GodownName" name="GodownName"
-                                                                    saCommonDir dirType="alphanumeric" required />
+                                                                <input type="text" class="form-control" placeholder="Enter Godown Name" [(ngModel)]="godown.GodownName" name="GodownName" saCommonDir
+                                                                    dirType="alphanumeric" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label for="sel1">Godown Capacity
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Godown Capacity <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Capacity" [(ngModel)]="godown.Capacity" name="Capacity" saCommonDir
                                                                     dirType="number" required />
@@ -54,8 +52,7 @@
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="sel1">Contact Person
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Contact Person <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Contact Person" [(ngModel)]="godown.ContactName" name="ContactName"
                                                                     saCommonDir dirType="alphaonly" required />
@@ -63,8 +60,7 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label for="sel1">Contact No.
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Contact No. <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Contact No." [(ngModel)]="godown.ContactNo" name="ContactNo" saCommonDir
                                                                     maxlength="15" dirType="number" required />
@@ -72,8 +68,7 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Godown License No.
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Godown License No. <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter License No." [(ngModel)]="godown.LicNo" name="LicNo" saCommonDir
                                                                     dirType="alphanumeric" required />
@@ -81,40 +76,31 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">License Issue Date
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">License Issue Date <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter License Issue Date" [(ngModel)]="godown.LicIssueDate" name="LicIssueDate"
-                                                                    (bsValueChange)="resetEndDate($event,'LI')" bsDatepicker 
-                                                                    [bsConfig]="datePickerConfig" onkeydown="return false" required
-                                                                />
+                                                                    (bsValueChange)="resetEndDate($event,'LI')" bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">License Expiry Date
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">License Expiry Date <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter License Expiry Date" [(ngModel)]="godown.LicExpDate" name="LicExpDate"
-                                                                    onkeydown="return false" [minDate]="LicMinDate"
-                                                                    bsDatepicker  [bsConfig]="datePickerConfig"
-                                                                    required />
+                                                                    onkeydown="return false" [minDate]="LicMinDate" bsDatepicker [bsConfig]="datePickerConfig" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Last Audit Date
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Last Audit Date <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Last Audit Date" [(ngModel)]="godown.LastAuditDate" name="LastAuditDate"
-                                                                    onkeydown="return false" bsDatepicker 
-                                                                    [bsConfig]="datePickerConfig" required />
+                                                                    onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label>Godown Type
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>Godown Type <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <select class="form-control" [(ngModel)]="godown.GodownTypeId" (change)="CheckGodownType()" name="GodownTypeId">
                                                                     <option value="" selected hidden>Select Type</option>
@@ -124,41 +110,33 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Start Date
-                                                                    <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Start Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
-                                                                id="startDate"  (bsValueChange)="resetEndDate($event,'LP')" onkeydown="return false"
-                                                                    bsDatepicker  [bsConfig]="datePickerConfig"
-                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'"
-                                                                />
+                                                                    id="startDate" (bsValueChange)="resetEndDate($event,'LP')" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig"
+                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">End Date
-                                                                    <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">End Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
-                                                                <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate" [disabled]="GodownType=='O'"
-                                                                    [required]="GodownType!='O'" (bsValueChange)="calculateMonths($event)"
-                                                                    onkeydown="return false" [minDate]="LeaseMinDate" bsDatepicker 
-                                                                     [bsConfig]="datePickerConfig" />
+                                                                <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate"
+                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" (bsValueChange)="calculateMonths($event)" onkeydown="return false"
+                                                                    [minDate]="LeaseMinDate" bsDatepicker [bsConfig]="datePickerConfig" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Lease Period ( In Months)
-                                                                    <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Lease Period ( In Months) <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="number" [(ngModel)]="godown.LeasePeriod"
-                                                                    name="LeasePeriod" [disabled]="GodownType=='O'" [required]="GodownType!='O'"
-                                                                />
+                                                                    name="LeasePeriod" [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <label>
-                                                                <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" [(ngModel)]="godown.IsActive" name="IsActive" /> Is Active
-                                                            </label>
+                                                                <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" [(ngModel)]="godown.IsActive" name="IsActive" /> Is Active </label>
                                                         </div>
                                                     </div>
                                                     <div class="form-actions">
@@ -166,15 +144,14 @@
                                                             <div class="col-sm-12">
                                                                 <ul class="pager wizard no-margin">
                                                                     <li class="previous">
-                                                                        <a routerLink="/master/godown-master" class="btn btn-lg btn-default"> Previous
-                                                                        </a>
+                                                                        <a routerLink="/master/godown-master" class="btn btn-lg btn-default"> Previous </a>
                                                                     </li>
                                                                     <li class="next">
                                                                         <!-- <button type="submit" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken next_button">
                                                                         Next
                                                                     </button> -->
-                                                                        <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
-                                                                            [disabled]="!loaderbtn">
+                                                                        <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid"
+                                                                            type="submit" [disabled]="!loaderbtn">
                                                                             <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i>
                                                                             {{loaderbtn==true? 'Next':'Loading'}}</button>
                                                                     </li>
@@ -192,31 +169,29 @@
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label for="sel1">Address Line 1
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Address Line 1 <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineOne"
-                                                                    name="AddressLine1" required />
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric"
+                                                                    [(ngModel)]="godown.AddressLineOne" name="AddressLine1" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="sel1">Address Line 2</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineTwo"
-                                                                    name="AddressLine2" />
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric"
+                                                                    [(ngModel)]="godown.AddressLineTwo" name="AddressLine2" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="sel1">Address Line 3</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="godown.AddressLineThree"
-                                                                    name="AddressLine3" />
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric"
+                                                                    [(ngModel)]="godown.AddressLineThree" name="AddressLine3" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label>State
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>State <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <select class="form-control" name="StateCode" [(ngModel)]="godown.StateCode" (change)="getCityData()">
                                                                     <option value="" selected hidden>Select State</option>
@@ -226,8 +201,7 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label>City
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>City <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <select class="form-control" [(ngModel)]="godown.CityCode" name="CityCode">
                                                                     <option value="" selected hidden>Select City</option>
@@ -237,12 +211,10 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label for="sel1">Pin Code
-                                                                    <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Pin Code <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="godown.PinCode"
-                                                                    name="Pin" minlength="6" maxlength="6" numericonly required
-                                                                />
+                                                                <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="godown.PinCode" name="Pin"
+                                                                    minlength="6" maxlength="6" numericonly required />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -251,15 +223,14 @@
                                                             <div class="col-sm-12">
                                                                 <ul class="pager wizard no-margin">
                                                                     <li class="previous">
-                                                                        <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
-                                                                        </a>
+                                                                        <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
                                                                     </li>
                                                                     <li class="next">
                                                                         <!-- <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
                                                                         Next
                                                                     </a> -->
-                                                                        <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
-                                                                            [disabled]="!loaderbtn">
+                                                                        <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid"
+                                                                            type="submit" [disabled]="!loaderbtn">
                                                                             <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i>
                                                                             {{loaderbtn==true? 'Next':'Loading'}}</button>
                                                                     </li>
@@ -277,8 +248,7 @@
                                                     <div class="row">
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label>Document Type
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>Document Type <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <select class="form-control" [(ngModel)]="document.DocTypId" name="DocTypeId" required>
                                                                     <option value="" [selected]="true" hidden>Select Document Type</option>
@@ -288,8 +258,7 @@
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
-                                                                <label>Select File
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>Select File <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File"
                                                                     required />
@@ -297,8 +266,7 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label>Document No.
-                                                                    <span class="errorMessage">*</span>
+                                                                <label>Document No. <span class="errorMessage">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir
                                                                     dirType="alphanumeric" required />
@@ -306,19 +274,15 @@
                                                         </div>
                                                         <div class="col-sm-1">
                                                             <div class="form-group">
-                                                                <label>&nbsp;
-                                                                </label>
+                                                                <label>&nbsp; </label>
                                                                 <button class="btn btn-block btn-warning ">
-                                                                    <i class="glyphicon glyphicon-plus"></i>
-                                                                    Add
-                                                                </button>
+                                                                    <i class="glyphicon glyphicon-plus"></i> Add </button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-12">
                                                             <div class="table-responsive">
-
                                                                 <table class="table table-hover">
                                                                     <thead>
                                                                         <tr>
@@ -337,8 +301,10 @@
                                                                             <td>{{docs.DocFileName}} </td>
                                                                             <td>{{docs.DocNo}} </td>
                                                                             <td>
-                                                                                <a href="{{imgUrl}}{{docs.DocFileName}}" *ngIf="docs.DocId!=null && docs.DocId!=''" target="_blank" class="btn btn-xs btn-success">View</a>
-                                                                                <a (click)="viewDocument(docs.filepreview)" *ngIf="docs.DocId==null || docs.DocId==''" target="_blank" class="btn btn-xs btn-success">View</a>
+                                                                                <a href="{{imgUrl}}{{docs.DocFileName}}" *ngIf="docs.DocId!=null && docs.DocId!=''" target="_blank"
+                                                                                    class="btn btn-xs btn-success">View</a>
+                                                                                <a (click)="viewDocument(docs.filepreview)" *ngIf="docs.DocId==null || docs.DocId==''" target="_blank"
+                                                                                    class="btn btn-xs btn-success">View</a>
                                                                             </td>
                                                                             <td>
                                                                                 <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
@@ -355,15 +321,14 @@
                                                         <div class="col-sm-12">
                                                             <ul class="pager wizard no-margin">
                                                                 <li class="previous">
-                                                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous
-                                                                    </a>
+                                                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
                                                                 </li>
                                                                 <li class="next">
                                                                     <!-- <a (click)="nextToSave()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
                                                                         Save & Submit
                                                                     </a> -->
-                                                                    <button (click)="nextToSave()" class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid"
-                                                                        type="submit" [disabled]="!loaderbtn">
+                                                                    <button (click)="nextToSave()" class="btn btn-lg txt-color-darken next_button"
+                                                                        [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit" [disabled]="!loaderbtn">
                                                                         <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i>
                                                                         {{loaderbtn==true? 'Submit':'Loading'}}</button>
                                                                 </li>
@@ -389,23 +354,14 @@
                                                     </div>
                                                 </div>
                                             </div> -->
-
                                         </div>
                                     </div>
                                 </form>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
-
-
-
             </article>
-
-
         </div>
-
     </sa-widgets-grid>
 </div>
