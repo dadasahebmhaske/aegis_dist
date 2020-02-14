@@ -30,10 +30,10 @@
                                     </div>
                                     <div class="col-sm-5">
                                         <div class="form-group">
-                                            <label for="sel1">Product<span class="errorMessage" style="color:red;">*</span></label>
-                                            <select class="form-control" [(ngModel)]="imbalance.ProductCode" name="ProductCode" required>
+                                            <label for="sel1">Product<span class="errorMessage">*</span></label>
+                                            <select class="form-control" [(ngModel)]="imbalance.ProdId" name="ProdId" required>
                                                 <option value="" selected hidden>Select Product</option>
-                                                <option [value]="pro.ProductCode" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                                <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -42,42 +42,42 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Sound <i class="fa fa-plus-circle"></i></label>
+                                            <label>Sound <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Sound" [(ngModel)]="imbalance.SoundPlus" name="SoundPlus" saCommonDir dirType="number"
                                                 required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Sound <i class="fa fa-minus-circle"></i></label>
+                                            <label>Sound <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Sound" [(ngModel)]="imbalance.SoundMinus" name="SoundMinus" saCommonDir dirType="number"
                                                 required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Empty <i class="fa fa-plus-circle"></i></label>
+                                            <label>Empty <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Empty" [(ngModel)]="imbalance.EmptyPlus" name="EmptyPlus" saCommonDir dirType="number"
                                                 required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Empty <i class="fa fa-minus-circle"></i></label>
+                                            <label>Empty <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Empty" [(ngModel)]="imbalance.EmptyMinus" name="EmptyMinus" saCommonDir dirType="number"
                                                 required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Defective <i class="fa fa-plus-circle"></i></label>
+                                            <label>Defective <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Defective" [(ngModel)]="imbalance.DefPlus" name="DefPlus" saCommonDir dirType="number"
                                                 required />
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Defective <i class="fa fa-minus-circle"></i></label>
+                                            <label>Defective <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
                                             <input type="text" class="form-control" placeholder="Enter Defective" [(ngModel)]="imbalance.DefMinus" name="DefMinus" saCommonDir dirType="number"
                                                 required />
                                         </div>

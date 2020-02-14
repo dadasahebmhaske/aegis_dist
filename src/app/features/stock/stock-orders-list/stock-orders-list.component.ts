@@ -62,7 +62,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    console.log($event.row);
+    //console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/stock/stock-orders']);
   }
@@ -72,6 +72,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
     this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, this.StartDate, this.EndDate).subscribe((resp: any) => {
       if (resp.StatusCode != 0) {
         this.ProductArray = resp.Data;
+        this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
       }
     });
     $('#productsModal').modal('show');
@@ -81,6 +82,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   }
 
   onLoad() {
+    console.log(this.StartDate); console.log(this.EndDate);
     this.stockService.getStockOrderDetails(this.cpInfo.CPCode, this.StartDate, this.EndDate).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.stockOrdersData = resData.Data;

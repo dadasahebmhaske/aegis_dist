@@ -26,6 +26,7 @@ export class ImbalanceComponent implements OnInit, OnDestroy {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.dataShare.GetSharedData.subscribe(data => {
       this.imbalance = data == null ? { ProdSegId: '', IsActive: 'Y', ProdId: '' } : data;
+      this.onSelectProdSegment();
       //this.stock.OrderDt = new Date(this.stock.OrderDt);
     });
     this.allOnLoad();
@@ -35,7 +36,6 @@ export class ImbalanceComponent implements OnInit, OnDestroy {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
-
   }
   onSelectProdSegment() {
     this.masterService.getProducts(this.imbalance.ProdSegId).subscribe((resPT: any) => {
@@ -47,12 +47,9 @@ export class ImbalanceComponent implements OnInit, OnDestroy {
   onSubmitImabalance() {
     this.loaderbtn = false;
     this.imbalance.ImbalanceId = this.imbalance.ImbalanceId == null || this.imbalance.ImbalanceId == '' ? '' : this.imbalance.ImbalanceId;
-    //this.imbalance.OrderNo = this.imbalance.OrderNo == null || this.imbalance.OrderNo == '' ? '' : this.imbalance.OrderNo;
-    // this.imbalance.OrderCode = this.imbalance.OrderCode == null || this.imbalance.OrderCode == '' ? '' : this.imbalance.OrderCode;
     this.imbalance.CPCode = this.cpInfo.CPCode;
-
-    //this.imbalance.OrderType = "WB";
     this.imbalance.UserCode = this.cpInfo.EmpId;
+    this.imbalance.Status = 'PE';
     this.imbalance.Flag = this.imbalance.ImbalanceId == null || this.imbalance.ImbalanceId == '' ? "IN" : "UP";
     this.stockService.postImabalance(this.imbalance).subscribe((resData: any) => {
       this.loaderbtn = true;

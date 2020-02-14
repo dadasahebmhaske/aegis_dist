@@ -36,6 +36,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, '', '').subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
+          this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
         }
       });
     });
@@ -108,7 +109,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product = { OrderType: '', ProdSegId: '', ProdId: '' };
     } else {
       this.ProductArray.push(this.product);
-      this.calculateQtyGTotal();
+      this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
       this.product = { OrderType: '', ProdSegId: '', ProdId: '' };
     }
   }
@@ -118,20 +119,21 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.removeProductUpdate.push(data);
     }
     this.ProductArray.splice(index, 1);
-    this.calculateQtyGTotal();
+    this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
   }
-  calculateQtyGTotal() {
-    this.stock.GrandTotal = this.stock.QtyTotal = this.stock.SubTotal = this.stock.IgstTotal = this.stock.CgstTotal = this.stock.SgstTotal = 0;
-    if (this.ProductArray.length != 0)
-      for (let i = 0; i < this.ProductArray.length; i++) {
-        this.stock.GrandTotal = parseInt(this.stock.GrandTotal) + parseInt(this.ProductArray[i].GrandTotal);
-        this.stock.QtyTotal = parseInt(this.stock.QtyTotal) + parseInt(this.ProductArray[i].ProdQty);
-        this.stock.SubTotal = parseInt(this.stock.SubTotal) + parseInt(this.ProductArray[i].SubTotal);
-        this.stock.IgstTotal = parseInt(this.stock.IgstTotal) + parseInt(this.ProductArray[i].IgstAmt);
-        this.stock.CgstTotal = parseInt(this.stock.CgstTotal) + parseInt(this.ProductArray[i].CgstAmt);
-        this.stock.SgstTotal = parseInt(this.stock.SgstTotal) + parseInt(this.ProductArray[i].SgstAmt);
-      }
-  }
+
+  // calculateQtyGTotal() {
+  //   this.stock.GrandTotal = this.stock.QtyTotal = this.stock.SubTotal = this.stock.IgstTotal = this.stock.CgstTotal = this.stock.SgstTotal = 0;
+  //   if (this.ProductArray.length != 0)
+  //     for (let i = 0; i < this.ProductArray.length; i++) {
+  //       this.stock.GrandTotal = parseInt(this.stock.GrandTotal) + parseInt(this.ProductArray[i].GrandTotal);
+  //       this.stock.QtyTotal = parseInt(this.stock.QtyTotal) + parseInt(this.ProductArray[i].ProdQty);
+  //       this.stock.SubTotal = parseInt(this.stock.SubTotal) + parseInt(this.ProductArray[i].SubTotal);
+  //       this.stock.IgstTotal = parseInt(this.stock.IgstTotal) + parseInt(this.ProductArray[i].IgstAmt);
+  //       this.stock.CgstTotal = parseInt(this.stock.CgstTotal) + parseInt(this.ProductArray[i].CgstAmt);
+  //       this.stock.SgstTotal = parseInt(this.stock.SgstTotal) + parseInt(this.ProductArray[i].SgstAmt);
+  //     }
+  // }
   onSubmitOrder() {
     if (this.ProductArray.length > 0 || this.removeProductUpdate.length > 0) {
       this.loaderbtn = false;

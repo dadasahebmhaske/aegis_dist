@@ -4,13 +4,22 @@ import { AppComponent } from '@app/app.component';
 @Injectable()
 export class StockService {
     constructor(private httpClient: HttpClient) { }
+    public calculateQtyGTotal(stock, ProductArray) {
+        stock.GrandTotal = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = 0;
+        if (ProductArray.length != 0)
+            for (let i = 0; i < ProductArray.length; i++) {
+                stock.GrandTotal = parseInt(stock.GrandTotal) + parseInt(ProductArray[i].GrandTotal);
+                stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
+                stock.SubTotal = parseInt(stock.SubTotal) + parseInt(ProductArray[i].SubTotal);
+                stock.IgstTotal = parseInt(stock.IgstTotal) + parseInt(ProductArray[i].IgstAmt);
+                stock.CgstTotal = parseInt(stock.CgstTotal) + parseInt(ProductArray[i].CgstAmt);
+                stock.SgstTotal = parseInt(stock.SgstTotal) + parseInt(ProductArray[i].SgstAmt);
+            }
+        return stock;
+    }
     getPlantDetails(cpcode) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPP&CPCode=${cpcode}&IsActive=Y`);
     }
-
-    // getProductDetails(cpcode, formFlag, ConsId) {
-    //     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&CPCode=${cpcode}&FormFlag=${formFlag}&ConsId=${ConsId}&IsActive=Y`);
-    // }
     public getOrderType() {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=ORDT&IsActive=Y`);
     }
@@ -27,7 +36,7 @@ export class StockService {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ManageProdImbalance`, data);
     }
     public getStockImbalanceDetails(cpcode, StartDate, EndDate) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&ProdSegId=&ProductCode=&FDate=&TDate=&ReferenceNo=&Status=&IsActive=Y`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=&IsActive=Y`);
     }
 
 
