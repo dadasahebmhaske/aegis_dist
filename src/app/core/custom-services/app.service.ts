@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import * as CryptoJs from 'crypto-js';
 import { AppComponent } from './../../app.component';
 import { ReplaySubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
   private AppData = new ReplaySubject<any>(1);
+  datepipe = new DatePipe('en-US');
   constructor() {
     let appData = localStorage.getItem('appData');
     if (appData) {
@@ -44,5 +46,11 @@ export class AppService {
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
     });
+  }
+  DateToString(date) {
+    if (date != '')
+      return this.datepipe.transform(date, 'dd-MMM-yyyy');
+    else
+      return '';
   }
 }

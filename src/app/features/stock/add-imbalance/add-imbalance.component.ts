@@ -14,12 +14,15 @@ export class AddImbalanceComponent implements OnInit {
   public cpInfo: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public EndDate: any = '';
+  public loaderbtn: boolean = true;
   public minDate: Date;
+  public maxDate: Date = new Date();
   public gridOptions: IGridoption;
   public StartDate: any = '';
+  public stage: any = '';
   public imbalanceData: any = [];
   constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
@@ -32,7 +35,7 @@ export class AddImbalanceComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Edit', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> '
+        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-if="row.entity.IsActive=='Y'" ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
@@ -58,13 +61,25 @@ export class AddImbalanceComponent implements OnInit {
     AppComponent.Router.navigate(['/stock/imbalance']);
   }
   onLoad() {
-    this.stockService.getStockImbalanceDetails(this.cpInfo.CPCode, this.StartDate, this.EndDate).subscribe((resData: any) => {
+    this.loaderbtn = false;
+    this.stockService.getStockImbalanceDetails(this.cpInfo.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.stage).subscribe((resData: any) => {
+      this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.imbalanceData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); this.imbalanceData = [{}] }
+
     });
+  }
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.EndDate != null) {
+      if ((new Date(this.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.EndDate = '';
+      }
+    }
+
   }
 
 }

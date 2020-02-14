@@ -5,6 +5,7 @@ import { CustomerService } from '../customer.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { AppComponent } from '@app/app.component';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 @Component({
   selector: 'sa-update-customer',
   templateUrl: './update-customer.component.html',
@@ -40,6 +41,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public ContractData: any = [];
   public CityData: any = [];
   public cpInfo: any;
+  public datePickerConfig: Partial<BsDatepickerConfig>;
   public DocFileName: string;
   public document: any = { DocTypId: '' };
   public docTypeData: any = [];
@@ -64,6 +66,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public SubAreaArray: any = [];
   public VolumeData: any = [];
   constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: new Date(), dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
@@ -395,6 +398,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
           "CustProdId": "",
           "CPCode": this.cpInfo.CPCode,
           "ConsId": this.customer.ConsId,
+          "IssueDate": this.product.IssueDate,
           "ProdId": this.product.ProdId,
           "ProdSegId": this.product.ProdSegId,
           "PurchaseQty": this.product.PurchaseQty,
@@ -440,6 +444,12 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }
     });
+  }
+  onProductSelect() {
+    let docobj;
+    docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
+    this.product.DepositAmt = docobj[0].DepositAmount;
+
   }
   // bank
   onSubmitBankData() {

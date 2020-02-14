@@ -1,47 +1,57 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-    <sa-widgets-grid>
-      <div class="row">
-        <article class="col-sm-12">
-          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-              <header class="text-center"> 
-                        <h2> <i class="fa fa-table"></i> Imbalance </h2>
-            </header>
-            <div>
-              <div class="widget-body">
-                <div class="row ">                 
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Imbalance </h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="imbalanceForm" #imbalanceForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Start Date." class="form-control" required />
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="StartDate" name="Startdate" id="startDate" (bsValueChange)="resetEndDate($event)"
+                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">
-                      <div class="form-group">
-                        <input type="text" placeholder="Enter End Date." class="form-control" required />
-                      </div>
+                    <div class="form-group">
+                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="EndDate" name="EndDate" required onkeydown="return false" [minDate]="minDate"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
+                        <option value="" selected hidden>Select Order Status</option>
+                        <option value="PE">Pending</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-success get_details">
-                        <i class="fa fa-search"></i> Get Details</button>  
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
-                  <div class="col-sm-2 pull-right">                     
-                    <div class="form-group pull-right">
-                      <a routerLink="/stock/imbalance"  class="btn btn-block btn-warning get_details pull-right">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        Add Imbalance
-                      </a>
-                    </div>
+                </form>
+                <div class="col-sm-2 pull-right">
+                  <div class="form-group pull-right">
+                    <a routerLink="/stock/imbalance" class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i> Add Imbalance </a>
                   </div>
-                  <div class="col-sm-12 table-responsive">
-                    <ui-grid [data]="imbalanceData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                 </div>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="imbalanceData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                 </div>
               </div>
             </div>
           </div>
-        </article>
-      </div>
-    </sa-widgets-grid>
-  </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

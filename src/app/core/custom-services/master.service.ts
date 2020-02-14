@@ -10,7 +10,15 @@ export class MasterService {
     if (dt2 != null && dt1 != null) {
       var diff = (new Date(dt2).getTime() - dt1.getTime()) / 1000;
       diff /= (60 * 60 * 24 * 7 * 4);
-      return Math.abs(Math.round(diff));
+      //return Math.abs(Math.round(diff)); for months
+      let months = Math.abs(Math.round(diff));
+      if (months < 10) {
+        return (months * 0.10).toFixed(1);
+      } else if (months < 12) {
+        return (months * 0.01).toFixed(2);
+      } else {
+        return Math.abs(diff % 12).toFixed(1);
+      }
     }
   }
   public filterData(data, DocTypId, para) {

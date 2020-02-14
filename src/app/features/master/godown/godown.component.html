@@ -128,9 +128,9 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Lease Period ( In Months) <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Lease ( In Years) <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="number" [(ngModel)]="godown.LeasePeriod"
+                                                                <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="decimal" [(ngModel)]="godown.LeasePeriod"
                                                                     name="LeasePeriod" [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
                                                             </div>
                                                         </div>

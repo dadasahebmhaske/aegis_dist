@@ -15,12 +15,18 @@ export class ImbalanceComponent implements OnInit, OnDestroy {
   public cpInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public imbalance: any = {};
-  public minDate: Date;
+  public minDate: Date = new Date();
+  public maxDate: Date = new Date();
   public loaderbtn: boolean = true;
   public productSegmentData: any = [];
   public productDataSelected: any = [];
+
+
   constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+
+    this.minDate.setDate(this.minDate.getDate() - 1);
+    this.maxDate.setDate(this.maxDate.getDate() + 1);
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', minDate: this.minDate, maxDate: this.maxDate, showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });

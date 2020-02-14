@@ -23,10 +23,18 @@
                         bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
+                        <option value="" selected hidden>Select Order Status</option>
+                        <option value="PE">Pending</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-success get_details">
-                        <i class="fa fa-search"></i> Get Details</button>
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
                   <div class="col-sm-2 pull-right">

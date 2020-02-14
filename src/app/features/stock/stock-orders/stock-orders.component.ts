@@ -121,7 +121,6 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     this.ProductArray.splice(index, 1);
     this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
   }
-
   // calculateQtyGTotal() {
   //   this.stock.GrandTotal = this.stock.QtyTotal = this.stock.SubTotal = this.stock.IgstTotal = this.stock.CgstTotal = this.stock.SgstTotal = 0;
   //   if (this.ProductArray.length != 0)

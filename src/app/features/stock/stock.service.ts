@@ -26,8 +26,8 @@ export class StockService {
     public postBulkOrders(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrder`, data);
     }
-    public getStockOrderDetails(cpcode, StartDate, EndDate) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=&VehicleId=&OrderStatus=&OrderStage=&IsActive=Y`);
+    public getStockOrderDetails(cpcode, StartDate, EndDate, stage) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=&VehicleId=&OrderStatus=&OrderStage=${stage}&IsActive=Y`);
     }
     public getStockOrderProductDetails(cpcode, sktorderId, OrderNo, StartD, EndD) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtls?StkOrdId=${sktorderId}&OrderNo=${OrderNo}&FOrderDt=${StartD}&TOrderDt=${EndD}&OrderType=&CPCode=${cpcode}&PlantId=&VehicleId=&OrderStage=PE&IsActive=Y`);
@@ -35,8 +35,8 @@ export class StockService {
     public postImabalance(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ManageProdImbalance`, data);
     }
-    public getStockImbalanceDetails(cpcode, StartDate, EndDate) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=&IsActive=Y`);
+    public getStockImbalanceDetails(cpcode, StartDate, EndDate, stage) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=${stage}&IsActive=Y`);
     }
 
 
