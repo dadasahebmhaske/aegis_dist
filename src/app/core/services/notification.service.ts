@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 declare var $: any;
 
@@ -18,6 +18,22 @@ export class NotificationService {
 
   smartMessageBox(data, cb?) {
     $.SmartMessageBox(data, cb)
+  }
+  Success = function (Message) {
+    $.bigBox({
+      title: Message,
+      color: "#296191",
+      icon: "fa fa-thumbs-up animated bounce ",
+      timeout: "2000"
+    });
+  }
+  Errmsg = function (Message) {
+    $.bigBox({
+      title: Message,
+      color: "#C46A69",
+      icon: "fa fa-warning shake animated",
+      timeout: 3000
+    });
   }
 
 }

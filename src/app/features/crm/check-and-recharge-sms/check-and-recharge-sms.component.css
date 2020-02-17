@@ -1,0 +1,45 @@
+.blue-label {
+    color: #3276b1;
+}
+.recharge-red {
+    color: red;
+    font-weight: 400;
+}
+.sms-info {
+    border: 1px solid #cecece;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+}
+hr {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    border: 0;
+    border-top: 1px solid #524f8452;
+}
+.text-size {
+    font-size: 13px;
+}
+.buy-no {
+    padding: 8px;
+}
+.sms-list {
+    padding-top: 10px;
+}
+p {
+    line-height: 1.4;
+    color: #555;
+    margin: 0;
+}
+.sms-info-buy {
+    border: 1px solid #cecece;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+.how-to-buy-head {
+    background-color: #f1f1f1;
+    height: 50px;
+    padding: 15px 0;
+    border-bottom: 1px solid #cecece;
+}

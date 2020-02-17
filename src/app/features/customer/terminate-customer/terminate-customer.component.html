@@ -1,0 +1,98 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2><i class="fa fa-user"></i> Terminate Customer</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="custListForm" autocomplete="off" #custListForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <!-- <label for="sel1"
+                        >Route
+                        <span class="errorMessage">*</span>
+                      </label> -->
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()" required>
+                        <option value="" hidden selected> Select Route <span id="opt">*</span> </option>
+                        <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <!-- <label for="sel1"
+                        >Sub Area
+                        <span class="errorMessage">*</span>
+                      </label> -->
+                      <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control" required>
+                        <option value="" selected hidden> Select Sub Area <span class="errorMessage">*</span>
+                        </option>
+                        <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-xs-4">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{
+                            'fa-search': loaderbtn,
+                            'fa-cog fa-spin': !loaderbtn
+                          }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="row">
+                <div class="col-sm-8 table-responsive">
+                  <div class="transfer-card">
+                    <label>
+                      <strong class="text-primary">Customer List : </strong>
+                    </label>
+                    <div class="">
+                      <ui-grid [data]="custTermiData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onSelect)="onSelectFunction($event)">
+                      </ui-grid>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="transfer-card">
+                    <label>
+                      <strong class="text-primary">Terminate Details : </strong>
+                    </label>
+                    <form name="custTermiForm" #custTermiForm="ngForm" (ngSubmit)="onTerminate()" autocomplete="off" ngNativeValidate>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label>Termination Reason <span class="errorMessage">*</span>
+                            </label>
+                            <textarea class="form-control" rows="5" placeholder="Enter Termination Reason " [(ngModel)]="terminateList.ReqRemark" name="ReqRemark" required></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                          <button class="btn btn-primary text-center" type="submit" [disabled]="!loaderbtn">
+                            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Terminate':'Loading'}}</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

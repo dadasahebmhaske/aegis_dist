@@ -1,0 +1,235 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-envelope"></i> Send Greetings</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                    <select class="form-control">
+                      <option selected hidden>Select Area</option>
+                      <option>Pune</option>
+                      <option>Nagpur </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-10 col-xs-8">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button>
+              
+                    <a routerLink="/crm/check-and-recharge-sms" class="btn  btn-warning get_details pull-right">
+                      <i class="fa fa-lg fa-money"></i>
+                      BUY NOW
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div sa-widget [colorbutton]="false" [editbutton]="false" [togglebutton]="false" [deletebutton]="false" [fullscreenbutton]="false"
+                    [custombutton]="false" [sortable]="false">
+                    <header>
+                      <h2>Send Message</h2>
+                      <ul class="nav nav-tabs pull-right in">
+                        <li [class.active]="state.tabs.demo8=='hb1'">
+                          <a (click)="state.tabs.demo8 = 'hb1'">
+                            <i class="fa fa-lg fa-envelope"></i>
+                            <span class="hidden-mobile hidden-tablet"> Transactional
+                              <span class="text-danger">( 1202 )</span>
+                            </span>
+                          </a>
+                        </li>
+                        <li [class.active]="state.tabs.demo8=='hb2'">
+                          <a (click)="state.tabs.demo8 = 'hb2'">
+                            <i class="fa fa-lg fa-envelope"></i>
+                            <span class="hidden-mobile hidden-tablet"> Promotional
+                              <span class="text-danger">( 1121 )</span>
+                            </span>
+                          </a>
+                        </li>
+                      </ul>
+                    </header>
+                    <div>
+                      <div class="widget-body">
+
+                        <tabset>
+                          <tab [active]="state.tabs.demo8 == 'hb1'">
+
+                            <div class="tabbable tabs-below">
+                              <div class="row">
+                                <div class="col-sm-5 col-xs-4">
+                                  <div class="form-group">
+                                    <select class="form-control">
+                                      <option selected hidden>Select Langauge</option>
+                                      <option>English</option>
+                                      <option>Hindi </option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 col-xs-4">
+                                  <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-info get_details">
+                                      <i class="fa fa-search"></i> Available Templates</button>
+
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Available Templates</label>
+                                    <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group  ">
+                                    <button type="submit" class="btn btn-info get_details pull-right">
+                                      <i class="fa fa-eye"></i> SMS Preview</button>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Message Preview</label>
+                                    <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Total Entered Character :
+                                      <span class="text-danger">10</span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group pull-right">
+                                    <label>Total SMS Count :
+                                      <span class="text-danger">1</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <footer>
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <hr />
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <label>
+                                      <input type="checkbox" name="IsActive" /> Accept ?
+                                    </label>
+                                  </div>
+                                  <div class="col-sm-8 ">
+                                    <a class="pull-right btn btn-default" routerLink="/crm/send-greetings">
+                                      &nbsp;&nbsp;Cancel
+                                    </a>
+                                    <button class="pull-right btn btn-primary marg-right" type="submit" disabled>
+                                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Send SMS
+                                    </button>
+                                  </div>
+                                </div>
+                              </footer>
+                            </div>
+                          </tab>
+                          <tab [active]="state.tabs.demo8 == 'hb2'">
+
+                            <div class="tabbable tabs-below">
+                              <div class="row">
+                                <div class="col-sm-5 col-xs-4">
+                                  <div class="form-group">
+                                    <select class="form-control">
+                                      <option selected hidden>Select Langauge</option>
+                                      <option>English</option>
+                                      <option>Hindi </option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-4 col-xs-4">
+                                  <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-info get_details">
+                                      <i class="fa fa-search"></i> Available Templates</button>
+
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Available Templates</label>
+                                    <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group  ">
+                                    <button type="submit" class="btn btn-info get_details pull-right">
+                                      <i class="fa fa-eye"></i> SMS Preview</button>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12">
+                                  <div class="form-group">
+                                    <label>Message Preview</label>
+                                    <textarea class="form-control" name="" id="" rows="3"></textarea>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Total Entered Character :
+                                      <span class="text-danger">10</span>
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group pull-right">
+                                    <label>Total SMS Count :
+                                      <span class="text-danger">1</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                              <footer>
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <hr />
+                                  </div>
+                                  <div class="col-sm-4">
+                                    <label>
+                                      <input type="checkbox" name="IsActive" /> Accept ?
+                                    </label>
+                                  </div>
+                                  <div class="col-sm-8 ">
+                                    <a class="pull-right btn btn-default" routerLink="/crm/send-greetings">
+                                      &nbsp;&nbsp;Cancel
+                                    </a>
+                                    <button class="pull-right btn btn-primary marg-right" type="submit" disabled>
+                                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Send SMS
+                                    </button>
+                                  </div>
+                                </div>
+                              </footer>
+                            </div>
+
+                          </tab>
+                        </tabset>
+
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+                <div class="col-sm-6 table-responsive">
+                    <ui-grid [data]="customerData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

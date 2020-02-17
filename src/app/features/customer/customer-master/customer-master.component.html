@@ -1,0 +1,43 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-user"></i> Customer Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="custForm" #custForm="ngForm" (ngSubmit)="getCustomer()" ngNativeValidate>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Customer No." class="form-control" oninvalid="this.setCustomValidity('Enter Customer Number')" onchange="this.setCustomValidity('')"
+                        oninput="setCustomValidity(' ')" aCommonDir dirType="number" [(ngModel)]="ConsNo" name="ConsNo" maxlength="8" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+                <div class="col-sm-9">
+                  <div class="form-group  pull-right">
+                    <a routerLink="/customer/new-customer" class="btn btn-block btn-warning get_details">
+                      <i class="glyphicon glyphicon-plus"></i> Add Customer </a>
+                  </div>
+                </div>
+                <div class="col-sm-12  table-responsive">
+                  <ui-grid [data]="custData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

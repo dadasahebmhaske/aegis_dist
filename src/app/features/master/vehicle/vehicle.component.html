@@ -1,0 +1,182 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <!-- widget grid -->
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-12">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-database"></i> Vehicle Master</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form name="vehicleForm" id="vehicleForm" #vehicleForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate> </form>
+                            <form name="vehicleDocsForm" id="vehicleDocsForm" #vehicleDocsForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate> </form>
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="vehicle-cart">
+                                        <label>
+                                            <strong class="text-primary">Vehicle Details : </strong>
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Vehicle Type <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <select class="form-control" [(ngModel)]="vehicle.VehicleTypeId" name="VehicleTypeId" form="vehicleForm" required>
+                                                        <option value="" selected hidden>Select Vehicle Type</option>
+                                                        <option [value]="tra.VehicleTypeId" *ngFor="let tra of transportData">{{tra.VehicleType}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Vehicle No. <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" [(ngModel)]="vehicle.VehicleNo" name="VehicleNo" saCommonDir dirType="alphanumeric" form="vehicleForm"
+                                                        placeholder="Enter Vehicle No." maxlength="15" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Cylinder Capacity <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" [(ngModel)]="vehicle.CylCapacity" name="CylCapacity" saCommonDir dirType="number" form="vehicleForm"
+                                                        placeholder="Enter Cylinder Capacity" maxlength="4" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Last Fitness Date <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="fitdate" [(ngModel)]="vehicle.LastFitnessDate" name="LastFitnessDate"
+                                                        placeholder="Enter Last Fitness Date" form="vehicleForm" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label class="chekbox-margin">
+                                                    <input type="checkbox" [(ngModel)]="vehicle.IsInsurance" trueFalseValue trueValue="Y" falseValue="N" name="IsInsurance " form="vehicleForm" />
+                                                    Insurance Done ? </label>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label>Insurance Renewal Date <span class="errorMessage" [hidden]="vehicle.IsInsurance=='N'">*</span>
+                                                    </label>
+                                                    <input type="text" id="rendate" class="form-control" [(ngModel)]="vehicle.InsRenewalDate" name="InsRenewalDate" placeholder="Enter Renewal Date"
+                                                        form="vehicleForm" [required]="vehicle.IsInsurance=='Y'" [disabled]="vehicle.IsInsurance=='N' || vehicle.IsInsurance==null"
+                                                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>
+                                                    <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='vehicle.IsActive' form="vehicleForm" /> Is Active
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="vehicle-cart">
+                                        <label>
+                                            <strong class="text-primary">Vehicle Documents : </strong>
+                                        </label>
+                                        <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Document Type <span class="errorMessage">*</span>
+                                                        </label>
+                                                        <select class="form-control" [(ngModel)]="document.DocTypId" name="DocTypeId" required>
+                                                            <option value="" [selected]="true" hidden>Select Document Type</option>
+                                                            <option [value]="doc.DocTypId" *ngFor="let doc of docTypeData">{{doc.DocType}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label>Select File <span class="errorMessage">*</span>
+                                                        </label>
+                                                        <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File"
+                                                            required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label>Document No. <span class="errorMessage">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir
+                                                            dirType="alphanumeric" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label>&nbsp; </label>
+                                                        <button class="btn btn-block btn-warning ">
+                                                            <i class="glyphicon glyphicon-plus"></i> Add </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Document Type</th>
+                                                                    <th>Document</th>
+                                                                    <th>Document No.</th>
+                                                                    <th>View</th>
+                                                                    <th>Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let docs of bdata;index as i">
+                                                                    <td>{{i+1}}</td>
+                                                                    <td>{{docs.DocType}}</td>
+                                                                    <td>{{docs.DocFileName}} </td>
+                                                                    <td>{{docs.DocNo}} </td>
+                                                                    <td>
+                                                                        <a href="{{imgUrl}}{{docs.DocFileName}}" *ngIf="docs.DocId!=null && docs.DocId!=''" target="_blank"
+                                                                            class="btn btn-xs btn-success">View</a>
+                                                                        <a (click)="viewDocument(docs.filepreview)" *ngIf="docs.DocId==null || docs.DocId==''" target="_blank"
+                                                                            class="btn btn-xs btn-success">View</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <footer>
+                                <div class="row">
+                                    <div class="col-sm-12 ">
+                                        <hr />
+                                        <a class="pull-right btn btn-default" routerLink="/master/vehicle-master">
+                                            <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                        <button class="pull-right btn btn-primary marg-right" type="submit" form="vehicleForm" [disabled]="!loaderbtn">
+                                            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
+</div>

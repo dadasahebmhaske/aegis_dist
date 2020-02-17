@@ -1,0 +1,14 @@
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    width: 33%;
+    text-align: center;
+    padding-left: 0;
+}
+.next_button{
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    float:right;
+}

@@ -1,0 +1,49 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <!-- widget grid -->
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-6 col-sm-offset-3">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-database"></i> Route Master</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form name="routeForm" #routeForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Route Name <span class="errorMessage">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="RouteName" [(ngModel)]="route.RouteName" saCommonDir dirType="alphanumeric" placeholder="Enter Route Name"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='route.IsActive' /> Is Active </label>
+                                    </div>
+                                </div>
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-sm-12 ">
+                                            <hr />
+                                            <a class="pull-right btn btn-default" routerLink="/master/route-master">
+                                                <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                            <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                                                <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
+</div>

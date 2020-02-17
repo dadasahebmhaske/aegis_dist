@@ -1,0 +1,20 @@
+.bot15 {
+    margin-bottom: 15px;
+}
+.left30 {
+    margin-left: 30px;
+}
+.icon-append11 {
+    right: -4px;
+    padding-left: 3px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    position: absolute;
+    top: 6px;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #a2a2a2;
+}

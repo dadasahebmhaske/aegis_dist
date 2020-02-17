@@ -1,0 +1,116 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    <sa-widgets-grid>
+        <div class="row">
+            <article class="col-sm-8 col-sm-offset-2">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                    <header class="text-center">
+                        <h2>
+                            <i class="fa fa-table"></i> Imbalance </h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <form name="imbalanceForm" #imbalanceForm="ngForm" (ngSubmit)="onSubmitImabalance()" autocomplete="off" ngNativeValidate>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label>Date<span class="errorMessage">*</span></label>
+                                            <input type="text" id="td" class="form-control" placeholder="dd-mmm-yyyy" [(ngModel)]="imbalance.ImbalanceDate" bsDatepicker [bsConfig]="datePickerConfig"
+                                                onkeydown="return false" name="ImbalanceDate" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="sel1">Product Segment<span class="errorMessage" style="color:red;">*</span></label>
+                                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="imbalance.ProdSegId" name="ProdSegId" required>
+                                                <option value="" selected hidden>Select Segment</option>
+                                                <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label for="sel1">Product<span class="errorMessage">*</span></label>
+                                            <select class="form-control" [(ngModel)]="imbalance.ProdId" name="ProdId" required>
+                                                <option value="" selected hidden>Select Product</option>
+                                                <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label> <strong>Imbalance</strong> ( Adjust Balance Stock )</label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Sound <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Sound" [(ngModel)]="imbalance.SoundPlus" name="SoundPlus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Sound <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Sound" [(ngModel)]="imbalance.SoundMinus" name="SoundMinus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Empty <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Empty" [(ngModel)]="imbalance.EmptyPlus" name="EmptyPlus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Empty <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Empty" [(ngModel)]="imbalance.EmptyMinus" name="EmptyMinus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Defective <i class="fa fa-plus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Defective" [(ngModel)]="imbalance.DefPlus" name="DefPlus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Defective <i class="fa fa-minus-circle"></i> <span class="errorMessage">*</span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Defective" [(ngModel)]="imbalance.DefMinus" name="DefMinus" saCommonDir dirType="number"
+                                                required />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="sel1">Remark</label>
+                                            <textarea class="form-control" placeholder="Enter Remark" [(ngModel)]="imbalance.Remark" name="Remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" row">
+                                    <div class="col-sm-6">
+                                        <label>
+                                            <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='imbalance.IsActive' /> Is Active </label>
+                                    </div>
+                                </div>
+                                <footer>
+                                    <div class="row">
+                                        <div class="col-sm-12 ">
+                                            <hr />
+                                            <a class="pull-right btn btn-default" routerLink="/stock/add-imbalance">
+                                                <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                            <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                                                <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </sa-widgets-grid>
+</div>

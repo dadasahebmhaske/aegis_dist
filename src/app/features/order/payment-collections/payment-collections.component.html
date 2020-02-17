@@ -1,0 +1,133 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-8 col-sm-offset-2">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Payment Collections</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row">
+                <div class="col-sm-12">
+                
+                    <div class="row">
+                  
+                      <div class="col-sm-3 ">
+                        <div class="form-group ">
+                            <label for="sel1">Customer/Mobile No.
+                                <span class="errorMessage">*</span>
+                              </label>
+                          <input type="text" class="form-control" placeholder="Enter Customer/Mobile No. " />
+                        </div>
+                      </div>
+                      <div class="col-sm-1">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-block btn-success get_details">
+                            <i class="fa fa-search"></i> Get Details</button>
+
+                        </div>
+                      </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-sm-12">
+                              <hr class="simple">
+                              </div>
+                      <div class="col-sm-12 text-center ">
+                        <div class="form-group label-center">
+                          <label>
+                            <strong>
+                              <i class="fa fa-user"></i>
+                              Customer Name : <span class="text-custname">Atul Purkar</span></strong>
+
+                          </label>
+                          <label>
+                            <strong style="margin-left:20px">                            
+                              Advance Balance : <span class="text-success">15000</span></strong>
+                          </label>
+                          <label>
+                            <strong style="margin-left:20px">                              
+                              Pending Balance : <span class="text-danger">00</span></strong>
+                          </label>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-12">
+                        <hr class="simple">
+                        </div>
+                    </div>
+                 
+                </div>
+
+                <div class="col-sm-12">
+           
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Received Amount
+                            <span class="errorMessage">*</span>
+                          </label>                      
+                          <input type="text" class="form-control" placeholder="Enter Amount " />
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Pay Mode
+                            <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control">
+                            <option selected hidden>Select Mode </option>
+                            <option>Cash </option>
+                            <option>Cheque</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Cheque No.
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Cheque No." disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Cheque Date                           
+                          </label>
+                          <input type="text" class="form-control" placeholder="Enter Date" disabled/>
+                        </div>
+                      </div>               
+                 
+                   
+
+                  </div>
+                </div>
+              </div>
+    
+              <footer>
+                <div class="row">
+                  <div class="col-sm-12 ">
+                    <hr />
+                    <a class="pull-right btn btn-default" routerLink="/order/cash-flow-register">
+                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
+                    </a>
+                    <button class="pull-right btn btn-primary marg-right" type="submit">
+                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
+                    </button>
+                  </div>
+                  <!-- <div class="col-sm-12 " ng-show="divhide">
+                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
+                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                              </button>
+                          </div> -->
+                </div>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

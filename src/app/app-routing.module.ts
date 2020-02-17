@@ -3,6 +3,9 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { MainLayoutComponent } from "./shared/layout/app-layouts/main-layout.component";
 import { AuthLayoutComponent } from "./shared/layout/app-layouts/auth-layout.component";
+import { AuthenticationGuard } from '../app/core/guards/authentication.guard';
+import { LoggedInGuard } from '../app/core/guards/loggedIn.guard';
+
 
 const routes: Routes = [
 
@@ -41,6 +44,7 @@ const routes: Routes = [
       {
         path: "dashboard",
         loadChildren: "./features/dashboard/dashboard.module#DashboardModule",
+        canActivate: [AuthenticationGuard],
         data: { pageTitle: "Dashboard" }
       },
 
@@ -106,14 +110,51 @@ const routes: Routes = [
         loadChildren:
           "./features/widgets/widgets-showcase.module#WidgetsShowcaseModule",
         data: { pageTitle: "Widgets" }
-      }
+      },
+      {
+        path: "master",
+        loadChildren: "./features/master/master.module#MasterModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "Master" }
+      },
+      {
+        path: "crm",
+        loadChildren: "./features/crm/crm.module#CrmModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "CRM" }
+      },
+      {
+        path: "customer",
+        loadChildren: "./features/customer/customer.module#CustomerModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "Customer" }
+      },
+      {
+        path: "order",
+        loadChildren: "./features/order/order.module#OrderModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "Order" }
+      },
+      {
+        path: "stock",
+        loadChildren: "./features/stock/stock.module#StockModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "Stock" }
+      },
+      {
+        path: "settings",
+        loadChildren: "./features/settings/settings.module#SettingsModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "settings" }
+      },
     ]
   },
 
   {
     path: "auth",
     component: AuthLayoutComponent,
-    loadChildren: "./features/auth/auth.module#AuthModule"
+    loadChildren: "./features/auth/auth.module#AuthModule",
+    canActivate: [LoggedInGuard],
   },
   { path: "**", redirectTo: "miscellaneous/error404" }
 ];
@@ -122,4 +163,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

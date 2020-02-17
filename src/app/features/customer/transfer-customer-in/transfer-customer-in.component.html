@@ -1,0 +1,77 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-user"></i> Transfer Customer In</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="StatusForm" #StatusForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <select class="form-control" [(ngModel)]="status" name="status" required>
+                        <option selected hidden> Select Status </option>
+                        <option value="AC"> Accepted </option>
+                        <option value="RJ"> Rejected </option>
+                        <option value="AP"> Pending </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+                <!-- <div class="col-sm-2 pull-right">                     
+                    <div class="form-group pull-right">
+                      <a routerLink="/stock/stock-orders"  class="btn btn-block btn-warning get_details pull-right">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        Add Order
+                      </a>
+                    </div>
+                  </div> -->
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="customerInData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Reject Details</h4>
+      </div>
+      <form name="rejectForm" #rejectForm="ngForm" (ngSubmit)="acceptRejectCustomer('RJ')" autocomplete="off" ngNativeValidate>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <label>Reason <span class="errorMessage">*</span></label>
+              <textarea class="form-control" [(ngModel)]="rjRemark" name="rjRemark" placeholder="Enter reason to reject" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" [disabled]="!loaderbtn">
+            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+          <a class="btn btn-default" data-dismiss="modal">Close</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

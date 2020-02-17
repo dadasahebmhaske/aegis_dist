@@ -1,0 +1,37 @@
+.vehicle-cart{
+    border: 1px solid #534d81;
+    padding: 15px 10px;
+    min-height: 583px;
+}
+.vehicle-cart:hover{
+    border: 1px solid #534d81;
+    padding: 15px 10px;
+    min-height: 583px;
+    box-shadow: 0 0 5px #534d81;
+}
+.logincDeatils {
+    /* border: 1px solid #534d81;*/
+    padding: 2px 10px; 
+    min-height: 90px;
+    margin-bottom:10px;
+    border-top: 1px solid #534d81;
+    border-bottom: 1px solid #534d81;
+    background: #534c7f0f;
+}
+.bootstrapWizard li {
+    display: block;
+    float: left;
+    width: 33%;
+    text-align: center;
+    padding-left: 0;
+}
+.btn-marg{
+    margin-top: 27px;
+}
+.next_button{
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    float:right;
+}

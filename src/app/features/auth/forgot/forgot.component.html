@@ -1,15 +1,22 @@
 <header id="header" class="animated fadeInDown">
 
   <div id="logo-group">
-      <span id="logo"> <img src="assets/img/logo.gif" alt="AEGIS"> </span>
+      <span id="logo"> <img src="assets/img/AegisLogoWithoutBackground.png" alt="AEGIS"> </span>
   </div>
-  <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
+  <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs pull-right">
+      <div  class="pull-right toll">
+          <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num color-orange"> 7666555560 </span></div>
+      </div>
+    </div>
+  <!-- <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
     <div  class="text-center toll">
         <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
     </div>
   </div>
-  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/auth/register" class="btn btn-danger">Create account</a> </span>
-
+  <span id="extr-page-header-space">
+      <span class="hidden-mobile hiddex-xs">Already registered?</span>
+      <a routerLink="/auth/login" class="btn btn-danger">Sign In</a>
+  </span> -->
 </header>
 <div id="main" role="main" class="animated fadeInDown">
 
@@ -24,11 +31,11 @@
                        [active]="slide.active" style="height:382px;">
                   <img [src]="slide.src" style="margin:auto;">
 
-                  <div class="carousel-caption">
+                  <!-- <div class="carousel-caption">
                     <h4>Slide {{i}}</h4>
 
                     <p>{{slide.text}}</p>
-                  </div>
+                  </div> -->
                 </slide>
               </carousel>
 
@@ -44,17 +51,17 @@
 
             <fieldset>
                 <section>
-                    <label class="label">Your Dist Code</label>
+                    <label class="label">Distributor  Code</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
                       <input type="text" name="Dist Code">
-                      <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Enter your dist code</b> </label>
+                     </label>
                 
                   </section>
               <section>
-                <label class="label">Enter your email address</label>
+                <label class="label">Registered Email ID</label>
                 <label class="input"> <i class="icon-append fa fa-envelope"></i>
                   <input type="email" name="email">
-                  <b class="tooltip tooltip-top-right"><i class="fa fa-envelope txt-color-teal"></i> Please enter email address for password reset</b></label>
+                 </label>
                   <div class="note">
                       <a routerLink="/auth/login">I remembered my password!</a>
                     </div>
@@ -67,14 +74,14 @@
             </fieldset>
             <footer>
               <button (click)="submit($event)" class="btn btn-primary">
-                <i class="fa fa-refresh"></i> Reset Password
+                <i class="fa fa-refresh"></i> Send Password
               </button>
             </footer>
           </form>
 
         </div>
 
-        <h5 class="text-center"> - Or sign in using -</h5>
+        <!-- <h5 class="text-center"> - Or sign in using -</h5>
 
         <ul class="list-inline text-center">
           <li>
@@ -86,7 +93,7 @@
           <li>
             <a (click)="(null)" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
           </li>
-        </ul>
+        </ul> -->
 
       </div>
     </div>
@@ -94,3 +101,13 @@
 
 </div>
 
+
+<div class="page-footer" style="background: #f4f4f4!important;color:#332c2c !important;border-top:none;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 text-center">
+                <span class=" text-center">415/416, Shree Nand Dham, Plot No-59, Sector No-11, Cbd Belapur, Navi Mumbai, Maharashtra 400614</span>
+                
+        </div>
+      
+    </div>
+</div>

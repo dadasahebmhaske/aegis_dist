@@ -1,0 +1,41 @@
+.transfer-card{
+    border: 1px solid #534d81;
+    padding: 15px;
+    min-height: 292px;
+}
+.transfer-card:hover{
+    border: 1px solid #534d81;
+    padding: 15px;
+    min-height: 292px;
+    box-shadow: 0 0 5px #534d81;
+}
+/* .ui-grid.disable-row-selection {
+  display: block !important;
+}
+#grid>.ui-grid-selection-row-header-buttons {
+  display: none !important;
+} */
+/* select >.form-control.ng-pristine.ng-invalid.ng-touched>option>strong {
+color:red!important;
+background: green!important;
+}
+#el01 option {width:20em;
+color:green;}
+[selected]>strong{
+  color:red!important;
+} */
+
+/* #elmen option ~ strong{
+  color:red !important;
+}
+[selected] {
+    color: #f00;
+    font-weight: bold;
+}
+#elmen select[value=""] {
+  color:red !important;
+  background: greenyellow;;
+} */
+ .elmen span {
+  color:red !important;
+}

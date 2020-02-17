@@ -1,14 +1,14 @@
 <header id="header" class="animated fadeInDown">
 
   <div id="logo-group">
-    <span id="logo"> <img src="assets/img/logo.gif" alt="AEGIS"> </span>
+    <span id="logo"> <img src="assets/img/AegisLogoWithoutBackground.png" alt="AEGIS"> </span>
   </div>
-  <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs ">
-      <div  class="text-center toll">
-          <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num login_toll"> 7666555560 </span></div>
+  <div class="col-sm-4 col-md-5 col-lg-7  hidden-xs pull-right">
+      <div  class="pull-right toll">
+          <div class="toll_number"><i class="fa fa-phone color-orange phone"></i> Toll Free Number <span class="toll_number num color-orange"> 7666555560 </span></div>
       </div>
     </div>
-  <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/auth/register" class="btn btn-danger">Create account</a> </span>
+  <!-- <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Need an account?</span> <a routerLink="/auth/distributor-authentification" class="btn btn-danger">Create account</a> </span> -->
 
 </header>
 <div id="main" role="main" class="animated fadeInDown">
@@ -23,11 +23,11 @@
                        [active]="slide.active" style="height:382px;">
                   <img [src]="slide.src" style="margin:auto;">
 
-                  <div class="carousel-caption">
+                  <!-- <div class="carousel-caption">
                     <h4>Slide {{i}}</h4>
 
                     <p>{{slide.text}}</p>
-                  </div>
+                  </div> -->
                 </slide>
               </carousel>
 
@@ -35,31 +35,42 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-          <form class="smart-form client-form">
+          <form class="smart-form client-form" name="loginForm" #loginForm="ngForm" (ngSubmit)="login($event,loginForm)" ngNativeValidate>
             <header>
               Sign In
             </header>
             <fieldset>
                 <section>
-                    <label class="label">Dist Code</label>
+                    <label class="label">Channel Partner Code</label>
                     <label class="input"> <i class="icon-append fa fa-user"></i>
-                      <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">
-                      <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
-                        Please enter dist code</b></label>
+                      <input type="text" name="SAPId" data-smart-validate-input="" data-required=""  data-message-required="Please enter Dist Code" data-message-email="Please enter a VALID Distributor  Code"
+                      ngModel
+                      required
+                       >
+                      </label>
                   </section>
               <section>
                 <label class="label">E-mail</label>
-                <label class="input"> <i class="icon-append fa fa-user"></i>
-                  <input type="email" name="email" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address">
-                  <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i>
-                    Please enter email address/username</b></label>
+                <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                  <input type="email" name="EmailId" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address" data-message-email="Please enter a VALID email address"
+                  ngModel
+                  minlength="6"
+                  autocomplete="on"
+                  email
+                  required
+                  >
+                 </label>
               </section>
               <section>
                 <label class="label">Password</label>
                 <label class="input"> <i class="icon-append fa fa-lock"></i>
-                  <input type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password">
-                  <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter
-                    your password</b> </label>
+                  <input type="password" name="Password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20" data-message="Please enter your email password"
+                  ngModel
+                  minlength="6"
+                  autocomplete="off"
+                  required
+                  >
+               </label>
 
                 <div class="note">
                   <a routerLink="/auth/forgot-password">Forgot password?</a>
@@ -72,13 +83,16 @@
               </section> -->
             </fieldset>
             <footer>
-              <button (click)="login($event)" class="btn btn-primary">
+              <!-- <button  class="btn btn-primary">
                 Sign in
-              </button>
+              </button> -->
+              <button class="btn btn-primary" type="submit"  [disabled]="!loaderbtn"> 
+                  <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i>                       
+               {{loaderbtn==true? 'Sign In':'Loading'}}</button>
             </footer>
           </form>
         </div>
-        <h5 class="text-center"> - Or sign in using -</h5>
+        <!-- <h5 class="text-center"> - Or sign in using -</h5>
         <ul class="list-inline text-center">
           <li>
             <a (click)="(null)" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
@@ -89,8 +103,17 @@
           <li>
             <a (click)="(null)" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
+</div>
+<div class="page-footer" style="background: #f4f4f4!important;color:#332c2c !important;border-top:none;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 text-center">
+                <span class=" text-center">415/416, Shree Nand Dham, Plot No-59, Sector No-11, Cbd Belapur, Navi Mumbai, Maharashtra 400614</span>
+                
+        </div>
+      
+    </div>
 </div>

@@ -1,0 +1,18 @@
+.login-header-big {
+    margin-top: 0px;
+}
+.badge-red {
+    display: inline-block;
+    min-width: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 7px;
+    color: #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #999;
+    border-radius: 50px;
+    background: #bb193f;
+}

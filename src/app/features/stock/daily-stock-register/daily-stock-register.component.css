@@ -1,0 +1,16 @@
+.jarviswidget-color-blueDark .nav-tabs li:not(.active) a, .jarviswidget-color-blueDark>header>.jarviswidget-ctrls a {
+    color: #060606!important;
+}
+.nav>li>a:focus, .nav>li>a:hover{
+    text-decoration: none;
+    background-color: #57467863 !important;
+
+}
+.nav-tabs>li.active>a {
+    -webkit-box-shadow: 0 -2px 0 #534d81;
+    -moz-box-shadow: 0 -2px 0 #534d81;
+    box-shadow: 0 -2px 0 #534d81;
+    border-top-width: 0!important;
+    margin-top: 1px!important;
+    font-weight: 700;
+}

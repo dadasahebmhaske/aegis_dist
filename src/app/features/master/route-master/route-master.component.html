@@ -1,0 +1,45 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+    
+     
+      <!-- widget grid -->
+      <sa-widgets-grid>
+    
+    
+        <div class="row">
+          <article class="col-sm-12">
+    
+            <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+              <header class="text-center">
+                <h2><i class="fa fa-database"></i> Route Master</h2>
+              </header>
+              <div>
+                <div class="widget-body">
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <div class="form-group  pull-right">
+                                <a routerLink="/master/route" class="btn btn-block btn-warning ">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    Add Route
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12  table-responsive">
+                          <ui-grid [data]="routeData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                      </div>
+                    </div>
+    
+                </div>
+              </div>
+            </div>
+    
+          
+    
+          </article>
+    
+         
+        </div>
+      
+      </sa-widgets-grid>
+    </div>
+    
