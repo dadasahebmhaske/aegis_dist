@@ -114,7 +114,7 @@
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
                                                                     id="startDate" (bsValueChange)="resetEndDate($event,'LP')" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig"
-                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
+                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" (ngModelChange)="setMinDate()" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
@@ -122,7 +122,7 @@
                                                                 <label for="sel1">End Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
                                                                 <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate"
-                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" (bsValueChange)="calculateMonths($event)" onkeydown="return false"
+                                                                    [disabled]="GodownType=='O'" [required]="GodownType!='O'" (ngModelChange)="calculateMonths()" onkeydown="return false"
                                                                     [minDate]="LeaseMinDate" bsDatepicker [bsConfig]="datePickerConfig" />
                                                             </div>
                                                         </div>

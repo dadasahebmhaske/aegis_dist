@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { CustomerService } from '../customer.service';
 import { AppService } from '@app/core/custom-services/app.service';
 @Component({

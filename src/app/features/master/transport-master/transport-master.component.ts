@@ -43,7 +43,7 @@ export class TransportMasterComponent implements OnInit {
     AppComponent.Router.navigate(['/master/transport']);
   }
   onLoad() {
-    this.masters.getTransport(this.cpInfo.CPCode).subscribe((resData: any) => {
+    this.masters.getTransport().subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.transportData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

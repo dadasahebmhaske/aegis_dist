@@ -6,19 +6,19 @@ import { AppComponent } from '../../app.component';
 })
 export class MasterService {
   constructor(private httpClient: HttpClient) { }
-  public getDiffMonths(dt2, dt1) {
+  public getMonthsDiff(dt2, dt1) {
     if (dt2 != null && dt1 != null) {
       var diff = (new Date(dt2).getTime() - dt1.getTime()) / 1000;
       diff /= (60 * 60 * 24 * 7 * 4);
-      //return Math.abs(Math.round(diff)); for months
-      let months = Math.abs(Math.round(diff));
-      if (months < 10) {
-        return (months * 0.10).toFixed(1);
-      } else if (months < 12) {
-        return (months * 0.01).toFixed(2);
-      } else {
-        return Math.abs(diff % 12).toFixed(1);
-      }
+      return Math.abs(Math.round(diff));
+    }
+  }
+  public getYearsDiff(d1, d2) {
+    if (d2 != null && d1 != null) {
+      let date1 = new Date(d1);
+      let date2 = new Date(d2);
+      let yearsDiff = date2.getFullYear() - date1.getFullYear();
+      return yearsDiff;
     }
   }
   public filterData(data, DocTypId, para) {
@@ -67,8 +67,8 @@ export class MasterService {
   public getSubArea(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
-  public getTransport(cpcode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VTM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);
+  public getTransport() {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=VTM&IsActive=Y`);
   }
   public getVehicles(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);

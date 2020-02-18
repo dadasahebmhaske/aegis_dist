@@ -37,7 +37,7 @@ export class VehicleComponent implements OnInit, OnDestroy {
     if (this.vehicle.VehicleTypeID != '') { this.getVehicleDocumentDetails(); }
   }
   onLoad() {
-    this.masterService.getTransport(this.cpInfo.CPCode).subscribe((resData: any) => {
+    this.masterService.getTransport().subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.transportData = resData.Data;
         //AppComponent.SmartAlert.Success(resData.Message);

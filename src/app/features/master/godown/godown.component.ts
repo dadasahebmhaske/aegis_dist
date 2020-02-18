@@ -323,13 +323,15 @@ export class GodownComponent implements OnInit, OnDestroy {
     docobj = this.masterService.filterData(this.GodownTypeData, this.godown.GodownTypeId, 'Id');
     this.GodownType = docobj[0].MstFlag;
   }
-  calculateMonths(value) {
-    if (this.godown.Startdate != undefined && value != undefined)
-      this.godown.LeasePeriod = this.masterService.getDiffMonths(this.godown.Startdate, value);
+  calculateMonths() {
+    if (this.godown.Startdate != undefined && this.godown.EndDate != undefined)
+      this.godown.LeasePeriod = this.masterService.getYearsDiff(this.godown.Startdate, this.godown.EndDate);
+    this.godown.LeasePeriod = this.godown.LeasePeriod + 1;
   }
   resetEndDate(val, flag) {
+
+
     if (flag == 'LP' && this.godown.Startdate != undefined && val != null && this.godown.EndDate != null) {
-      this.LeaseMinDate = val;
       if ((new Date(this.godown.EndDate).getTime()) < (new Date(val).getTime())) {
         this.godown.EndDate = '';
         this.godown.LeasePeriod = null;
@@ -337,13 +339,21 @@ export class GodownComponent implements OnInit, OnDestroy {
     }
 
     if (flag == 'LI' && val != null && this.godown.LicExpDate != null) {
-      this.LicMinDate = val;
       if ((new Date(this.godown.LicExpDate).getTime()) < (new Date(val).getTime())) {
         this.godown.LicExpDate = '';
       }
-
+    }
+    if (flag == 'LI') {
+      this.LicMinDate = val;
     }
   }
+  setMinDate() {
+    if (this.godown.Startdate != null && this.godown.Startdate != undefined) {
+      this.LeaseMinDate = this.godown.Startdate;
+      this.LeaseMinDate.setFullYear(this.LeaseMinDate.getFullYear() + 1);
+    }
+  }
+
   getCityData() {
     this.masterService.getCity(this.godown.StateCode).subscribe((res) => {
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }

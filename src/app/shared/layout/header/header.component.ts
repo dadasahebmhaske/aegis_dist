@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {Store}from "@ngrx/store";
-import {getUser,AuthState} from './../../../core/store/auth';
-import {pipe} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { getUser, AuthState } from './../../../core/store/auth';
+import { pipe } from 'rxjs';
 import { AppService } from '@app/core/custom-services/app.service';
 
 
@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'sa-header',
   templateUrl: './header.component.html',
-  styles:[`#header>:first-child, aside {
+  styles: [`#header>:first-child, aside {
     width: 77px;}
 #logo {width: 77px;
   margin-top: 3px !important;
@@ -27,21 +27,24 @@ declare var $: any;
 :16px 0;}`]
 })
 export class HeaderComponent implements OnInit {
-public cpInfo:any;
-  constructor(private router: Router,private appService:AppService) {
+  public cpInfo: any;
+  constructor(private router: Router, private appService: AppService) {
   }
 
   ngOnInit() {
-  this.appService.getAppData().subscribe(data=>{this.cpInfo=data;
-  if(this.cpInfo==null)
-  this.cpInfo.CPName='';
-  });
+    this.appService.getAppData().subscribe(data => {
+      this.cpInfo = data;
+      if (this.cpInfo == null) {
+        this.cpInfo.CPName = '';
+        this.cpInfo.CPCode = '';
+      }
+    });
   }
 
 
   searchMobileActive = false;
 
-  toggleSearchMobile(){
+  toggleSearchMobile() {
     this.searchMobileActive = !this.searchMobileActive;
 
     $('body').toggleClass('search-mobile', this.searchMobileActive);
@@ -51,10 +54,10 @@ public cpInfo:any;
     this.router.navigate(['/miscellaneous/search']);
 
   }
-  logout(){
+  logout() {
     localStorage.clear();
-    this.appService.setProperty(null,false);
+    this.appService.setProperty(null, false);
     this.router.navigate(['/auth/login']);
-   
+
   }
 }

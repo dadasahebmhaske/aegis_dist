@@ -6,6 +6,7 @@ import { CustomerService } from '@app/features/customer/customer.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { StockService } from '../stock.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import Swal from 'sweetalert2'
 @Component({
   selector: 'sa-stock-orders',
   templateUrl: './stock-orders.component.html',
@@ -64,44 +65,70 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
-    this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
-      if (resPT.StatusCode != 0) {
-        this.productDataSelected = resPT.Data;
-      } else { this.productDataSelected = []; }
-    });
+    if (this.stock.PlantId == undefined || this.stock.PlantId == null || this.stock.PlantId == '') {
+      this.product.ProdSegId = '';
+      AppComponent.SmartAlert.Errmsg(`Please select plant first`);
+    } else {
+      this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
+        if (resPT.StatusCode != 0) {
+          this.productDataSelected = resPT.Data;
+        } else { this.productDataSelected = []; }
+      });
+    }
+
   }
   onSelectProduct() {
     let docobj;
-    docobj = this.masterService.filterData(this.orderTypeData, this.product.OrderType, 'MstFlag');
-    this.product.OrderTypeName = docobj[0].Name;//extra
-    docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
-    this.product.ProdSeg = docobj[0].ProdSeg;//extra
-    docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
-    this.product.ProdRate = docobj[0].DepositAmount;
-    this.product.Product = docobj[0].Product; //extra
-    this.product.ProdCode = docobj[0].ProductCode;
-    this.product.IgstPer = docobj[0].IgstPer;
-    this.product.CgstPer = docobj[0].CgstPer;
-    this.product.SgstPer = docobj[0].SgstPer;
-    if (this.product.ProdQty != null) {
-      this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
-      if (this.cpInfo.IsHomeState == 'Y') {
-        this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
-        this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
-        this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
-        this.product.IgstAmt = 0;
-      } else {
-        this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
-        this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
-        this.product.CgstAmt = this.product.SgstAmt = 0;
+    docobj = this.masterService.filterData(this.plantData, this.stock.PlantId, 'PlantId');
+    let plantStateCode = docobj[0].StateCode;
+    if (plantStateCode == null || plantStateCode == undefined || plantStateCode == '') {
+      Swal.fire({
+        title: '',
+        text: 'Plant Address not added on system. Please contact to admin!',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.value) {
+
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+        }
+      })
+    } else {
+      docobj = this.masterService.filterData(this.orderTypeData, this.product.OrderType, 'MstFlag');
+      this.product.OrderTypeName = docobj[0].Name;//extra
+      docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
+      this.product.ProdSeg = docobj[0].ProdSeg;//extra
+      docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
+      this.product.ProdRate = docobj[0].DepositAmount;
+      this.product.Product = docobj[0].Product; //extra
+      this.product.ProdCode = docobj[0].ProductCode;
+      this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
+      this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
+      this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
+      if (this.product.ProdQty != null) {
+        this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
+        if (parseInt(this.cpInfo.StateCode) == parseInt(plantStateCode)) {
+          this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
+          this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
+          this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
+          this.product.IgstAmt = 0;
+        } else {
+          this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
+          this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
+          this.product.CgstAmt = this.product.SgstAmt = 0;
+        }
+        this.product.SubTotal = parseInt(this.product.ProdAmt);
       }
-      this.product.SubTotal = parseInt(this.product.ProdAmt);
+      this.product.OrderCode = '';
+      this.product.CouponCode = '';
+      this.product.DiscountAmt = '';
+      this.product.TranCharges = '';
+      this.product.IsActive = 'Y';
     }
-    this.product.OrderCode = '';
-    this.product.CouponCode = '';
-    this.product.DiscountAmt = '';
-    this.product.TranCharges = '';
-    this.product.IsActive = 'Y';
+
   }
   addProduct() {
     if (this.ProductArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId)) && this.ProductArray.some(obj => obj.OrderType === this.product.OrderType)) {
