@@ -15,4 +15,8 @@ export class OrderService {
     public postRefillBooking(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessRefillBooking`, data, AppComponent.httpOptions);
     }
+
+    public getCPPriceAllocation(cpcode, ProdSegId) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPProdPriceAllocation?PriceCode=&CPCode=${cpcode}&IsActive=Y&ProdSegId=${ProdSegId}&ProdId=`, AppComponent.httpOptions);
+    }
 }
