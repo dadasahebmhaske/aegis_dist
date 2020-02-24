@@ -9,28 +9,25 @@
           </header>
           <div>
             <div class="widget-body">
+                <form name="PAllocationForm" #PAllocationForm="ngForm" (ngSubmit)="onLoad()" ngNativeValidate autocomplete="off">
               <div class="row ">
                   <div class="col-sm-2 col-xs-4">
                       <div class="form-group">
-                          <select class="form-control">
-                              <option selected hidden>Select Product Category</option>
-                              <option>Category 1 </option>
-                              <option>Category 2</option>
-                              <option>Category 3 </option>
-                          </select>
+                          <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="PAllocation.ProdSegId" name="ProdSegId" required>
+                              <option value="" selected hidden>Select Segment</option>
+                              <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                            </select>
                       </div>
                   </div>
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
-                        <select class="form-control">
-                            <option selected hidden>Select Product</option>
-                            <option>5 Kg </option>
-                            <option>14.5 Kg</option>
-                            <option>19 Kg </option>
-                        </select>
+                        <select class="form-control" [(ngModel)]="PAllocation.ProdId" name="ProdId"  required>
+                            <option value="" selected hidden>Select Product</option>
+                            <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                          </select>
                     </div>
                 </div>
-                <div class="col-sm-2 col-xs-4">
+                <!-- <div class="col-sm-2 col-xs-4">
                   <div class="form-group">
                       <select class="form-control">
                           <option selected hidden>Select Price Status</option>
@@ -39,7 +36,7 @@
                           <option>Future </option>
                       </select>
                   </div>
-              </div>
+              </div> -->
             
                 <div class="col-sm-1 col-xs-4">
                   <div class="form-group">
@@ -56,64 +53,18 @@
                     </a>
                   </div>
                 </div>
+               
               </div>
+              </form>
               <div class="row">
-                <div class="col-sm-12">
-                  <div class="table-responsive">
-
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>Product Category</th>
-                          <th>Product</th>
-                          <th>Price</th>
-                          <th>From Date</th>
-                          <th>To Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Category 1</td>
-                          <td>14 Kg cylinder</td>
-                          <td>699</td>
-                          <td>
-                          12-Nov-2019
-                          </td>
-                          <td>
-                            12-Nov-2020
-                            </td>
-                       
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Category 1</td>
-                          <td>19 Kg cylinder</td>
-                          <td>1299</td>
-                          <td>
-                            11-Aug-2019
-                            </td>
-                            <td>
-                              26-Jan-2020
-                              </td>
-                        </tr>
-                                      </tbody>
-                    </table>
-
-                  </div>
-                </div>
+                  <div class="col-sm-12 table-responsive">
+                      <ui-grid [data]="PriceAllocationData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" ></ui-grid>
+                    </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </article>
-
-
     </div>
-
   </sa-widgets-grid>
 </div>

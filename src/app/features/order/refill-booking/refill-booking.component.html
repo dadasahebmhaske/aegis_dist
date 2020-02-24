@@ -25,12 +25,12 @@
                         </div>
                         <div class="col-sm-2">
                           <div class="form-group">
-                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')" [disabled]="hideaddbtn"
                               onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
                               required />
                           </div>
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-1" [hidden]="!hideaddrow">
                           <div class="form-group">
                             <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
                               <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn, 'fa-cog fa-spin': !loaderbtn }"></i> {{ loaderbtn == true ? 'Get Details' : 'Loading' }} </button>
@@ -52,7 +52,7 @@
                       <strong class="text-primary"> Booking Details : </strong>
                     </label>
                     <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()" autocomplete="off" ngNativeValidate>
-                      <div class="row">
+                      <div class="row" [hidden]="!hideaddrow">
                         <div class="col-sm-3">
                           <div class="form-group">
                             <label for="sel1">Product Segment <span class="errorMessage">*</span>
@@ -99,7 +99,7 @@
                         <div class="col-sm-1">
                           <div class="form-group">
                             <label>&nbsp; </label>
-                            <button class="btn btn-block btn-warning ">
+                            <button class="btn btn-block btn-warning " [disabled]="hideaddbtn">
                               <i class="glyphicon glyphicon-plus"></i> Add </button>
                           </div>
                         </div>
@@ -116,12 +116,12 @@
                                 <th>Product Name</th>
                                 <th class="text-right">Rate</th>
                                 <th class="text-right">Quantity</th>
-                                <th class="text-right">Sub Total</th>
-                                <th class="text-right">IGST </th>
+                                <!-- <th class="text-right">Sub Total</th> -->
+                                <!-- <th class="text-right">IGST </th>
                                 <th class="text-right"> CGST </th>
-                                <th class="text-right">SGST </th>
+                                <th class="text-right">SGST </th> -->
                                 <th class="text-right">Amount</th>
-                                <th>Remove</th>
+                                <th [hidden]="!hideaddrow"> Remove</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -131,23 +131,15 @@
                                 <td>{{pr.Product}}</td>
                                 <td class="text-right">{{pr.ProdRate}}</td>
                                 <td class="text-right">{{pr.ProdQty}}</td>
-                                <td class="text-right">{{pr.SubTotal}}</td>
-                                <td class="text-right">{{pr.IgstAmt}}</td>
-                                <td class="text-right">{{pr.CgstAmt}}</td>
-                                <td class="text-right">{{pr.SgstAmt}}</td>
-                                <td class="text-right">{{pr.GrandTotal}}</td>
-                                <td>
+                                <td class="text-right">{{pr.TotalAmt}}</td>
+                                <td [hidden]="!hideaddrow">
                                   <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                 </td>
                               </tr>
                               <tr>
                                 <td colspan="4" class="text-right"><strong>Total</strong> :</td>
                                 <td class="text-right"><strong>{{cust.QtyTotal}}</strong></td>
-                                <td class="text-right"><strong>{{cust.SubTotal}}</strong></td>
-                                <td class="text-right"><strong>{{cust.IgstTotal}}</strong></td>
-                                <td class="text-right"><strong>{{cust.CgstTotal}}</strong></td>
-                                <td class="text-right"><strong>{{cust.SgstTotal}}</strong></td>
-                                <td class="text-right"><strong>{{cust.GrandTotal}}</strong></td>
+                                <td class="text-right"><strong>{{cust.TotalAmt}}</strong></td>
                                 <td></td>
                               </tr>
                             </tbody>
@@ -160,11 +152,11 @@
               </div>
               <form name="refillBookingForm" #refillBookingForm="ngForm" (ngSubmit)="onSubmitBooking()" autocomplete="off" ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-3 col-sm-offset-5">
+                  <div class="col-sm-3 ">
                     <div class="form-group">
                       <label>Delivery Boy <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode" required>
+                      <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode" [disabled]="hideaddbtn" required>
                         <option value="" selected hidden>Select Delivery Boy</option>
                         <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
                       </select>
@@ -173,13 +165,26 @@
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Discount </label>
-                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" name="Discount" (ngModelChange)="onDiscountAdd()" saCommonDir dirType="number" />
+                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" name="Discount" (ngModelChange)="onDiscountAdd()" saCommonDir dirType="number"
+                        [disabled]="hideaddbtn" />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Total Amount </label>
                       <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="cust.TotalAmtPayable" name="TotalAmtPayable" disabled />
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-5" *ngIf="hideaddrow">
+                      <div class="form-group">
+                          <label for="comment" >Remark</label>
+                          <textarea class="form-control" rows="3" id="comment"  [(ngModel)]="cust.Remarks" name="Remarks" required></textarea>
+                        </div>
+                    </div> -->
+                  <div class="col-sm-5" [hidden]="hideaddrow">
+                    <div class="form-group">
+                      <label for="comment">Cancel Remark <span class="errorMessage">*</span></label>
+                      <textarea class="form-control" rows="3" id="comment" [(ngModel)]="cust.Remarks" name="Remarks" [required]="!hideaddrow"></textarea>
                     </div>
                   </div>
                 </div>
@@ -189,8 +194,9 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Book Now':'Loading'}}</button>
+                      <button class="pull-right btn  marg-right" [ngClass]="{'btn-primary':btnAction=='Book Now'?true:false,'btn-danger':btnAction!='Book Now'?true:false}" type="submit"
+                        [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? btnAction:'Loading'}}</button>
                     </div>
                   </div>
                 </footer>

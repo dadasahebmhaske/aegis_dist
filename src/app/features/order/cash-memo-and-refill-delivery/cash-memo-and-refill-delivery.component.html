@@ -9,19 +9,20 @@
           </header>
           <div>
             <div class="widget-body">
+                <form name="cashMemoForm" #cashMemoForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
               <div class="row ">
                   <div class="col-sm-2 col-xs-4">
                       <div class="form-group">
-                          <select class="form-control">
-                              <option selected hidden>Select Area</option>
-                              <option>Pune</option>
-                              <option>Nagpur </option>
+                          <select class="form-control"  [(ngModel)]="cashmemo.areacode" name="areacode">
+                              <option value="" selected hidden> Select Area </option>
+                              <option *ngFor="let ar of AreaData" value="{{ar.areacode}}">{{ar.area}}</option>
+                            
                           </select>
                       </div>
                   </div>
                 <div class="col-sm-2 col-xs-8">
                   <div class="form-group">
-                    <input type="text" placeholder="Enter Customer/Mobile No." class="form-control" required />
+                    <input type="text" placeholder="Enter Customer/Mobile No." class="form-control" [(ngModel)]="cashmemo.CustNoMob" name="CustNoMob" required />
                   </div>
                 </div>
                 <div class="col-sm-1 col-xs-4">
@@ -51,13 +52,15 @@
                     </a>
                   </div>
                 </div>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="CashMemoData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
               </div>
+            </form>
+
             </div>
           </div>
         </div>
-
-
-
       </article>
 
 

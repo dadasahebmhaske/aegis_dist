@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppComponent } from '@app/app.component';
+import { map } from 'rxjs/operators';
 @Injectable()
 export class CustomerService {
   constructor(private httpClient: HttpClient) { }
@@ -42,6 +43,45 @@ export class CustomerService {
   }
   getProductDetails(cpcode, formFlag, ConsId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&CPCode=${cpcode}&FormFlag=${formFlag}&ConsId=${ConsId}&IsActive=Y`);
+  }
+  public getCustomerSV(data) {
+    //return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Operational/GetSV`, { params: data, headers: AppComponent.headers }); // { params: data, headers: AppComponent.httpOptions.headers }
+
+
+    // let headerOptions = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Accept': 'application/pdf'
+    //   //   'Accept': 'application/octet-stream', // for excel file
+    // });
+
+    let requestOptions = { headers: AppComponent.headers, params: data, responseType: 'arraybuffer' as 'blob' };
+    // post or get depending on your requirement
+    this.httpClient.get(`${AppComponent.BaseUrlDist}Operational/GetSV`, requestOptions).pipe(map((data: any) => {
+
+      let blob = new Blob([data], {
+        type: 'application/pdf' // must match the Accept type
+        // type: 'application/octet-stream' // for excel 
+      });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob);
+        return;
+      }
+
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'Aegis.pdf';
+      link.click();
+      //window.URL.revokeObjectURL(link.href);
+      setTimeout(function () {
+        // For Firefox it is necessary to delay revoking the ObjectURL
+        window.URL.revokeObjectURL(data);
+      }, 100);
+
+
+    })).subscribe((result: any) => {
+    });
+
   }
   public getCustomer(cpcode, SubAreaId, ConsNo, MobNo) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);

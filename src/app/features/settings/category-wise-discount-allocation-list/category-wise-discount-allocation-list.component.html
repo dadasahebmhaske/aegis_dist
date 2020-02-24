@@ -10,8 +10,9 @@
           </header>
           <div>
             <div class="widget-body">
+                <form name="CatDiscountForm" #CatDiscountForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
               <div class="row ">
-                <div class="col-sm-2 col-xs-4">
+                <!-- <div class="col-sm-2 col-xs-4">
                   <div class="form-group">
                     <select class="form-control">
                       <option selected hidden>Select  Category</option>
@@ -28,7 +29,7 @@
                       <i class="fa fa-search"></i> Get Details</button>
 
                   </div>
-                </div>
+                </div> -->
                 <div class="col-sm-2 pull-right">
                   <div class="form-group pull-right">
                     <a routerLink="/settings/category-wise-discount-allocation" class="btn btn-block btn-warning get_details pull-right">
@@ -38,7 +39,14 @@
                   </div>
                 </div>
               </div>
+              </form>
+
               <div class="row">
+                  <div class="col-sm-12 table-responsive">
+                      <ui-grid [data]="DiscountData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                    </div>
+              </div>
+              <!-- <div class="row">
                 <div class="col-sm-12">
                   <div class="table-responsive">
 
@@ -73,7 +81,7 @@
 
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

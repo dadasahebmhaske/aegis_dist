@@ -49,6 +49,66 @@
                     <label>
                       <strong class="text-primary"> Product Details : </strong>
                     </label>
+                    <form name="productForm" #productForm="ngForm" (ngSubmit)="onProductSubmit()" autocomplete="off" ngNativeValidate>
+                      <div class="row">
+                        <div class="col-sm-2 ">
+                          <div class="form-group">
+                            <label>Issue Date <span class="errorMessage">*</span>
+                            </label><input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="product.IssueDate" bsDatepicker [bsConfig]="datePickerConfig" onkeydown="return false"
+                              name="IssueDate" required />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                              <option value="" selected hidden>Select Segment</option>
+                              <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Product <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="product.ProdId" (change)="onProductSelect()" name="ProdId" required>
+                              <option value="" selected hidden>Select Product</option>
+                              <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label for="sel1">Rate</label>
+                            <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="product.DepositAmt" saCommonDir dirType="number" name="DepositAmt" disabled />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Purchase Qty <span class="errorMessage">*</span>
+                            </label>
+                            <input type="text" maxlength="3" minlength="1" class="form-control" placeholder="Enter Quantity" [(ngModel)]="product.PurchaseQty" saCommonDir dirType="number"
+                              name="PurchaseQty" required />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Monthly Consumption <span class="errorMessage">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Consumption" maxlength="3" minlength="1" [(ngModel)]="product.MonthlyConsumption" saCommonDir dirType="number"
+                              name="MonthlyConsumption" required />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label>&nbsp; </label>
+                            <button class="btn btn-block btn-warning ">
+                              <i class="glyphicon glyphicon-plus"></i> Add </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="table-responsive">
@@ -62,6 +122,7 @@
                                 <th class="text-right">Deposite Amount</th>
                                 <th class="text-right">Purchase Quantity</th>
                                 <th class="text-right">Monthly Consumption</th>
+                                <th>Remove</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -73,6 +134,9 @@
                                 <td class="text-right">{{pr.DepositAmt}}</td>
                                 <td class="text-right">{{pr.PurchaseQty}}</td>
                                 <td class="text-right">{{pr.MonthlyConsumption}}</td>
+                                <td>
+                                  <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -86,10 +150,10 @@
                 <div class="row">
                   <div class="col-sm-12 ">
                     <hr />
-                    <!-- <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
-                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a> -->
-                    <button class="pull-right btn btn-primary" type="submit">
-                      <i class="glyphicon glyphicon-download"></i> &nbsp;Create SV & Download</button>
+                    <button class="pull-right btn btn-success" type="submit" [disabled]="!loaderbtn" (click)="createSVDownload()">
+                      <i class="fa fa-fw" [ngClass]="{'fa-download':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? ' Create SV & Download':'Loading'}}</button>
+                    <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" (click)="onCustomerProdSubmit()">
+                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
                   </div>
                 </div>
               </footer>

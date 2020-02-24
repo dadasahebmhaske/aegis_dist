@@ -30,9 +30,10 @@ export class AppComponent implements OnInit {
         'content-Type': 'application/json', Authorization: 'Basic ' + btoa(environment.authKey)
       })
     };
-    // AppComponent.headers=new HttpHeaders({
-    //   'content-Type':'application/json',Authorization:'Basic '+btoa(environment.authKey)
-    // });
+    AppComponent.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/pdf'
+    });
     AppComponent.BaseUrl = environment.BaseUrl;
     AppComponent.BaseUrlDist = environment.BaseUrlDist;
     AppComponent.ImageUrl = environment.ImageUrl;

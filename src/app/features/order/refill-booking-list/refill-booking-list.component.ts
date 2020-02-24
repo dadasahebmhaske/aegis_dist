@@ -5,6 +5,7 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { StockService } from '@app/features/stock/stock.service';
+import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 @Component({
   selector: 'sa-refill-booking-list',
@@ -26,13 +27,14 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   public SubAreaData: any = [];
   public stock: any = {};
   public bookingOrdersData: any = [];
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService,private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
     this.onloadAll();
+    this.onLoad();
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -41,32 +43,33 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs" ng-if="row.entity.OrderStage=='PE'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
-        , width: "48", exporterSuppressExport: true,
+        name: 'Select1', displayName: 'Cancel Booking', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cancel Booking&nbsp;</button> `
+        , width: "120", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      {
-        name: 'Select', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.IsActive=='Y'"   ng-click="grid.appScope.deleteEmployee(row.entity)"   >&nbsp;Product&nbsp;</button> `
-        , width: "71", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      },
-      //{ name: 'OrderType', displayName: 'Order Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrderNo', displayName: 'Order No.', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrderDt', displayName: 'Order Date', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PlantName', displayName: 'Plant Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Vehicle', displayName: 'Vehicle', width: "200", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'RefillQty', displayName: 'Refill Qty', width: "100", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'EmptyQty', displayName: 'Empty Qty', width: "110", cellTooltip: true, filterCellFiltered: true },
+      // {
+      //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
+      //   , width: "71", exporterSuppressExport: true,
+      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
+      // },
+      { name: 'BookRefNo', displayName: 'Book Ref No.', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalAmtPayable', displayName: 'Total Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
+      //{ name: 'PendingAmt', displayName: 'Pending Amount', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Consumer No', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Consumer name', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookStatus', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AllocatedUserCode', displayName: 'Allocated User Code', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
       // { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
-      { name: 'GrandTotal', displayName: 'Amount', width: "100", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
+     
+      // { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
 
-      { name: 'Remark', displayName: 'Remark', width: "*", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'Remark', displayName: 'Remark', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-    this.onLoad();
+    // this.onLoad();
   }
   onloadAll() {
     this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
@@ -86,7 +89,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   onEditFunction = ($event) => {
     //console.log($event.row);
     this.datashare.updateShareData($event.row);
-    AppComponent.Router.navigate(['/stock/stock-orders']);
+    AppComponent.Router.navigate(['/order/refill-booking']);
   }
   onDeleteFunction = ($event) => {
     // console.log($event.row);
@@ -100,8 +103,9 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     });
   }
   onLoad() {
+    
     this.loaderbtn = false;
-    this.stockService.getStockOrderDetails(this.cpInfo.CPCode, this.appService.DateToString(this.bookOrder.StartDate), this.appService.DateToString(this.bookOrder.EndDate), this.bookOrder.stage).subscribe((resData: any) => {
+    this.orderService.getRefillBookingDetails(this.cpInfo.CPCode, this.appService.DateToString(this.bookOrder.StartDate), this.appService.DateToString(this.bookOrder.EndDate)).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.bookingOrdersData = resData.Data;

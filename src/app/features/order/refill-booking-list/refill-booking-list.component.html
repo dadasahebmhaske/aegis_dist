@@ -11,11 +11,9 @@
             <div class="widget-body">
               <div class="row ">
                 <form name="orderBookingForm" #orderBookingForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                  <div class="col-sm-2">
+                  <!-- <div class="col-sm-2">
                     <div class="form-group">
-                      <!-- <label for="sel1">Route <span class="errorMessage">*</span>
-                      </label> -->
-                      <select class="form-control" [(ngModel)]="bookOrder.RoutId" name="RoutId" (change)="getSubArea()" required>
+                      <select class="form-control" [(ngModel)]="bookOrder.RoutId" name="RoutId" (change)="getSubArea()" >
                         <option value="" selected hidden> Select Route </option>
                         <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}}</option>
                       </select>
@@ -23,18 +21,16 @@
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <!-- <label for="sel1">Sub Area <span class="errorMessage">*</span>
-                      </label> -->
-                      <select [(ngModel)]="bookOrder.SubAreaId" name="SubAreaId" class="form-control" required>
+                      <select [(ngModel)]="bookOrder.SubAreaId" name="SubAreaId" class="form-control" >
                         <option value="" selected hidden> Select Sub Area </option>
                         <option *ngFor="let sub of SubAreaData" value="{{sub.SubAreaId}}">{{sub.SubAreaName}}</option>
-                      </select>
+                       </select>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="bookOrder.StartDate" name="Startdate" id="startDate"
-                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
+                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">

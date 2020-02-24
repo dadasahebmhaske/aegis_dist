@@ -100,22 +100,22 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       checked: false,
       submitted: false,
     },
+    // {
+    //   key: 'step3',
+    //   title: 'Customer Product Details',
+    //   valid: true,
+    //   checked: false,
+    //   submitted: false,
+    // },
     {
       key: 'step3',
-      title: 'Customer Product Details',
-      valid: true,
-      checked: false,
-      submitted: false,
-    },
-    {
-      key: 'step4',
       title: 'Customer Document Details',
       valid: true,
       checked: false,
       submitted: false,
     },
     {
-      key: 'step5',
+      key: 'step4',
       title: 'Customer Bank Details',
       valid: true,
       checked: false,
@@ -139,27 +139,27 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
           AppComponent.SmartAlert.Errmsg(`Please add customer details first`)
         }
         break;
+      // case 'step3':
+      //   //this.activeStep = steo;this.getCustomerProductDetails();
+      //   if (steo.key == "step3" && this.customer.ConsId != null && this.customer.AddressId != null) {
+      //     this.activeStep = steo;
+      //     this.getCustomerProductDetails();
+      //   } else {
+      //     AppComponent.SmartAlert.Errmsg(`Please add address details first`)
+      //   }
+      //   break;
       case 'step3':
-        //this.activeStep = steo;this.getCustomerProductDetails();
+        //this.activeStep = steo;  this.getCustomerDocumentDetails();
         if (steo.key == "step3" && this.customer.ConsId != null && this.customer.AddressId != null) {
           this.activeStep = steo;
-          this.getCustomerProductDetails();
+          this.getCustomerDocumentDetails();
         } else {
           AppComponent.SmartAlert.Errmsg(`Please add address details first`)
         }
         break;
       case 'step4':
-        //this.activeStep = steo;  this.getCustomerDocumentDetails();
-        if (steo.key == "step4" && this.customer.ConsId != null && this.customer.CustProdId != null) {
-          this.activeStep = steo;
-          this.getCustomerDocumentDetails();
-        } else {
-          AppComponent.SmartAlert.Errmsg(`Please add product details first`)
-        }
-        break;
-      case 'step5':
         //this.activeStep = steo; this.getCustomerBankDetails();
-        if (steo.key == "step5" && this.customer.ConsId != null && this.customer.DocId != null) {
+        if (steo.key == "step4" && this.customer.ConsId != null && this.customer.DocId != null) {
           this.activeStep = steo;
           this.getCustomerBankDetails();
         } else {
@@ -233,7 +233,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
         if (resData.StatusCode != 0) {
           this.address.AddressId = resData.Data[0].AddressId
           AppComponent.SmartAlert.Success(resData.Message);
-          this.getCustomerProductDetails();
+          this.getCustomerDocumentDetails();
           this.addArray = [];
           this.nextStep();
           // this. this.getCustomerAddressDetails();();

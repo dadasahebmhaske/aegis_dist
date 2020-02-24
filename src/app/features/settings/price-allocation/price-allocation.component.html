@@ -15,49 +15,46 @@
             </header>
             <div>
               <div class="widget-body">
+                    <form name="PAllocationsaveForm" #PAllocationsaveForm="ngForm" (ngSubmit)="SavePriceAllocation()" ngNativeValidate autocomplete="off">
                   <div class="row">
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Product Segment<span class="errorMessage">*</span></label>
-                              <select class="form-control">
-                                <option selected hidden>Select Product Segment</option>
-                                <option>Category 1 </option>
-                                <option>Category 2</option>
-                                <option>Category 3 </option>
-                            </select>
+                              <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="Pallocation.ProdSegId" name="ProdSegId" required>
+                                    <option value="" selected hidden>Select Segment</option>
+                                    <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                                  </select>
                           </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                             <label>Product <span class="errorMessage">*</span></label>
-                            <select class="form-control">
-                              <option selected hidden>Select Product</option>
-                              <option>5 Kg </option>
-                              <option>14.5 Kg</option>
-                              <option>19 Kg </option>
-                          </select>
+                            <select class="form-control" [(ngModel)]="Pallocation.ProdId" name="ProdId"  required>
+                                    <option value="" selected hidden>Select Product</option>
+                                    <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                  </select>
                         </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                           <label>Effective Price<span class="errorMessage">*</span></label>
-                          <input type="text" class="form-control" placeholder="Enter Price" required />
+                          <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" required />
                       </div>
                   </div>
                       <div class="col-sm-6">
                           <div class="form-group">
                               <label>Effective Date<span class="errorMessage">*</span></label>
-                              <input type="text" class="form-control" placeholder="Enter Effective Date" required />
+                              <input type="text" class="form-control" placeholder="Enter Effective Date" [(ngModel)]="Pallocation.EffectiveDate" name="EffectiveDate" 
+                              onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                           </div>
                       </div>
                   </div>
 
           <div class="row">
-              <div class="col-sm-6">
-                  <label>
-                      <input type="checkbox" ng-true-value="'Y'" ng-false-value="'N'" ng-model="Area.IsActive" /> Is Active
-                  </label>
-              </div>
+                <div class="col-sm-6">
+                        <label>
+                            <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='Pallocation.IsActive' /> Is Active </label>
+                    </div>
             
           </div>
        
@@ -80,7 +77,7 @@
                           </div> -->
                       </div>
                   </footer>
-  
+                </form>
               </div>
             </div>
           </div>
