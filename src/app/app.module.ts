@@ -10,14 +10,14 @@ import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/commo
 import { UpgradeModule } from '@angular/upgrade/static';
 import { UiGridDirective } from './core/directive/uigrid.directive';
 import { BsDatepickerModule } from 'ngx-bootstrap';
-import {AuthenticationGuard} from '../app/core/guards/authentication.guard';
-import {LoggedInGuard} from '../app/core/guards/loggedIn.guard';
+import { AuthenticationGuard } from '../app/core/guards/authentication.guard';
+import { LoggedInGuard } from '../app/core/guards/loggedIn.guard';
 import { environment } from '../environments/environment';
 
 
 @NgModule({
   declarations: [
-    AppComponent,UiGridDirective
+    AppComponent, UiGridDirective
   ],
   imports: [
     BrowserModule,
@@ -28,10 +28,10 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     UpgradeModule,
     BsDatepickerModule.forRoot(),
-  
+
   ],
-  providers: [AuthenticationGuard,LoggedInGuard],
-  exports:[UiGridDirective],
+  providers: [AuthenticationGuard, LoggedInGuard],
+  exports: [UiGridDirective],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

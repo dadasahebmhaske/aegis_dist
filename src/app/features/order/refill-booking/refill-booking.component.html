@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-sm-2">
                           <div class="form-group">
-                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')" [disabled]="hideaddbtn"
+                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')" [disabled]="!hideaddrow"
                               onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
                               required />
                           </div>
@@ -99,7 +99,7 @@
                         <div class="col-sm-1">
                           <div class="form-group">
                             <label>&nbsp; </label>
-                            <button class="btn btn-block btn-warning " [disabled]="hideaddbtn">
+                            <button class="btn btn-block btn-warning " [disabled]="!hideaddrow">
                               <i class="glyphicon glyphicon-plus"></i> Add </button>
                           </div>
                         </div>
@@ -156,7 +156,7 @@
                     <div class="form-group">
                       <label>Delivery Boy <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode" [disabled]="hideaddbtn" required>
+                      <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode" [disabled]="!hideaddrow" required>
                         <option value="" selected hidden>Select Delivery Boy</option>
                         <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
                       </select>
@@ -166,7 +166,7 @@
                     <div class="form-group">
                       <label>Discount </label>
                       <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" name="Discount" (ngModelChange)="onDiscountAdd()" saCommonDir dirType="number"
-                        [disabled]="hideaddbtn" />
+                        [disabled]="!hideaddrow" />
                     </div>
                   </div>
                   <div class="col-sm-2">

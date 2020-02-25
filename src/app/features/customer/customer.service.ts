@@ -54,11 +54,11 @@ export class CustomerService {
     //   //   'Accept': 'application/octet-stream', // for excel file
     // });
 
-    let requestOptions = { headers: AppComponent.headers, params: data, responseType: 'arraybuffer' as 'blob' };
+    let requestOptions = { headers: AppComponent.headers, params: data, responseType: 'arraybuffer' };
     // post or get depending on your requirement
-    this.httpClient.get(`${AppComponent.BaseUrlDist}Operational/GetSV`, requestOptions).pipe(map((data: any) => {
+    this.httpClient.get(`${AppComponent.BaseUrlDist}Operational/GetSV`, { headers: AppComponent.headers, params: data, responseType: 'arraybuffer' }).pipe(map((resdata: any) => {
 
-      let blob = new Blob([data], {
+      let blob = new Blob([resdata], {
         type: 'application/pdf' // must match the Accept type
         // type: 'application/octet-stream' // for excel 
       });
@@ -67,7 +67,6 @@ export class CustomerService {
         window.navigator.msSaveOrOpenBlob(blob);
         return;
       }
-
       var link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = 'Aegis.pdf';
@@ -77,8 +76,6 @@ export class CustomerService {
         // For Firefox it is necessary to delay revoking the ObjectURL
         window.URL.revokeObjectURL(data);
       }, 100);
-
-
     })).subscribe((result: any) => {
     });
 
