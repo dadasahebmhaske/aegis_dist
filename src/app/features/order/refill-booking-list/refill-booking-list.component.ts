@@ -27,7 +27,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   public SubAreaData: any = [];
   public stock: any = {};
   public bookingOrdersData: any = [];
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService,private orderService: OrderService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -43,7 +43,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Cancel Booking', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cancel Booking&nbsp;</button> `
+        name: 'Select1', displayName: 'Cancel Booking', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cancel Booking&nbsp;</button> `
         , width: "120", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
@@ -62,7 +62,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
       { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
       // { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
-     
+
       // { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
 
@@ -103,7 +103,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     });
   }
   onLoad() {
-    
+
     this.loaderbtn = false;
     this.orderService.getRefillBookingDetails(this.cpInfo.CPCode, this.appService.DateToString(this.bookOrder.StartDate), this.appService.DateToString(this.bookOrder.EndDate)).subscribe((resData: any) => {
       this.loaderbtn = true;

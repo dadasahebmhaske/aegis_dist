@@ -14,15 +14,15 @@ import { MasterService } from '@app/core/custom-services/master.service';
   styleUrls: ['./cash-memo-and-refill-delivery.component.css']
 })
 export class CashMemoAndRefillDeliveryComponent implements OnInit {
-  public AreaData=[];
+  public AreaData = [];
   public cpInfo: any = {};
-  public cashmemo: any = {areacode:''};
-  public CashMemoData:any={};
+  public cashmemo: any = { areacode: '' };
+  public CashMemoData: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
 
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService,private orderService: OrderService) { }
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
@@ -39,42 +39,44 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Undeliver Refill&nbsp;</button> `
-        , width: "118", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+        name: 'Select2', displayName: 'Deliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Deliver &nbsp;</button> `
+        , width: "71", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Deliver</div>', enableFiltering: false
       },
       {
-        name: 'Select2', displayName: 'Deliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Deliver Refill&nbsp;</button> `
-        , width: "100", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Undeliver &nbsp;</button> `
+        , width: "85", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Undeliver</div>', enableFiltering: false
       },
+
       {
-        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Print Cash Memo&nbsp;</button> `
-        , width: "130", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cash Memo&nbsp;</button> `
+        , width: "95", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Print</div>', enableFiltering: false
       },
       // {
       //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
       //   , width: "71", exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
+      { name: 'ConsNo', displayName: 'Consumer No', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Consumer name', width: "*", cellTooltip: true, filterCellFiltered: true },
+
       { name: 'BookRefNo', displayName: 'Book Ref No.', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotalAmtPayable', displayName: 'Total Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
       //{ name: 'PendingAmt', displayName: 'Pending Amount', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsNo', displayName: 'Consumer No', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsName', displayName: 'Consumer name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'BookStatus', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AllocatedUserCode', displayName: 'Allocated User Code', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AllocatedUserCode', displayName: 'Allocated User Code', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
-    
+
     ]
     this.gridOptions.columnDefs = columnDefs;
     // this.onLoad();
   }
 
- onLoad() {
+  onLoad() {
     this.loaderbtn = false;
-    this.orderService.getRefillBookingDetails(this.cpInfo.CPCode,'','').subscribe((resData: any) => {
+    this.orderService.getRefillBookingDetails(this.cpInfo.CPCode, '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.CashMemoData = resData.Data;
@@ -93,7 +95,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   onDeleteFunction = ($event) => {
     //console.log($event.row);
     this.datashare.updateShareData($event.row);
-    AppComponent.Router.navigate(['/order/deliver-refill']);
+    AppComponent.Router.navigate(['/order/undeliver-refill']);
   }
 
   // onloadAll() {

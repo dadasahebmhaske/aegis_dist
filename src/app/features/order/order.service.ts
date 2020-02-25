@@ -21,10 +21,10 @@ export class OrderService {
     }
 
     public calculateQtyGTotalRefillDelivery(deliverrefill, ProductArray) {
-        deliverrefill.TotalAmt = deliverrefill.QtyTotal = deliverrefill.SubTotal = deliverrefill.IgstTotal = deliverrefill.CgstTotal = deliverrefill.SgstTotal = deliverrefill.ReturnQty = 0;
+        deliverrefill.TotalAmount = deliverrefill.QtyTotal = deliverrefill.SubTotal = deliverrefill.IgstTotal = deliverrefill.CgstTotal = deliverrefill.SgstTotal = deliverrefill.ReturnQty = deliverrefill.TotalRefillAmt = 0;
         if (ProductArray.length != 0)
             for (let i = 0; i < ProductArray.length; i++) {
-                deliverrefill.TotalAmt = parseInt(deliverrefill.TotalAmt) + parseInt(ProductArray[i].TotalAmt);
+                deliverrefill.TotalAmount = parseInt(deliverrefill.TotalAmount) + parseInt(ProductArray[i].TotalAmount);
                 // deliverrefill.ReturnRefillId = parseInt(deliverrefill.ReturnRefillId) + parseInt(ProductArray[i].ReturnRefillId);
                 deliverrefill.QtyTotal = parseInt(deliverrefill.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 deliverrefill.SubTotal = parseInt(deliverrefill.SubTotal) + parseInt(ProductArray[i].SubTotal);
@@ -32,8 +32,9 @@ export class OrderService {
                 deliverrefill.CgstTotal = parseInt(deliverrefill.CgstTotal) + parseInt(ProductArray[i].CgstAmt);
                 deliverrefill.SgstTotal = parseInt(deliverrefill.SgstTotal) + parseInt(ProductArray[i].SgstAmt);
                 deliverrefill.ReturnQty = parseInt(deliverrefill.ReturnQty) + (ProductArray[i].ReturnQty == undefined ? 0 : parseInt(ProductArray[i].ReturnQty));
+                deliverrefill.TotalRefillAmt = parseInt(deliverrefill.TotalRefillAmt) + (parseInt(ProductArray[i].ProdRate) * parseInt(ProductArray[i].ProdQty));
             }
-        deliverrefill.TotalAmtPayable = deliverrefill.TotalAmt - deliverrefill.Discount;
+        deliverrefill.TotalAmtPayable = deliverrefill.TotalAmount - deliverrefill.Discount;
         return deliverrefill;
     }
 
@@ -44,8 +45,8 @@ export class OrderService {
     public getRefillBookingDetails(cpcode, StartDate, EndDate) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillBooking?BookRefNo=&CPCode=${cpcode}&ConsId=&BookStatus=2&Allocateduse=&CashMemoNo=&CashMemoRefNo=&CashMemoId=&IsActive=Y&FDate=${StartDate}&TDate =${EndDate}`, AppComponent.httpOptions);
     }
-    public getRefillBookingProducts(cpcode, BookRefNo) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillBookingProducts?BookRefNo=${BookRefNo}&CPCode=${cpcode}&ConsId=&BookStatus=&Allocateduse=&CashMemoNo=&CashMemoRefNo=&CashMemoId=&IsActive=Y&FDate=&TDate =`, AppComponent.httpOptions);
+    public getRefillBookingProducts(cpcode, CashMemoRefNo) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCashMemoProducts?CashMemoRefNo=${CashMemoRefNo}&CPCode=${cpcode}`, AppComponent.httpOptions);
     }
     public getCPPriceAllocation(cpcode, ProdSegId) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPProdPriceAllocation?PriceCode=&CPCode=${cpcode}&IsActive=Y&ProdSegId=${ProdSegId}&ProdId=`, AppComponent.httpOptions);

@@ -23,6 +23,7 @@ export class SvCreationPrintingComponent implements OnInit {
   public product: any = { ProdSegId: '', ProdId: '' };
   public productSegmentData: any = [];
   public productDataSelected: any = [];
+  public prodFlag: boolean = false;
   public removeProductUpdate: any = [];
   public svCustData: any = {};
   constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService) {
@@ -100,6 +101,7 @@ export class SvCreationPrintingComponent implements OnInit {
           "Product": ProdName
         }
       );
+      this.prodFlag = true;
       this.product = { ProdSegId: '', ProdId: '' };
     }
   }
@@ -109,6 +111,7 @@ export class SvCreationPrintingComponent implements OnInit {
       this.removeProductUpdate.push(data);
     }
     this.prodArray.splice(index, 1);
+    this.prodFlag = true;
   }
 
   onSelectProdSegment() {
@@ -139,6 +142,7 @@ export class SvCreationPrintingComponent implements OnInit {
           AppComponent.SmartAlert.Success(resData.Message);
           this.prodArray = [];
           this.getCustomerProductDetails();
+          this.prodFlag = false;
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -150,27 +154,24 @@ export class SvCreationPrintingComponent implements OnInit {
     if (this.custData.ConsId == undefined) {
       AppComponent.SmartAlert.Errmsg("Please verify customer first.");
     } else {
-      this.loaderbtn = false;
-      this.svCustData = {
-        "data":
-          [
-            {
-              "CPCode": this.cpInfo.CPCode,
-              "ConsId": this.custData.ConsId,
-              "IsActive": "Y"
-            }
-          ]
+      if (this.prodFlag == true) { AppComponent.SmartAlert.Errmsg(`Please submit product details first then download SV.`); }
+      else {
+        this.loaderbtn = false;
+        this.svCustData = {
+          "data":
+            [
+              {
+                "CPCode": this.cpInfo.CPCode,
+                "ConsId": this.custData.ConsId,
+                "IsActive": "Y"
+              }
+            ]
+        }
+        let para = JSON.stringify(this.svCustData.data);
+        window.location.href = `${AppComponent.BaseUrlDist}Operational/GetSV?data=${para}`, '_blank';
+        this.loaderbtn = true;
       }
-      this.customerService.getCustomerSV(this.svCustData)//.subscribe((resData: any) => {
-      //   this.loaderbtn = true;
-      //   if (resData.StatusCode != 0) {
-      //     AppComponent.SmartAlert.Success(resData.Message);
-      //     this.svCustData = {};
-      //   }
-      //   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-      // });
     }
-
   }
   ngOnDestroy() {
     this.datashare.updateShareData(null);

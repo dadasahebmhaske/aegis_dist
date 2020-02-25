@@ -108,6 +108,11 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
       this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
       this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
+      if (this.product.OrderType != 'RO') {
+        this.product.IgstPer = 0;
+        this.product.CgstPer = 0;
+        this.product.SgstPer = 0;
+      }
       if (this.product.ProdQty != null) {
         this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
         if (parseInt(this.cpInfo.StateCode) == parseInt(plantStateCode)) {

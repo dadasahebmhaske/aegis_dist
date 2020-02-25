@@ -16,19 +16,19 @@ import { CustomerService } from '@app/features/customer/customer.service';
   styleUrls: ['./price-allocation-list.component.css']
 })
 export class PriceAllocationListComponent implements OnInit {
-  
+
   public cpInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
   public gridOptions: IGridoption;
-  public PAllocation: any={ProdSegId: '', ProdId: ''};
-  public PriceAllocationData :any=[];
+  public PAllocation: any = { ProdSegId: '', ProdId: '' };
+  public PriceAllocationData: any = [];
   public productSegmentData: any = [];
   public productDataSelected: any = [];
 
-  constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService,private settingService: SettingService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService, private settingService: SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
 
@@ -46,7 +46,7 @@ export class PriceAllocationListComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
+        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
         , width: "50", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
@@ -56,12 +56,12 @@ export class PriceAllocationListComponent implements OnInit {
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
       { name: 'Prodseg', displayName: 'Product segment', width: "150", cellTooltip: true, filterCellFiltered: true },
-      
+
       { name: 'Product', displayName: 'Product ', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'Price', displayName: 'Price', width: "400", cellTooltip: true, filterCellFiltered: true },
       { name: 'EffectiveDate', displayName: 'Effective Date', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
-    
+
     ]
     this.gridOptions.columnDefs = columnDefs;
     // this.onLoad();
@@ -82,18 +82,18 @@ export class PriceAllocationListComponent implements OnInit {
   }
 
   onSelectProdSegment() {
-    
-        this.masterService.getProducts(this.PAllocation.ProdSegId).subscribe((resPT: any) => {
-          if (resPT.StatusCode != 0) {
-            this.productDataSelected = resPT.Data;
-          } else { this.productDataSelected = []; }
-        });
-    }
+
+    this.masterService.getProducts(this.PAllocation.ProdSegId).subscribe((resPT: any) => {
+      if (resPT.StatusCode != 0) {
+        this.productDataSelected = resPT.Data;
+      } else { this.productDataSelected = []; }
+    });
+  }
 
   onLoad() {
-    
+
     this.loaderbtn = false;
-    this.settingService.getPriceAllocationDetails(this.cpInfo.CPCode,this.PAllocation.ProdSegId,this.PAllocation.ProdId).subscribe((resData: any) => {
+    this.settingService.getPriceAllocationDetails(this.cpInfo.CPCode, this.PAllocation.ProdSegId, this.PAllocation.ProdId).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.PriceAllocationData = resData.Data;

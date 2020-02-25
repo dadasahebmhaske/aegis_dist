@@ -17,42 +17,32 @@
                     <div class="logincDeatils">
                       <!-- <label class="text-primary"><strong>Customer  Details : </strong></label> -->
                       <div class="row">
-
                         <div class="col-sm-3 col-sm-offset-1">
                           <div class="form-group label-center">
-                            <label><strong >   <i class="fa fa-user"></i>
-                                  Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>  
-                                                                 </label>
+                            <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>
+                            </label>
                           </div>
                         </div>
                         <div class="col-sm-3 col-sm-offset-1">
                           <div class="form-group label-center">
-                            <label><strong>  <i class="fa fa-user"></i>
-                                  Customer Name : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>  
-                                 
-                                </label>
-
+                            <label><strong> <i class="fa fa-user"></i> Customer Name : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>
+                            </label>
                           </div>
                         </div>
                         <div class="col-sm-3 col-sm-offset-1">
                           <div class="form-group label-center">
-                            <label><strong >   <i class="fa fa-user"></i>
-                                  Delivery Boy : </strong>  <strong class="text-warning"> {{deliverrefill.AllocatedUserCode}}</strong> 
-                                 
-                                </label>
-
+                            <label><strong> <i class="fa fa-user"></i> Delivery Boy : </strong> <strong class="text-warning"> {{deliverrefill.AllocatedUserCode}}</strong>
+                            </label>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
                   <div class="col-sm-12">
                     <div class="refill">
                       <label>
-                      <strong class="text-primary"> Booking Details : </strong>
-                    </label>
-
+                        <strong class="text-primary"> Booking Details : </strong>
+                      </label>
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="table-responsive">
@@ -64,15 +54,13 @@
                                   <th>Product Name</th>
                                   <th class="text-right">Rate</th>
                                   <th class="text-right">Quantity</th>
-                                  <!-- <th class="text-right">Sub Total</th> -->
+                                  <th class="text-right">Discount</th>
                                   <!-- <th class="text-right">IGST </th>
                                 <th class="text-right"> CGST </th>
                                 <th class="text-right">SGST </th> -->
                                   <th class="text-right">Return Quantity</th>
                                   <th class="text-right">Amount</th>
-
                                   <th> Edit</th>
-
                                 </tr>
                               </thead>
                               <tbody>
@@ -82,29 +70,26 @@
                                   <td>{{pr.Product}}</td>
                                   <td class="text-right">{{pr.ProdRate}}</td>
                                   <td class="text-right">{{pr.ProdQty}}</td>
+                                  <td class="text-right">{{pr.Discount}}</td>
                                   <td class="text-right">{{pr.ReturnQty}}</td>
-                                  <td class="text-right">{{pr.TotalAmt}}</td>
+                                  <td class="text-right">{{pr.TotalAmount}}</td>
                                   <td>
                                     <a class="btn btn-xs btn-primary" (click)=onEditProduct(pr,i)>Edit</a>
                                   </td>
                                 </tr>
-                            
                               </tbody>
                             </table>
                           </div>
                         </div>
                       </div>
-
-
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Delivery Boy
-                      <span class="errorMessage">*</span>
-                    </label>
+                      <label>Delivery Boy <span class="errorMessage">*</span>
+                      </label>
                       <select class="form-control" [(ngModel)]="deliverrefill.AllocatedUserCode" name="AllocatedUserCode" required>
                         <option value="" selected hidden>Select Delivery Boy</option>
                         <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
@@ -113,67 +98,55 @@
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
-                      <label>Total Qty  <span class="errorMessage">*</span>
-                    </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.QtyTotal" name="QtyTotal" disabled
-                      />
+                      <label>Total Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.QtyTotal" name="QtyTotal" disabled />
                     </div>
                   </div>
                   <div class="col-sm-1">
                     <div class="form-group">
-                      <label>Return Qty  <span class="errorMessage">*</span>
-                    </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.ReturnQty" name="ReturnQty " />
+                      <label>Return Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.ReturnQty" name="ReturnQty " disabled />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <label>Total Discount  </label>
-                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" disabled
-                      />
+                      <label>Total Discount </label>
+                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Total Price </label>
-                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="deliverrefill.TotalAmtPayable" name="TotalAmtPayable"
-                        disabled/>
+                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="deliverrefill.TotalAmtPayable" name="TotalAmtPayable" disabled />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Paid Amount <span class="errorMessage">*</span></label>
                       <input type="text" class="form-control" placeholder="Enter Paid Amount" [(ngModel)]="deliverrefill.TotalReceivedAmount" name="TotalReceivedAmount"
-                        (ngModelChange)="calculatePending()" required/>
+                        (ngModelChange)="calculatePending()" required />
                     </div>
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Pending Amount </label>
-                      <input type="text" class="form-control" placeholder="Enter Pending Amount" [(ngModel)]="deliverrefill.PendingAmt " name="PendingAmt "
-                        disabled/>
+                      <input type="text" class="form-control" placeholder="Enter Pending Amount" [(ngModel)]="deliverrefill.PendingAmt " name="PendingAmt " disabled />
                     </div>
                   </div>
-
                 </div>
-
-
                 <footer>
                   <div class="row">
                     <div class="col-sm-12 ">
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/order/cash-memo-and-refill-delivery">
-                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                    </a>
-                      <button form="deliverRefillForm" class="pull-right btn btn-primary marg-right" type="submit">
-                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Process Delivery
-                    </button>
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <!-- <button form="deliverRefillForm" class="pull-right btn btn-primary marg-right" type="submit">
+                        <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Process Delivery </button> -->
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Process Delivery':'Loading'}}</button>
                     </div>
-                    <!-- <div class="col-sm-12 " ng-show="divhide">
-                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                              </button>
-                          </div> -->
                   </div>
                 </footer>
               </form>
@@ -184,14 +157,10 @@
     </div>
   </sa-widgets-grid>
 </div>
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="qtyModal" role="dialog">
   <div class="modal-dialog">
-    <form name="EditdeliverRefillForm"  #EditdeliverRefillForm="ngForm" (ngSubmit)="onSubmitqty()"
-      autocomplete="off" ngNativeValidate>
+    <form name="EditdeliverRefillForm" #EditdeliverRefillForm="ngForm" (ngSubmit)="onSubmitqty()" autocomplete="off" ngNativeValidate>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -201,24 +170,22 @@
           <div class="row">
             <div class="col-sm-4 col-sm-offset-2">
               <div class="form-group">
-                <label>Total Quantity  <span class="errorMessage">*</span>
-                  </label>
-                <input type="text" class="form-control" placeholder="Enter Quantity"  [(ngModel)]="Edeliverrefill.ProdQty "
-                  name="ProdQty " />
+                <label>Total Quantity <span class="errorMessage">*</span>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ProdQty " name="ProdQty " />
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label>Return Quantity  <span class="errorMessage">*</span>
-                  </label>
-                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty"
-                  name="ReturnQty" required/>
-              </div>  
+                <label>Return Quantity <span class="errorMessage">*</span>
+                </label>
+                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty" name="ReturnQty" required />
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary"  >Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>

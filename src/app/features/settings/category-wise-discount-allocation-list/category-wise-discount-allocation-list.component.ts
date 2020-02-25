@@ -7,7 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
-import {SettingService} from '../../settings/setting.service';
+import { SettingService } from '../../settings/setting.service';
 
 @Component({
   selector: 'sa-category-wise-discount-allocation-list',
@@ -18,19 +18,19 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
   public bookOrder: any = { StartDate: '', EndDate: '', RoutId: '', SubAreaId: '' };
   public cpInfo: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
-  public DiscountData:any={};
+  public DiscountData: any = {};
   public gridOptions: IGridoption;
   public minDate: Date;
   public maxDate: Date = new Date();
-  
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService,private orderService: OrderService,private settingService: SettingService) {
+
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService, private settingService: SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
-  
+
     this.onLoad();
   }
 
@@ -41,7 +41,7 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Edit&nbsp;</button> '
+        name: 'Select', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Edit&nbsp;</button> `
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
@@ -54,7 +54,7 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
     // this.onLoad();
   }
 
- 
+
   onEditFunction = ($event) => {
     //console.log($event.row);
     this.datashare.updateShareData($event.row);
@@ -62,10 +62,10 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
   }
 
   onLoad() {
-    
-   
+
+
     this.settingService.getDiscountDetails().subscribe((resData: any) => {
-    
+
       if (resData.StatusCode != 0) {
         this.DiscountData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
