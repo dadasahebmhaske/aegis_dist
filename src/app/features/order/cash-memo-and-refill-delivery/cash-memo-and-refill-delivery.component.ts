@@ -39,18 +39,18 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select2', displayName: 'Deliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Deliver &nbsp;</button> `
+        name: 'Select2', displayName: 'Deliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-success btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Deliver &nbsp;</button> `
         , width: "71", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Deliver</div>', enableFiltering: false
       },
       {
-        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Undeliver &nbsp;</button> `
+        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Undeliver &nbsp;</button> `
         , width: "85", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Undeliver</div>', enableFiltering: false
       },
 
       {
-        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cash Memo&nbsp;</button> `
+        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cash Memo&nbsp;</button> `
         , width: "95", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Print</div>', enableFiltering: false
       },
@@ -59,15 +59,16 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
       //   , width: "71", exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'ConsNo', displayName: 'Consumer No', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsName', displayName: 'Consumer name', width: "*", cellTooltip: true, filterCellFiltered: true },
-
-      { name: 'BookRefNo', displayName: 'Book Ref No.', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalAmtPayable', displayName: 'Total Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
-      //{ name: 'PendingAmt', displayName: 'Pending Amount', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'BookStatus', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AllocatedUserCode', displayName: 'Allocated User Code', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Costumer No', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CashMemoDate', displayName: 'Cash Memo Date', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CashMemoStatusName', displayName: 'Cash Memo Status', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TtlProdQty', displayName: 'Total Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RefillAmount', displayName: 'Refill Amount', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Discount', displayName: 'Discount', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalAmtPayable', displayName: 'Amount Payable', width: "180", cellTooltip: true, filterCellFiltered: true },
 
     ]
     this.gridOptions.columnDefs = columnDefs;
@@ -76,7 +77,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
 
   onLoad() {
     this.loaderbtn = false;
-    this.orderService.getRefillBookingDetails(this.cpInfo.CPCode, '', '').subscribe((resData: any) => {
+    this.orderService.getCashMemoDetails(this.cpInfo.CPCode, '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.CashMemoData = resData.Data;

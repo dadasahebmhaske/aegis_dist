@@ -34,7 +34,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
 
       this.deliverrefill = data == null ? { IsActive: 'Y' } : data;
 
-      this.orderService.getRefillBookingProducts(this.cpInfo.CPCode, this.deliverrefill.CashMemoRefNo).subscribe((resp: any) => {
+      this.orderService.getCashMemoProducts(this.cpInfo.CPCode, this.deliverrefill.CashMemoRefNo).subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
           this.deliverrefill = this.orderService.calculateQtyGTotalRefillDelivery(this.deliverrefill, this.ProductArray);

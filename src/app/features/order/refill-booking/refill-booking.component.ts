@@ -47,7 +47,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       this.orderService.getRefillBookingProducts(this.cpInfo.CPCode, this.cust.BookRefNo).subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
-          this.cust = this.orderService.calculateQtyGTotalRefillB(this.cust, this.ProductArray);
+          // this.cust = this.orderService.calculateQtyGTotalRefillB(this.cust, this.ProductArray);
         }
       });
     });
@@ -64,12 +64,6 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
-    // this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
-    //   if (resPT.StatusCode != 0) {
-    //     this.productDataSelected = resPT.Data;
-    //   } else { this.productDataSelected = []; }
-    // });
-
     this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId).subscribe((resCPA: any) => {
       if (resCPA.StatusCode != 0) {
         this.productDataSelected = resCPA.Data;
@@ -85,27 +79,28 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.product.ProdRate = docobj[0].Price;
     this.product.Product = docobj[0].Product; //extra
     this.product.ProdCode = docobj[0].ProductCode;
-    this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
-    this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
-    this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
+    // this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
+    // this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
+    // this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
 
     this.product.BookProdId = '';
     this.product.BookNo = '';
 
     if (this.product.ProdQty != null) {
-      this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
-      if (this.cpInfo.IsHomeState == 'Y') {
-        this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
-        this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
-        this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
-        this.product.IgstAmt = 0;
-      } else {
-        this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
-        this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
-        this.product.CgstAmt = this.product.SgstAmt = 0;
-      }
-      this.product.TotalAmt = this.product.GrandTotal;
-      this.product.SubTotal = parseInt(this.product.ProdAmt);
+      this.product.RefillAmount = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
+      // if (this.cpInfo.IsHomeState == 'Y') {
+      //   this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
+      //   this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
+      //   this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
+      //   this.product.IgstAmt = 0;
+      // } else {
+      //   this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
+      //   this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
+      //   this.product.CgstAmt = this.product.SgstAmt = 0;
+      // }
+      this.product.Discount = (parseFloat(this.product.RefillAmount) * parseFloat(this.cust.DiscountPer == null ? 0 : this.cust.DiscountPer)) / 100
+      this.product.AmountPayable = parseFloat(this.product.RefillAmount) - parseFloat(this.product.Discount);
+
     }
     // this.product.OrderCode = '';
     // this.product.CouponCode = '';
@@ -124,7 +119,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
         this.ProductArray.push(this.product);
         this.cust = this.orderService.calculateQtyGTotalRefillB(this.cust, this.ProductArray);
         this.product = { ProdSegId: '', ProdId: '' };
-        this.onDiscountAdd();
+        //this.onDiscountAdd();
       }
   }
   onRemoveProduct(data, index) {
@@ -133,8 +128,8 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       this.removeProductUpdate.push(data);
     }
     this.ProductArray.splice(index, 1);
-    this.cust = this.stockService.calculateQtyGTotal(this.cust, this.ProductArray);
-    this.onDiscountAdd();
+    this.cust = this.orderService.calculateQtyGTotalRefillB(this.cust, this.ProductArray);
+    //this.onDiscountAdd();
   }
 
   onEditProduct(data, index) {
@@ -164,8 +159,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     if (this.cust.BookRefNo == null) {
       if (this.ProductArray.length > 0 || this.removeProductUpdate.length > 0) {
         this.loaderbtn = false;
-        this.cust.BookRefNo = '';
-        this.cust.PendingAmt = '';
+        //this.cust.PendingAmt = '';
         this.cust.CPCode = this.cpInfo.CPCode;
         this.cust.BookStatus = 2;
         this.cust.Lat = '';
@@ -173,15 +167,12 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
         this.cust.IsActive = 'Y'
         this.cust.UserCode = this.cpInfo.EmpId;
         this.cust.Flag = "IN";
-        this.cust.BookNo = '';
+        // this.cust.BookNo = '';
         // this.cust.Remarks = '';
-        this.cust.BookType = '';
+        //this.cust.BookType = '';
         this.cust.ImeiNo = '';
-        this.cust.TransfStatus = '';
+        // this.cust.TransfStatus = '';
         this.cust.Apptype = "WB";
-
-
-
         // if (this.removeProductUpdate.length > 0) {
         //   this.ProductArray = this.ProductArray.concat(this.removeProductUpdate);
         // }
@@ -203,8 +194,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       }
     }
     else {
-      this.cust.IsActive = 'N';
-      this.cust.UserCode = this.cpInfo.EmpId;
+      this.cust = { 'BookRefNo': this.cust.BookRefNo, 'ConsId': this.cust.ConsId, 'UserCode': this.cpInfo.EmpId, 'CancelReason': this.cust.CancelReason }
       let ciphertext = this.appService.getEncrypted(this.cust);
       this.orderService.postCancelBooking(ciphertext).subscribe((resData: any) => {
         this.loaderbtn = true;

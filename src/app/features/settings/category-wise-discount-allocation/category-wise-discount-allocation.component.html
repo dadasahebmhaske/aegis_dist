@@ -11,50 +11,46 @@
           </header>
           <div>
             <div class="widget-body">
-                <form name="CatDiscountForm" #CatDiscountForm="ngForm" (ngSubmit)="SaveCatDiscount()" ngNativeValidate autocomplete="off">
-              <div class="row">
-                <div class="col-sm-7">
-                  <div class="form-group">
-                    <label>Customer Category
-                      <span class="errorMessage">*</span>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="discount.Category" name="Category" required placeholder="Enter Customer Category" required />
-                 
-                  </div>
-                </div>
-                <div class="col-sm-5">
-                  <div class="form-group">
-                    <label>Discount( % )
-                      <span class="errorMessage">*</span>
-                    </label>
-                    <input type="text" class="form-control" [(ngModel)]="discount.DiscountPer" name="DiscountPer" required placeholder="Enter Discount( % )" required />
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-6">
-                    <label>
-                        <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='discount.IsActive' required/> Is Active </label>
-                </div>
-              </div>
-              <footer>
+              <form name="CatDiscountForm" #CatDiscountForm="ngForm" (ngSubmit)="SaveCatDiscount()" ngNativeValidate autocomplete="off">
                 <div class="row">
-                  <div class="col-sm-12 ">
-                    <hr />
-                    <a class="pull-right btn btn-default" routerLink="/settings/category-wise-discount-allocation-list">
-                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                    </a>
-                    <button class="pull-right btn btn-primary marg-right" type="submit">
-                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                    </button>
+                  <div class="col-sm-7">
+                    <div class="form-group">
+                      <label>Customer Category <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" [(ngModel)]="discount.Category" name="Category" required placeholder="Enter Customer Category" saCommonDir dirType="alphanumeric"
+                        required />
+                    </div>
                   </div>
-                  <!-- <div class="col-sm-12 " ng-show="divhide">
+                  <div class="col-sm-5">
+                    <div class="form-group">
+                      <label>Discount( % ) <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" [(ngModel)]="discount.DiscountPer" name="DiscountPer" saCommonDir dirType="decimal" required placeholder="Enter Discount( % )" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label>
+                      <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='discount.IsActive' required /> Is Active </label>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/settings/category-wise-discount-allocation-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit">
+                        <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit </button>
+                    </div>
+                    <!-- <div class="col-sm-12 " ng-show="divhide">
                               <button type="button" name="" class="pull-right btn btn-primary marg-right">
                                   <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
                               </button>
                           </div> -->
-                </div>
-              </footer>
+                  </div>
+                </footer>
               </form>
             </div>
           </div>

@@ -62,10 +62,7 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
   }
 
   onLoad() {
-
-
-    this.settingService.getDiscountDetails().subscribe((resData: any) => {
-
+    this.masterService.getDiscountDetails(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.DiscountData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

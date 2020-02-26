@@ -35,6 +35,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public bulkProd: any = {};
   public bdata: any = [];
   public bulkDoc: any = {};
+  public CatDiscountData: any = [];
   public customer: any = {};
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
@@ -70,7 +71,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
-    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' } : data);
+    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data);
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allOnloadMethods();
     this.customer.CustTypeId != null && this.customer.CustTypeId != '' ? this.onSelectCustomerType() : '';
@@ -376,6 +377,11 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.masterService.getProductSegmentDetails().subscribe((resPS: any) => {
       if (resPS.StatusCode != 0)
         this.productSegmentData = resPS.Data;
+    });
+    this.masterService.getDiscountDetails(this.cpInfo.CPCode).subscribe((resCData: any) => {
+      if (resCData.StatusCode != 0) {
+        this.CatDiscountData = resCData.Data;
+      }
     });
 
   }

@@ -43,30 +43,28 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Cancel Booking', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cancel Booking&nbsp;</button> `
-        , width: "120", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+        name: 'Select1', displayName: 'Cancel Booking', cellTemplate: `<button  style="margin:3px 5px;" class="btn-danger btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cancel&nbsp;</button> `
+        , width: "70", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Booking</div>', enableFiltering: false
       },
       // {
       //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
       //   , width: "71", exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'BookRefNo', displayName: 'Book Ref No.', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalAmtPayable', displayName: 'Total Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
-      //{ name: 'PendingAmt', displayName: 'Pending Amount', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsNo', displayName: 'Consumer No', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsName', displayName: 'Consumer name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'BookStatus', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AllocatedUserCode', displayName: 'Allocated User Code', width: "180", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Costumer No', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookNo', displayName: 'Book No.', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookDate', displayName: 'Book Date', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookStatusName', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TtlProdQty', displayName: 'Total Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RefillAmount', displayName: 'Refill Amount', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Discount', displayName: 'Discount', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalAmtPayable', displayName: 'Amount Payable', width: "180", cellTooltip: true, filterCellFiltered: true },
 
-      // { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
 
-      // { name: 'Remark', displayName: 'Remark', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
     ]
     this.gridOptions.columnDefs = columnDefs;
     // this.onLoad();

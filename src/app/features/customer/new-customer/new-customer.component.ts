@@ -11,6 +11,7 @@ import { CustomerService } from '../customer.service';
 export class NewCustomerComponent implements OnInit {
   public addArray: any = [];
   public bulkAdd: any = {};
+  public CatDiscountData: any = [];
   public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
@@ -61,6 +62,11 @@ export class NewCustomerComponent implements OnInit {
       if (resCo.StatusCode != 0)
         this.ContractData = resCo.Data;
     });
+    this.masterService.getDiscountDetails(this.cpInfo.CPCode).subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.CatDiscountData = resData.Data;
+      }
+    });
   }
   getCityData() {
     this.masterService.getCity(this.customer.StateCode).subscribe((res) => {
@@ -107,7 +113,6 @@ export class NewCustomerComponent implements OnInit {
     this.customer.CPCode = this.cpInfo.CPCode;
     this.customer.UserCode = this.cpInfo.EmpId;
     this.customer.ConsId = '';
-    this.customer.CustCatId = null;
     this.customer.ConsNo = null;
     this.customer.ConsName = `${this.customer.FirstName} ${this.customer.LatName}`;
     let ciphertext = this.appService.getEncrypted(this.customer);

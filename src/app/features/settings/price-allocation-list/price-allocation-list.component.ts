@@ -55,11 +55,11 @@ export class PriceAllocationListComponent implements OnInit {
       //   , width: "71", exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'Prodseg', displayName: 'Product segment', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Prodseg', displayName: 'Product segment', width: "*", cellTooltip: true, filterCellFiltered: true },
 
       { name: 'Product', displayName: 'Product ', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Price', displayName: 'Price', width: "400", cellTooltip: true, filterCellFiltered: true },
-      { name: 'EffectiveDate', displayName: 'Effective Date', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Price', displayName: 'Price', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'EffectiveDate', displayName: 'Effective Date', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true },
 
     ]

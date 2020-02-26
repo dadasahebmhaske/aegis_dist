@@ -79,6 +79,9 @@ export class MasterService {
   public postBulkAddress(fd: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageAddressDtls`, fd);
   }
+  public getDiscountDetails(cpcode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DISCT&CPCode=${cpcode}&IsActive=Y`);
+  }
   // public getProductSegment() {
   //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
   // }

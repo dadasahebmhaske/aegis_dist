@@ -49,6 +49,7 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'MobileNo', displayName: 'Mobile No.', width: "140", cellTooltip: true, filterCellFiltered: true },
       { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'EmailId', displayName: 'Email Id', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Category', displayName: 'Discount Category', width: "160", cellTooltip: true, filterCellFiltered: true, },
       { name: 'OpeningCylQty', displayName: 'Opening Cyl. Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'OpeningBalAmt', displayName: 'Opening Bal Amt', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'CustTypeName', displayName: 'Customer Type', width: "140", cellTooltip: true, filterCellFiltered: true },

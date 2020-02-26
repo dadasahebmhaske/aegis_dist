@@ -60,6 +60,15 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
+                      <label for="sel1">Discount Category </label>
+                      <select class="form-control" [(ngModel)]="customer.CustCatId" name="CustCatId">
+                        <option value="" selected hidden> Select Category </option>
+                        <option [value]="cat.CategoryId" *ngFor="let cat of CatDiscountData">{{cat.CatDisc}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
                       <label for="sel1">Customer Type <span class="errorMessage">*</span>
                       </label>
                       <select class="form-control" [(ngModel)]="customer.CustTypeId" (change)="onSelectCustomerType()" name="CustTypeId" required>
