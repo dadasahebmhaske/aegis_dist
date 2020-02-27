@@ -11,141 +11,99 @@
           </header>
           <div>
             <div class="widget-body">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="logincDeatils">
-                    <!-- <label class="text-primary"><strong>Customer  Details : </strong></label> -->
-                    <div class="row">
-                      <div class="col-sm-3 col-sm-offset-1">
-                        <div class="form-group label-center">
-                          <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-sm-3 col-sm-offset-1">
-                        <div class="form-group label-center">
-                          <label><strong> <i class="fa fa-user"></i> Customer Name : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="col-sm-3 col-sm-offset-1">
-                        <div class="form-group label-center">
-                          <label><strong> <i class="fa fa-user"></i> Delivery Boy : </strong> <strong class="text-warning"> {{deliverrefill.AllocatedUserCode}}</strong>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-12">
-                  <div class="refill">
-                    <label>
-                      <strong class="text-primary"> Booking Details : </strong>
-                    </label>
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="table-responsive">
-                          <table class="table table-hover">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>Product Segment</th>
-                                <th>Product Name</th>
-                                <th class="text-right">Rate</th>
-                                <th class="text-right">Quantity</th>
-                                <th class="text-right">Discount</th>
-                                <!-- <th class="text-right">IGST </th>
-                                                <th class="text-right"> CGST </th>
-                                                <th class="text-right">SGST </th> -->
-                                <th class="text-right">Amount</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let pr of ProductArray;index as i">
-                                <td>{{i+1}}</td>
-                                <td>{{pr.ProdSeg}}</td>
-                                <td>{{pr.Product}}</td>
-                                <td class="text-right">{{pr.ProdRate}}</td>
-                                <td class="text-right">{{pr.ProdQty}}</td>
-                                <td class="text-right">{{pr.Discount}}</td>
-                                <td class="text-right">{{pr.TotalAmount}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4 pull-right">
-                  <div class="form-group">
-                    <label>Reason <span class="errorMessage">*</span>
-                    </label>
-                    <select class="form-control">
-                      <option selected hidden>Select Reason</option>
-                      <option>Delivery On Hold </option>
-                      <option>Cash Memo Problem </option>
-                      <option>Other Reason </option>
-                    </select>
-                  </div>
-                </div>
-                <!-- <div class="col-sm-1">
-                    <div class="form-group">
-                      <label>Total Qty  <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty" disabled />
-                    </div>
-                  </div>
-                  <div class="col-sm-1">
-                    <div class="form-group">
-                      <label>Return Qty  <span class="errorMessage">*</span>
-                      </label>
-                      <input type="text" class="form-control" placeholder="Enter Qty" disabled />
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Total Discount  </label>
-                      <input type="text" class="form-control" placeholder="Enter Discount"  />
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Total Price </label>
-                      <input type="text" class="form-control" placeholder="Enter Amount"  disabled/>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Paid Amount        </label>
-                      <input type="text" class="form-control" placeholder="Enter Paid Amount"  />
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="form-group">
-                      <label>Pending Amount        </label>
-                      <input type="text" class="form-control" placeholder="Enter Pending Amount"  disabled/>
-                    </div>
-                  </div> -->
-              </div>
-              <footer>
+              <form name="deliverRefillForm" id="deliverRefillForm" #deliverRefillForm="ngForm" (ngSubmit)="markUndeliverRefill()" autocomplete="off" ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-12 ">
-                    <hr />
-                    <a class="pull-right btn btn-default" routerLink="/order/cash-memo-and-refill-delivery">
-                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                    <button class="pull-right btn btn-primary marg-right" type="submit">
-                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Process Undelivery </button>
+                  <div class="col-sm-12">
+                    <div class="logincDeatils">
+                      <!-- <label class="text-primary"><strong>Customer  Details : </strong></label> -->
+                      <div class="row">
+                        <div class="col-sm-3 col-sm-offset-1">
+                          <div class="form-group label-center">
+                            <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3 col-sm-offset-1">
+                          <div class="form-group label-center">
+                            <label><strong> <i class="fa fa-user"></i> Customer Name : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3 col-sm-offset-1">
+                          <div class="form-group label-center">
+                            <label><strong> <i class="fa fa-user"></i> Delivery Boy : </strong> <strong class="text-warning"> {{deliverrefill.AllocatedUserName}}</strong>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <!-- <div class="col-sm-12 " ng-show="divhide">
-                                <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                    <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                                </button>
-                            </div> -->
+                  <div class="col-sm-12">
+                    <div class="refill">
+                      <label>
+                        <strong class="text-primary"> Booking Details : </strong>
+                      </label>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="table-responsive">
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Product Segment</th>
+                                  <th>Product Name</th>
+                                  <th class="text-right">Rate</th>
+                                  <th class="text-right">Quantity</th>
+                                  <th class="text-right">Refill Amount</th>
+                                  <th class="text-right">Discount</th>
+                                  <th class="text-right">Amount</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let pr of ProductArray;index as i">
+                                  <td>{{i+1}}</td>
+                                  <td>{{pr.ProdSeg}}</td>
+                                  <td>{{pr.Product}}</td>
+                                  <td class="text-right">{{pr.ProdRate}}</td>
+                                  <td class="text-right">{{pr.ProdQty}}</td>
+                                  <td class="text-right">{{pr.RefillAmount}}</td>
+                                  <td class="text-right">{{pr.Discount}}</td>
+                                  <td class="text-right">{{pr.TotalAmount}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </footer>
+                <div class="row">
+                  <div class="col-sm-4 pull-right">
+                    <div class="form-group">
+                      <label>Reason <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="deliverrefill.ReturnResionId" name="ReturnResionId" required>
+                        <option value="" selected hidden>Select Reason</option>
+                        <option [value]="rr.Id" *ngFor="let rr of reasonArrayData">{{rr.Name}} </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/order/cash-memo-and-refill-delivery">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Process Undelivery':'Loading'}}</button>
+                      <!-- <button class="pull-right btn btn-primary marg-right" type="submit">
+                        <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Process Undelivery </button> -->
+                    </div>
+                  </div>
+                </footer>
+              </form>
             </div>
           </div>
         </div>

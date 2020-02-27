@@ -1,18 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
+import { OrderService } from '../order.service';
+import { AppService } from '@app/core/custom-services/app.service';
+import { DatashareService } from '@app/core/custom-services/datashare.service';
+import { MasterService } from '@app/core/custom-services/master.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
 @Component({
   selector: 'sa-undelivered-orders',
   templateUrl: './undelivered-orders.component.html',
   styleUrls: ['./undelivered-orders.component.css']
 })
-export class UndeliveredOrdersComponent implements OnInit {
-  public unDeliveredOrderData: any=[];
+export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
+  public cpInfo: any = {};
+  public DeliveredOrderData: any = [];
+  public deliverFilter: any = { DelUserCode: '' };
+  public datePickerConfig: Partial<BsDatepickerConfig>;
+  public delBoyData: any = [];
   public gridOptions: IGridoption;
-  constructor() {
+  public loaderbtn: boolean = true;
+  public minDate: Date;
+  public maxDate: Date = new Date();
+  public ProductArray: any = [];
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
+    this.allOnLoad();
+  }
+  allOnLoad() {
+    this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+      if (respD.StatusCode != 0)
+        this.delBoyData = respD.Data;
+    });
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -21,59 +43,53 @@ export class UndeliveredOrdersComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
-        , width: "71",exporterSuppressExport: true,
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null"  ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
+        , width: "71", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
-      { name: 'CustNo', displayName: 'Customer No.', width: "120", cellTooltip: true, filterCellFiltered: true,visible:false },
-      { name: 'CustName', displayName: 'Customer Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'UnDeliveredDate', displayName: 'Undelivery Date', width: "160", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RefillQuantity', displayName: 'Refill Quantity', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RefillAmount', displayName: 'Refill Amount', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'unDelAttempts', displayName: 'Undelivery Attempts', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Reason', displayName: 'Reason', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Costumer No', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', width: "160", cellTooltip: true, filterCellFiltered: true },
-     { name: 'DManName', displayName: 'Delivery Man ', width: "160", cellTooltip: true, filterCellFiltered: true },             
-   ]
+      { name: 'DelDate', displayName: 'Undelivery Date', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelUserName', displayName: 'Undelivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ReturnReason', displayName: 'Reason', width: "250", cellTooltip: true, filterCellFiltered: true },
+    ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
-  onEditFunction = ($event) => {
-    // console.log($event.row);
-   // AppComponent.Router.navigate(['/master/vehicle']);
+  onEditFunction = (event) => {
+    this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.ProductArray = resData.Data;
+        console.log(this.ProductArray);
+        AppComponent.SmartAlert.Success(resData.Message);
+        $('#productsModal').modal('show');
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
   }
   onLoad() {
-    this.unDeliveredOrderData = [{
-  'CustNo': 123456 ,
-  'CustName': 'Sanjay Kumar' ,  
-  'UnDeliveredDate': '10-01-2020', 
-  'RefillQuantity': 5,   
-  'RefillAmount': 4000 ,
-  'unDelAttempts': 1 ,
-  'Reason': "Home Locked" ,
-  'CashMemoNo': 'JAN/0120157' ,                            
-  'CashMemoDate': '07-01-2020' ,                   
-  'DManName': 'Amir Khan' 
-    },{
-      'CustNo': 123456 ,
-      'CustName': 'Vijay CHauhan' ,  
-      'UnDeliveredDate': '10-01-2020', 
-      'RefillQuantity': 5,   
-      'RefillAmount': 4000 ,
-      'unDelAttempts': 1 ,
-      'Reason': "Home Locked" ,
-      'CashMemoNo': 'JAN/0120157' ,                            
-      'CashMemoDate': '07-01-2020' ,                   
-      'DManName': 'Amir Khan' 
-        }];
-    // this.masters.getVehicles().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-    // this.vehicleData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 5, this.deliverFilter.DelUserCode, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+      if (resData.StatusCode != 0) {
+        this.DeliveredOrderData = resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.deliverFilter.EndDate != null) {
+      if ((new Date(this.deliverFilter.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.deliverFilter.EndDate = '';
+      }
+    }
+  }
+  ngOnDestroy() {
+    this.appService.removeBackdrop();
+    //this.stockOrdersData = [{}];
   }
 
 }

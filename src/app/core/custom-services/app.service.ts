@@ -48,7 +48,7 @@ export class AppService {
     });
   }
   DateToString(date) {
-    if (date != '')
+    if (date != '' && date != null)
       return this.datepipe.transform(date, 'dd-MMM-yyyy');
     else
       return '';

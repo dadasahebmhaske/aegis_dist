@@ -29,8 +29,8 @@
                   </div> -->
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="bookOrder.StartDate" name="Startdate" id="startDate" onkeydown="return false"
-                        bsDatepicker [bsConfig]="datePickerConfig" required />
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="bookOrder.StartDate" name="Startdate" id="startDate"
+                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">

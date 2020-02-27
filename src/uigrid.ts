@@ -11,6 +11,7 @@ export function initUiGrid() {
       onEdit: '&',
       onDelete: '&',
       onSelect: '&',
+      onSelected: '&',
       gridOptions: '='
     },
     transclude: true,
@@ -96,6 +97,11 @@ export function initUiGrid() {
       }
       $scope.deleteEmployee = function (row) {
         ctrl.onDelete({
+          row
+        });
+      }
+      $scope.selectedEmployee = function (row) {
+        ctrl.onSelected({
           row
         });
       }

@@ -16,7 +16,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   public bookOrder: any = { StartDate: '', EndDate: '', RoutId: '', SubAreaId: '' };
   public cpInfo: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
-  //public EndDate: any = '';
+
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();

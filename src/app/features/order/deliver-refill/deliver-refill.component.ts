@@ -15,7 +15,6 @@ import { OrderService } from '../order.service';
 })
 export class DeliverRefillComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
-
   public custData: any = {};
   public deliverrefill: any = { AllocatedUserCode: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
@@ -23,11 +22,9 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
   public ProductArray: any = [];
   public loaderbtn: boolean = true;
   public Edeliverrefill: any = {};
-
   constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
-
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.dataShare.GetSharedData.subscribe(data => {
@@ -43,24 +40,20 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
     });
     this.allOnLoad();
   }
-
   allOnLoad() {
     this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
         this.delBoyData = respD.Data;
     });
   }
-
   calculatePending() {
     this.deliverrefill.PendingAmt = parseInt(this.deliverrefill.TotalAmtPayable) - (parseInt(this.deliverrefill.TotalReceivedAmount))
   }
-
   onEditProduct(data, index) {
     $('#qtyModal').modal('show');
     this.Edeliverrefill.ProdQty = data.ProdQty;
     this.Edeliverrefill.index = index;
   }
-
   onSubmitqty() {
     this.ProductArray[this.Edeliverrefill.index].ProdQty = this.Edeliverrefill.ProdQty;
     this.ProductArray[this.Edeliverrefill.index].TotalAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].ProdRate) * parseInt(this.Edeliverrefill.ProdQty);
@@ -71,7 +64,6 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
   }
   SavedeliverRefill() {
     if (this.deliverrefill.CashMemoRefNo != null) {
-
       this.loaderbtn = false;
       this.deliverrefill.CPCode = this.cpInfo.CPCode;
       this.deliverrefill.Lat = '';
@@ -79,7 +71,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
       this.deliverrefill.IsActive = 'Y'
       this.deliverrefill.UserCode = this.cpInfo.EmpId;
       this.deliverrefill.ImeiNo = '';
-      this.deliverrefill.Apptype = "WB";
+      this.deliverrefill.Apptype = "DI";
       this.deliverrefill.Status = 4;
       this.deliverrefill.TotalDiscount = this.deliverrefill.Discount;
       this.deliverrefill.TotalReturnQty = this.deliverrefill.ReturnQty;
@@ -94,6 +86,8 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Cash memo not generated`);
     }
   }
 

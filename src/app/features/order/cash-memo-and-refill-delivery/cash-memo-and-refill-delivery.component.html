@@ -9,32 +9,54 @@
           </header>
           <div>
             <div class="widget-body">
-              <form name="cashMemoForm" #cashMemoForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                <div class="row ">
-                  <div class="col-sm-2 col-xs-4">
+              <div class="row">
+                <form name="cashMemoForm" autocomplete="off" #cashMemoForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2">
                     <div class="form-group">
-                      <select class="form-control" [(ngModel)]="cashmemo.areacode" name="areacode">
-                        <option value="" selected hidden> Select Area </option>
-                        <option *ngFor="let ar of AreaData" value="{{ar.areacode}}">{{ar.area}}</option>
+                      <!-- <label for="sel1"
+                                      >Route
+                                      <span class="errorMessage">*</span>
+                                    </label> -->
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()" required>
+                        <option value="" hidden selected> Select Route <span id="opt">*</span> </option>
+                        <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-2 col-xs-8">
+                  <div class="col-sm-2">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Customer/Mobile No." class="form-control" [(ngModel)]="cashmemo.CustNoMob" name="CustNoMob" required />
+                      <!-- <label for="sel1"
+                                      >Sub Area
+                                      <span class="errorMessage">*</span>
+                                    </label> -->
+                      <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control" required>
+                        <option value="" selected hidden> Select Sub Area <span class="errorMessage">*</span>
+                        </option>
+                        <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-xs-4">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-success get_details">
-                        <i class="fa fa-search"></i> Get Details</button>
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{
+                                          'fa-search': loaderbtn,
+                                          'fa-cog fa-spin': !loaderbtn
+                                        }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
                     </div>
                   </div>
-                  <div class="col-sm-12 table-responsive">
-                    <ui-grid [data]="CashMemoData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
-                  </div>
+                </form>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="CashMemoData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)" (onSelected)="onSelectedFunction($event)">
+                  </ui-grid>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

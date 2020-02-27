@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
+import { CustomerService } from '@app/features/customer/customer.service';
 
 @Component({
   selector: 'sa-cash-memo-and-refill-delivery',
@@ -16,26 +17,29 @@ import { MasterService } from '@app/core/custom-services/master.service';
 export class CashMemoAndRefillDeliveryComponent implements OnInit {
   public AreaData = [];
   public cpInfo: any = {};
+  public cmCustData: any = {};
   public cashmemo: any = { areacode: '' };
   public CashMemoData: any = {};
+  public cust: any = { RoutId: '', SubAreaId: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
+  public RouteData: any = [];
+  public SubAreaArray: any = [];
+  public SubAreaData: any = [];
 
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
-    // this.onloadAll();
-    this.onLoad();
-    // this.onloadAll();
+    this.onloadAll();
   }
 
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Refill Booking Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Cash Memo Generated Orders list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {
@@ -50,19 +54,14 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
       },
 
       {
-        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Cash Memo&nbsp;</button> `
+        name: 'Select3', displayName: 'Print Cash Memo', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.selectedEmployee(row.entity)"  ">&nbsp;Cash Memo&nbsp;</button> `
         , width: "95", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Print</div>', enableFiltering: false
       },
-      // {
-      //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
-      //   , width: "71", exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      // },
       { name: 'ConsNo', displayName: 'Costumer No', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoStatusName', displayName: 'Cash Memo Status', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'TtlProdQty', displayName: 'Total Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
@@ -72,12 +71,14 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
 
     ]
     this.gridOptions.columnDefs = columnDefs;
-    // this.onLoad();
+    this.onLoad();
   }
 
   onLoad() {
     this.loaderbtn = false;
-    this.orderService.getCashMemoDetails(this.cpInfo.CPCode, '', '').subscribe((resData: any) => {
+    this.cust.SubAreaId = this.cust.SubAreaId == null ? '' : this.cust.SubAreaId;
+    this.cust = this.customerService.checkCustOrMobNo(this.cust);
+    this.orderService.getCashMemoDetails(this.cpInfo.CPCode, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo, '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.CashMemoData = resData.Data;
@@ -98,12 +99,36 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/order/undeliver-refill']);
   }
+  onSelectedFunction = (event) => {
+    console.log(event.row);
+    this.cmCustData = {
+      "data":
+        [
+          {
+            "CPCode": this.cpInfo.CPCode,
+            "CashMemoRefNo": event.row.CashMemoRefNo,
+            "ConsId": event.row.ConsId,
+            "IsActive": "Y"
+          }
+        ]
+    }
+    let para = JSON.stringify(this.cmCustData.data);
+    window.location.href = `${AppComponent.BaseUrlDist}Document/GetCashmemoPrint?data=${para}`, '_blank';
+  }
 
-  // onloadAll() {
-  //   this.masterService.getAreaDetails().subscribe((resA: any) => {
-  //     if (resA.StatusCode != 0)
-  //       this.AreaData = resA.Data;
-  //   });
-  // }
+  onloadAll() {
+    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteData = resR.Data;
+    });
+    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaArray = reSA.Data;
+      }
+    });
+  }
+  getSubArea() {
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
+  }
 
 }

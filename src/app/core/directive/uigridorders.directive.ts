@@ -15,6 +15,7 @@ export class UigridordersDirective extends UpgradeComponent implements OnInit, O
   @Input() gridOptions: {};
   @Output() onEdit: EventEmitter<{}>;
   @Output() onDelete: EventEmitter<{}>;
+  @Output() onSelected: EventEmitter<{}>;
 
   constructor(elementRef: ElementRef, injector: Injector) {
     console.log('thus');
