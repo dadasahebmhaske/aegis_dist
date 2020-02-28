@@ -30,6 +30,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
+    this.StartDate = this.EndDate = new Date();
     this.onLoad();
   }
   configureGrid() {

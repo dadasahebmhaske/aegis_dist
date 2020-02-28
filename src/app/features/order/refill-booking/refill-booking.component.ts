@@ -172,7 +172,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
         //this.cust.BookType = '';
         this.cust.ImeiNo = '';
         // this.cust.TransfStatus = '';
-        this.cust.Apptype = "WB";
+        this.cust.Apptype = "DI";
         // if (this.removeProductUpdate.length > 0) {
         //   this.ProductArray = this.ProductArray.concat(this.removeProductUpdate);
         // }

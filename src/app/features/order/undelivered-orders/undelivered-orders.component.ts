@@ -27,6 +27,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.deliverFilter.StartDate = this.deliverFilter.EndDate = new Date();
     this.configureGrid();
     this.allOnLoad();
   }
@@ -53,6 +54,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
       { name: 'CashMemoNo', displayName: 'Cash Memo No.', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'DelDate', displayName: 'Undelivery Date', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'DelUserName', displayName: 'Undelivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ReturnReason', displayName: 'Reason', width: "250", cellTooltip: true, filterCellFiltered: true },
     ]

@@ -1,18 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
+import { OrderService } from '../order.service';
+import { AppService } from '@app/core/custom-services/app.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { MasterService } from '@app/core/custom-services/master.service';
 @Component({
   selector: 'sa-delivery-man-wise-refill-order-summary',
   templateUrl: './delivery-man-wise-refill-order-summary.component.html',
   styleUrls: ['./delivery-man-wise-refill-order-summary.component.css']
 })
 export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
-  public unDeliveredOrderData: any=[];
+  public cpInfo: any = {};
+  public datePickerConfig: Partial<BsDatepickerConfig>;
+  public deliverFilter: any = { DelUserCode: '' };
+  public delBoyData: any = [];
   public gridOptions: IGridoption;
-  constructor() {
+  public loaderbtn: boolean = true;
+  public minDate: Date;
+  public maxDate: Date = new Date();
+  public unDeliveredOrderData: any = [];
+  constructor(private appService: AppService, private masterService: MasterService, private orderService: OrderService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.deliverFilter.StartDate = this.deliverFilter.EndDate = new Date();
+    this.allOnLoad();
     this.configureGrid();
+  }
+  allOnLoad() {
+    this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+      if (respD.StatusCode != 0)
+        this.delBoyData = respD.Data;
+    });
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -25,7 +46,7 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
       //   , width: "71",exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'DManCode', displayName: 'Del. Man Code', width: "150", cellTooltip: true, filterCellFiltered: true,visible:false },
+      { name: 'DManCode', displayName: 'Del. Man Code', width: "150", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'DManName', displayName: 'Delivery Man', width: "190", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotalDeliveredCount', displayName: 'Total Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'DACDeliveredCount', displayName: 'DAC Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
@@ -34,57 +55,68 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
       { name: 'AppBookings', displayName: 'App Bookings', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'DigitalPayment', displayName: 'Digital Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashPayment', displayName: 'Cash Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
-     { name: 'TotalPayment', displayName: 'Total Payment', width: "150", cellTooltip: true, filterCellFiltered: true },             
-      ]
+      { name: 'TotalPayment', displayName: 'Total Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
+    ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = ($event) => {
     // console.log($event.row);
-   // AppComponent.Router.navigate(['/master/vehicle']);
+    // AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
     this.unDeliveredOrderData = [{
-      'DManCode':10003,
-   'DManName': 'Amir Khan' ,
-   'TotalDeliveredCount': 555 ,
-   'DACDeliveredCount': 450 ,
-   'UnDeliveredCount': 5,
-   'PendingCashMemo': 2 ,
-   'AppBookings': 7,
-   'DigitalPayment': 1241 ,
-   'CashPayment': 1241 ,
-   'TotalPayment': 2482
-    },{
-      'DManCode':10004,
-   'DManName': 'Saifu Khan' ,
-   'TotalDeliveredCount': 555 ,
-   'DACDeliveredCount': 450 ,
-   'UnDeliveredCount': 5,
-   'PendingCashMemo': 2 ,
-   'AppBookings': 7,
-   'DigitalPayment': 1000 ,
-   'CashPayment': 1241 ,
-   'TotalPayment': 3241
-    },{
-      'DManCode':10001,
-   'DManName': 'Salman Khan' ,
-   'TotalDeliveredCount': 555 ,
-   'DACDeliveredCount': 450 ,
-   'UnDeliveredCount': 5,
-   'PendingCashMemo': 2 ,
-   'AppBookings': 7,
-   'DigitalPayment': 1241 ,
-   'CashPayment': 1241 ,
-   'TotalPayment': 2482
+      'DManCode': 10003,
+      'DManName': 'Amir Khan',
+      'TotalDeliveredCount': 555,
+      'DACDeliveredCount': 450,
+      'UnDeliveredCount': 5,
+      'PendingCashMemo': 2,
+      'AppBookings': 7,
+      'DigitalPayment': 1241,
+      'CashPayment': 1241,
+      'TotalPayment': 2482
+    }, {
+      'DManCode': 10004,
+      'DManName': 'Saifu Khan',
+      'TotalDeliveredCount': 555,
+      'DACDeliveredCount': 450,
+      'UnDeliveredCount': 5,
+      'PendingCashMemo': 2,
+      'AppBookings': 7,
+      'DigitalPayment': 1000,
+      'CashPayment': 1241,
+      'TotalPayment': 3241
+    }, {
+      'DManCode': 10001,
+      'DManName': 'Salman Khan',
+      'TotalDeliveredCount': 555,
+      'DACDeliveredCount': 450,
+      'UnDeliveredCount': 5,
+      'PendingCashMemo': 2,
+      'AppBookings': 7,
+      'DigitalPayment': 1241,
+      'CashPayment': 1241,
+      'TotalPayment': 2482
     }];
-    // this.masters.getVehicles().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-    // this.vehicleData=resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    this.loaderbtn = false;
+    this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
+    this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate);
+    this.orderService.getDelManWiseData(this.cpInfo.CPCode, this.deliverFilter).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        this.unDeliveredOrderData = resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
   }
-
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.deliverFilter.EndDate != null) {
+      if ((new Date(this.deliverFilter.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.deliverFilter.EndDate = '';
+      }
+    }
+  }
 }

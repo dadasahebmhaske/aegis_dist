@@ -13,117 +13,103 @@
             <div class="widget-body">
               <div class="row">
                 <div class="col-sm-12">
-                
-                    <div class="row">
-                  
-                      <div class="col-sm-3 ">
-                        <div class="form-group ">
-                            <label for="sel1">Customer/Mobile No.
-                                <span class="errorMessage">*</span>
-                              </label>
-                          <input type="text" class="form-control" placeholder="Enter Customer/Mobile No. " />
+                  <div class="row">
+                    <form name="custForm" #custForm="ngForm" (ngSubmit)="onGetCustomer()" ngNativeValidate autocomplete="off">
+                      <div class="col-sm-3">
+                        <div class="form-group pull-right label-center">
+                          <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                            onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" required />
                         </div>
                       </div>
                       <div class="col-sm-1">
                         <div class="form-group">
-                          <button type="submit" class="btn btn-block btn-success get_details">
-                            <i class="fa fa-search"></i> Get Details</button>
-
+                          <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                            <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn, 'fa-cog fa-spin': !loaderbtn }"></i> {{ loaderbtn == true ? 'Get Details' : 'Loading' }} </button>
                         </div>
                       </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-12">
-                              <hr class="simple">
-                              </div>
-                      <div class="col-sm-12 text-center ">
-                        <div class="form-group label-center">
-                          <label>
-                            <strong>
-                              <i class="fa fa-user"></i>
-                              Customer Name : <span class="text-custname">Atul Purkar</span></strong>
-
-                          </label>
-                          <label>
-                            <strong style="margin-left:20px">                            
-                              Advance Balance : <span class="text-success">15000</span></strong>
-                          </label>
-                          <label>
-                            <strong style="margin-left:20px">                              
-                              Pending Balance : <span class="text-danger">00</span></strong>
-                          </label>
-
-                        </div>
-                      </div>
-                      <div class="col-sm-12">
-                        <hr class="simple">
-                        </div>
+                    </form>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <hr class="simple">
                     </div>
-                 
+                    <div class="col-sm-12 text-center ">
+                      <div class="form-group label-center">
+                        <label>
+                          <strong>
+                            <i class="fa fa-user"></i> Customer Name : <span class="text-custname">{{cust.ConsName}}</span></strong>
+                        </label>
+                        <label>
+                          <strong style="margin-left:20px"> Advance Balance : <span class="text-success">{{cust.AdvanceAmt}}</span></strong>
+                        </label>
+                        <label>
+                          <strong style="margin-left:20px"> Pending Balance : <span class="text-danger">{{cust.PendingAmt}}</span></strong>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <hr class="simple">
+                    </div>
+                  </div>
                 </div>
-
-                <div class="col-sm-12">
-           
+              </div>
+              <form name="custPayForm" #custPayForm="ngForm" (ngSubmit)="onSubmitPayment()" ngNativeValidate autocomplete="off">
+                <div class="row">
+                  <div class="col-sm-12">
                     <div class="row">
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label>Received Amount
-                            <span class="errorMessage">*</span>
-                          </label>                      
-                          <input type="text" class="form-control" placeholder="Enter Amount " />
+                          <label>Received Amount <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" minlength="1" maxlength="8" [(ngModel)]="cust.PaidAmount" name="TotalReceivedAmount" saCommonDir dirType="number"
+                            placeholder="Enter Amount " required />
                         </div>
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label>Pay Mode
-                            <span class="errorMessage">*</span>
+                          <label>Pay Mode <span class="errorMessage">*</span>
                           </label>
-                          <select class="form-control">
-                            <option selected hidden>Select Mode </option>
-                            <option>Cash </option>
-                            <option>Cheque</option>
+                          <select class="form-control" [(ngModel)]="cust.PayMode" name="PayMode" required>
+                            <option value="" selected hidden>Select Mode </option>
+                            <option [value]="pay.PayMode" *ngFor="let pay of PayModeData">{{pay.PayDesc}} </option>
                           </select>
                         </div>
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label>Cheque No.
-                          </label>
-                          <input type="text" class="form-control" placeholder="Enter Cheque No." disabled/>
+                          <label>Cheque No. <span class="errorMessage" [hidden]="cust.PayMode!='CQ'">*</span> </label>
+                          <input type="text" class="form-control" minlength="6" maxlength="23" [(ngModel)]="cust.ChequeNo" name="ChequeNo" saCommonDir dirType="number" placeholder="Enter Cheque No."
+                            [disabled]="cust.PayMode!='CQ'" [required]="cust.PayMode!='CQ'" />
                         </div>
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <label>Cheque Date                           
-                          </label>
-                          <input type="text" class="form-control" placeholder="Enter Date" disabled/>
+                          <label>Cheque Date <span class="errorMessage" [hidden]="cust.PayMode!='CQ'">*</span></label>
+                          <input type="text" id="ChequeDate" class="form-control" placeholder="Enter Date" [(ngModel)]="cust.ChequeDate" name="ChequeDate" onkeydown="return false" bsDatepicker
+                            [bsConfig]="datePickerConfig" [disabled]="cust.PayMode!='CQ'" [required]="cust.PayMode!='CQ'" />
                         </div>
-                      </div>               
-                 
-                   
-
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-    
-              <footer>
-                <div class="row">
-                  <div class="col-sm-12 ">
-                    <hr />
-                    <a class="pull-right btn btn-default" routerLink="/order/cash-flow-register">
-                      <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                    </a>
-                    <button class="pull-right btn btn-primary marg-right" type="submit">
-                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                    </button>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/order/cash-flow-register">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
                   </div>
-                  <!-- <div class="col-sm-12 " ng-show="divhide">
-                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
-                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
-                              </button>
-                          </div> -->
-                </div>
-              </footer>
+                </footer>
+              </form>
             </div>
           </div>
         </div>

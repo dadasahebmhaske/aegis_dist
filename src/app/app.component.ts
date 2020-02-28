@@ -8,8 +8,8 @@ import { OnInit } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `<router-outlet></router-outlet><ng-container *ngIf="loading">
-<div class="cssload-box-loading">
-</div>
+ <div class="cssload-box-loading">
+ </div>
 </ng-container>`,
 })
 export class AppComponent implements OnInit {

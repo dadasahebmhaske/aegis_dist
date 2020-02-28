@@ -26,6 +26,7 @@ export class AddImbalanceComponent implements OnInit {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.StartDate = this.EndDate = new Date();
     this.configureGrid();
   }
   configureGrid() {

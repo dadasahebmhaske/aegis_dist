@@ -27,6 +27,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.deliverFilter.StartDate = this.deliverFilter.EndDate = new Date();
     this.configureGrid();
     this.allOnLoad();
   }
@@ -60,7 +61,8 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
       { name: 'PaidAmt', displayName: 'Amount Received', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'PendingAmt', displayName: 'Amount Pending', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotalReturnQty', displayName: 'Return Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
-
+      { name: 'PayModeName', displayName: 'Pay Mode', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'DelUserName', displayName: 'Delivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
 
     ]

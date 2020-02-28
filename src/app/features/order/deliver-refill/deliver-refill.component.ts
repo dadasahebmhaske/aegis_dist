@@ -72,6 +72,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
       this.deliverrefill.UserCode = this.cpInfo.EmpId;
       this.deliverrefill.ImeiNo = '';
       this.deliverrefill.Apptype = "DI";
+      this.deliverrefill.PayMode = "CA";
       this.deliverrefill.Status = 4;
       this.deliverrefill.TotalDiscount = this.deliverrefill.Discount;
       this.deliverrefill.TotalReturnQty = this.deliverrefill.ReturnQty;

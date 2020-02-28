@@ -11,29 +11,34 @@
           <div>
             <div class="widget-body">
               <div class="row ">
-                <div class="col-sm-2 col-xs-4">
-                  <div class="form-group">
-                    <input type="text" placeholder="Enter Customer No." class="form-control" required />
+                <form name="custCashFlowForm" #custCashFlowForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2 col-xs-4">
+                    <div class="form-group">
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-sm-2 col-xs-8">
-                  <div class="form-group">
-                    <input type="text" placeholder="Enter Start Date." class="form-control" required />
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-sm-2 col-xs-8">
-                  <div class="form-group">
-                    <input type="text" placeholder="Enter End Date." class="form-control" required />
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-sm-1 col-xs-4">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success get_details">
-                      <i class="fa fa-search"></i> Get Details</button>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
                   </div>
-                </div>
+                </form>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="areaOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  <ui-grid [data]="custOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                 </div>
               </div>
             </div>
@@ -43,80 +48,62 @@
     </div>
   </sa-widgets-grid>
 </div>
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="productsModal" role="dialog">
-      <div class="modal-dialog">
-      
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title text-center">Products Details</h4>
-          </div>
-          <div class="modal-body">
-           <div class="row">
-            <div class="col-sm-12">
-              <div class="refill">
-              
-                <div class="row">
-                  <div class="col-sm-12">
-                    <div class="table-responsive">
-  
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Product Segment</th>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Return Quantity</th>
-                       
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Category 1</td>
-                            <td>14 Kg cylinder</td>
-                            <td>699</td>
-                            <td>
-                             1
-                            </td>
-                            <td>
-                              1
-                             </td>
-                        
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Category 1</td>
-                            <td>19 Kg cylinder</td>
-                            <td>1299</td>
-                            <td>
-                          5
-                            </td>
-                            <td>
-                              4
-                                </td>
-                          </tr>
-                            </tbody>
-                      </table>
-  
-                    </div>
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Products Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="refill">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product Segment</th>
+                          <th>Product Name</th>
+                          <th class="text-right">Rate</th>
+                          <th class="text-right">Quantity</th>
+                          <th class="text-right">Refill Amount</th>
+                          <th class="text-right">Discount</th>
+                          <th class="text-right">Return Quantity</th>
+                          <th class="text-right">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let pr of ProductArray;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{pr.ProdSeg}}</td>
+                          <td>{{pr.Product}}</td>
+                          <td class="text-right">{{pr.ProdRate}}</td>
+                          <td class="text-right">{{pr.ProdQty}}</td>
+                          <td class="text-right">{{pr.RefillAmount}}</td>
+                          <td class="text-right">{{pr.Discount}}</td>
+                          <td class="text-right">{{pr.EmptyQty}}</td>
+                          <td class="text-right">{{pr.AmountPayable}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
-           </div>
-          </div>
-          <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
-        
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>

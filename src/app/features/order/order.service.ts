@@ -73,7 +73,27 @@ export class OrderService {
     public getRefillDeliveryProductDetails(cpcode, delRef) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliveryProducts?DelRefNo=${delRef}&CPCode=${cpcode}`);
     }
+    public getPayMode() {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetpaymentMode?PayModeId=&PayMode=&IsActive=Y`);
+    }
+    public getCustVerify(cpcode, cust) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCustomerAndPayRegister?ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}`);
+    }
 
+    public postCustPayment(data: any) {
+        return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/InsertPaymentRegister`, data, AppComponent.httpOptions);
+    }
+    public getCashFlow(cpcode, cust) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetPaymentRegister?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FromDate=${cust.StartDate}&ToDate=${cust.EndDate}`);
+    }
+    public getDelManWiseData(cpcode, data) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDelivery?DelRefNo=&CPCode=${cpcode}&ConsId=&DelUserCode=${data.DelUserCode}&FDate=${data.fd}&TDate=${data.td}`);
 
-
+    }
+    public getAreaWiseOrderData(cpcode, SubAreaId, ConsNo, MobileNo) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCashMemo?CashMemoRefNo=&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobileNo}`);
+    }
+    public getCustWisetransData(cpcode, cust) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliveryProducts?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FDate=${cust.StartDate}&TDate=${cust.EndDate}`);
+    }
 }

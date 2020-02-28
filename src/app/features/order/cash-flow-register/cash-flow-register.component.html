@@ -4,56 +4,52 @@
     <div class="row">
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-            <header class="text-center"> 
-                      <h2> <i class="fa fa-table"></i> Cash Flow Register</h2>
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Cash Flow Register</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
+                <form name="custCashFlowForm" #custCashFlowForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Customer/Mobile No." class="form-control" required />
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
                   </div>
-                <div class="col-sm-2 col-xs-8">
-                  <div class="form-group">
-                    <input type="text" placeholder="Enter Start Date." class="form-control" required />
-                  </div>
-                </div>
-                <div class="col-sm-2 col-xs-8">
+                  <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter End Date." class="form-control" required />
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                     </div>
                   </div>
-                <div class="col-sm-1 col-xs-4">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-block btn-success get_details">
-                      <i class="fa fa-search"></i> Get Details</button>
-
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
                   </div>
-                </div>
-                <div class="col-sm-2 pull-right">                     
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+                <div class="col-sm-2 pull-right">
                   <div class="form-group pull-right">
-                    <a routerLink="/order/payment-collections"  class="btn btn-block btn-warning get_details pull-right">
-                      <i class="glyphicon glyphicon-plus"></i>
-                      Add Payment
-                    </a>
+                    <a routerLink="/order/payment-collections" class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i> Add Payment </a>
                   </div>
                 </div>
                 <div class="col-sm-12 table-responsive">
                   <ui-grid [data]="cashFlowData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
-              </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
       </article>
-
-
     </div>
-
   </sa-widgets-grid>
 </div>

@@ -34,6 +34,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
     this.onloadAll();
+    this.bookOrder.StartDate = this.bookOrder.EndDate = new Date();
     this.onLoad();
   }
   configureGrid() {
@@ -62,8 +63,8 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
       { name: 'RefillAmount', displayName: 'Refill Amount', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'Discount', displayName: 'Discount', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotalAmtPayable', displayName: 'Amount Payable', width: "180", cellTooltip: true, filterCellFiltered: true },
-
-
+      { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AllocatedUserName', displayName: 'Delivery Boy', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
     ]
     this.gridOptions.columnDefs = columnDefs;
