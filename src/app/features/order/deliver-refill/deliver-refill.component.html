@@ -112,7 +112,7 @@
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Total Discount </label>
-                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" />
+                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" (ngModelChange)="calculatePending()" />
                     </div>
                   </div>
                   <div class="col-sm-2">

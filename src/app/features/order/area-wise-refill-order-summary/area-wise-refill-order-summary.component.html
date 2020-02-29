@@ -18,9 +18,9 @@
                                                             >Route
                                                             <span class="errorMessage">*</span>
                                                           </label> -->
-                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()" required>
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RouteId" name="RouteId" (change)="getSubArea()" required>
                         <option value="" hidden selected> Select Route <span id="opt">*</span> </option>
-                        <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
+                        <option [value]="rou.RouteId" *ngFor="let rou of RouteData">{{ rou.RouteName }}</option>
                       </select>
                     </div>
                   </div>
@@ -37,12 +37,24 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-3 col-xs-4">
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                        bsDatepicker [bsConfig]="datePickerConfig" />
+                    </div>
+                  </div>
+                  <!-- <div class="col-sm-3 col-xs-4">
                     <div class="form-group">
                       <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
                         onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">

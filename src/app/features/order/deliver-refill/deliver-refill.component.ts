@@ -47,6 +47,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
     });
   }
   calculatePending() {
+    this.deliverrefill.TotalAmtPayable = parseInt(this.deliverrefill.TotalAmount) - parseInt(this.deliverrefill.Discount);
     this.deliverrefill.PendingAmt = parseInt(this.deliverrefill.TotalAmtPayable) - (parseInt(this.deliverrefill.TotalReceivedAmount))
   }
   onEditProduct(data, index) {

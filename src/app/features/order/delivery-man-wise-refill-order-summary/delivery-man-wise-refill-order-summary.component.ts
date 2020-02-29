@@ -46,16 +46,26 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
       //   , width: "71",exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'DManCode', displayName: 'Del. Man Code', width: "150", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'DManName', displayName: 'Delivery Man', width: "190", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalDeliveredCount', displayName: 'Total Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DACDeliveredCount', displayName: 'DAC Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'UnDeliveredCount', displayName: 'UnDelivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PendingCashMemo', displayName: 'Pending Cash Memo', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AppBookings', displayName: 'App Bookings', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DigitalPayment', displayName: 'Digital Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashPayment', displayName: 'Cash Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalPayment', displayName: 'Total Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
+
+      { name: 'DelUserName', displayName: 'Delivery Boy', width: "190", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DeliveryCount', displayName: 'Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'DACDeliveredCount', displayName: 'DAC Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'UnDeliveryCount', displayName: 'Undelivered Count', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalProdDelivered', displayName: 'Product Delivered', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalRefillAmount', displayName: 'Refill Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalDiscount', displayName: 'Discount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalSalesAmt', displayName: 'Sales Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalPaymentCollected', displayName: 'Payment Collected', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalPendingAmt', displayName: 'Pending Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalEmptyReturn', displayName: 'Empty Return', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelDate', displayName: 'Delivery Date', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BatteryLevel', displayName: 'Battery Level', width: "150", cellTooltip: true, filterCellFiltered: true },
+
+      // { name: 'PendingCashMemo', displayName: 'Pending Cash Memo', width: "150", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'AppBookings', displayName: 'App Bookings', width: "150", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'DigitalPayment', displayName: 'Digital Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'CashPayment', displayName: 'Cash Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'TotalPayment', displayName: 'Total Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
@@ -65,40 +75,6 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
     // AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
-    this.unDeliveredOrderData = [{
-      'DManCode': 10003,
-      'DManName': 'Amir Khan',
-      'TotalDeliveredCount': 555,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1241,
-      'CashPayment': 1241,
-      'TotalPayment': 2482
-    }, {
-      'DManCode': 10004,
-      'DManName': 'Saifu Khan',
-      'TotalDeliveredCount': 555,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1000,
-      'CashPayment': 1241,
-      'TotalPayment': 3241
-    }, {
-      'DManCode': 10001,
-      'DManName': 'Salman Khan',
-      'TotalDeliveredCount': 555,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1241,
-      'CashPayment': 1241,
-      'TotalPayment': 2482
-    }];
     this.loaderbtn = false;
     this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
     this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate);
@@ -108,7 +84,7 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
         this.unDeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else { this.unDeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   resetEndDate(val) {

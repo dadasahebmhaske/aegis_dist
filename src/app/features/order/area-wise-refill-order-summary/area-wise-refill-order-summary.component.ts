@@ -23,14 +23,19 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
+  public minDate: Date;
+  public maxDate: Date = new Date();
   public RouteData: any = [];
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
 
-  constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
+  constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+  }
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.cust.StartDate = this.cust.EndDate = new Date();
     this.configureGrid();
     this.onloadAll();
   }
@@ -45,16 +50,18 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
       //   , width: "71",exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      //{ name: 'DManCode', displayName: 'Del. Man Code', width: "150", cellTooltip: true, filterCellFiltered: true,visible:false },
-      { name: 'Area', displayName: 'Area', width: "190", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalDeliveredCount', displayName: 'Total Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DACDeliveredCount', displayName: 'DAC Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'UnDeliveredCount', displayName: 'UnDelivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PendingCashMemo', displayName: 'Pending Cash Memo', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AppBookings', displayName: 'App Bookings', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DigitalPayment', displayName: 'Digital Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashPayment', displayName: 'Cash Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalPayment', displayName: 'Total Payment', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RouteName', displayName: 'Route', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Area', width: "190", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DeliveryCount', displayName: 'Delivered Count', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'UnDeliveryCount', displayName: 'Undelivered Count', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalProdDelivered', displayName: 'Product Delivered Count', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalRefillAmount', displayName: 'Refill Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalDiscount', displayName: 'Discount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalSalesAmt', displayName: 'Sales Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalPaymentCollected', displayName: 'Payment Collected', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalPendingAmt', displayName: 'Pending Amount', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalEmptyReturn', displayName: 'Empty Return', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelDate', displayName: 'Delivery Date', width: "150", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
@@ -64,48 +71,20 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     // AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
-    this.areaOrderData = [{
-      'Area': 'Mumbai',
-      'TotalDeliveredCount': 755,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1241,
-      'CashPayment': 1241,
-      'TotalPayment': 2482
-    }, {
-      'Area': 'Pune',
-      'TotalDeliveredCount': 655,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1000,
-      'CashPayment': 1241,
-      'TotalPayment': 3241
-    }, {
-      'Area': 'Kolhapur',
-      'TotalDeliveredCount': 555,
-      'DACDeliveredCount': 450,
-      'UnDeliveredCount': 5,
-      'PendingCashMemo': 2,
-      'AppBookings': 7,
-      'DigitalPayment': 1241,
-      'CashPayment': 1241,
-      'TotalPayment': 2482
-    }];
-    // this.loaderbtn = false;
-    // this.cust.SubAreaId = this.cust.SubAreaId == null ? '' : this.cust.SubAreaId;
-    // this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    // this.orderService.getAreaWiseOrderData(this.cpInfo.CPCode, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
-    //   this.loaderbtn = true;
-    //   if (resData.StatusCode != 0) {
-    //     this.areaOrderData = resData.Data;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    //   }
-    //   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    // });
+    this.loaderbtn = false;
+    this.cust.RouteId = this.cust.RouteId == null ? '' : this.cust.RouteId;
+    this.cust.SubAreaId = this.cust.SubAreaId == null ? '' : this.cust.SubAreaId;
+    this.cust.StartDate = this.appService.DateToString(this.cust.StartDate);
+    this.cust.EndDate = this.appService.DateToString(this.cust.EndDate);
+    this.cust = this.customerService.checkCustOrMobNo(this.cust);
+    this.orderService.getAreaWiseOrderData(this.cpInfo.CPCode, this.cust).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        this.areaOrderData = resData.Data;
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
   }
   onloadAll() {
     this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
@@ -119,6 +98,14 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     });
   }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RouteId, 'RouteId');
+  }
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.cust.EndDate != null) {
+      if ((new Date(this.cust.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.cust.EndDate = '';
+      }
+    }
   }
 }
