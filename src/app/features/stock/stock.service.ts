@@ -38,7 +38,9 @@ export class StockService {
     public getStockImbalanceDetails(cpcode, StartDate, EndDate, stage) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=${stage}&IsActive=Y`);
     }
-
+    public getDayEndData(cpcode, data) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${data.StartDate}&TDate=${data.EndDate}&ReferenceNo=&IsActive=Y`);
+    }
 
 
 

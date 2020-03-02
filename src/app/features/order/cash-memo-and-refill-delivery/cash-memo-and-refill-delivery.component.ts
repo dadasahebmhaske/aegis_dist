@@ -100,20 +100,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     AppComponent.Router.navigate(['/order/undeliver-refill']);
   }
   onSelectedFunction = (event) => {
-    console.log(event.row);
-    this.cmCustData = {
-      "data":
-        [
-          {
-            "CPCode": this.cpInfo.CPCode,
-            "CashMemoRefNo": event.row.CashMemoRefNo,
-            "ConsId": event.row.ConsId,
-            "IsActive": "Y"
-          }
-        ]
-    }
-    let para = JSON.stringify(this.cmCustData.data);
-    window.location.href = `${AppComponent.BaseUrlDist}Document/GetCashmemoPrint?data=${para}`, '_blank';
+    window.location.href = `${AppComponent.BaseUrlDist}Document/GetCashmemoPrint?CPCode=${this.cpInfo.CPCode}&CashMemoRefNo=${event.row.CashMemoRefNo}&ConsId=${event.row.ConsId}&IsActive=Y`, '_blank';
   }
 
   onloadAll() {

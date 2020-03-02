@@ -501,27 +501,33 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   //address
   onSubmitAddress() {
     let docobj;
-    docobj = this.masterService.filterData(this.addressTypeData, this.address.AddressType, 'MstFlag');
-    let AddressTypeName = docobj[0].Name;
     docobj = this.masterService.filterData(this.StateData, this.address.StateCode, 'StateCode');
     let StateName = docobj[0].StateDesc;
     docobj = this.masterService.filterData(this.CityData, this.address.CityCode, 'CityCode');
     let CityName = docobj[0].CityName;
-    this.addArray.push({
-      "AddressId": "",
-      "AddressType": this.address.AddressType,
-      "StateCode": this.address.StateCode,
-      "CityCode": this.address.CityCode,
-      "PinCode": this.address.PinCode,
-      "AddressLineOne": this.address.AddressLineOne,
-      "AddressLineTwo": this.address.AddressLineTwo,
-      "AddressLineThree": this.address.AddressLineThree,
-      "IsActive": "Y",
-      "AddressTypeName": AddressTypeName,
-      "StateName": StateName,
-      "CityName": CityName
-    });
-    this.address = { AddressType: '', StateCode: '', CityCode: '' };
+    docobj = this.masterService.filterData(this.addressTypeData, this.address.AddressType, 'MstFlag');
+    let AddressTypeName = docobj[0].Name;
+    if (this.addArray.some(obj => obj.AddressType === docobj[0].MstFlag)) {
+      AppComponent.SmartAlert.Errmsg("The Address is already added in list.");
+      this.address = { AddressType: '', StateCode: '', CityCode: '' };
+    } else {
+      this.addArray.push({
+        "AddressId": "",
+        "AddressType": this.address.AddressType,
+        "StateCode": this.address.StateCode,
+        "CityCode": this.address.CityCode,
+        "PinCode": this.address.PinCode,
+        "AddressLineOne": this.address.AddressLineOne,
+        "AddressLineTwo": this.address.AddressLineTwo,
+        "AddressLineThree": this.address.AddressLineThree,
+        "IsActive": "Y",
+        "AddressTypeName": AddressTypeName,
+        "StateName": StateName,
+        "CityName": CityName
+      });
+      this.address = { AddressType: '', StateCode: '', CityCode: '' };
+    }
+
   }
   onRemoveAddress(data, index) {
     if (data.AddressId != '' && data.AddressId != null) {

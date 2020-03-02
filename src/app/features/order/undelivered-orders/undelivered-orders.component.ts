@@ -6,6 +6,7 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { CustomerService } from '@app/features/customer/customer.service';
 @Component({
   selector: 'sa-undelivered-orders',
   templateUrl: './undelivered-orders.component.html',
@@ -22,7 +23,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   public minDate: Date;
   public maxDate: Date = new Date();
   public ProductArray: any = [];
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -73,7 +74,8 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
     });
   }
   onLoad() {
-    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 5, this.deliverFilter.DelUserCode, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+    this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
+    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 5, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

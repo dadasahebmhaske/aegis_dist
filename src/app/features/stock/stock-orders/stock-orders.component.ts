@@ -69,7 +69,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product.ProdSegId = '';
       AppComponent.SmartAlert.Errmsg(`Please select plant first`);
     } else {
-      this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
+      this.masterService.getNewProducts(this.cpInfo.CPCode, this.stock.PlantId, this.product.ProdSegId).subscribe((resPT: any) => {
         if (resPT.StatusCode != 0) {
           this.productDataSelected = resPT.Data;
         } else { this.productDataSelected = []; }
@@ -102,7 +102,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
       this.product.ProdSeg = docobj[0].ProdSeg;//extra
       docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
-      this.product.ProdRate = docobj[0].DepositAmount;
+      this.product.ProdRate = docobj[0].Price;
       this.product.Product = docobj[0].Product; //extra
       this.product.ProdCode = docobj[0].ProductCode;
       this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;

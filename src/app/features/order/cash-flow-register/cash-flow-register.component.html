@@ -19,14 +19,20 @@
                   </div>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
-                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
-                        bsDatepicker [bsConfig]="datePickerConfig" />
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                          bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">

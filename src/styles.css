@@ -357,6 +357,25 @@ body.smart-style-2 {
   background-color: #7876a142 !important;
 }
 
+.posticon {
+    position: relative;
+    display: block;
+}
+.icon-append {
+    right: 5px;
+    padding-left: 3px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    position: absolute;
+    top: 5px;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #747070;
+}
+
 .cssload-box-loading {
 	width: 49px;
 	height: 49px;

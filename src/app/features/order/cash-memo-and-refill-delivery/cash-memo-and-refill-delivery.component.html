@@ -17,8 +17,8 @@
                                       >Route
                                       <span class="errorMessage">*</span>
                                     </label> -->
-                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()" required>
-                        <option value="" hidden selected> Select Route <span id="opt">*</span> </option>
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()">
+                        <option value="" hidden selected> Select Route </option>
                         <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
                       </select>
                     </div>
@@ -29,9 +29,8 @@
                                       >Sub Area
                                       <span class="errorMessage">*</span>
                                     </label> -->
-                      <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control" required>
-                        <option value="" selected hidden> Select Sub Area <span class="errorMessage">*</span>
-                        </option>
+                      <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control">
+                        <option value="" selected hidden> Select Sub Area </option>
                         <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}</option>
                       </select>
                     </div>

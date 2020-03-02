@@ -67,8 +67,8 @@ export class OrderService {
     public postCashMemoUndeliverRefill(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessMarkRefillUnDeliver`, data, AppComponent.httpOptions);
     }
-    public getRefillDeliveryDetails(cpcode, delStatus, DelUserCode, fd, td) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDelivery?DelRefNo=&CPCode=${cpcode}&ConsId=&DelStatus=${delStatus}&DelUserCode=${DelUserCode}&FDate=${fd}&TDate=${td}`);
+    public getRefillDeliveryDetails(cpcode, delStatus, DelFilter, fd, td) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDelivery?DelRefNo=&CPCode=${cpcode}&ConsId=&DelStatus=${delStatus}&DelUserCode=${DelFilter.DelUserCode}&ConsNo=${DelFilter.ConsNo}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
     }
     public getRefillDeliveryProductDetails(cpcode, delRef) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliveryProducts?DelRefNo=${delRef}&CPCode=${cpcode}`);

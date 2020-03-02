@@ -95,7 +95,6 @@ export class CustomerMasterComponent implements OnInit {
   }
   getCustomer() {
     this.custData = this.masterService.filterData(this.custDataStored, this.ConsNo, 'ConsNo');
-    if (this.custData.length == 0)
-      this.custData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found');
+    if (this.custData.length == 0) { this.custData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found'); }
   }
 }
