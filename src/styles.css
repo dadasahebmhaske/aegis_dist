@@ -417,6 +417,10 @@ body.smart-style-2 {
 		-webkit-animation: cssload-animate 0.58s linear infinite;
 		-moz-animation: cssload-animate 0.58s linear infinite;
 }
+@media only screen and (max-width: 479px) and (min-width: 320px){
+#logo-group {
+    width: 94px!important;
+}}
 @keyframes cssload-animate {
 	17% {
 		border-bottom-right-radius: 3px;

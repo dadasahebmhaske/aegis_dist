@@ -60,7 +60,6 @@ export class OrderService {
     public postCancelBooking(data: string) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessCancelRefillBooking`, { data: data }, AppComponent.httpOptions);
     }
-
     public postCashMemoDeliverRefill(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessRefillDelivery`, data, AppComponent.httpOptions);
     }

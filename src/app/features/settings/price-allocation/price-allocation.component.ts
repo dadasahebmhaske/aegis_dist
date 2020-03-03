@@ -30,7 +30,7 @@ export class PriceAllocationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.datashare.GetSharedData.subscribe(data => this.Pallocation = data == null ? { ProdSegId: '', ProdId: '', IsActive: 'Y' } : data);
-    //this.onSelectProdSegment();
+    this.onSelectProdSegment();
     this.onloadAll();
   }
 

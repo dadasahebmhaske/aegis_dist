@@ -177,7 +177,7 @@
                               <div class="form-group">
                                 <label for="sel1">Route <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" [(ngModel)]="customer.RoutId" name="RoutId" (change)="getSubArea()" required>
+                                <select class="form-control" [(ngModel)]="customer.RoutId" name="RoutId" (change)="GetSubArea()" required>
                                   <option value="" selected hidden> Select Route </option>
                                   <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}} </option>
                                 </select>

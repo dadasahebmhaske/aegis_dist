@@ -349,6 +349,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
+        this.GetSubArea();
       }
     });
     this.masterService.getState().subscribe((resSt: any) => {
@@ -358,7 +359,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.customerService.getContraType().subscribe((resCo) => {
       if (resCo.StatusCode != 0) {
         this.ContractData = resCo.Data;
-        this.getSubArea();
       }
     });
     this.masterService.getDocumentType('CUSTM').subscribe(
@@ -385,7 +385,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     });
 
   }
-  getSubArea() {
+  GetSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
   }
   //product

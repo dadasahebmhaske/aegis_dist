@@ -33,7 +33,7 @@ export class CustomerWiseTransactionsComponent implements OnInit, OnDestroy {
     this.StartMindate.setFullYear(this.StartMindate.getFullYear() - 1);
     this.deliverFilter.StartDate = this.StartMindate;
     this.deliverFilter.EndDate = new Date();
-    this.configureGrid();
+    this.configureGrid(); this.DeliveredOrderData = [{}];
     this.allOnLoad();
   }
   allOnLoad() {
@@ -73,7 +73,7 @@ export class CustomerWiseTransactionsComponent implements OnInit, OnDestroy {
       { name: 'ReturnReason', displayName: 'Undelivered Reason', width: "250", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-    this.onLoad();
+    //this.onLoad();
   }
   onEditFunction = (event) => {
     this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
