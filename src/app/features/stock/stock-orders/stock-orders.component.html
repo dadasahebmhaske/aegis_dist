@@ -86,9 +86,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-1">
+                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
-                                                <label>Rate <span class="errorMessage">*</span>
+                                                <label> <span *ngIf="product.OrderType=='RO'">Rate </span>
+                                                    <span *ngIf="product.OrderType=='NC'">Deposite </span>
                                                 </label>
                                                 <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir
                                                     dirType="number" disabled required />
@@ -102,11 +103,19 @@
                                                     saCommonDir dirType="number" required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-2" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> Amount <span class="errorMessage">*</span>
                                                 </label>
                                                 <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.ProdAmt" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2" *ngIf="product.OrderType=='NC'">
+                                            <div class="form-group">
+                                                <label>Refundable Amount <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.RefundRate" saCommonDir dirType="number" disabled
                                                     required />
                                             </div>
                                         </div>
@@ -129,13 +138,14 @@
                                                         <th>Order Type</th>
                                                         <th>Product Segment</th>
                                                         <th>Product Name</th>
-                                                        <th class="text-right">Rate</th>
+                                                        <th class="text-right">Rate / Deposit</th>
                                                         <th class="text-right">Quantity</th>
                                                         <th class="text-right">Sub Total</th>
                                                         <th class="text-right">IGST </th>
                                                         <th class="text-right"> CGST </th>
                                                         <th class="text-right">SGST </th>
                                                         <th class="text-right">Amount</th>
+                                                        <th class="text-right">Refundable Amount</th>
                                                         <th>Remove</th>
                                                     </tr>
                                                 </thead>
@@ -145,13 +155,14 @@
                                                         <td>{{pr.OrderTypeName}}</td>
                                                         <td>{{pr.ProdSeg}}</td>
                                                         <td>{{pr.Product}}</td>
-                                                        <td class="text-right">{{pr.ProdRate}}</td>
+                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdRate}}</td>
                                                         <td class="text-right">{{pr.ProdQty}}</td>
                                                         <td class="text-right">{{pr.SubTotal}}</td>
                                                         <td class="text-right">{{pr.IgstAmt}}</td>
                                                         <td class="text-right">{{pr.CgstAmt}}</td>
                                                         <td class="text-right">{{pr.SgstAmt}}</td>
-                                                        <td class="text-right">{{pr.GrandTotal}}</td>
+                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.GrandTotal}}</td>
+                                                        <td class="text-right">{{pr.RefundRate}}</td>
                                                         <td>
                                                             <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                                         </td>
@@ -164,6 +175,7 @@
                                                         <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
+                                                        <td class="text-right"><strong>{{stock.RefundRate}}</strong></td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>

@@ -69,7 +69,9 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product.ProdSegId = '';
       AppComponent.SmartAlert.Errmsg(`Please select plant first`);
     } else {
-      this.masterService.getNewProducts(this.cpInfo.CPCode, this.stock.PlantId, this.product.ProdSegId).subscribe((resPT: any) => {
+      if (this.product.OrderType != null)
+        this.product.ProdType = this.product.OrderType == 'RO' || this.product.OrderType == 'DR' ? 'F' : 'E';
+      this.masterService.getNewProducts(this.cpInfo.CPCode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType).subscribe((resPT: any) => {
         if (resPT.StatusCode != 0) {
           this.productDataSelected = resPT.Data;
         } else { this.productDataSelected = []; }
@@ -102,7 +104,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
       this.product.ProdSeg = docobj[0].ProdSeg;//extra
       docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
-      this.product.ProdRate = docobj[0].Price;
+      this.product.ProdRate = docobj[0].ProdPrice;
       this.product.Product = docobj[0].Product; //extra
       this.product.ProdCode = docobj[0].ProductCode;
       this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
@@ -126,6 +128,8 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
           this.product.CgstAmt = this.product.SgstAmt = 0;
         }
         this.product.SubTotal = parseInt(this.product.ProdAmt);
+        if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.GrandTotal = 0; this.product.SubTotal = 0; }
+        if (this.product.OrderType == 'NC') { this.product.RefundRate = this.product.GrandTotal; } else { this.product.RefundRate = 0; }
       }
       this.product.OrderCode = '';
       this.product.CouponCode = '';

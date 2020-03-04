@@ -187,7 +187,7 @@ export class GodownComponent implements OnInit, OnDestroy {
     this.bulkAdd.Flag = this.godown.AddressId == null ? "IN" : "UP";
     this.bulkAdd.data = this.addArray;
     this.bulkAdd.RefId = this.godown.GodownId;
-    this.bulkAdd.FormFlag = 'CUSTM';
+    this.bulkAdd.FormFlag = 'GDWN';
     //this.bulkAdd.AddressType = 'H';
     this.bulkAdd.UserCode = this.cpInfo.EmpId;
     //let ciphertext = this.appService.getEncrypted(this.bulkAdd);

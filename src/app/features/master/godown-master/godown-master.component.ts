@@ -59,7 +59,7 @@ export class GodownMasterComponent implements OnInit {
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    // console.log($event.row);
+    console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/godown']);
   }
@@ -72,5 +72,4 @@ export class GodownMasterComponent implements OnInit {
       else { this.godownData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
-
 }

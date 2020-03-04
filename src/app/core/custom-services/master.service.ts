@@ -55,8 +55,8 @@ export class MasterService {
   public getProductSegmentDetails() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&IsActive=Y`);
   }
-  public getNewProducts(cpcode, plantId, Pscode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=ADPA&CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&IsActive=Y`);
+  public getNewProducts(cpcode, plantId, Pscode, Prodtype) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&IsActive=Y`);
   }
   public getProducts(Pscode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y`);
