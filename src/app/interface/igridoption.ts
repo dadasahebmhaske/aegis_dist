@@ -19,7 +19,8 @@ export interface IGridoption {
     enableRowSelection: boolean,
     enableSelectAll: boolean,
     enableRowHeaderSelection: boolean,
-    selectionRowHeaderWidth: number
+    selectionRowHeaderWidth: number,
+
 }
 
 export enum IGridHeaderCellClass {
@@ -34,4 +35,5 @@ export interface IGridColumnDefs {
     cellTemplate: string;
     displayName: string;
     enableSorting: boolean;
+    cellClass: string;
 }

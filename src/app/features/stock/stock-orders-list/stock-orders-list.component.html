@@ -99,6 +99,7 @@
                           <th class="text-right"> CGST </th>
                           <th class="text-right">SGST </th>
                           <th class="text-right">Amount</th>
+                          <th class="text-right">Refund</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -107,13 +108,14 @@
                           <td>{{pr.OrderTypeName}}</td>
                           <td>{{pr.ProdSeg}}</td>
                           <td>{{pr.Product}}</td>
-                          <td class="text-right">{{pr.ProdRate}}</td>
+                          <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdRate}}</td>
                           <td class="text-right">{{pr.ProdQty}}</td>
                           <td class="text-right">{{pr.SubTotal}}</td>
                           <td class="text-right">{{pr.IgstAmt}}</td>
                           <td class="text-right">{{pr.CgstAmt}}</td>
                           <td class="text-right">{{pr.SgstAmt}}</td>
-                          <td class="text-right">{{pr.GrandTotal}}</td>
+                          <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.GrandTotal}}</td>
+                          <td class="text-right">{{pr.RefundAmt}}</td>
                         </tr>
                         <tr>
                           <td colspan="5" class="text-right"><strong>Total</strong> :</td>
@@ -123,6 +125,7 @@
                           <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                           <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
                           <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
                         </tr>
                       </tbody>
                     </table>

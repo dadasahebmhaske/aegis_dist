@@ -34,7 +34,7 @@ export class VehicleMasterComponent implements OnInit {
       { name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'VehicleNo', displayName: 'Vehicle No', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'VehicleType', displayName: 'Vehicle Type', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CylCapacity', displayName: 'Cylinder Capacity', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CylCapacity', displayName: 'Cylinder Capacity', cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'LastFitnessDate', displayName: 'Last Fitness Date', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsInsurance', displayName: 'Insurance Done', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'InsRenewalDate', displayName: 'Insurance Renewal Date', width: "*", cellTooltip: true, filterCellFiltered: true },

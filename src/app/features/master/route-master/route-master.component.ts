@@ -33,9 +33,9 @@ export class RouteMasterComponent implements OnInit {
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'RouteId', displayName: 'Route ID', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RouteId', displayName: 'Route ID', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'RouteName', displayName: 'Route', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();

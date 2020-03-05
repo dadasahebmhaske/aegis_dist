@@ -129,7 +129,10 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
         }
         this.product.SubTotal = parseInt(this.product.ProdAmt);
         if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.GrandTotal = 0; this.product.SubTotal = 0; }
-        if (this.product.OrderType == 'NC') { this.product.RefundRate = this.product.GrandTotal; } else { this.product.RefundRate = 0; }
+        if (this.product.OrderType == 'NC') {
+          this.product.RefundRate = this.product.ProdRate;
+          this.product.RefundAmt = parseInt(this.product.RefundRate) * parseInt(this.product.ProdQty);
+        } else { this.product.RefundRate = 0; }
       }
       this.product.OrderCode = '';
       this.product.CouponCode = '';

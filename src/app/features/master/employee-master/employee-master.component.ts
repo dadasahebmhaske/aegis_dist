@@ -35,19 +35,19 @@ export class EmployeeMasterComponent implements OnInit {
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'EmpId', displayName: 'Emp ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
+      { name: 'EmpId', displayName: 'Emp ID', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'FirstName', displayName: 'First Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'LastName', displayName: 'Last Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'RoleCode', displayName: 'Designation', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Salary', displayName: 'Salary', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Salary', displayName: 'Salary', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'Gender', displayName: 'Gender', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'DateOfBirth', displayName: 'Date Of Birth', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DateOfBirth', displayName: 'Date Of Birth', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'EmailId', displayName: 'Email Id', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'MobileNo', displayName: 'Mobile No.', width: "110", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'BloodGrp', displayName: 'Blood Group', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'Qualification', displayName: 'Qualification', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Active', width: "90", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "90", cellTooltip: true, filterCellFiltered: true },
 
     ]
     this.gridOptions.columnDefs = columnDefs;

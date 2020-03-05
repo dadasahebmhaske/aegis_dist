@@ -5,10 +5,11 @@ import { AppComponent } from '@app/app.component';
 export class StockService {
     constructor(private httpClient: HttpClient) { }
     public calculateQtyGTotal(stock, ProductArray) {
-        stock.GrandTotal = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = 0;
+        stock.GrandTotal = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = stock.TtlRefundAmt = 0;
         if (ProductArray.length != 0)
             for (let i = 0; i < ProductArray.length; i++) {
                 stock.GrandTotal = parseInt(stock.GrandTotal) + parseInt(ProductArray[i].GrandTotal);
+                stock.TtlRefundAmt = parseInt(stock.TtlRefundAmt) + parseInt(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
                 stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 stock.SubTotal = parseInt(stock.SubTotal) + parseInt(ProductArray[i].SubTotal);
                 stock.IgstTotal = parseInt(stock.IgstTotal) + parseInt(ProductArray[i].IgstAmt);

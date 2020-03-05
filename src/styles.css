@@ -421,6 +421,18 @@ body.smart-style-2 {
 #logo-group {
     width: 94px!important;
 }}
+.cell-right{
+    text-align: right;
+}
+.cell-center{
+    text-align: center;
+}
+.ui-grid-header-cell .ui-grid-cell-contents{
+   text-align: center;
+}
+.loader-center{
+  position:absolute;left: 50%;top:50%;  margin-left: -282px; margin-top: -188px;
+}
 @keyframes cssload-animate {
 	17% {
 		border-bottom-right-radius: 3px;

@@ -41,12 +41,12 @@ export class TransferCustomerInComponent implements OnInit, OnDestroy {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Reject</div>', enableFiltering: false
       },
 
-      { name: 'OldCPCode', displayName: 'CP Code', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OldCPCode', displayName: 'CP Code', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'OldCP', displayName: 'Channel Partner Name', width: "250", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Customer Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'MobileNo', displayName: 'Mobile No.', width: "110", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TransReqDate', displayName: 'Transfer Out Date', width: "140", cellTooltip: true, filterCellFiltered: true },
-      { name: 'AcptRejDate', displayName: 'Transfer In Date', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MobileNo', displayName: 'Mobile No.', width: "110", cellClass: 'cell-center', cellTooltip: true, filterCellFiltered: true },
+      { name: 'TransReqDate', displayName: 'Transfer Out Date', cellClass: 'cell-center', width: "140", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AcptRejDate', displayName: 'Transfer In Date', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ReqRemark', displayName: 'Reason', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;

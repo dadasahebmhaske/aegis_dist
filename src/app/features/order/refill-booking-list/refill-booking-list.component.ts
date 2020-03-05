@@ -52,19 +52,19 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
       //   , width: "71", exporterSuppressExport: true,
       //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       // },
-      { name: 'ConsNo', displayName: 'Costumer No', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'BookNo', displayName: 'Book No.', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'BookDate', displayName: 'Book Date', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookNo', displayName: 'Book No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BookDate', displayName: 'Book Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'BookStatusName', displayName: 'Book Status', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TtlProdQty', displayName: 'Total Qty', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RefillAmount', displayName: 'Refill Amount', width: "160", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Discount', displayName: 'Discount', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'TotalAmtPayable', displayName: 'Amount Payable', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TtlProdQty', displayName: 'Total Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RefillAmount', displayName: 'Refill Amount', cellClass: 'cell-right', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Discount', displayName: 'Discount', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalAmtPayable', displayName: 'Amount Payable', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'AllocatedUserName', displayName: 'Delivery Boy', width: "180", cellTooltip: true, filterCellFiltered: true },
-      { name: 'IsActive', displayName: 'Is Active', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
+      { name: 'IsActive', displayName: 'Is Active', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true, visible: false },
     ]
     this.gridOptions.columnDefs = columnDefs;
     // this.onLoad();

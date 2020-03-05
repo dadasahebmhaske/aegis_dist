@@ -33,8 +33,8 @@ export class SubAreaMasterComponent implements OnInit {
       },
       { name: 'RouteName', displayName: 'Route Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubAreaId', displayName: 'Sub Area Id', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'IsActive', displayName: 'Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaId', displayName: 'Sub Area Id', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
+      { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();

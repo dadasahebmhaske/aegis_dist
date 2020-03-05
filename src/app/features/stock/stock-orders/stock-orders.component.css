@@ -7,3 +7,6 @@ hr.simple {
 .text-right{
     text-align: right;
 }
+ small {
+    font-size: 76%;
+}

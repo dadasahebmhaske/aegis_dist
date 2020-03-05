@@ -115,7 +115,7 @@
                                             <div class="form-group">
                                                 <label>Refundable Amount <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.RefundRate" saCommonDir dirType="number" disabled
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.RefundAmt" saCommonDir dirType="number" disabled
                                                     required />
                                             </div>
                                         </div>
@@ -162,7 +162,7 @@
                                                         <td class="text-right">{{pr.CgstAmt}}</td>
                                                         <td class="text-right">{{pr.SgstAmt}}</td>
                                                         <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.GrandTotal}}</td>
-                                                        <td class="text-right">{{pr.RefundRate}}</td>
+                                                        <td class="text-right">{{pr.RefundAmt}}</td>
                                                         <td>
                                                             <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                                         </td>
@@ -175,7 +175,7 @@
                                                         <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
-                                                        <td class="text-right"><strong>{{stock.RefundRate}}</strong></td>
+                                                        <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>

@@ -50,15 +50,15 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
       //{ name: 'OrderType', displayName: 'Order Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrderNo', displayName: 'Order No.', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrderDt', displayName: 'Order Date', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OrderNo', displayName: 'Order No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OrderDt', displayName: 'Order Date', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'PlantName', displayName: 'Plant Name', width: "250", cellTooltip: true, filterCellFiltered: true },
       { name: 'Vehicle', displayName: 'Vehicle', width: "200", cellTooltip: true, filterCellFiltered: true },
       // { name: 'RefillQty', displayName: 'Refill Qty', width: "100", cellTooltip: true, filterCellFiltered: true },
       // { name: 'EmptyQty', displayName: 'Empty Qty', width: "110", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
       // { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
-      { name: 'GrandTotal', displayName: 'Amount', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'GrandTotal', displayName: 'Amount', width: "100", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
       { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
 
@@ -75,6 +75,8 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   onDeleteFunction = ($event) => {
     // console.log($event.row);
     this.stock = $event.row;
+    this.StartDate = this.appService.DateToString(this.StartDate);
+    this.EndDate = this.appService.DateToString(this.EndDate);
     this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, this.StartDate, this.EndDate).subscribe((resp: any) => {
       if (resp.StatusCode != 0) {
         this.ProductArray = resp.Data;
