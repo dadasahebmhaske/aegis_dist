@@ -36,7 +36,7 @@ export class AddImbalanceComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-if="row.entity.IsActive=='Y' || row.entity.Status=='PE" ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
+        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-if="row.entity.Status=='PE" ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },

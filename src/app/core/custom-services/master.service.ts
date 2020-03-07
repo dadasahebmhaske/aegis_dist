@@ -32,8 +32,8 @@ export class MasterService {
   getDocumentDetails(formFlag, RefId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DOC&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
   }
-  public getDesignation() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=DGM&IsActive=Y`);
+  public getDesignation(DeptId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DGM&IsActive=Y&DeptId=${DeptId}`);
   }
   public getCustomer(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&IsActive=Y`);

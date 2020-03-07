@@ -8,9 +8,9 @@ describe('SendGreetingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SendGreetingsComponent ]
+      declarations: [SendGreetingsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,6 +19,9 @@ describe('SendGreetingsComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
   it('should create', () => {
     expect(component).toBeTruthy();
   });

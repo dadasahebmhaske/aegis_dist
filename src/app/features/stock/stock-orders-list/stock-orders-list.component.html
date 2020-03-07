@@ -34,8 +34,10 @@
                       <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
                         <option value="" selected hidden>Select Order Status</option>
                         <option value="PE">Pending</option>
-                        <option value="RJ">Reject</option>
-                        <option value="DI">Dispatch</option>
+                        <option value="AC">Accepted By Admin</option>
+                        <option value="CA">Accepted By CP</option>
+                        <option value="RJ">Rejected</option>
+                        <option value="DI">Dispatched</option>
                       </select>
                     </div>
                   </div>
@@ -114,7 +116,7 @@
                           <td class="text-right">{{pr.IgstAmt}}</td>
                           <td class="text-right">{{pr.CgstAmt}}</td>
                           <td class="text-right">{{pr.SgstAmt}}</td>
-                          <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.GrandTotal}}</td>
+                          <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdAmt}}</td>
                           <td class="text-right">{{pr.RefundAmt}}</td>
                         </tr>
                         <tr>
@@ -124,11 +126,18 @@
                           <td class="text-right"><strong>{{stock.IgstTotal}}</strong></td>
                           <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                           <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
-                          <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
+                          <td class="text-right"><strong>{{stock.ProdAmt}}</strong></td>
                           <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </div>
+                <div class="col-sm-12" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'">
+                  <div class="form-group">
+                    <label>Reject Remark <span class="errorMessage">*</span>
+                    </label>
+                    <textarea class="form-control" [(ngModel)]="stock.RejectRemark" name="Remark" placeholder=""></textarea>
                   </div>
                 </div>
               </div>
@@ -137,7 +146,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <label class="pull-left" [hidden]="stock.IsDispatch != 'Y' "><strong>Dispatch Date :</strong> {{stock.DispatchDt}}</label>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

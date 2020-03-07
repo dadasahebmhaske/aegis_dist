@@ -161,7 +161,7 @@
                                                         <td class="text-right">{{pr.IgstAmt}}</td>
                                                         <td class="text-right">{{pr.CgstAmt}}</td>
                                                         <td class="text-right">{{pr.SgstAmt}}</td>
-                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.GrandTotal}}</td>
+                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdAmt}}</td>
                                                         <td class="text-right">{{pr.RefundAmt}}</td>
                                                         <td>
                                                             <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
@@ -174,7 +174,7 @@
                                                         <td class="text-right"><strong>{{stock.IgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
-                                                        <td class="text-right"><strong>{{stock.GrandTotal}}</strong></td>
+                                                        <td class="text-right"><strong>{{stock.ProdAmt}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
                                                         <td></td>
                                                     </tr>

@@ -11,16 +11,32 @@
             <div class="widget-body">
               <div class="row ">
                 <form name="dayEndSearchForm" #dayEndSearchForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                  <div class="col-sm-2 col-xs-8">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="dayEndFilt.StartDate" name="Startdate" id="startDate"
-                        (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                  <div class="col-sm-1 col-xs-8 marg-top">
+                    <div class="form-group ">
+                      <label class="pull-right">Last Day End</label>
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="dayEndFilt.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
-                        bsDatepicker [bsConfig]="datePickerConfig" />
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="dayEndFilt.lastDayEnd" name="lastDayEnd" id="lastDayEnd"
+                          onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" disabled />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-8 marg-top">
+                    <div class="form-group">
+                      <label class="pull-right">Current Date</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="dayEndFilt.CurrentDate" name="EndDate" onkeydown="return false"
+                          [minDate]="minDate" [maxDate]="maxDate" bsDatepicker [bsConfig]="datePickerConfig1" />
+                      </label>
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">

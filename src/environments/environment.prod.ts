@@ -18,5 +18,7 @@ export const environment = {
   BaseUrlDist: 'http://apk.sipl.pw/AegisDistributorApi/api/',
   ImageUrl: 'http://apk.sipl.pw/AegisDistributorApi/Documents/',
   authKey: 'Aegis:Aegis@12345?',
-  secureKey: 'AEGIS11223344556'
+  secureKey: 'AEGIS11223344556',
+  deptId: 1006
+
 };

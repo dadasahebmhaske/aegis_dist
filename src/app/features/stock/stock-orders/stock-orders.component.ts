@@ -117,18 +117,18 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       }
       if (this.product.ProdQty != null) {
         this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
+        this.product.SubTotal = parseInt(this.product.ProdAmt);
         if (parseInt(this.cpInfo.StateCode) == parseInt(plantStateCode)) {
           this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
           this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
-          this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
+          this.product.ProdAmt = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
           this.product.IgstAmt = 0;
         } else {
           this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
-          this.product.GrandTotal = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
+          this.product.ProdAmt = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
           this.product.CgstAmt = this.product.SgstAmt = 0;
         }
-        this.product.SubTotal = parseInt(this.product.ProdAmt);
-        if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.GrandTotal = 0; this.product.SubTotal = 0; }
+        if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.ProdAmt = 0; this.product.SubTotal = 0; }
         if (this.product.OrderType == 'NC') {
           this.product.RefundRate = this.product.ProdRate;
           this.product.RefundAmt = parseInt(this.product.RefundRate) * parseInt(this.product.ProdQty);
@@ -140,7 +140,6 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product.TranCharges = '';
       this.product.IsActive = 'Y';
     }
-
   }
   addProduct() {
     if (this.ProductArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId)) && this.ProductArray.some(obj => obj.OrderType === this.product.OrderType)) {
@@ -179,7 +178,8 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stock.OrderNo = this.stock.OrderNo == null || this.stock.OrderNo == '' ? '' : this.stock.OrderNo;
       this.stock.OrderCode = this.stock.OrderCode == null || this.stock.OrderCode == '' ? '' : this.stock.OrderCode;
       this.stock.CPCode = this.cpInfo.CPCode;
-      this.stock.ProdAmt = this.stock.SubTotal
+      //this.stock.ProdAmt = this.stock.SubTotal
+      this.stock.GrandTotal = this.stock.ProdAmt;
       this.stock.DiscountAmt = '';
       //this.stock.SubTotal
       //this.stock.GrandTotal    

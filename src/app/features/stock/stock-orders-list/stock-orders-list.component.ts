@@ -5,6 +5,7 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { StockService } from '../stock.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'sa-stock-orders-list',
   templateUrl: './stock-orders-list.component.html',
@@ -50,18 +51,17 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
       //{ name: 'OrderType', displayName: 'Order Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrderNo', displayName: 'Order No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OrderNo', displayName: 'Order No.', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'OrderDt', displayName: 'Order Date', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'PlantName', displayName: 'Plant Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Vehicle', displayName: 'Vehicle', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Vehicle', displayName: 'Vehicle', width: "220", cellTooltip: true, filterCellFiltered: true },
       // { name: 'RefillQty', displayName: 'Refill Qty', width: "100", cellTooltip: true, filterCellFiltered: true },
       // { name: 'EmptyQty', displayName: 'Empty Qty', width: "110", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DefecQty', displayName: 'Defective Qty', width: "140", cellTooltip: true, filterCellFiltered: true },
       // { name: 'NewConn', displayName: 'New Connection', width: "145", cellTooltip: true, filterCellFiltered: true },
       { name: 'GrandTotal', displayName: 'Amount', width: "100", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
-      { name: 'OrdStatus', displayName: 'Order Status', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OrdStatus', displayName: 'Order Status', width: "150", cellTooltip: true, filterCellFiltered: true },
       // { name: 'DocRefCode', displayName: 'Invoice No.', width: "150", cellTooltip: true, filterCellFiltered: true },
-
       { name: 'Remark', displayName: 'Remark', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
@@ -73,7 +73,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
     AppComponent.Router.navigate(['/stock/stock-orders']);
   }
   onDeleteFunction = ($event) => {
-    // console.log($event.row);
+    console.log($event.row);
     this.stock = $event.row;
     this.StartDate = this.appService.DateToString(this.StartDate);
     this.EndDate = this.appService.DateToString(this.EndDate);
@@ -98,6 +98,45 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); this.stockOrdersData = [{}] }
     });
   }
+  DispatchOrder(action) {
+    if (action == 'RJ' && this.stock.RejectRemark == null || this.stock.RejectRemark == '') {
+      AppComponent.SmartAlert.Errmsg(`Please enter reject remark`);
+    } else {
+      let text = action == 'AC' ? `You want to accept this order!` : `You want to reject this order!`
+      let subText = action == 'AC' ? 'accept' : 'reject';
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `${text}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: `Yes, ${subText} it!`,
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.value) {
+          this.stock.OrderStage = action == 'AC' ? 'CA' : 'RJ';
+          this.onSubmitDispatchOrder();
+        } else if (result.dismiss === Swal.DismissReason.cancel) { }
+      })
+    }
+  }
+  onSubmitDispatchOrder() {
+    this.loaderbtn = false;
+    this.stock.OrderCode
+    this.stock.CPCode = this.cpInfo.CPCode;
+    this.stock.OrderType = "WB";
+    this.stock.UserCode = this.cpInfo.EmpId;
+    this.stock.Flag = "UP";
+    this.stock.data = this.ProductArray;
+    this.stockService.postBulkOrders(this.stock).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        AppComponent.SmartAlert.Success(resData.Message);
+        this.onLoad();
+        $('#productsModal').modal('hide');
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
   resetEndDate(val) {
     this.minDate = val;
     if (val != undefined && val != null && this.EndDate != null) {
@@ -105,7 +144,6 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
         this.EndDate = '';
       }
     }
-
   }
   ngOnDestroy() {
     this.appService.removeBackdrop();

@@ -48,7 +48,6 @@ export class EmployeeMasterComponent implements OnInit {
       { name: 'BloodGrp', displayName: 'Blood Group', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'Qualification', displayName: 'Qualification', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "90", cellTooltip: true, filterCellFiltered: true },
-
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
@@ -59,7 +58,7 @@ export class EmployeeMasterComponent implements OnInit {
     AppComponent.Router.navigate(['/master/employee']);
   }
   getDesignations() {
-    this.masterService.getDesignation().subscribe((res: any) => {
+    this.masterService.getDesignation(AppComponent.DeptId).subscribe((res: any) => {
       if (res.StatusCode != 0)
         this.designationData = res.Data;
       this.designationData.unshift({ RoleCode: "ALL", RoleDesc: "ALL" });

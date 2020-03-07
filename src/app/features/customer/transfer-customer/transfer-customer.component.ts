@@ -99,7 +99,7 @@ export class TransferCustomerComponent implements OnInit {
       let forData = [];
       if (this.selectedRows != null) {
         for (let i = 0; i < this.selectedRows.length; i++) {
-          forData.push({ Id: '', ConsId: this.selectedRows[i].ConsId, ConsNo: this.selectedRows[i].ConsNo });
+          forData.push({ Id: '', ConsId: String(this.selectedRows[i].ConsId), ConsNo: this.selectedRows[i].ConsNo });
         }
         this.custOutList.data = forData;
         this.selectedRows = [];

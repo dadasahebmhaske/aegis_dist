@@ -5,10 +5,10 @@ import { AppComponent } from '@app/app.component';
 export class StockService {
     constructor(private httpClient: HttpClient) { }
     public calculateQtyGTotal(stock, ProductArray) {
-        stock.GrandTotal = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = stock.TtlRefundAmt = 0;
+        stock.ProdAmt = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = stock.TtlRefundAmt = 0;
         if (ProductArray.length != 0)
             for (let i = 0; i < ProductArray.length; i++) {
-                stock.GrandTotal = parseInt(stock.GrandTotal) + parseInt(ProductArray[i].GrandTotal);
+                stock.ProdAmt = parseInt(stock.ProdAmt) + parseInt(ProductArray[i].ProdAmt);
                 stock.TtlRefundAmt = parseInt(stock.TtlRefundAmt) + parseInt(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
                 stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 stock.SubTotal = parseInt(stock.SubTotal) + parseInt(ProductArray[i].SubTotal);
@@ -39,8 +39,14 @@ export class StockService {
     public getStockImbalanceDetails(cpcode, StartDate, EndDate, stage) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=${stage}&IsActive=Y`);
     }
+    public getLastDayEnd(cpcode) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Stock/GetItemCurrentStock?CPCode=${cpcode}&ProdId=&ReferenceNo=&IsActive=Y`);
+    }
     public getDayEndData(cpcode, data) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${data.StartDate}&TDate=${data.EndDate}&ReferenceNo=&IsActive=Y`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Stock/GetItemCurrentStock?CPCode=${cpcode}&LastDayEndDate=${data.lastDayEnd}&CurrentDayEndDate=${data.CurrentDate}`);
+    }
+    public postDayend(data: any) {
+        return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}stock/ProcessDayEnd`, data);
     }
 
 

@@ -48,6 +48,7 @@ export class GodownComponent implements OnInit, OnDestroy {
   public removeDocUpdate: any = [];
   public StateData: any = [];
   public selectedFile: File = null;
+  public tempObje: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   constructor(private httpClient: HttpClient, private appService: AppService, private datashare: DatashareService, private godownService: GodownService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -55,7 +56,8 @@ export class GodownComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}GodownDocs/`;
     this.datashare.GetSharedData.subscribe((data) => {
-      this.godown = data == null ? { IsActive: 'Y', StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data
+      this.godown = data == null ? { IsActive: 'Y', StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data;
+      this.tempObje = { s: this.godown.Startdate, e: this.godown.EndDate, l: this.godown.LeasePeriod };
     });
 
     this.allOnloadMethods();
@@ -322,6 +324,13 @@ export class GodownComponent implements OnInit, OnDestroy {
     let docobj;
     docobj = this.masterService.filterData(this.GodownTypeData, this.godown.GodownTypeId, 'Id');
     this.GodownType = docobj[0].MstFlag;
+    if (this.GodownType == 'O') {
+      this.godown.Startdate = this.godown.EndDate = this.godown.LeasePeriod = ''
+    } else {
+      this.godown.Startdate = this.tempObje.s;
+      this.godown.EndDate = this.tempObje.e;
+      this.godown.LeasePeriod = this.tempObje.l;
+    }
   }
   calculateMonths() {
     if (this.godown.Startdate != undefined && this.godown.EndDate != undefined)

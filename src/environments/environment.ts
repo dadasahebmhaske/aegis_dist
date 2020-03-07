@@ -19,10 +19,11 @@ export const environment = {
     api: null,
     db: 'smartadmin-angular'
   },
-  BaseUrl:'http://192.168.1.198/AEGISAdmin/api/',
-  BaseUrlDist:'http://192.168.1.216:8081/distributorapi/api/',
-  ImageUrl:'http://192.168.1.198/AEGISAdmin/Documents/',
-  authKey:'Aegis:Aegis@12345?', 
-  secureKey:'AEGIS11223344556',
+  BaseUrl: 'http://192.168.1.198/AEGISAdmin/api/',
+  BaseUrlDist: 'http://192.168.1.216:8081/distributorapi/api/',
+  ImageUrl: 'http://192.168.1.198/AEGISAdmin/Documents/',
+  authKey: 'Aegis:Aegis@12345?',
+  secureKey: 'AEGIS11223344556',
+  deptId: 1012
 
 };

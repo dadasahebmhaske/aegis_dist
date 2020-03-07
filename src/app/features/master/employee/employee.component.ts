@@ -34,6 +34,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public docTypeData: any = [];
   public DocFileName: string;
   public document: any = { DocTypId: '' };
+  public dept;
   public employee: any = { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' };
   public fd = new FormData();
   public filepreview: any;
@@ -51,7 +52,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' } : data);
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.getDesignation();
+    this.getDesignation(this.dept);
     this.allOnloadMethods();
     this.imgUrl = `${AppComponent.ImageUrl}EmpDocs/`;
     this.employee.ReTypePassword = this.employee.Password;
@@ -310,8 +311,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }
-  getDesignation() {
-    this.masterService.getDesignation().subscribe((res) => {
+  getDesignation(dept) {
+    this.dept = AppComponent.DeptId;
+    this.masterService.getDesignation(this.dept).subscribe((res) => {
       if (res.StatusCode != 0) {
         this.designationData = res.Data;
       }

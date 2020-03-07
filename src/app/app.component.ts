@@ -18,12 +18,12 @@ export class AppComponent implements OnInit {
   static headers: HttpHeaders;
   static httpOptions;
   static ImageUrl;
+  static DeptId;
   static Router: Router;
   static secureKey;
   static SmartAlert: NotificationService;
   public loading: boolean = false;
   constructor(public router: Router, public SmartAlert: NotificationService) {
-
     AppComponent.httpOptions = {
       headers: new HttpHeaders({
         'content-Type': 'application/json', Authorization: 'Basic ' + btoa(environment.authKey)
@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
     });
     AppComponent.BaseUrl = environment.BaseUrl;
     AppComponent.BaseUrlDist = environment.BaseUrlDist;
+    AppComponent.DeptId = environment.deptId;
     AppComponent.ImageUrl = environment.ImageUrl;
     AppComponent.Router = router;
     AppComponent.SmartAlert = SmartAlert;
