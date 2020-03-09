@@ -1,99 +1,102 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-    <sa-widgets-grid>
-      <div class="row">
-        <article class="col-sm-12">
-          <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-              <header class="text-center"> 
-                        <h2> <i class="fa fa-table"></i> Daily Stock Register</h2>
-            </header>
-            <div>
-              <div class="widget-body">
-                <div class="row ">                 
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Daily Stock Register</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="dailyStockForm" #dailyStockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Start Date." class="form-control" required />
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="stockFilter.StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">
-                      <div class="form-group">
-                        <input type="text" placeholder="Enter End Date." class="form-control" required />
-                      </div>
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="stockFilter.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                          bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <!-- <label for="sel1">Product Category<span class="errorMessage" style="color:red;">*</span></label> -->
-                            <select class="form-control"  >
-                                <option value="" selected hidden>--Select Product Segment--</option>
-                            </select>
-                        </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <!-- <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                      </label> -->
+                      <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="stockFilter.ProdSegId" name="ProdSegId">
+                        <option value="" selected hidden>Select Segment</option>
+                        <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                      </select>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <!-- <label for="sel1">Product<span class="errorMessage" style="color:red;">*</span></label> -->
-                            <select class="form-control"  >
-                                <option value="" selected hidden>--Select Product--</option>
-                            </select>
-                        </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <!-- <label for="sel1">Product <span class="errorMessage">*</span>
+                      </label> -->
+                      <select class="form-control" [(ngModel)]="stockFilter.ProdId" name="ProdId" (change)="onSelectProduct()" [required]="stockFilter.ProdSegId!='' && stockFilter.ProdSegId!=null">
+                        <option value="" selected hidden>Select Product</option>
+                        <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                      </select>
                     </div>
+                  </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
-                      <button type="submit" class="btn btn-block btn-success get_details">
-                        <i class="fa fa-search"></i> Get Details</button>
-  
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
+                </form>
                 <div class="col-sm-12">
-                    <ul id="myTab1" class="nav nav-tabs bordered">
-                        <li [class.active]="state.tabs.demo1 == 0">
-                          <a (click)="state.tabs.demo1 = 0"> Sound </a>
-                        </li>
-                        <li [class.active]="state.tabs.demo1 == 1">
-                          <a (click)="state.tabs.demo1 = 1"> Empty</a>
-                        </li>
-                        <li [class.active]="state.tabs.demo1 == 2">
-                            <a (click)="state.tabs.demo1 = 2"> Defective</a>
-                          </li>
-                      
-                      </ul>
-        
-                      <tabset class="padding-10">
-                        <tab [active]="state.tabs.demo1 == 0">
-                         <div class="row">
-                            <div class="col-sm-12 table-responsive">
-                                <ui-grid [data]="soundData" [gridOptions]="gridOptions" ></ui-grid>
-                              </div>
-                         </div>
-                        </tab>
-                        <tab [active]="state.tabs.demo1 == 1">
-                            <div class="row">
-                                <div class="col-sm-12 table-responsive">
-                                    <ui-grid [data]="emptyData" [gridOptions]="gridEmptyOptions" ></ui-grid>
-                                  </div>
-                             </div>
-                        </tab>
-                        <tab [active]="state.tabs.demo1 == 2">
-                            <div class="row">
-                                <div class="col-sm-12 table-responsive">
-                                    <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions" ></ui-grid>
-                                  </div>
-                             </div>
-                        </tab>
-                     
-                      </tabset>
-        
-                </div>
+                  <ul id="myTab1" class="nav nav-tabs bordered">
+                    <li [class.active]="state.tabs.demo1 == 0">
+                      <a (click)="state.tabs.demo1 = 0;showGrid('S')"> Filled </a>
+                    </li>
+                    <li [class.active]="state.tabs.demo1 == 1">
+                      <a (click)="state.tabs.demo1 = 1;showGrid('E')"> Empty</a>
+                    </li>
+                    <li [class.active]="state.tabs.demo1 == 2">
+                      <a (click)="state.tabs.demo1 = 2;showGrid('D')"> Defective</a>
+                    </li>
+                  </ul>
+                  <tabset class="padding-10">
+                    <tab [active]="state.tabs.demo1 == 0">
+                      <div class="row">
+                        <div class="col-sm-12 table-responsive" *ngIf="flag=='S'">
+                          <ui-grid [data]="soundData" [gridOptions]="gridOptions"></ui-grid>
+                        </div>
+                      </div>
+                    </tab>
+                    <tab [active]="state.tabs.demo1 == 1" *ngIf="flag=='E'">
+                      <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                          <ui-grid [data]="emptyData" [gridOptions]="gridEmptyOptions"></ui-grid>
+                        </div>
+                      </div>
+                    </tab>
+                    <tab [active]="state.tabs.demo1 == 2" *ngIf="flag=='D'">
+                      <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                          <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions"></ui-grid>
+                        </div>
+                      </div>
+                    </tab>
+                  </tabset>
                 </div>
               </div>
             </div>
           </div>
-  
-  
-  
-        </article>
-  
-  
-      </div>
-  
-    </sa-widgets-grid>
-  </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

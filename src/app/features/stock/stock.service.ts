@@ -8,13 +8,13 @@ export class StockService {
         stock.ProdAmt = stock.QtyTotal = stock.SubTotal = stock.IgstTotal = stock.CgstTotal = stock.SgstTotal = stock.TtlRefundAmt = 0;
         if (ProductArray.length != 0)
             for (let i = 0; i < ProductArray.length; i++) {
-                stock.ProdAmt = parseInt(stock.ProdAmt) + parseInt(ProductArray[i].ProdAmt);
-                stock.TtlRefundAmt = parseInt(stock.TtlRefundAmt) + parseInt(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
+                stock.ProdAmt = parseFloat(stock.ProdAmt) + parseFloat(ProductArray[i].ProdAmt);
+                stock.TtlRefundAmt = parseFloat(stock.TtlRefundAmt) + parseFloat(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
                 stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
-                stock.SubTotal = parseInt(stock.SubTotal) + parseInt(ProductArray[i].SubTotal);
-                stock.IgstTotal = parseInt(stock.IgstTotal) + parseInt(ProductArray[i].IgstAmt);
-                stock.CgstTotal = parseInt(stock.CgstTotal) + parseInt(ProductArray[i].CgstAmt);
-                stock.SgstTotal = parseInt(stock.SgstTotal) + parseInt(ProductArray[i].SgstAmt);
+                stock.SubTotal = parseFloat(stock.SubTotal) + parseFloat(ProductArray[i].SubTotal);
+                stock.IgstTotal = parseFloat(stock.IgstTotal) + parseFloat(ProductArray[i].IgstAmt);
+                stock.CgstTotal = parseFloat(stock.CgstTotal) + parseFloat(ProductArray[i].CgstAmt);
+                stock.SgstTotal = parseFloat(stock.SgstTotal) + parseFloat(ProductArray[i].SgstAmt);
             }
         return stock;
     }
@@ -40,13 +40,16 @@ export class StockService {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=${stage}&IsActive=Y`);
     }
     public getLastDayEnd(cpcode) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Stock/GetItemCurrentStock?CPCode=${cpcode}&ProdId=&ReferenceNo=&IsActive=Y`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetLastDayEndDate?pCPCode=${cpcode}`);
     }
     public getDayEndData(cpcode, data) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Stock/GetItemCurrentStock?CPCode=${cpcode}&LastDayEndDate=${data.lastDayEnd}&CurrentDayEndDate=${data.CurrentDate}`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetCurrentStock?pCPCode=${cpcode}&pSegId=&pProdId=&pDayEndDate=${data.lastDayEnd}&pCurrentDate=${data.CurrentDate}&pType=`);
     }
     public postDayend(data: any) {
-        return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}stock/ProcessDayEnd`, data);
+        return this.httpClient.post<any>(`${AppComponent.BaseUrl}stock/ProcessDayEnd`, data);
+    }
+    public getDailyStockRegisterData(data) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetDailyStkRegister?pCPCode=${data.CPCode}&pSegId=${data.ProdSegId}&pProdId=${data.ProdSegId}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}&pType=`);
     }
 
 

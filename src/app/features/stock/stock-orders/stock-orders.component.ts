@@ -77,7 +77,6 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
         } else { this.productDataSelected = []; }
       });
     }
-
   }
   onSelectProduct() {
     let docobj;
@@ -107,6 +106,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.product.ProdRate = docobj[0].ProdPrice;
       this.product.Product = docobj[0].Product; //extra
       this.product.ProdCode = docobj[0].ProductCode;
+      this.product.RefundableAmount = docobj[0].RefundableAmount;
       this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
       this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
       this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
@@ -116,23 +116,22 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
         this.product.SgstPer = 0;
       }
       if (this.product.ProdQty != null) {
-        this.product.ProdAmt = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
-        this.product.SubTotal = parseInt(this.product.ProdAmt);
+        this.product.ProdAmt = parseFloat(this.product.ProdRate) * parseFloat(this.product.ProdQty);
+        this.product.SubTotal = parseFloat(this.product.ProdRate) * parseFloat(this.product.ProdQty);
         if (parseInt(this.cpInfo.StateCode) == parseInt(plantStateCode)) {
-          this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
-          this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
-          this.product.ProdAmt = parseInt(this.product.ProdAmt) + (parseInt(this.product.CgstAmt) + parseInt(this.product.SgstAmt));
+          this.product.CgstAmt = parseFloat(this.product.ProdAmt) * (parseFloat(this.product.CgstPer) / 100);
+          this.product.SgstAmt = parseFloat(this.product.ProdAmt) * (parseFloat(this.product.SgstPer) / 100);
+          this.product.ProdAmt = parseFloat(this.product.ProdAmt) + (parseFloat(this.product.CgstAmt) + parseFloat(this.product.SgstAmt));
           this.product.IgstAmt = 0;
         } else {
-          this.product.IgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.IgstPer) / 100);
-          this.product.ProdAmt = parseInt(this.product.ProdAmt) + (parseInt(this.product.IgstAmt));
+          this.product.IgstAmt = parseFloat(this.product.ProdAmt) * (parseFloat(this.product.IgstPer) / 100);
+          this.product.ProdAmt = parseFloat(this.product.ProdAmt) + (parseFloat(this.product.IgstAmt));
           this.product.CgstAmt = this.product.SgstAmt = 0;
         }
         if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.ProdAmt = 0; this.product.SubTotal = 0; }
         if (this.product.OrderType == 'NC') {
-          this.product.RefundRate = this.product.ProdRate;
-          this.product.RefundAmt = parseInt(this.product.RefundRate) * parseInt(this.product.ProdQty);
-        } else { this.product.RefundRate = 0; }
+          this.product.RefundAmt = parseFloat(this.product.RefundableAmount) * parseFloat(this.product.ProdQty);
+        } else { this.product.RefundableAmount = 0; }
       }
       this.product.OrderCode = '';
       this.product.CouponCode = '';

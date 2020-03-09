@@ -1,18 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
+
+import { AppService } from '@app/core/custom-services/app.service';
+import { DatashareService } from '@app/core/custom-services/datashare.service';
+import { MasterService } from '@app/core/custom-services/master.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { CustomerService } from '@app/features/customer/customer.service';
+import { OrderService } from '@app/features/order/order.service';
 @Component({
   selector: 'sa-customer-daily-stock-register',
   templateUrl: './customer-daily-stock-register.component.html',
   styleUrls: ['./customer-daily-stock-register.component.css']
 })
 export class CustomerDailyStockRegisterComponent implements OnInit {
+  public cpInfo: any = {};
+  public datePickerConfig: Partial<BsDatepickerConfig>;
   public customerDailyStockData: any = [];
+  public stockFilter: any = {};
   public gridOptions: IGridoption;
+  public loaderbtn: boolean = true;
+  public minDate: Date;
+  public StartMindate: Date;
+  public maxDate: Date = new Date();
 
-  constructor() {
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.stockFilter.StartDate = this.stockFilter.EndDate = new Date();
     this.configureGrid();
   }
   configureGrid() {
@@ -36,7 +53,7 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
 
       { name: 'ReturnQty', displayName: 'Return Qty', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CloseingBalance', displayName: 'Closing Quantity', width: "*", cellTooltip: true, filterCellFiltered: true },
-      ]
+    ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
@@ -52,15 +69,28 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
       'Product': 'Comm. Cylinder 19 KG',
       'OpeningBalance': 77,
       'SoundQty': 20,
-      'ReturnQty':12,
-      'CloseingBalance': 85,     }];
-    // this.masters.getVehicles().subscribe(resData:any=>{      
-    //   if(resData.StatusCode!=0){
-    // this.vehicleData=resData.Data;
+      'ReturnQty': 12,
+      'CloseingBalance': 85,
+    }];
+    this.stockFilter = this.customerService.checkCustOrMobNo(this.stockFilter);
+    this.stockFilter.StartDate = this.appService.DateToString(this.stockFilter.StartDate);
+    this.stockFilter.EndDate = this.appService.DateToString(this.stockFilter.EndDate);
+    this.stockFilter.CPCode = this.cpInfo.CPCode;
+    // this.stockService.getVehicles().subscribe(resData: any => {
+    //   if (resData.StatusCode != 0) {
+    //     this.vehicleData = resData.Data;
     //     AppComponent.SmartAlert.Success(resData.Message);
-    // }
-    //   else{AppComponent.SmartAlert.Errmsg(resData.Message);}
-    // }); 
+    //   }
+    //   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    // });
+  }
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.stockFilter.EndDate != null) {
+      if ((new Date(this.stockFilter.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.stockFilter.EndDate = '';
+      }
+    }
   }
 
 }

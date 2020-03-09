@@ -20,6 +20,7 @@ export interface IGridoption {
     enableSelectAll: boolean,
     enableRowHeaderSelection: boolean,
     selectionRowHeaderWidth: number,
+    enableVerticalScrollbar: number
 
 }
 

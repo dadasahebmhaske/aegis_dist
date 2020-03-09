@@ -18,12 +18,14 @@ export class DayEndComponent implements OnInit {
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public datePickerConfig1: Partial<BsDatepickerConfig>;
   public dayEndData: any = [];
+  public flag: string = 'S';
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date;
   public defectiveData: any = [];
   public emptyData: any = [];
   public gridDefectiveOptions: IGridoption;
+  public gridShow: string = 'S';
   public gridEmptyOptions: IGridoption;
   public gridOptions: IGridoption;
   public soundData: any = [];
@@ -42,7 +44,8 @@ export class DayEndComponent implements OnInit {
     this.datePickerConfig1 = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.dayEndFilt.lastDayEnd = new Date();
+    this.showGrid('S');
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureSoundGrid();
     this.configureDefectiveGrid();
     this.configureEmptyGrid();
@@ -51,18 +54,19 @@ export class DayEndComponent implements OnInit {
   configureEmptyGrid() {
     this.gridEmptyOptions = <IGridoption>{}
     this.gridEmptyOptions.exporterMenuPdf = false;
-    this.gridEmptyOptions.exporterExcelFilename = 'Day End Details.xlsx';
+    this.gridEmptyOptions.exporterExcelFilename = 'Empty Day End Details.xlsx';
+    this.gridEmptyOptions.enableVerticalScrollbar = 1;
     let columnDefs = [];
     columnDefs = [
-      { name: 'Product', displayName: 'Empty Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Bal Empty', cellClass: 'cell-right', width: "160", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Empty Qty', cellClass: 'cell-right', width: "120", cellTooltip: true },
-      { name: 'StockOut', displayName: 'Empty Return', cellClass: 'cell-right', width: "130", cellTooltip: true },
-      // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', cellClass: 'cell-right', width: "180", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Empty +', cellClass: 'cell-right', width: "100", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Empty -', cellClass: 'cell-right', width: "100", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'cell-right', width: "250", cellTooltip: true }
+      { name: 'Product', displayName: 'Empty Product Name', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Bal Empty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Empty Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Empty Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "180", cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Empty +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Empty -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Empty', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridEmptyOptions.columnDefs = columnDefs;
 
@@ -70,99 +74,65 @@ export class DayEndComponent implements OnInit {
   configureDefectiveGrid() {
     this.gridDefectiveOptions = <IGridoption>{}
     this.gridDefectiveOptions.exporterMenuPdf = false;
-    this.gridDefectiveOptions.exporterExcelFilename = 'Day End Details.xlsx';
+    this.gridDefectiveOptions.exporterExcelFilename = 'Defective Day End Details.xlsx';
     let columnDefs = [];
     columnDefs = [
-      { name: 'ProductName', displayName: 'Defective Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Defective', cellClass: 'cell-right', width: "200", cellTooltip: true },
+      { name: 'Product', displayName: 'Defective Product Name', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Balance Defective', cellClass: 'cell-right', width: "*", cellTooltip: true },
       //{ name: 'StockIn', displayName: 'Inward Qty', width: "*",  cellTooltip: true },
-      { name: 'StockOut', displayName: 'Defective Return', cellClass: 'cell-right', width: "150", cellTooltip: true },
-      //{ name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Defective +', cellClass: 'cell-right', width: "120", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Defective -', cellClass: 'cell-right', width: "120", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'cell-right', width: "300", cellTooltip: true }
+      { name: 'StockOut', displayName: 'Defective Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Defective +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Defective -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Defective', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridDefectiveOptions.columnDefs = columnDefs;
+
   }
   configureSoundGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Day End Details.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Filled Day End Details.xlsx';
     let columnDefs = [];
     columnDefs = [
-      { name: 'ProductName', displayName: 'Product Name', width: "300", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Sound', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "120", cellTooltip: true },
-      { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "130", cellTooltip: true },
-      { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      { name: 'StockInFromUsers', displayName: 'Return from Retailer', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Sound +', cellClass: 'cell-right', width: "100", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Sound -', cellClass: 'cell-right', width: "100", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Sound', cellClass: 'cell-right', width: "200", cellTooltip: true }
+      { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+      { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridOptions.columnDefs = columnDefs;
   }
-
   onLoad() {
-    this.soundData = [{
-      'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas',
-      'OpeningBal': 755,
-      'StockIn': 0,
-      'StockOut': 0,
-      'StockOutToUsers': 0,
-      'StockInFromUsers': 0,
-      'ImbalPlus': 0,
-      'ImbalMinus': 0,
-      'ClosingBal': 755
-    },];
-
-    this.emptyData = [{
-      'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas',
-      'OpeningBal': 755,
-      'StockIn': 0,
-      'StockOut': 0,
-      'StockOutToUsers': 0,
-      'StockInFromUsers': 0,
-      'ImbalPlus': 0,
-      'ImbalMinus': 0,
-      'ClosingBal': 755
-    },];
-    this.defectiveData = [{
-      'ProductName': 'Comm. LPG Cylinder 12 Kg - Go Gas',
-
-      'OpeningBal': 755,
-      'StockIn': 0,
-      'StockOut': 0,
-      'StockOutToUsers': 0,
-      'StockInFromUsers': 0,
-      'ImbalPlus': 0,
-      'ImbalMinus': 0,
-      'ClosingBal': 755
-    },];
-    // this.loaderbtn = false;
-    // // this.stockService.getLastDayEnd(this.cpInfo.CPCode).subscribe((resDay: any) => {
-    // //   this.loaderbtn = true;
-    // //   if (resDay.StatusCode != 0) {
-    // //     this.dayEndData = resDay.Data;
-    // //     AppComponent.SmartAlert.Success(resDay.Message);
-    // //   }
-    // //   else { AppComponent.SmartAlert.Errmsg(resDay.Message); }
-    // // });
-    // this.dayEndFilt.lastDayEnd = this.appService.DateToString(this.dayEndFilt.lastDayEnd);
-    // this.dayEndFilt.CurrentDate = this.appService.DateToString(this.dayEndFilt.CurrentDate);
-    // this.stockService.getDayEndData(this.cpInfo.CPCode, this.dayEndFilt).subscribe((resData: any) => {
-    //   this.loaderbtn = true;
-    //   if (resData.StatusCode != 0) {
-    //     this.stock = resData.Data;
-    //     this.soundData = resData.Data.Table;
-    //     this.emptyData = resData.Data.Table1;
-    //     this.defectiveData = resData.Data.Table2;
-    //     AppComponent.SmartAlert.Success(resData.Message);
-    //   }
-    //   else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    // });
-    this.resetEndDate();
+    this.loaderbtn = false;
+    this.stockService.getLastDayEnd(this.cpInfo.CPCode).subscribe((resDay: any) => {
+      if (resDay.StatusCode != 0) {
+        this.dayEndFilt.lastDayEnd = resDay.Data[0].DayEndDate;
+        this.resetEndDate();
+        AppComponent.SmartAlert.Success(resDay.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resDay.Message); this.loaderbtn = true; }
+    });
+  }
+  getStockData() {
+    this.dayEndFilt.lastDayEnd = this.appService.DateToString(this.dayEndFilt.lastDayEnd);
+    this.dayEndFilt.CurrentDate = this.appService.DateToString(this.dayEndFilt.CurrentDate);
+    this.stockService.getDayEndData(this.cpInfo.CPCode, this.dayEndFilt).subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        this.stock = resData.Data;
+        this.soundData = resData.Data.Table;
+        this.emptyData = resData.Data.Table1;
+        this.defectiveData = resData.Data.Table2;
+        AppComponent.SmartAlert.Success(resData.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
   }
   dayEndProcess() {
     Swal.fire({
@@ -179,23 +149,32 @@ export class DayEndComponent implements OnInit {
     })
   }
   postDayEnd() {
+    this.stock.Date = this.dayEndFilt.CurrentDate;
+    // this.stock.Type=''
     this.loaderbtn = false;
     this.stock.CPCode = this.cpInfo.CPCode;
     this.stock.UserCode = this.cpInfo.EmpId;
     this.stock.Flag = "IN";
+    this.stock.DataSound = this.stock.Table;
+    this.stock.DataEmpty = this.stock.Table1;
+    this.stock.DataDefective = this.stock.Table2;
     this.stockService.postDayend(this.stock).subscribe((resD: any) => {
       this.loaderbtn = true;
       if (resD.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resD.Message);
+        this.onLoad();
       }
       else { AppComponent.SmartAlert.Errmsg(resD.Message); }
     });
   }
   resetEndDate() {
-    this.dayEndFilt.CurrentDate = new Date();
+    this.dayEndFilt.CurrentDate = new Date(this.dayEndFilt.lastDayEnd);
     this.dayEndFilt.CurrentDate = this.dayEndFilt.CurrentDate.setDate(this.dayEndFilt.CurrentDate.getDate() + 1);
     this.maxDate = this.minDate = new Date(this.dayEndFilt.CurrentDate);
     this.dayEndFilt.CurrentDate = this.appService.DateToString(this.dayEndFilt.CurrentDate);
+    this.getStockData();
   }
-
+  showGrid(flag) {
+    this.flag = flag;
+  }
 }

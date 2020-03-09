@@ -49,13 +49,13 @@
                 <div class="col-sm-12">
                   <ul id="myTab1" class="nav nav-tabs bordered">
                     <li [class.active]="state.tabs.demo1 == 0">
-                      <a (click)="state.tabs.demo1 = 0"> Sound </a>
+                      <a (click)="state.tabs.demo1 = 0;showGrid('S')"> Filled </a>
                     </li>
                     <li [class.active]="state.tabs.demo1 == 1">
-                      <a (click)="state.tabs.demo1 = 1"> Empty</a>
+                      <a (click)="state.tabs.demo1 = 1;showGrid('E')"> Empty</a>
                     </li>
                     <li [class.active]="state.tabs.demo1 == 2">
-                      <a (click)="state.tabs.demo1 = 2"> Defective</a>
+                      <a (click)="state.tabs.demo1 = 2;showGrid('D')"> Defective</a>
                     </li>
                     <li class="pull-right">
                       <!-- <a (click)="(null)">
@@ -74,7 +74,7 @@
                     </li>
                   </ul>
                   <tabset class="padding-10">
-                    <tab [active]="state.tabs.demo1 == 0">
+                    <tab [active]="state.tabs.demo1 == 0" *ngIf="flag=='S'">
                       <div class="row">
                         <div class="col-sm-12 ">
                           <ui-grid [data]="soundData" [gridOptions]="gridOptions"></ui-grid>
@@ -83,14 +83,14 @@
                     </tab>
                     <tab [active]="state.tabs.demo1 == 1">
                       <div class="row">
-                        <div class="col-sm-12 ">
+                        <div class="col-sm-12" *ngIf="flag=='E'">
                           <ui-grid [data]="emptyData" [gridOptions]="gridEmptyOptions"></ui-grid>
                         </div>
                       </div>
                     </tab>
                     <tab [active]="state.tabs.demo1 == 2">
                       <div class="row">
-                        <div class="col-sm-12 ">
+                        <div class="col-sm-12 " *ngIf="flag=='D'">
                           <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions"></ui-grid>
                         </div>
                       </div>

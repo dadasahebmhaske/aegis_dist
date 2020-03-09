@@ -105,6 +105,34 @@
                                         </div>
                                         <div class="col-sm-2" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
+                                                <label> Sub Total </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="SubTotal" [(ngModel)]="product.SubTotal" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                            <div class="form-group">
+                                                <label> IGST </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="IgstAmt" [(ngModel)]="product.IgstAmt" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                            <div class="form-group">
+                                                <label> CGST </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="CgstAmt" [(ngModel)]="product.CgstAmt" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                            <div class="form-group">
+                                                <label> SIGST </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="SgstAmt" [(ngModel)]="product.SgstAmt" saCommonDir dirType="number" disabled
+                                                    required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                            <div class="form-group">
                                                 <label> Amount <span class="errorMessage">*</span>
                                                 </label>
                                                 <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.ProdAmt" saCommonDir dirType="number" disabled
@@ -113,10 +141,18 @@
                                         </div>
                                         <div class="col-sm-2" *ngIf="product.OrderType=='NC'">
                                             <div class="form-group">
+                                                <label>Refundable Rate <span class="errorMessage">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="RefundableAmount" [(ngModel)]="product.RefundableAmount" saCommonDir
+                                                    dirType="number" disabled required />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2" *ngIf="product.OrderType=='NC'">
+                                            <div class="form-group">
                                                 <label>Refundable Amount <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.RefundAmt" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount" name="RefundAmt" [(ngModel)]="product.RefundAmt" saCommonDir dirType="number"
+                                                    disabled required />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
