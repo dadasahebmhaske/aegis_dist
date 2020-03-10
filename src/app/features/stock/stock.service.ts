@@ -49,9 +49,9 @@ export class StockService {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}stock/ProcessDayEnd`, data);
     }
     public getDailyStockRegisterData(data) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetDailyStkRegister?pCPCode=${data.CPCode}&pSegId=${data.ProdSegId}&pProdId=${data.ProdSegId}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}&pType=`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetDailyStkRegister?pCPCode=${data.CPCode}&pSegId=${data.ProdSegId}&pProdId=${data.ProdId}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}&pType=`);
     }
-
-
-
+    public getCustomerDailyStockRegister(data) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetCustomerStock?pCPCode=${data.CPCode}&pSegId=&pProdId=&pMobileNo=${data.MobileNo}&pConsNo=${data.ConsNo}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}`);
+    }
 }

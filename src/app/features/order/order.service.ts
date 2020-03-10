@@ -19,10 +19,11 @@ export class OrderService {
     }
 
     public calculateQtyGTotalRefillDelivery(deliverrefill, ProductArray) {
-        deliverrefill.TotalAmount = deliverrefill.QtyTotal = deliverrefill.SubTotal = deliverrefill.IgstTotal = deliverrefill.CgstTotal = deliverrefill.SgstTotal = deliverrefill.ReturnQty = deliverrefill.TotalRefillAmt = 0;
+        deliverrefill.TotalAmount = deliverrefill.QtyTotal = deliverrefill.SubTotal = deliverrefill.IgstTotal = deliverrefill.CgstTotal = deliverrefill.SgstTotal = deliverrefill.ReturnQty = deliverrefill.TotalRefillAmt = deliverrefill.Discount = 0;
         if (ProductArray.length != 0)
             for (let i = 0; i < ProductArray.length; i++) {
                 deliverrefill.TotalAmount = parseInt(deliverrefill.TotalAmount) + parseInt(ProductArray[i].TotalAmount);
+                deliverrefill.Discount = parseInt(deliverrefill.Discount) + parseInt(ProductArray[i].Discount);
                 deliverrefill.QtyTotal = parseInt(deliverrefill.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 deliverrefill.SubTotal = parseInt(deliverrefill.SubTotal) + parseInt(ProductArray[i].SubTotal);
                 deliverrefill.IgstTotal = parseInt(deliverrefill.IgstTotal) + parseInt(ProductArray[i].IgstAmt);
@@ -31,7 +32,6 @@ export class OrderService {
                 deliverrefill.ReturnQty = parseInt(deliverrefill.ReturnQty) + (ProductArray[i].ReturnQty == undefined ? 0 : parseInt(ProductArray[i].ReturnQty));
                 deliverrefill.TotalRefillAmt = parseInt(deliverrefill.TotalRefillAmt) + (parseInt(ProductArray[i].ProdRate) * parseInt(ProductArray[i].ProdQty));
             }
-        deliverrefill.TotalAmtPayable = deliverrefill.TotalAmount - deliverrefill.Discount;
         return deliverrefill;
     }
 

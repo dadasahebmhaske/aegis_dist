@@ -47,19 +47,23 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
     });
   }
   calculatePending() {
-    this.deliverrefill.TotalAmtPayable = parseInt(this.deliverrefill.TotalAmount) - parseInt(this.deliverrefill.Discount);
-    this.deliverrefill.PendingAmt = parseInt(this.deliverrefill.TotalAmtPayable) - (parseInt(this.deliverrefill.TotalReceivedAmount))
+    this.deliverrefill.TotalAmtPayable = parseInt(this.deliverrefill.TotalRefillAmt) - parseInt(this.deliverrefill.Discount);
+    this.deliverrefill.PendingAmt = parseInt(this.deliverrefill.TotalAmtPayable) - (parseInt(this.deliverrefill.TotalReceivedAmount == null ? 0 : this.deliverrefill.TotalReceivedAmount))
   }
   onEditProduct(data, index) {
     $('#qtyModal').modal('show');
     this.Edeliverrefill.ProdQty = data.ProdQty;
+    this.Edeliverrefill.ReturnQty = data.ReturnQty;
     this.Edeliverrefill.index = index;
   }
   onSubmitqty() {
     this.ProductArray[this.Edeliverrefill.index].ProdQty = this.Edeliverrefill.ProdQty;
-    this.ProductArray[this.Edeliverrefill.index].TotalAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].ProdRate) * parseInt(this.Edeliverrefill.ProdQty);
+    this.ProductArray[this.Edeliverrefill.index].RefillAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].ProdRate) * parseInt(this.Edeliverrefill.ProdQty);
+    this.ProductArray[this.Edeliverrefill.index].Discount = parseInt(this.ProductArray[this.Edeliverrefill.index].RefillAmount) * parseInt(this.deliverrefill.DiscountPer) / 100;
+    this.ProductArray[this.Edeliverrefill.index].TotalAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].RefillAmount) - parseInt(this.ProductArray[this.Edeliverrefill.index].Discount);
     this.ProductArray[this.Edeliverrefill.index].ReturnQty = this.Edeliverrefill.ReturnQty;
     this.deliverrefill = this.orderService.calculateQtyGTotalRefillDelivery(this.deliverrefill, this.ProductArray);
+    this.calculatePending();
     this.Edeliverrefill = {};
     $('#qtyModal').modal('hide');
   }

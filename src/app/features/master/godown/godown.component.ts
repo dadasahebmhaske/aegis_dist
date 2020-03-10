@@ -55,12 +55,14 @@ export class GodownComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}GodownDocs/`;
+    this.allOnloadMethods();
     this.datashare.GetSharedData.subscribe((data) => {
       this.godown = data == null ? { IsActive: 'Y', StateCode: '', DocTypId: '', GodownTypeId: '', CityCode: '' } : data;
       this.tempObje = { s: this.godown.Startdate, e: this.godown.EndDate, l: this.godown.LeasePeriod };
+
     });
 
-    this.allOnloadMethods();
+
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.godown.StateCode = this.godown.StateCode == null ? '' : this.godown.StateCode;
     this.godown.CityCode = this.godown.CityCode == null ? '' : this.godown.CityCode;
@@ -176,7 +178,7 @@ export class GodownComponent implements OnInit, OnDestroy {
   nextToDocumentDeatils() {
     this.loaderbtn = false;
     this.addArray.push({
-      "AddressId": "",
+      "AddressId": this.godown.AddressId == null ? '' : this.godown.AddressId,
       "AddressType": 'GA',
       "StateCode": this.godown.StateCode,
       "CityCode": this.godown.CityCode,
@@ -252,6 +254,7 @@ export class GodownComponent implements OnInit, OnDestroy {
     this.godownService.getGodownType().subscribe((resD: any) => {
       if (resD.StatusCode != 0)
         this.GodownTypeData = resD.Data;
+      this.CheckGodownType();
     });
   }
   onFileSelected(event) {

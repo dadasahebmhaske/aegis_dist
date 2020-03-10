@@ -512,7 +512,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       this.address = { AddressType: '', StateCode: '', CityCode: '' };
     } else {
       this.addArray.push({
-        "AddressId": "",
+        "AddressId": '',
         "AddressType": this.address.AddressType,
         "StateCode": this.address.StateCode,
         "CityCode": this.address.CityCode,
@@ -527,7 +527,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       });
       this.address = { AddressType: '', StateCode: '', CityCode: '' };
     }
-
   }
   onRemoveAddress(data, index) {
     if (data.AddressId != '' && data.AddressId != null) {
@@ -554,7 +553,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
             this.addArray[i].StateName = docobj[0].StateDesc;
             docobj = this.masterService.filterData(this.CityData, this.addArray[i].CityCode, 'CityCode');
             this.addArray[i].CityName = docobj[0].CityName;
-
           } else { this.CityData = []; }
         });
       }
@@ -575,7 +573,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       this.filepreview = (<FileReader>event.target).result;
       var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
       f1 = f1.toString().toLowerCase();
-
       if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
       }
       else {
@@ -595,7 +592,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.document.DocFileName = this.DocFileName;
     this.document.IsActive = "Y";
     this.document.filepreview = this.filepreview;
-
     if (this.bdata.some(obj => parseInt(obj.DocNo) === parseInt(this.document.DocNo))) {
       AppComponent.SmartAlert.Errmsg("The Document is already added in list.");
       $("#fileControl").val('');
@@ -627,7 +623,6 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       if (this.bdata.length > 0) {
         this.customer.DocId = this.bdata[0].DocId;
       }
-
     });
   }
   onSelectCustomerType() {
@@ -650,10 +645,8 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
         this.ServiceData = [];
       }
     });
-
   }
   private lastModel;
-
   //custom change detection
   ngDoCheck() {
     if (!this.lastModel) {

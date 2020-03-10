@@ -168,7 +168,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   nextToDocumentDeatils() {
     this.loaderbtn = false;
     this.addArray.push({
-      "AddressId": "",
+      "AddressId": this.employee.AddressId == null ? '' : this.employee.AddressId,
       "AddressType": 'H',
       "StateCode": this.employee.StateCode,
       "CityCode": this.employee.CityCode,

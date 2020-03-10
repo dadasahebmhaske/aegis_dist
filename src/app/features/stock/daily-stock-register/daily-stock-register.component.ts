@@ -62,11 +62,11 @@ export class DailyStockRegisterComponent implements OnInit {
   configureEmptyGrid() {
     this.gridEmptyOptions = <IGridoption>{}
     this.gridEmptyOptions.exporterMenuPdf = false;
-    this.gridEmptyOptions.exporterExcelFilename = 'Area Wise Refill Order Summary.xlsx';
+    this.gridEmptyOptions.exporterExcelFilename = 'Daily Stock Register.xlsx';
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
+      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
       { name: 'OpeningBal', displayName: 'Opening Bal Empty', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Empty Qty', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Empty Return', width: "*", cellTooltip: true },
@@ -82,11 +82,11 @@ export class DailyStockRegisterComponent implements OnInit {
   configureDefectiveGrid() {
     this.gridDefectiveOptions = <IGridoption>{}
     this.gridDefectiveOptions.exporterMenuPdf = false;
-    this.gridDefectiveOptions.exporterExcelFilename = 'Area Wise Refill Order Summary.xlsx';
+    this.gridDefectiveOptions.exporterExcelFilename = 'Daily Stock Register.xlsx';
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
+      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
       { name: 'OpeningBal', displayName: 'Opening Balance Defective', width: "*", cellTooltip: true },
       //{ name: 'StockIn', displayName: 'Inward Qty', width: "*",  cellTooltip: true },
       { name: 'StockOut', displayName: 'Defective Return', width: "*", cellTooltip: true },
@@ -102,11 +102,11 @@ export class DailyStockRegisterComponent implements OnInit {
   configureSoundGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Area Wise Refill Order Summary.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Daily Stock Register.xlsx';
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
+      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
       { name: 'OpeningBal', displayName: 'Opening Balance Filled', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Inward Qty', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Delivery Qty', width: "*", cellTooltip: true },
