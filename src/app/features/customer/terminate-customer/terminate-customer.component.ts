@@ -71,11 +71,9 @@ export class TerminateCustomerComponent implements OnInit {
     //this.onLoad();
   }
   onEditFunction = ($event) => {
-    console.log($event.row);
     //this.datashare.updateShareData($event.row);
   }
   onSelectFunction = ($event) => {
-    console.log($event);
     this.selectedRows = $event.row;
     //this.datashare.updateShareData($event.row);
   }

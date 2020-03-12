@@ -29,10 +29,6 @@ export class CustomerMasterComponent implements OnInit {
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Customer list.xlsx';
 
-    // this.gridOptions.multiSelect = false;
-    // this.gridOptions.enableRowSelection = false;
-    // this.gridOptions.enableSelectAll = false;
-    // this.gridOptions.enableRowHeaderSelection = false;
     this.gridOptions.selectionRowHeaderWidth = 0;
     let columnDefs = [];
     columnDefs = [
@@ -65,15 +61,6 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'GstNo', displayName: 'GST No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ManifoldCertNo', displayName: 'Manifold Cert. No.', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "90", cellTooltip: true, filterCellFiltered: true },
-      // { name: 'CustTypeId', displayName: 'Customer Type', width: "140", cellTooltip: true, filterCellFiltered: true ,visible:false},
-      // { name: 'ConsuptionTypeId', displayName: 'Consumption Type', width: "160", cellTooltip: true, filterCellFiltered: true ,visible:false},
-      // { name: 'VolumeTypeId', displayName: 'Volume Type', width: "130", cellTooltip: true, filterCellFiltered: true ,visible:false},
-      // { name: 'ServiceTypeId', displayName: 'Service Type', width: "120", cellTooltip: true, filterCellFiltered: true ,visible:false},
-      // { name: 'FirmTypeId', displayName: 'Firm Type', width: "120", cellTooltip: true, filterCellFiltered: true,visible:false },
-      // { name: 'ContractualId', displayName: 'Contractual  Non-Contractual', width: "120", cellTooltip: true, filterCellFiltered: true ,visible:false},
-      // { name: 'RoutId', displayName: 'Rout', width: "120", cellTooltip: true, filterCellFiltered: true,visible:false },
-      // { name: 'SubAreaId', displayName: 'Sub Area', width: "130", cellTooltip: true, filterCellFiltered: true,visible:false },
-
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();

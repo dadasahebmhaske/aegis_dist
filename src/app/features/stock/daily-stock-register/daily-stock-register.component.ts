@@ -29,7 +29,7 @@ export class DailyStockRegisterComponent implements OnInit {
   public productDataSelected: any = [];
   public productSegmentData: any = [];
   public StartMindate: Date;
-  public maxDate: Date = new Date();
+  public maxDate: Date;
   public soundData: any = [];
   public state: any = {
     tabs: {
@@ -41,19 +41,27 @@ export class DailyStockRegisterComponent implements OnInit {
     },
   }
   constructor(private appService: AppService, private customerService: CustomerService, private stockService: StockService, private masterService: MasterService, private orderService: OrderService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.showGrid('S');
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.stockFilter.StartDate = this.stockFilter.EndDate = new Date();
+    this.allLoad();
     this.configureSoundGrid();
     this.configureDefectiveGrid();
     this.configureEmptyGrid();
     this.onLoad();
-    this.allLoad();
   }
   allLoad() {
+    this.stockService.getLastDayEnd(this.cpInfo.CPCode).subscribe((resDay: any) => {
+      if (resDay.StatusCode != 0) {
+        this.stockFilter.StartDate = this.stockFilter.EndDate = new Date(resDay.Data[0].DayEndDate);
+        this.maxDate = new Date(resDay.Data[0].DayEndDate);
+        this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+        AppComponent.SmartAlert.Success(resDay.Message);
+      }
+      else { AppComponent.SmartAlert.Errmsg(resDay.Message); this.loaderbtn = true; }
+    });
     this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
@@ -66,15 +74,15 @@ export class DailyStockRegisterComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Bal Empty', width: "*", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Empty Qty', width: "*", cellTooltip: true },
-      { name: 'StockOut', displayName: 'Empty Return', width: "*", cellTooltip: true },
+      { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Bal Empty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Empty Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Empty Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
       // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
       // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "180", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Empty +', width: "*", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Empty -', width: "*", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Empty', width: "*", cellTooltip: true }
+      { name: 'ImbalPlus', displayName: 'Empty +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Empty -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Empty', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridEmptyOptions.columnDefs = columnDefs;
 
@@ -86,15 +94,15 @@ export class DailyStockRegisterComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Defective', width: "*", cellTooltip: true },
+      { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Balance Defective', cellClass: 'cell-right', width: "*", cellTooltip: true },
       //{ name: 'StockIn', displayName: 'Inward Qty', width: "*",  cellTooltip: true },
-      { name: 'StockOut', displayName: 'Defective Return', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Defective Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
       //{ name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
       // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Defective +', width: "*", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Defective -', width: "*", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Defective', width: "*", cellTooltip: true }
+      { name: 'ImbalPlus', displayName: 'Defective +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Defective -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Defective', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridDefectiveOptions.columnDefs = columnDefs;
 
@@ -106,15 +114,15 @@ export class DailyStockRegisterComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
       { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
-      // { name: 'Date', displayName: 'Date', width: "*", cellTooltip: true },
-      { name: 'OpeningBal', displayName: 'Opening Balance Filled', width: "*", cellTooltip: true },
-      { name: 'StockIn', displayName: 'Inward Qty', width: "*", cellTooltip: true },
-      { name: 'StockOut', displayName: 'Delivery Qty', width: "*", cellTooltip: true },
+      { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170", cellTooltip: true },
       // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Filled +', width: "*", cellTooltip: true },
-      { name: 'ImbalMinus', displayName: 'Filled -', width: "*", cellTooltip: true },
-      { name: 'ClosingBal', displayName: 'Closing Balance Filled', width: "*", cellTooltip: true }
+      { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
     this.gridOptions.columnDefs = columnDefs;
   }

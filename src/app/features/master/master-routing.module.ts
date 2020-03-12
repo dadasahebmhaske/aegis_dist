@@ -5,8 +5,6 @@ import { VehicleMasterComponent } from './vehicle-master/vehicle-master.componen
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { RouteMasterComponent } from './route-master/route-master.component';
 import { RouteComponent } from './route/route.component';
-import { CustomerCategoryMasterComponent } from './customer-category-master/customer-category-master.component';
-import { CustomerCategoryComponent } from './customer-category/customer-category.component';
 import { GodownMasterComponent } from './godown-master/godown-master.component';
 import { GodownComponent } from './godown/godown.component';
 import { TransportMasterComponent } from './transport-master/transport-master.component';
@@ -20,8 +18,6 @@ const routes: Routes = [
   { path: 'vehicle', component: VehicleComponent },
   { path: 'route-master', component: RouteMasterComponent },
   { path: 'route', component: RouteComponent },
-  { path: 'customer-category-master', component: CustomerCategoryMasterComponent },
-  { path: 'customer-category', component: CustomerCategoryComponent },
   { path: 'godown-master', component: GodownMasterComponent },
   { path: 'godown', component: GodownComponent },
   { path: 'transport-master', component: TransportMasterComponent },
@@ -38,4 +34,4 @@ const routes: Routes = [
 // })
 export const routing = [RouterModule.forChild(routes)]
 //export class MasterRoutingModule { }
-export const componentArray = [EmployeeComponent, EmployeeMasterComponent, SubAreaComponent, SubAreaMasterComponent, TransportComponent, TransportMasterComponent, GodownComponent, GodownMasterComponent, CustomerCategoryComponent, CustomerCategoryMasterComponent, RouteComponent, RouteMasterComponent, VehicleComponent, VehicleMasterComponent];
+export const componentArray = [EmployeeComponent, EmployeeMasterComponent, SubAreaComponent, SubAreaMasterComponent, TransportComponent, TransportMasterComponent, GodownComponent, GodownMasterComponent, RouteComponent, RouteMasterComponent, VehicleComponent, VehicleMasterComponent];

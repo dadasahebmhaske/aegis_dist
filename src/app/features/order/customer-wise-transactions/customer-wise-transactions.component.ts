@@ -79,7 +79,6 @@ export class CustomerWiseTransactionsComponent implements OnInit, OnDestroy {
     this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.ProductArray = resData.Data;
-        console.log(this.ProductArray);
         AppComponent.SmartAlert.Success(resData.Message);
         $('#productsModal').modal('show');
       }

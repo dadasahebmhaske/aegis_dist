@@ -47,11 +47,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
         , width: "70", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Booking</div>', enableFiltering: false
       },
-      // {
-      //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
-      //   , width: "71", exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      // },
+
       { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
@@ -85,12 +81,10 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.bookOrder.RoutId, 'RouteId');
   }
   onEditFunction = ($event) => {
-    //console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/order/refill-booking']);
   }
   onDeleteFunction = ($event) => {
-    // console.log($event.row);
     this.stock = $event.row;
     this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, this.bookOrder.StartDate, this.bookOrder.EndDate).subscribe((resp: any) => {
       if (resp.StatusCode != 0) {

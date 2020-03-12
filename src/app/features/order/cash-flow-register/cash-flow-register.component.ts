@@ -33,11 +33,7 @@ export class CashFlowRegisterComponent implements OnInit {
     this.gridOptions.exporterExcelFilename = 'Cash Flow Register list.xlsx';
     let columnDefs = [];
     columnDefs = [
-      // {
-      //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
-      //   , width: "71",exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      // },
+
       { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "125", cellTooltip: true, filterCellFiltered: true, visible: true },
       { name: 'ConsName', displayName: 'Customer Name', width: "250", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },

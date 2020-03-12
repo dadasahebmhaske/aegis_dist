@@ -94,9 +94,9 @@ export class SvCreationPrintingComponent implements OnInit {
           "DepositAmt": this.product.DepositAmt,
           "MonthlyConsumption": this.product.MonthlyConsumption,
           "IsActive": "Y",
-          "RefundableAmt": 0,
-          "TotalDepositAmt": 0,
-          "TotalRefundableAmt": 0,
+          "RefundableAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].RefundableAmount),
+          "TotalDepositAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].DepositAmount),
+          "TotalRefundableAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].RefundableAmount),
           "ProdSeg": ProdSegName,
           "Product": ProdName
         }
@@ -136,6 +136,7 @@ export class SvCreationPrintingComponent implements OnInit {
       this.bulkProd.data = this.prodArray;
       this.bulkProd.RefId = this.custData.ConsId;
       this.bulkProd.UserCode = this.cpInfo.EmpId;
+      this.bulkProd.CPCode = this.cpInfo.CPCode
       this.customerService.postBulkProduct(this.bulkProd).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {

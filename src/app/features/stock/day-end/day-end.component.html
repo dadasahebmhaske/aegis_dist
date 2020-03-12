@@ -74,9 +74,9 @@
                     </li>
                   </ul>
                   <tabset class="padding-10">
-                    <tab [active]="state.tabs.demo1 == 0" *ngIf="flag=='S'">
+                    <tab [active]="state.tabs.demo1 == 0">
                       <div class="row">
-                        <div class="col-sm-12 ">
+                        <div class="col-sm-12 " *ngIf="flag=='S'">
                           <ui-grid [data]="soundData" [gridOptions]="gridOptions"></ui-grid>
                         </div>
                       </div>

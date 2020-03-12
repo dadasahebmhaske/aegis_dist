@@ -45,11 +45,6 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     this.gridOptions.exporterExcelFilename = 'Area Wise Refill Order Summary.xlsx';
     let columnDefs = [];
     columnDefs = [
-      // {
-      //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
-      //   , width: "71",exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      // },
       { name: 'RouteName', displayName: 'Route', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Area', width: "190", cellTooltip: true, filterCellFiltered: true },
       { name: 'DeliveryCount', displayName: 'Delivered Count', cellClass: 'cell-right', width: "160", cellTooltip: true, filterCellFiltered: true },

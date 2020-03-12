@@ -59,7 +59,6 @@ export class GodownMasterComponent implements OnInit {
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/godown']);
   }

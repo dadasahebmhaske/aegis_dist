@@ -90,12 +90,10 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
 
 
   onEditFunction = ($event) => {
-    //console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/order/deliver-refill']);
   }
   onDeleteFunction = ($event) => {
-    //console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/order/undeliver-refill']);
   }

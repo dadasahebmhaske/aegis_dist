@@ -53,11 +53,6 @@ export class TransferCustomerComponent implements OnInit {
     // this.gridOptions.enableRowHeaderSelection = true;
     this.gridOptions.selectionRowHeaderWidth = 35;
     columnDefs = [
-      // {
-      //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ng-if="row.entity.IsActive!=null">Update</button> '
-      //   , width: "63",exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Update</div>', enableFiltering: false
-      // },
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'ConsNo', displayName: 'Customer No.', width: "*", cellTooltip: true, filterCellFiltered: true },
       // { name: 'Salutation', displayName: 'Salutation', width: "100", cellTooltip: true, filterCellFiltered: true },
@@ -66,14 +61,12 @@ export class TransferCustomerComponent implements OnInit {
       { name: 'MobileNo', displayName: 'Mobile No.', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-    //this.onLoad();
+
   }
   onEditFunction = ($event) => {
-    console.log($event.row);
     //this.datashare.updateShareData($event.row);
   }
   onSelectFunction = ($event) => {
-    console.log($event);
     this.selectedRows = $event.row;
     //this.datashare.updateShareData($event.row);
   }

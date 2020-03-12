@@ -37,11 +37,7 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
     this.gridOptions.exporterExcelFilename = 'Customer Daily Stock Register.xlsx';
     let columnDefs = [];
     columnDefs = [
-      // {
-      //   name: 'Select1', displayName: 'Edit', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> '
-      //   , width: "48", exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
-      // },
+
       { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "128", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Customer Name ', width: "280", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
@@ -56,21 +52,8 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
-  // onEditFunction = ($event) => {
-  //   // console.log($event.row);
-  //   AppComponent.Router.navigate(['/stock/imbalance']);
-  // }
+
   onLoad() {
-    // this.customerDailyStockData = [{
-    //   'CustNo': 999666,
-    //   'CustName': 'Ajay Narayanurthy',
-    //   'Date': '10-01-2020',
-    //   'Product': 'Comm. Cylinder 19 KG',
-    //   'OpeningBalance': 77,
-    //   'SoundQty': 20,
-    //   'ReturnQty': 12,
-    //   'CloseingBalance': 85,
-    // }];
     this.loaderbtn = false;
     this.stockFilter = this.customerService.checkCustOrMobNo(this.stockFilter);
     this.stockFilter.StartDate = this.appService.DateToString(this.stockFilter.StartDate);

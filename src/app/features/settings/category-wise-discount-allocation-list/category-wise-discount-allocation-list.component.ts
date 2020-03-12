@@ -22,18 +22,14 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
   public gridOptions: IGridoption;
   public minDate: Date;
   public maxDate: Date = new Date();
-
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService, private settingService: SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
-
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
-
     this.onLoad();
   }
-
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
@@ -51,16 +47,11 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
       { name: 'IsActive', displayName: 'Is Active', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
-    // this.onLoad();
   }
-
-
   onEditFunction = ($event) => {
-    //console.log($event.row);
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/settings/category-wise-discount-allocation']);
   }
-
   onLoad() {
     this.masterService.getDiscountDetails(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {

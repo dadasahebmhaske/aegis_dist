@@ -27,18 +27,15 @@ export class PriceAllocationListComponent implements OnInit {
   public PriceAllocationData: any = [];
   public productSegmentData: any = [];
   public productDataSelected: any = [];
-
   constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService, private settingService: SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
-
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureGrid();
     this.onloadAll();
     this.onLoad();
   }
-
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
@@ -50,13 +47,7 @@ export class PriceAllocationListComponent implements OnInit {
         , width: "50", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      // {
-      //   name: 'Select', displayName: 'Delete', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-click="grid.appScope.deleteEmployee(row.entity)">&nbsp;Delete&nbsp;</button> `
-      //   , width: "71", exporterSuppressExport: true,
-      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-      // },
       { name: 'Prodseg', displayName: 'Product segment', width: "*", cellTooltip: true, filterCellFiltered: true },
-
       { name: 'Product', displayName: 'Product ', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'Price', displayName: 'Price', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'EffectiveDate', displayName: 'Effective Date', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -64,34 +55,25 @@ export class PriceAllocationListComponent implements OnInit {
 
     ]
     this.gridOptions.columnDefs = columnDefs;
-    // this.onLoad();
   }
-
   onEditFunction = ($event) => {
-    //console.log($event.row);
     this.dataShare.updateShareData($event.row);
     AppComponent.Router.navigate(['/settings/price-allocation']);
   }
-
-
   onloadAll() {
     this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
   }
-
   onSelectProdSegment() {
-
     this.masterService.getProducts(this.PAllocation.ProdSegId).subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }
     });
   }
-
   onLoad() {
-
     this.loaderbtn = false;
     this.settingService.getPriceAllocationDetails(this.cpInfo.CPCode, this.PAllocation.ProdSegId, this.PAllocation.ProdId).subscribe((resData: any) => {
       this.loaderbtn = true;
@@ -102,7 +84,4 @@ export class PriceAllocationListComponent implements OnInit {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); this.PriceAllocationData = [{}] }
     });
   }
-
-
-
 }

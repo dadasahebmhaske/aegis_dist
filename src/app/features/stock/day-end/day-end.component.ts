@@ -44,6 +44,7 @@ export class DayEndComponent implements OnInit {
     this.datePickerConfig1 = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+
     this.showGrid('S');
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.configureSoundGrid();
