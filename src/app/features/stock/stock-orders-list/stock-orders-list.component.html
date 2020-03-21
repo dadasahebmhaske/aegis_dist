@@ -35,7 +35,7 @@
                         <option value="" selected hidden>Select Order Status</option>
                         <option value="PE">Pending</option>
                         <option value="AC">Accepted By Admin</option>
-                        <option value="CA">Accepted By CP</option>
+                        <!-- <option value="CA">Accepted By CP</option> -->
                         <option value="RJ">Rejected</option>
                         <option value="DI">Dispatched</option>
                       </select>
@@ -134,11 +134,11 @@
                   </div>
                 </div>
                 <div class="col-sm-12" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label>Reject Remark <span class="errorMessage">*</span>
                     </label>
                     <textarea class="form-control" [(ngModel)]="stock.RejectRemark" name="Remark" placeholder=""></textarea>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -147,8 +147,8 @@
       </div>
       <div class="modal-footer">
         <label class="pull-left" [hidden]="stock.IsDispatch != 'Y' "><strong>Dispatch Date :</strong> {{stock.DispatchDt}}</label>
-        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
-        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button>
+        <!-- <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button> -->
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

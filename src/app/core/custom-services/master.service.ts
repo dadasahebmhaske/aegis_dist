@@ -59,7 +59,7 @@ export class MasterService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&IsActive=Y`);
   }
   public getProducts(Pscode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y&ProdType=E`);
   }
   public getRoutes(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
