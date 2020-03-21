@@ -42,8 +42,8 @@ export class OrderService {
     public getRefillBookingDetails(cpcode, StartDate, EndDate) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillBooking?BookRefNo=&CPCode=${cpcode}&ConsId=&BookStatus=2&Allocateduse=&CashMemoNo=&CashMemoRefNo=&CashMemoId=&IsActive=Y&FDate=${StartDate}&TDate=${EndDate}`, AppComponent.httpOptions);
     }
-    public getCashMemoDetails(cpcode, SubAreaId, ConsNo, MobileNo, StartDate, EndDate) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCashMemo?CashMemoRefNo=&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobileNo}&CashMemoStatus=2&Allocateduse=&CashMemoNo=&FDate=${StartDate}&TDate=${EndDate}`, AppComponent.httpOptions);
+    public getCashMemoDetails(cpcode,RouteId, SubAreaId, ConsNo, MobileNo, StartDate, EndDate) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCashMemo?CashMemoRefNo=&CPCode=${cpcode}&RouteId=${RouteId}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobileNo}&CashMemoStatus=2&Allocateduse=&CashMemoNo=&FDate=${StartDate}&TDate=${EndDate}`, AppComponent.httpOptions);
     }
     public getRefillBookingProducts(cpcode, BookRefNo) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillBookingProducts?BookRefNo=${BookRefNo}&CPCode=${cpcode}`, AppComponent.httpOptions);

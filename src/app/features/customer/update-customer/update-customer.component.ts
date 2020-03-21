@@ -445,7 +445,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
-    this.masterService.getProducts(this.product.ProdSegId).subscribe((resPT: any) => {
+    this.masterService.getProducts(this.product.ProdSegId,'E').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }

@@ -20,7 +20,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   public cmCustData: any = {};
   public cashmemo: any = { areacode: '' };
   public CashMemoData: any = {};
-  public cust: any = { RoutId: '', SubAreaId: '' };
+  public cust: any = { RouteId: '', SubAreaId: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
@@ -77,8 +77,9 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   onLoad() {
     this.loaderbtn = false;
     this.cust.SubAreaId = this.cust.SubAreaId == null ? '' : this.cust.SubAreaId;
+    this.cust.RouteId = this.cust.RouteId == null ? '' : this.cust.RouteId;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.orderService.getCashMemoDetails(this.cpInfo.CPCode, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo, '', '').subscribe((resData: any) => {
+    this.orderService.getCashMemoDetails(this.cpInfo.CPCode,this.cust.RouteId, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo, '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.CashMemoData = resData.Data;
@@ -113,7 +114,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     });
   }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RouteId, 'RouteId');
   }
 
 }

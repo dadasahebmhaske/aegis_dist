@@ -1,0 +1,495 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Employee Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row">
+                <form novalidate="novalidate">
+                  <div class="col-sm-12">
+                    <div class="form-bootstrapWizard clearfix">
+                      <ul class="bootstrapWizard">
+                        <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                          <a (click)="setActiveStep(pane)">
+                            <span class="step">
+                              <span *ngIf="!pane.checked">{{i + 1}}</span>
+                              <i class="fa fa-check" *ngIf="pane.checked"></i>
+                            </span>
+                            <span class="title">{{pane.title}}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="tab-content">
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                        <br>
+                        <h3>
+                          <strong>Step 1 </strong> - Customer Details</h3>
+                          <form name="customerForm" #customerForm="ngForm" (ngSubmit)="onSubmitCustomer()" autocomplete="off" ngNativeValidate>
+                            <div class="row">
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Customer No. </label>
+                                  <input type="text" class="form-control" placeholder="Enter Customer No." [(ngModel)]="customer.ConsNo" name="ConsNo" saCommonDir dirType="number" disabled />
+                                </div>
+                              </div>
+                              <div class="col-sm-1">
+                                <div class="form-group">
+                                  <label for="sel1">Salutation <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.Salutation" name="Salutation" required>
+                                    <option value="" selected hidden>-Select-</option>
+                                    <option value="Mr">Mr.</option>
+                                    <option value="Mrs">Mrs.</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">First Name <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="customer.FirstName" name="FirstName" saCommonDir dirType="alphaonly" required />
+                                </div>
+                              </div>
+                              <!--<div class="col-sm-3">
+                                      <div class="form-group">
+                                          <label for="sel1">Middle Name</label>
+                                          <input type="text" class="form-control" placeholder="Enter Middle Name" ng-model="consumer.MiddleName" alphaonly />
+                                      </div>
+                                  </div>-->
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Last Name <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="customer.LatName" name="LatName" saCommonDir dirType="alphaonly" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Mobile No. <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="customer.MobileNo" name="MobileNo" minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}"
+                                    oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" saCommonDir dirType="number"
+                                    required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Discount Category </label>
+                                  <select class="form-control" [(ngModel)]="customer.CustCatId" name="CustCatId">
+                                    <option value="" selected hidden> Select Category </option>
+                                    <option [value]="cat.CategoryId" *ngFor="let cat of CatDiscountData">{{cat.CatDisc}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Customer Type <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.CustTypeId" (change)="onSelectCustomerType()" name="CustTypeId" required>
+                                    <option value="" selected hidden> Select Customer Type</option>
+                                    <option [value]="ct.Id" *ngFor="let ct of CustTypeData">{{ct.Name}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Volume Type <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.VolumeTypeId" name="VolumeTypeId" required>
+                                    <option value="" selected hidden> Select Volume Type</option>
+                                    <option [value]="v.Id" *ngFor="let v of VolumeData">{{v.VolumeTypeName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Consumption Type <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.ConsuptionTypeId" name="ConsuptionTypeId" required>
+                                    <option value="" selected hidden> Select Consumption Type </option>
+                                    <option [value]="con.Id" *ngFor="let con of ConsumptionData">{{con.ConsumpName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Service Type <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.ServiceTypeId" name="ServiceTypeId" required>
+                                    <option value="" selected hidden> Select Service Type </option>
+                                    <option [value]="sd.Id" *ngFor="let sd of ServiceData">{{sd.ServiceTypeName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Type Of Firm <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.FirmTypeId" name="FirmTypeId" required>
+                                    <option value="" selected hidden> Select Type of Firm </option>
+                                    <option [value]="fm.Id" *ngFor="let fm of FirmData">{{fm.Name}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Contractual / Non-Contractual <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.ContractualId" name="ContractualId" required>
+                                    <option value="" selected hidden> Select </option>
+                                    <option [value]="con.Id" *ngFor="let con of ContractData">{{con.Name}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Route <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.RoutId" name="RoutId" (change)="getSubArea()" required>
+                                    <option value="" selected hidden> Select Route </option>
+                                    <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Sub Area <span class="errorMessage">*</span>
+                                  </label>
+                                  <select [(ngModel)]="customer.SubAreaId" name="SubAreaId" class="form-control" required>
+                                    <option value="" selected hidden> Select Sub Area </option>
+                                    <option *ngFor="let sub of SubAreaData" value="{{sub.SubAreaId}}">{{sub.SubAreaName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Opening Balance Quantity <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Quantity" minlength="1" maxlength="3" [(ngModel)]="customer.OpeningCylQty" name="OpeningCylQty" saCommonDir
+                                    dirType="number" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Opening Balance Amount <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" maxlength="8" placeholder="Enter Amount" [(ngModel)]="customer.OpeningBalAmt" name="OpeningBalAmt" saCommonDir dirType="number"
+                                    required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Delivery Address Line 1 <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.AddressLineOne" name="AddressLine1"
+                                    required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Delivery Address Line 2</label>
+                                  <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.AddressLineTwo" name="AddressLine2" />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Delivery Address Line 3</label>
+                                  <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.AddressLineThree" name="AddressLine3" />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label>State <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" name="StateCode" [(ngModel)]="customer.StateCode" (change)="getCityData()" required>
+                                    <option value="" selected hidden>Select State</option>
+                                    <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label>City <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="customer.CityCode" name="CityCode" required>
+                                    <option value="" selected hidden>Select City</option>
+                                    <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}} </option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Pin Code <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="customer.PinCode" name="Pin" minlength="6" maxlength="6" numericonly
+                                    required />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-6">
+                                <label>
+                                  <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='customer.IsActive' form="vehicleForm" /> Is Active </label>
+                              </div>
+                            </div>
+                          
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a routerLink="/order/instant-delivered-orders" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                              
+                                    <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit" [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                        <br>
+                        <h3>
+                          <strong>Step 2</strong> - Address Details</h3>
+                        <form name="addressForm" #addressForm="ngForm" autocomplete="off" (ngSubmit)="nextToDocumentDeatils()" autocomplete="off" ngNativeValidate>
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 1 <span class="errorMessage" style="color:red;">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineOne" name="AddressLine1"
+                                  required />
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 2</label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineTwo"
+                                  name="AddressLine2" />
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 3</label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineThree"
+                                  name="AddressLine3" />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>State <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" name="StateCode" [(ngModel)]="employee.StateCode" (change)="getCityData()" required>
+                                  <option value="" selected hidden>Select State</option>
+                                  <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>City <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.CityCode" name="CityCode" required>
+                                  <option value="" selected hidden>Select City</option>
+                                  <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}} </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Pin Code <span class="errorMessage" style="color:red;">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="employee.PinCode" name="Pin" minlength="6" maxlength="6"
+                                  numericonly required />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                             
+                                    <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit" [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div> -->
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                        <br>
+                        <h3>
+                          <strong>Step 2</strong> - Delivery Details</h3>
+                        <!-- <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate> -->
+                          <form name="undeliverRefillForm" id="undeliverRefillForm" #undeliverRefillForm="ngForm" (ngSubmit)="SavedeliverRefill()" autocomplete="off" ngNativeValidate>
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="logincDeatils">
+                                 <div class="row">
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                      <div class="form-group label-center">
+                                        <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                      <div class="form-group label-center">
+                                        <label><strong> <i class="fa fa-user"></i> Customer Name : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-3 col-sm-offset-1">
+                                      <div class="form-group label-center">
+                                        <label><strong> <i class="fa fa-user"></i> Delivery Boy : </strong> <strong class="text-warning"> {{deliverrefill.AllocatedUserName}}</strong>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-12">
+                                <div class="refill">
+                                  <label>
+                                    <strong class="text-primary"> Booking Details : </strong>
+                                  </label>
+                                  <div class="row">
+                                    <div class="col-sm-12">
+                                      <div class="table-responsive">
+                                        <table class="table table-hover">
+                                          <thead>
+                                            <tr>
+                                              <th>#</th>
+                                              <th>Product Segment</th>
+                                              <th>Product Name</th>
+                                              <th class="text-right">Rate</th>
+                                              <th class="text-right">Quantity</th>
+                                              <th class="text-right">Refill Amount</th>
+                                              <th class="text-right">Discount</th>
+                                              <th class="text-right">Return Quantity</th>
+                                              <th class="text-right">Amount</th>
+                                              <th> Edit</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr *ngFor="let pr of ProductArray;index as i">
+                                              <td>{{i+1}}</td>
+                                              <td>{{pr.ProdSeg}}</td>
+                                              <td>{{pr.Product}}</td>
+                                              <td class="text-right">{{pr.ProdRate}}</td>
+                                              <td class="text-right">{{pr.ProdQty}}</td>
+                                              <td class="text-right">{{pr.RefillAmount}}</td>
+                                              <td class="text-right">{{pr.Discount}}</td>
+                                              <td class="text-right">{{pr.ReturnQty}}</td>
+                                              <td class="text-right">{{pr.TotalAmount}}</td>
+                                              <td>
+                                                <a class="btn btn-xs btn-primary" (click)=onEditProduct(pr,i)>Edit</a>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Delivery Boy <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="deliverrefill.AllocatedUserCode" name="AllocatedUserCode" required>
+                                    <option value="" selected hidden>Select Delivery Boy</option>
+                                    <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-1">
+                                <div class="form-group">
+                                  <label>Total Qty <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.QtyTotal" name="QtyTotal" disabled />
+                                </div>
+                              </div>
+                              <div class="col-sm-1">
+                                <div class="form-group">
+                                  <label>Return Qty <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Qty" [(ngModel)]="deliverrefill.ReturnQty" name="ReturnQty " disabled />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Total Discount </label>
+                                  <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" (ngModelChange)="calculatePending()" />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Total Price </label>
+                                  <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="deliverrefill.TotalAmtPayable" name="TotalAmtPayable" disabled />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Paid Amount <span class="errorMessage">*</span></label>
+                                  <input type="text" class="form-control" placeholder="Enter Paid Amount" [(ngModel)]="deliverrefill.TotalReceivedAmount" name="TotalReceivedAmount"
+                                    (ngModelChange)="calculatePending()" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label>Pending Amount </label>
+                                  <input type="text" class="form-control" placeholder="Enter Pending Amount" [(ngModel)]="deliverrefill.PendingAmt " name="PendingAmt " disabled />
+                                </div>
+                              </div>
+                            </div>
+                          
+                        <div class="form-actions">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <ul class="pager wizard no-margin">
+                                <li class="previous">
+                                  <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                </li>
+                                <li class="next">
+                                
+                                  <button (click)="nextToSave()" class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
+                                    [disabled]="!loaderbtn">
+                                    <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

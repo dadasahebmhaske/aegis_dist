@@ -8,16 +8,16 @@ import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 @Component({
-  selector: 'sa-undelivered-orders',
-  templateUrl: './undelivered-orders.component.html',
-  styleUrls: ['./undelivered-orders.component.css']
+  selector: 'sa-instant-delivered-orders',
+  templateUrl: './instant-delivered-orders.component.html',
+  styleUrls: ['./instant-delivered-orders.component.css']
 })
-export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
+export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
   public cpInfo: any = {};
-  public DeliveredOrderData: any = [];
-  public deliverFilter: any = { DelUserCode: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
+  public DeliveredOrderData: any = [];
   public delBoyData: any = [];
+  public deliverFilter: any = { DelUserCode: '' };
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
   public minDate: Date;
@@ -41,41 +41,58 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Undelivered Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Delivered Orders list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null"  ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null" ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
         , width: "71", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
-      { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
+      {
+        name: 'Select1', displayName: 'Process', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Process&nbsp;</button> `
+        , width: "71", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Process</div>', enableFiltering: false
+      },
+      { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true }, 
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoNo', displayName: 'Cash Memo No.', cellClass: 'cell-center', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DelDate', displayName: 'Undelivery Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelDate', displayName: 'Delivery Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TtlProdQty', displayName: 'Total Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RefillAmount', displayName: 'Refill Amount', cellClass: 'cell-right', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Discount', displayName: 'Discount', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalAmtPayable', displayName: 'Amount Payable', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'PaidAmt', displayName: 'Amount Received', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'PendingAmt', displayName: 'Amount Pending', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'TotalReturnQty', displayName: 'Return Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'PayModeName', displayName: 'Pay Mode', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DelUserName', displayName: 'Undelivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ReturnReason', displayName: 'Reason', width: "250", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelUserName', displayName: 'Delivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
+
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = (event) => {
-    console.log(event.row);
     this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.ProductArray = resData.Data;
+        console.log(this.ProductArray);
         AppComponent.SmartAlert.Success(resData.Message);
         $('#productsModal').modal('show');
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
+  onDeleteFunction = ($event) => {
+    this.datashare.updateShareData($event.row);
+    AppComponent.Router.navigate(['/order/instant-delivery-process']);
+  }
   onLoad() {
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
-    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 5, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 4, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
@@ -93,6 +110,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.appService.removeBackdrop();
+    //this.stockOrdersData = [{}];
   }
 
 }

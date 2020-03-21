@@ -12,6 +12,8 @@ import { AreaWiseRefillOrderSummaryComponent } from './area-wise-refill-order-su
 import { CustomerWiseTransactionsComponent } from './customer-wise-transactions/customer-wise-transactions.component';
 import  { CashFlowRegisterComponent } from './cash-flow-register/cash-flow-register.component';
 import { PaymentCollectionsComponent } from './payment-collections/payment-collections.component';
+import { InstantDeliveredOrdersComponent } from './instant-delivered-orders/instant-delivered-orders.component';
+import { InstantDeliveryProcessComponent } from './instant-delivery-process/instant-delivery-process.component';
 
 const routes: Routes = [
   { path:'refill-booking-list',
@@ -22,6 +24,10 @@ const routes: Routes = [
    component:CashMemoAndRefillDeliveryComponent},
    { path:'deliver-refill',
    component:DeliverRefillComponent},
+   { path:'instant-delivered-orders',
+   component:InstantDeliveredOrdersComponent},
+   { path:'instant-delivery-process',
+   component:InstantDeliveryProcessComponent},
    { path:'undeliver-refill',
    component:UndeliverRefillComponent},
    { path:'delivered-orders',
@@ -49,6 +55,8 @@ export const compArray=[
   DeliveredOrdersComponent,
   DeliverRefillComponent,
   DeliveryManWiseRefillOrderSummaryComponent,
+  InstantDeliveredOrdersComponent,
+  InstantDeliveryProcessComponent,
   PaymentCollectionsComponent,
   RefillBookingListComponent,
   RefillBookingComponent,

@@ -49,7 +49,7 @@ export class PriceAllocationComponent implements OnInit, OnDestroy {
     }
 
 
-    this.masterService.getProducts(this.Pallocation.ProdSegId).subscribe((resPT: any) => {
+    this.masterService.getProducts(this.Pallocation.ProdSegId,'F').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }

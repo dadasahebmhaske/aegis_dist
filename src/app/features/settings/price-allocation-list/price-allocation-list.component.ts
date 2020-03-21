@@ -67,7 +67,7 @@ export class PriceAllocationListComponent implements OnInit {
     });
   }
   onSelectProdSegment() {
-    this.masterService.getProducts(this.PAllocation.ProdSegId).subscribe((resPT: any) => {
+    this.masterService.getProducts(this.PAllocation.ProdSegId,'F').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }

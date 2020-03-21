@@ -17,7 +17,7 @@
                                       >Route
                                       <span class="errorMessage">*</span>
                                     </label> -->
-                      <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()">
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RouteId" name="RouteId" (change)="getSubArea()">
                         <option value="" hidden selected> Select Route </option>
                         <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
                       </select>

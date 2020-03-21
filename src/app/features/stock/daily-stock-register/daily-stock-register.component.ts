@@ -146,7 +146,7 @@ export class DailyStockRegisterComponent implements OnInit {
     });
   }
   onSelectProdSegment() {
-    this.masterService.getProducts(this.stockFilter.ProdSegId).subscribe((resPT: any) => {
+    this.masterService.getProducts(this.stockFilter.ProdSegId,'').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.productDataSelected = resPT.Data;
       } else { this.productDataSelected = []; }
