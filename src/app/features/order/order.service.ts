@@ -95,4 +95,10 @@ export class OrderService {
     public getCustWisetransData(cpcode, cust) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliveryProducts?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FDate=${cust.StartDate}&TDate=${cust.EndDate}`);
     }
+    public getInstantDeliveryDetails(cpcode, delStatus, DelFilter, fd, td) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetInstantRefillDelivery?DelRefNo=&CPCode=${cpcode}&ConsId=&DelStatus=${delStatus}&DelUserCode=${DelFilter.DelUserCode}&FDate=${fd}&TDate=${td}&ConsNo=${DelFilter.ConsNo}&MobileNo=${DelFilter.MobileNo}`);
+    }
+    public getInstantDeliveryProductDetails(cpcode, delRef) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetInstantRefillDeliveryProducts?DelRefNo=${delRef}&CPCode=${cpcode}`);
+    }
 }

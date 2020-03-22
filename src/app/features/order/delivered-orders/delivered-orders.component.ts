@@ -51,6 +51,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
       },
       { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoNo', displayName: 'Cash Memo No.', cellClass: 'cell-center', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
