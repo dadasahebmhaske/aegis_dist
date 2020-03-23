@@ -338,8 +338,7 @@
                         <br>
                         <h3>
                           <strong>Step 2</strong> - Delivery Details</h3>
-                        <!-- <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate> -->
-                          <form name="undeliverRefillForm" id="undeliverRefillForm" #undeliverRefillForm="ngForm" (ngSubmit)="SavedeliverRefill()" autocomplete="off" ngNativeValidate>
+                          <form name="undeliverRefillForm" id="undeliverRefillForm" #undeliverRefillForm="ngForm" (ngSubmit)="nextToSave()" autocomplete="off" ngNativeValidate>
                             <div class="row">
                               <div class="col-sm-12">
                                 <div class="logincDeatils">
@@ -384,8 +383,8 @@
                                               <th class="text-right">Refill Amount</th>
                                               <th class="text-right">Discount</th>
                                               <th class="text-right">Return Quantity</th>
-                                              <th class="text-right">Amount</th>
-                                              <th> Edit</th>
+                                              <!-- <th class="text-right">Amount</th>
+                                              <th> Edit</th> -->
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -398,10 +397,10 @@
                                               <td class="text-right">{{pr.RefillAmount}}</td>
                                               <td class="text-right">{{pr.Discount}}</td>
                                               <td class="text-right">{{pr.ReturnQty}}</td>
-                                              <td class="text-right">{{pr.TotalAmount}}</td>
+                                              <!-- <td class="text-right">{{pr.TotalAmount}}</td>
                                               <td>
                                                 <a class="btn btn-xs btn-primary" (click)=onEditProduct(pr,i)>Edit</a>
-                                              </td>
+                                              </td> -->
                                             </tr>
                                           </tbody>
                                         </table>
@@ -439,7 +438,7 @@
                               <div class="col-sm-2">
                                 <div class="form-group">
                                   <label>Total Discount </label>
-                                  <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" (ngModelChange)="calculatePending()" />
+                                  <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="deliverrefill.Discount" name="Discount" (ngModelChange)="calculatePending()" disabled/>
                                 </div>
                               </div>
                               <div class="col-sm-2">
@@ -452,7 +451,7 @@
                                 <div class="form-group">
                                   <label>Paid Amount <span class="errorMessage">*</span></label>
                                   <input type="text" class="form-control" placeholder="Enter Paid Amount" [(ngModel)]="deliverrefill.TotalReceivedAmount" name="TotalReceivedAmount"
-                                    (ngModelChange)="calculatePending()" required />
+                                    (ngModelChange)="calculatePending()" required disabled/>
                                 </div>
                               </div>
                               <div class="col-sm-2">

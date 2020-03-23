@@ -34,7 +34,14 @@ export class OrderService {
             }
         return deliverrefill;
     }
-
+    
+    public assignEmptyToReturnQty(deliverrefill) {
+        if (deliverrefill.length != 0)
+            for (let i = 0; i < deliverrefill.length; i++) {
+                deliverrefill[i].ReturnQty = deliverrefill[i].EmptyQty;
+                    }
+        return deliverrefill;
+    }
     public postRefillBooking(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessRefillBooking`, data, AppComponent.httpOptions);
     }
@@ -100,5 +107,8 @@ export class OrderService {
     }
     public getInstantDeliveryProductDetails(cpcode, delRef) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetInstantRefillDeliveryProducts?DelRefNo=${delRef}&CPCode=${cpcode}`);
+    }
+    public postInstantDeliverRefill(data: any) {
+        return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/ProcessRefillDelivery`, data, AppComponent.httpOptions);
     }
 }

@@ -50,16 +50,16 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
       },
       {
-        name: 'Select1', displayName: 'Process', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.MobileNo!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Process&nbsp;</button> `
+        name: 'Select1', displayName: 'Process', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.DelStatus!=4 && row.entity.MobileNo !=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Process&nbsp;</button> `
         , width: "71", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Process</div>', enableFiltering: false
       },
-      { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true }, 
+     // { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true }, 
       { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashMemoNo', displayName: 'Cash Memo No.', cellClass: 'cell-center', width: "135", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CashMemoDate', displayName: 'Cash Memo Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
+     // { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
+      //{ name: 'CashMemoNo', displayName: 'Cash Memo No.', cellClass: 'cell-center', width: "135", cellTooltip: true, filterCellFiltered: true },
+      //{ name: 'CashMemoDate', displayName: 'Cash Memo Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'DelDate', displayName: 'Delivery Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'TtlProdQty', displayName: 'Total Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'RefillAmount', displayName: 'Refill Amount', cellClass: 'cell-right', width: "160", cellTooltip: true, filterCellFiltered: true },
@@ -68,7 +68,8 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
       { name: 'PaidAmt', displayName: 'Amount Received', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'PendingAmt', displayName: 'Amount Pending', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'TotalReturnQty', displayName: 'Return Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'PayModeName', displayName: 'Pay Mode', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DelStatusName', displayName: 'Delivery Status', width: "150", cellTooltip: true, filterCellFiltered: true },
+       { name: 'PayModeName', displayName: 'Pay Mode', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'AppName', displayName: 'App', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'DelUserName', displayName: 'Delivered By', width: "180", cellTooltip: true, filterCellFiltered: true },
 
@@ -77,10 +78,9 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
     this.onLoad();
   }
   onEditFunction = (event) => {
-    this.orderService.getInstantDeliveryProductDetails((this.cpInfo.CPCode+5), event.row.DelRefNo).subscribe((resData: any) => {
+    this.orderService.getInstantDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.ProductArray = resData.Data;
-        console.log(this.ProductArray);
         AppComponent.SmartAlert.Success(resData.Message);
         $('#productsModal').modal('show');
       }
@@ -101,7 +101,7 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
     //   else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     // });
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
-    this.orderService.getInstantDeliveryDetails((this.cpInfo.CPCode +5), '', this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+    this.orderService.getInstantDeliveryDetails(this.cpInfo.CPCode, '', this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
@@ -121,5 +121,4 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
     this.appService.removeBackdrop();
     //this.stockOrdersData = [{}];
   }
-
 }
