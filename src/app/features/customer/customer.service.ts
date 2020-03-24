@@ -9,6 +9,9 @@ export class CustomerService {
   public postCustomerDetails(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}/Operational/ManageCustomer`, { data: data }, AppComponent.httpOptions);
   }
+  public postInstantCustomerDetails(data: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}/Operational/ManageInstantCustomer`, { data: data }, AppComponent.httpOptions);
+  }
   public getCustomerType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CTM&IsActive=Y`);
   }

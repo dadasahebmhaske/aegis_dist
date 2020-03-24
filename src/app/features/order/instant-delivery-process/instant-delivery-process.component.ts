@@ -63,6 +63,9 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       this.deliverrefill = data == null ? {AllocatedUserCode: '' , IsActive: 'Y' } : data;
       this.customer.ConsName=this.deliverrefill.ConsName;
       this.customer.MobileNo=this.deliverrefill.MobileNo;
+      this.customer.ConsId=this.deliverrefill.ConsId;
+      if(this.customer.ConsId !=''&& this.customer.ConsId !=undefined && this.customer.ConsId !=null)
+      this.nextStep();
       this.deliverrefill.AllocatedUserCode=this.deliverrefill.DelUserCode;
       this.deliverrefill.AllocatedUserName=this.deliverrefill.DelUserName;
       this.deliverrefill.TotalReceivedAmount=this.deliverrefill.PaidAmt;
@@ -122,16 +125,10 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
   setActiveStep(steo) {
     switch (steo.key) {
       case 'step1':
-        this.activeStep = steo;
+        if (steo.key == "step1" && this.customer.ConsId==undefined) {
+          this.activeStep = steo;
+        }
         break;
-      // case 'step2':
-      //   if (steo.key == "step2" ) {
-      //     this.activeStep = steo;
-      //     //this.getEmployeeAddressDetails();
-      //   } else {
-      //     AppComponent.SmartAlert.Errmsg(`Please add Godown details first`)
-      //   }
-      //   break;
       case 'step2':
         if (steo.key == "step2" && this.customer.ConsId!=undefined) {
           this.activeStep = steo;
@@ -142,10 +139,10 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
         break;
     }
   }
-
   prevStep() {
     let idx = this.steps.indexOf(this.activeStep);
     if (idx > 0) {
+      if(this.customer.ConsId==undefined||this.customer.ConsId=='')
       this.activeStep = this.steps[idx - 1]
     }
   }
@@ -173,15 +170,17 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       this.customer.Flag = (this.customer.ConsId !=''&& this.customer.ConsId !=undefined)?'UP':'IN';
       this.customer.CPCode = this.cpInfo.CPCode;
       this.customer.UserCode = this.cpInfo.EmpId;
-      this.customer.ConsId = '';
-      this.customer.ConsNo = null;
+      if(this.customer.ConsId==undefined)
+      {this.customer.ConsId = '';
+      this.customer.ConsNo = null;}
       this.customer.ConsName = `${this.customer.FirstName} ${this.customer.LatName}`;
       let ciphertext = this.appService.getEncrypted(this.customer);
-      this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
+      this.customerService.postInstantCustomerDetails(ciphertext).subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           if (resp.Data.length != 0)
             this.customer.ConsId = resp.Data[0].ConsId;
-            this.customer = Object.assign(this.customer, resp.Data[0])
+            this.customer = Object.assign(this.customer, resp.Data[0]);
+            if(this.customer.Flag=='IN')
           this.saveAddressDeatils();
           //AppComponent.SmartAlert.Success(resp.Message);
         } else {
@@ -221,32 +220,6 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     } else { 
       AppComponent.SmartAlert.Errmsg(`Cash memo not generated`);
     }
-    // if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
-    //   this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
-    //   this.bulkDoc.RefId = this.employee.EmpId;
-    //   this.bulkDoc.FormFlag = 'EMP';
-    //   this.bulkDoc.UserCode = this.cpInfo.EmpId;
-    //   if (this.removeDocUpdate.length > 0) {
-    //     this.bdata = this.bdata.concat(this.removeDocUpdate);
-    //   }
-    //   this.bulkDoc.bdata = this.bdata;
-    //   let ciphertext = this.appService.getEncrypted(this.bulkDoc);
-    //   this.fd.append('CipherText', ciphertext);
-    //   this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
-    //     this.loaderbtn = true;
-    //     if (resData.StatusCode != 0) {
-    //       this.bdata = []; this.removeDocUpdate = [];
-    //       if (resData.Data.length != 0)
-    //         this.employee.DocId = resData.Data[0].DocId;
-    //       AppComponent.SmartAlert.Success(resData.Message);
-    //       AppComponent.Router.navigate(['/master/employee-master']);
-    //     }
-    //     else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    //   });
-    // } else {
-    //   AppComponent.SmartAlert.Errmsg(`Please Add atleast one document.`);
-    // }
-  
   }
   onWizardComplete(data) {
     console.log('basic wizard complete', data)
@@ -313,10 +286,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     this.bulkAdd.data = this.addArray;
     this.bulkAdd.RefId = this.customer.ConsId;
     this.bulkAdd.FormFlag = 'CUSTM';
-    //this.bulkAdd.AddressType = 'D';
     this.bulkAdd.UserCode = this.cpInfo.EmpId;
-    //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
-    // this.fd.append('CipherText', ciphertext);
     this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
