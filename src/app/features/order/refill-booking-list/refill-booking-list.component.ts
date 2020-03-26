@@ -48,8 +48,8 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Booking</div>', enableFiltering: false
       },
 
-      { name: 'ConsNo', displayName: 'Costumer No', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ConsName', displayName: 'Costumer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsNo', displayName: 'Customer No', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ConsName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'BookNo', displayName: 'Book No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'BookDate', displayName: 'Book Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
