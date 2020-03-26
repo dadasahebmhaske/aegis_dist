@@ -44,7 +44,7 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label for="sel1">Godown Capacity <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Godown Capacity (In MT)  <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Capacity" [(ngModel)]="godown.Capacity" name="Capacity" saCommonDir
                                                                     dirType="number" required />
@@ -128,7 +128,7 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Lease ( In Years) <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Lease Period  ( In Years) <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Lease Period" saCommonDir dirType="decimal" [(ngModel)]="godown.LeasePeriod"
                                                                     name="LeasePeriod" [disabled]="GodownType=='O'" [required]="GodownType!='O'" />
