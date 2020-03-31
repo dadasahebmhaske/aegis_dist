@@ -33,7 +33,6 @@ const FakeDataSource = {
   styles: []
 })
 export class LiveStatsComponent implements OnInit, OnDestroy {
-
   constructor(private zone: NgZone) {
   }
 

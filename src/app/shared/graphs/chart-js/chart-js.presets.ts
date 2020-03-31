@@ -141,11 +141,13 @@ export const presets = {
     options:  {
       scales: {
         xAxes: [{
+          display: false,
           gridLines:{
+           
             color: 'rgba(192,192,192,0.1)'
           }
         }],
-        yAxes: [{
+        yAxes: [{ display: false,
           gridLines:{
             color: 'rgba(192,192,192,0.1)'
           }

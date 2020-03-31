@@ -1,7 +1,8 @@
 <div id="content">
 
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Dashboard', 'My Dashboard']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="['Dashboard', 'My Dashboard']" icon="home"
+      class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     <sa-stats></sa-stats>
   </div>
 
@@ -11,7 +12,134 @@
       <article class="col-sm-12">
 
 
-        <live-feeds-widget></live-feeds-widget>
+        <!-- <live-feeds-widget></live-feeds-widget> -->
+        <div sa-widget [sortable]="false" [togglebutton]="false" [editbutton]="false" [fullscreenbutton]="false"
+          [colorbutton]="false" [deletebutton]="false" saSparklineContainer saEasyPieChartContainer>
+
+          <header>
+            <span class="widget-icon">
+              <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
+
+            <h2> Live Feeds As On</h2>
+
+            <ul class="nav nav-tabs pull-right in" id="myTab">
+              <li class="active">
+                <a data-toggle="tab" href="#s1"><i class="fa fa-clock-o"></i> <span
+                    class="hidden-mobile hidden-tablet">&nbsp;Delivery Status</span></a>
+              </li>
+              <li>
+                <a data-toggle="tab" href="#s3"><i class="fa fa-clock-o"></i> <span
+                    class="hidden-mobile hidden-tablet">&nbsp;Live Stats</span></a>
+              </li>
+
+              <li>
+                <a data-toggle="tab" href="#s2"><i class="fa fa-facebook"></i> <span
+                    class="hidden-mobile hidden-tablet">&nbsp;Social Network</span></a>
+              </li>
+
+
+            </ul>
+
+          </header>
+
+          <div class="no-padding">
+
+            <div class="widget-body">
+
+              <div id="myTabContent" class="tab-content">
+                <!-- <revenue-feed class="tab-pane fade active in" id="s1" ></revenue-feed> -->
+                <div class="row tab-pane fade active in" id="s1">
+                  <div class="col-sm-8">
+                    <div>
+
+                      <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                        <div class="btn-group hidden-phone pull-left">
+                          <a class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown"><i
+                              class="fa fa-cog"></i> More <span class="caret"> </span> </a>
+                          <ul class="dropdown-menu pull-right">
+                            <li>
+                              <a (click)="(null)"><i class="fa fa-file-text-alt"></i>> Delivery Man Wise</a>
+                            </li>
+                            <li>
+      
+                              <a (click)="(null)"><i class="fa fa-question-sign"></i> Area Wise</a>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="inline-group pull-right">
+                          <label for="gra-0" class="checkbox">
+                            <input type="checkbox" id="gra-0" [(ngModel)]="state.targetsShow"
+                              (ngModelChange)="updateData()" />
+                            <i></i> Pending </label>
+                          <!-- Target -->
+                          <label for="gra-2" class="checkbox">
+                            <input type="checkbox" id="gra-2" [(ngModel)]="state.signupsShow"
+                              (ngModelChange)="updateData()" />
+                            <i></i> Delivered </label>
+                          <!-- Signups -->
+                          <label for="gra-1" class="checkbox">
+                            <input type="checkbox" id="gra-1" [(ngModel)]="state.actualsShow"
+                              (ngModelChange)="updateData()" />
+                            <i></i> Undelivered </label>
+                          <!-- Actual -->
+                        
+                        </div>
+
+                 
+
+                      </div>
+
+                      <div class="padding-10">
+                        <sa-flot-chart class="chart-large has-legend-unique" [data]="revenueData"
+                          [options]="revenueChartOptions"></sa-flot-chart>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> Order Delivery</span>
+                      </div>
+
+                    </div>
+                    <div style="width: 250px;display: block;margin: auto;">
+                      <br>
+                      <sa-chart-js type="pie" [data]="chartjsData['pie-chart']"></sa-chart-js>
+                    </div>
+                    <div class="top_deliverylsit">
+                      <strong class="pull-left">Top Delivery Man</strong>
+                      <strong class="pull-right"> Total Delivery</strong>
+                    </div>
+                    <div  class="top_deliverylsit">
+                      <span class="pull-left">1 . Raju Rathor</span>
+                      <span class="pull-right"> 191</span>
+                    </div>
+                    <div  class="top_deliverylsit">
+                      <span class="pull-left">2 . Sonaram Bhinsone</span>
+                      <span class="pull-right"> 121</span>
+                    </div>
+                    <div  class="top_deliverylsit">
+                      <span class="pull-left">3 . Chanchaddas Das Rastogi</span>
+                      <span class="pull-right"> 91</span>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <live-stats-feed class="tab-pane fade  padding-10 no-padding-bottom" id="s3"></live-stats-feed>
+
+                <social-network-feed class="tab-pane fade" id="s2"></social-network-feed>
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </article>
     </div>
