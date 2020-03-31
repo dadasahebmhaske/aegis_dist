@@ -33,11 +33,17 @@ const FakeDataSource = {
   styles: []
 })
 export class LiveStatsComponent implements OnInit, OnDestroy {
+  public per:number=55;
+  public showpie:boolean=false;
   constructor(private zone: NgZone) {
   }
 
   ngOnInit() {
     this.updateStats()
+    this.per=44;
+    setTimeout(() => {
+      this.showpie=true;
+    },500);
   }
 
   @Input() public liveSwitch = false;

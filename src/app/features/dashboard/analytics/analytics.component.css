@@ -1,1 +1,75 @@
 .top_deliverylsit{margin:5px;padding:  10px;display: block;}
+.show-stat-microcharts {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.show-stat-microcharts>div {
+    border-right: 1px solid #DADADA!important;
+    border-top: 1px solid #DADADA!important;
+    margin-top: 0px!important;
+    height: 65px;
+    overflow: hidden;
+    padding: 7px 9px;
+}
+.show-stat-bottom{ border-bottom: 1px solid #DADADA!important;}
+.easy-pie-title {
+    display: inline-block;
+    margin: 10px 6px 0;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: auto;
+    height: 19px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.smaller-stat span.label {
+    font-size: 14px;
+    width: auto;
+    display: block;
+    text-align: left;
+    opacity: 1; 
+    cursor: default;
+    padding: 10px 5px;
+}
+.smart-form select.input-sm {
+    height: 23px;
+    line-height: 15px;
+    font-size: 12px;
+}
+.table thead tr {
+    font-size: 12px !important;
+}
+.tbl > thead > tr > th {
+    vertical-align: middle !important;
+    background: #ccc;
+    border-right: 1px solid #ededed;
+}
+.tbl > tbody > tr > td {
+    vertical-align: middle !important;
+}
+.icon-append {
+    right: 5px;
+    padding-left: 3px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    position: absolute;
+    height: 15px;
+    top: 5px;
+    width: 22px;
+    height: 11111111;
+    font-size: 14px;
+    line-height: 15px;
+    text-align: center;
+    color: #747070;
+}
+@media (min-width: 768px){
+.jarviswidget > header h2 {
+    display: inline-block;
+    font-size: 14px;
+    position: absolute;
+    margin: 0;
+    text-align: center;
+    margin-left: 10px;
+}}

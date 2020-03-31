@@ -17,6 +17,10 @@ export class AnalyticsComponent implements OnInit {
   public revenueData: Array<any>;
   public chartjsData: any={};
   public calendar$
+  public loaderbtn:boolean=true;
+
+  public per:number=55;
+  public showpie:boolean=false;
   constructor(
     private store: Store<any>
   ) {
@@ -24,6 +28,10 @@ export class AnalyticsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.per=44;
+    setTimeout(() => {
+      this.showpie=true;
+    },500);
     this.updateData();
     this.chartjsData={
       "pie-chart": {
