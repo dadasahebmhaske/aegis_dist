@@ -36,18 +36,21 @@ export class AnalyticsComponent implements OnInit {
     this.chartjsData={
       "pie-chart": {
         "datasets":[{
-          "data":[18,49,27],
+          "data":[28,39,27],
            "backgroundColor": [
-                "rgba(220,220,220,0.8)",
-                "rgba(151,187,205,1)",
-                "rgba(169, 3, 41, 0.7)",
+                "#a84242",
+                "#71843F",
+                "#3276B1",
                 // "#949FB1",
                 // "#4D5360"
             ],
            "hoverBackgroundColor": [
-                "rgba(220,220,220,0.7)",
-               "rgba(151,187,205,0.8)",
-                "rgba(169, 3, 41, 0.7)",
+            "#a84242",
+            "#71843F",
+            "#3276B1",
+              //   "rgba(220,220,220,0.7)",
+              //  "rgba(151,187,205,0.8)",
+              //   "rgba(169, 3, 41, 0.7)",
                 // "#A8B3C5",
                 // "#616774"
             ],
@@ -55,9 +58,9 @@ export class AnalyticsComponent implements OnInit {
     
         
         "labels":[
-           "Grey",
-            "Blue",
-            "Red",
+           "Pending",
+            "Delivered",
+            "Undelivered",
             // "Grey",
             // "Dark Grey"
         ]
