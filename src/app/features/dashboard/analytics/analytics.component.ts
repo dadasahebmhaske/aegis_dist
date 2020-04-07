@@ -90,7 +90,7 @@ export class AnalyticsComponent implements OnInit {
       defaultTheme: false
     },
     xaxis: {
-      mode: "time"
+      mode: "time",
     },
     yaxes: {
       tickFormatter: function (val, axis) {

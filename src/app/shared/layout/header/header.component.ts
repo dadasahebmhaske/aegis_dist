@@ -58,6 +58,8 @@ export class HeaderComponent implements OnInit {
     localStorage.clear();
     this.appService.setProperty(null, false);
     this.router.navigate(['/auth/login']);
-
+  }
+  ChangePass(){
+    this.router.navigate(['/settings/change-password']);
   }
 }

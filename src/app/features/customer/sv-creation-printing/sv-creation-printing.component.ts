@@ -44,14 +44,14 @@ export class SvCreationPrintingComponent implements OnInit {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.custData = resData.Data[0];
-        //
+        this.prodArray = null;
         this.getCustomerProductDetails();
       }
       else { this.custData = {}; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   getCustomerProductDetails() {
-    this.prodArray = [];
+    this.prodArray = [{}];
     this.customerService.getProductDetails(this.cpInfo.CPCode, 'CUSTM', this.custData.ConsId).subscribe((resprod: any) => {
       if (resprod.StatusCode != 0) {
         this.prodArray = resprod.Data;

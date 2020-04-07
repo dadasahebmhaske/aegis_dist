@@ -9,6 +9,7 @@ import { StockService } from '../stock/stock.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 
 
+
 @NgModule({
   declarations: [compArray,UigridsettingDirective],
   imports: [

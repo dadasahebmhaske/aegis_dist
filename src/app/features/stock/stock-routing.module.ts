@@ -9,13 +9,20 @@ import { ImbalanceComponent } from './imbalance/imbalance.component';
 import { DailyStockRegisterComponent } from './daily-stock-register/daily-stock-register.component';
 import { DayEndComponent } from './day-end/day-end.component';
 import { CustomerDailyStockRegisterComponent } from './customer-daily-stock-register/customer-daily-stock-register.component';
-
+import { OrderAndDispatchDetailsComponent } from './order-and-dispatch-details/order-and-dispatch-details.component';
+import { OrderAcceptedRejectedComponent } from './order-accepted-rejected/order-accepted-rejected.component';
+import { OrderAcceptedRejectedDispatchedComponent } from './order-accepted-rejected-dispatched/order-accepted-rejected-dispatched.component';
+import { OrderDispatchDetailsComponent } from './order-dispatch-details/order-dispatch-details.component';
 const routes: Routes = [ 
   { path:'add-imbalance',component:AddImbalanceComponent},
   { path:'daily-stock-register',component:DailyStockRegisterComponent},
   { path:'customer-daily-stock-register',component:CustomerDailyStockRegisterComponent},
   { path:'day-end',component:DayEndComponent},
   { path:'imbalance',component:ImbalanceComponent},
+  { path:'order-and-dispatch-details',component:OrderAndDispatchDetailsComponent},
+  { path:'order-accepted-rejected',component:OrderAcceptedRejectedComponent},
+  { path:'order-dispatch-details',component:OrderDispatchDetailsComponent},
+  { path:'order-accepted-rejected-dispatched',component:OrderAcceptedRejectedDispatchedComponent},
   { path:'stock-orders',component:StockOrdersComponent},
   { path:'stock-orders-list',component:StockOrdersListComponent},
   { path:'return-stock',component:ReturnStockComponent},
@@ -31,6 +38,10 @@ export const compArray=[
   ImbalanceComponent,
   ReturnStockComponent,
   ReturnStockListComponent,
+  OrderAndDispatchDetailsComponent,
+  OrderAcceptedRejectedComponent,
+  OrderDispatchDetailsComponent,
+  OrderAcceptedRejectedDispatchedComponent,
   StockOrdersComponent,
   StockOrdersListComponent
 ];

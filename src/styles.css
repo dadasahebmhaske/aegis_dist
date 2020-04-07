@@ -337,6 +337,10 @@ body.smart-style-2 {
 .swal2-popup {
      font-size: 1.2rem !important;
 }
+.fa-plus-square-o:before {
+  content: "";
+}
+
 /* .ui-grid.disable-row-selection {
   display: none;
 } */
