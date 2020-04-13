@@ -11,9 +11,13 @@
             <div class="widget-body">
               <div class="row ">
 
-                <div class="col-sm-12 table-responsive">
+                <!-- <div class="col-sm-12 table-responsive">
                   <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
-                </div>
+                </div> -->
+                <div class="col-sm-12" >
+                  <ui-grid [data]="actionData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                
+              </div>
                 <div class="col-sm-12">
                   <form name="Disp" #Disp="ngForm" ngNativeValidate> 
                     <div class="row">

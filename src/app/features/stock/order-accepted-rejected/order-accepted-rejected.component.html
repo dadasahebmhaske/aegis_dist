@@ -12,34 +12,34 @@
               <div class="row ">
               <div class="col-sm-12">
                 <div class="form-group label-center">
-                  <label><strong >  Order No. : <span class="val-color">2020040316225032</span></strong>
+                  <label><strong >  Order No. : <span class="val-color">{{Order.OrderNo}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  Order Date : <span class="val-color">03-Apr-2020</span></strong>
+                  <label><strong class="marg-left">  Order Date : <span class="val-color">{{Order.OrderDt}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  SB / SF Code : <span class="val-color">11220004</span></strong>
+                  <label><strong class="marg-left">  SB / SF Code : <span class="val-color">{{Order.CPCode}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  SB / SF Name : <span class="val-color">Jaxson Enterprises</span></strong>
+                  <label><strong class="marg-left">  SB / SF Name : <span class="val-color">{{Order.CPName}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  Plant name. : <span class="val-color">Dharwad 2</span></strong>
+                  <label><strong class="marg-left">  Plant name. : <span class="val-color">{{Order.PlantName}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  Vehicle No. : <span class="val-color">MH12QR8787</span></strong>
+                  <label><strong class="marg-left">  Vehicle No. : <span class="val-color">{{Order.VehicleNo}}</span></strong>
                   </label>
-                  <label><strong class="marg-left">  Status : <span class="val-color">Pending</span></strong>
+                  <label><strong class="marg-left">  Status : <span class="val-color">{{Order.OrdStatus}}</span></strong>
                   </label>
                 </div>
               </div>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" ></ui-grid>
                 </div>
                 <div class="col-sm-1 col-xs-4  pull-right marg-top1 ">
                   <div class="form-group">
-                    <button class="btn btn-block btn-danger get_details" type="submit" [disabled]="!loaderbtn">
+                    <button class="btn btn-block btn-danger get_details" type="submit" (click)="PostRejectOrder()" [disabled]="!loaderbtn">
                       <i class="fa fa-fw" [ngClass]="{'fa-close':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Reject':'Loading'}}</button>
                   </div>
                 </div>
                 <div class="col-sm-1 col-xs-4 pull-right marg-top">
                   <div class="form-group">
-                    <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                    <button class="btn btn-block btn-success get_details" type="submit" (click)="PostAcceptOrder()" [disabled]="!loaderbtn">
                       <i class="fa fa-fw" [ngClass]="{'fa-check':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Accept':'Loading'}}</button>
                   </div>
                 </div>

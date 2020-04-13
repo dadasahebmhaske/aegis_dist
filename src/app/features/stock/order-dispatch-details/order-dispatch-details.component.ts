@@ -16,7 +16,7 @@ import { Config } from 'protractor';
   templateUrl: './order-dispatch-details.component.html',
   styleUrls: ['./order-dispatch-details.component.css']
 })
-export class OrderDispatchDetailsComponent implements OnInit {
+export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
   gridOptions: IGridoption;
   prodtype:any={};
   Order:any={};
@@ -29,7 +29,7 @@ export class OrderDispatchDetailsComponent implements OnInit {
   ProductData:any=[];
   rowIndex:number;
   DispatchRemark:string;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private appService: AppService, public dataShare: DatashareService, public stockService: StockService) { }
 
   ngOnInit() {
    
@@ -46,17 +46,16 @@ export class OrderDispatchDetailsComponent implements OnInit {
         this.OrderTdata=res.Data;
       }
     });
-
-    if(sessionStorage.actionData!=null){
-      this.gridhide= false;
-      // this.actionData = angular.fromJson(sessionStorage.AOrderData);
-      // sessionStorage.removeItem('AOrderData');
-      this.Order = angular.fromJson(sessionStorage.actionData);
-      // sessionStorage.OskId=this.Order.StkOrdId;      
-      
+    this.dataShare.GetSharedData.subscribe(data => {
+      this.Order = this.olddata = data;
       this.getOderDetails(this.Order.StkOrdId);
-      this.olddata = angular.fromJson(sessionStorage.BOrder);
-    }   
+    });
+    // if(sessionStorage.actionData!=null){
+    //   this.gridhide= false;
+    //   this.Order = angular.fromJson(sessionStorage.actionData);
+    //   this.getOderDetails(this.Order.StkOrdId);
+    //   this.olddata = angular.fromJson(sessionStorage.BOrder);
+    // }   
 
   }
 
@@ -231,6 +230,10 @@ export class OrderDispatchDetailsComponent implements OnInit {
     }  
     $("#myModal").modal('hide');
   }
+  ngOnDestroy() {
+   this.appService.removeBackdrop();
+    this.dataShare.updateShareData(null);
+   }
 }
 
 

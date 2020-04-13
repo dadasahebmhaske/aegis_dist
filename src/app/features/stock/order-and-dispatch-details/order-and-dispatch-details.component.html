@@ -11,6 +11,12 @@
             <div class="widget-body">
               <div class="row ">
                 <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                      <div class="col-sm-2">
+                        <div class="form-group">
+                          <!-- <label for="sel1">Channel Partner Code</label> -->
+                          <input type="text" class="form-control" id="pmode" placeholder="Channel Partner Code" autocomplete="off" [(ngModel)]="order.CPCode" [ngModelOptions]="{standalone: true}" />
+                        </div>
+                      </div>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <label class="posticon">
@@ -31,13 +37,17 @@
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
+                      <select  class="form-control"  [(ngModel)]="order.OrderStage" name="OrderStage">
+                        <option value="" selected hidden>--Select--</option>
+                        <option *ngFor="let option of Status" value="{{option.OrderStage}}">{{option.OrderStageDesc}}</option>
+                        </select>
+                      <!-- <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
                         <option value="" selected hidden>Select Order Status</option>
                         <option value="PE">Pending</option>
                         <option value="AC">Accepted</option>
                         <option value="RJ">Rejected</option>
                         <option value="DI">Dispatched</option>
-                      </select>
+                      </select> -->
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">

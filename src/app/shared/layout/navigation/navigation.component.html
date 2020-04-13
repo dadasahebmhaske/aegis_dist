@@ -133,9 +133,10 @@
             <a routerLink="/stock/return-stock-list">Return Stock </a>
           </li> -->
           <li routerLinkActive="active">
-            <a routerLink="/stock/add-imbalance">Imbalance</a>
+            <a routerLink="/stock/add-imbalance">Imbalance {{stockShow}}</a>
+            {{stockShow}}
           </li>
-          <li>
+          <li *ngIf="stockShow">
             <a title="Stock">
               <span >Stock SF / SD</span>
             </a>

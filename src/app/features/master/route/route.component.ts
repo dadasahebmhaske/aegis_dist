@@ -35,6 +35,7 @@ public loaderbtn:boolean=true;
       else{AppComponent.SmartAlert.Errmsg(resData.Message);}
     }); 
   }
+  
   ngOnDestroy(){
     this.datashare.updateShareData(null);    
   }

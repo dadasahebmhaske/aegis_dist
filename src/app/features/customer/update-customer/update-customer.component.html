@@ -218,7 +218,7 @@
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <label for="sel1">GST No. </label>
-                                <input type="text" class="form-control" placeholder="Enter GST No. " [(ngModel)]="customer.GstNo" name="GstNo" saCommonDir dirType="alphanumeric"
+                                <input type="text" class="form-control" placeholder="Enter GST No. " [(ngModel)]="customer.GstNo" name="GstNo" saCommonDir dirType="alphanumericupper"
                                   pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}" />
                               </div>
                             </div>
@@ -226,7 +226,7 @@
                               <div class="form-group">
                                 <label for="sel1">Manifold Certificate No. </label>
                                 <input type="text" class="form-control" placeholder="Enter Certificate No." [(ngModel)]="customer.ManifoldCertNo" name="ManifoldCertNo" saCommonDir
-                                  dirType="alphanumeric" />
+                                  dirType="alphanumericupper" />
                               </div>
                             </div>
                             <div class="col-sm-3 btn-marg">
@@ -524,7 +524,7 @@
                               <div class="form-group">
                                 <label>Document No. <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir dirType="alphanumeric" required />
+                                <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir dirType="alphanumericupper" required />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -636,7 +636,7 @@
                               <div class="form-group">
                                 <label for="sel1">IFSC Code</label>
                                 <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" [(ngModel)]="bank.IFSCCode" name="IFSCCode"
-                                  oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" saCommonDir dirType="alphanumeric" />
+                                  oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" saCommonDir dirType="alphanumericupper" />
                               </div>
                             </div>
                             <div class="col-sm-1">

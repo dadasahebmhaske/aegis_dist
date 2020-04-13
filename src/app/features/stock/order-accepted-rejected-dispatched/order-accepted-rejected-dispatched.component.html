@@ -5,12 +5,12 @@
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
-            <h2> <i class="fa fa-table"></i> Accepted / rejected / Dispatched Order List </h2>
+            <h2> <i class="fa fa-table"></i> {{orderData.ShowRepo}} Order List </h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
-                <form name="dailyStockForm" #dailyStockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                <!-- <form name="dailyStockForm" #dailyStockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
                       <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
@@ -41,9 +41,9 @@
                         <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
-                </form>
+                </form> -->
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="customerDailyStockData" [gridOptions]="gridOptions"></ui-grid>
+                  <ui-grid [data]="reportData" [gridOptions]="gridOptions"></ui-grid>
                 </div>
               </div>
             </div>
