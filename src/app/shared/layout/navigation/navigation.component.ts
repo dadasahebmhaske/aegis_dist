@@ -17,7 +17,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.appService.getAppData().subscribe(data => {
       this.CPSD = data;
-      this.stockShow=this.CPSD.ChannelTypeFlag=='DI'?true:false;
+      this.stockShow=(this.CPSD.ChannelTypeFlag=='DI'|| this.CPSD.ChannelTypeFlag=='DE') ?true:false;
     });
   }
 

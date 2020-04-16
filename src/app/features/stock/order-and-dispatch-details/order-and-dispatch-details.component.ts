@@ -91,7 +91,6 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
       AppComponent.Router.navigate(['/stock/order-accepted-rejected-dispatched']);
     } else if ($event.row.OrderStage=='AC'){
       $event.row.ShowRepo = 'Accepted';
-      this.datashare.updateShareData($event.row);
       AppComponent.Router.navigate(['/stock/order-accepted-rejected-dispatched']);
     } else if( $event.row.OrderStage=='PE' && $event.row.IsDispatch=='Y') {  
       AppComponent.Router.navigate(['/stock/order-dispatch-details']); 
@@ -101,7 +100,7 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
       $event.row.ShowRepo = 'Rejected';
       AppComponent.Router.navigate(['/stock/order-accepted-rejected-dispatched']); 
     }
-    // this.datashare.updateShareData($event.row);
+     this.datashare.updateShareData($event.row);
   }
   onLoad() {
     this.loaderbtn = false;
@@ -110,6 +109,7 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
     this.accvis = this.order.OrderStage == 'AC' ? true : false;
     this.dispvis = this.order.OrderStage == 'DI' ? true : false;
     this.rjvis = this.order.OrderStage == 'RJ' ? true : false;
+    this.order.ParentCPCode=this.cpInfo.ParentCPCode==null?this.cpInfo.CPCode:this.cpInfo.ParentCPCode;
     this.stockService.getSFSDStockOrderDetails(this.cpInfo.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.order).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
@@ -131,6 +131,7 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
   }
   ngOnDestroy() {
     this.appService.removeBackdrop();
+    
     //this.stockOrdersData = [{}];
   }
 }

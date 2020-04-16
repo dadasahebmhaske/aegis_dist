@@ -65,10 +65,16 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
+    if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
+      this.stock.PlantId = 11;
+    }
     if (this.stock.PlantId == undefined || this.stock.PlantId == null || this.stock.PlantId == '') {
       this.product.ProdSegId = '';
       AppComponent.SmartAlert.Errmsg(`Please select plant first`);
     } else {
+      if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
+        this.stock.PlantId = '';
+      }
       if (this.product.OrderType != null)
         this.product.ProdType = this.product.OrderType == 'RO' || this.product.OrderType == 'DR' ? 'F' : 'E';
       this.masterService.getNewProducts(this.cpInfo.CPCode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType).subscribe((resPT: any) => {
@@ -79,9 +85,13 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     }
   }
   onSelectProduct() {
-    let docobj;
-    docobj = this.masterService.filterData(this.plantData, this.stock.PlantId, 'PlantId');
-    let plantStateCode = docobj[0].StateCode;
+    let docobj; let plantStateCode;
+    if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
+      plantStateCode = this.cpInfo.StateCode;
+    } else {
+      docobj = this.masterService.filterData(this.plantData, this.stock.PlantId, 'PlantId');
+      plantStateCode = docobj[0].StateCode;
+    }
     if (plantStateCode == null || plantStateCode == undefined || plantStateCode == '') {
       Swal.fire({
         title: '',
@@ -177,6 +187,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stock.OrderNo = this.stock.OrderNo == null || this.stock.OrderNo == '' ? '' : this.stock.OrderNo;
       this.stock.OrderCode = this.stock.OrderCode == null || this.stock.OrderCode == '' ? '' : this.stock.OrderCode;
       this.stock.CPCode = this.cpInfo.CPCode;
+      this.stock.ParentCPCode = this.cpInfo.ParentCPCode == null ? '' : this.cpInfo.ParentCPCode;
       //this.stock.ProdAmt = this.stock.SubTotal
       this.stock.GrandTotal = this.stock.ProdAmt;
       this.stock.DiscountAmt = '';

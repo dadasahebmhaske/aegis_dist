@@ -28,7 +28,7 @@ export class StockService {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrder`, data);
     }
     public getSFSDStockOrderDetails(cpcode, StartDate, EndDate, order) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=${order.PlantId}&VehicleId=&OrderStatus=&OrderStage=${order.OrderStage}&IsActive=Y`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=${order.PlantId}&VehicleId=&OrderStatus=&OrderStage=${order.OrderStage}&ParentCPCode=${order.ParentCPCode}&IsActive=Y`);
     }
     public getStockOrderDetails(cpcode, StartDate, EndDate, stage) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=&VehicleId=&OrderStatus=&OrderStage=${stage}&IsActive=Y`);
@@ -45,7 +45,7 @@ export class StockService {
     public acceptSDSFOrder(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrder`, data);
     }
-    
+
     public getStockImbalanceDetails(cpcode, StartDate, EndDate, stage) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetImbalanceDtls?ImbalanceId=&CPCode=${cpcode}&ProdSegId=&ProdId=&FDate=${StartDate}&TDate=${EndDate}&ReferenceNo=&Status=${stage}&IsActive=Y`);
     }
@@ -64,7 +64,17 @@ export class StockService {
     public getCustomerDailyStockRegister(data) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetCustomerStock?pCPCode=${data.CPCode}&pSegId=&pProdId=&pMobileNo=${data.MobileNo}&pConsNo=${data.ConsNo}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}`);
     }
-    public getSFSDOrderReportAcRjDi(data) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtls?StkOrdId=${data}&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=AC&IsActive=Y&OrderCode=&Flag=AC`);
+    public  getProductSegmentDetails() {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=`);
     }
+    public getSFSDOrderReportAcRjDi(data, action) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtls?StkOrdId=${data}&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=${action}&IsActive=Y&OrderCode=&Flag=${action}`);
+    }
+    public getSFSDAcceptedOrders(data) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtls?StkOrdId=${data}&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=PE&IsActive=Y&OrderCode=&Flag=DI`);
+    }
+    public postDispatchOrders(data: any) {
+        return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrderDispatch`, data);
+    }
+    
 }

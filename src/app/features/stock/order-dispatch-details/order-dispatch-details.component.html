@@ -93,9 +93,9 @@
               <div class="form-group">
                   <label>Order Type<span class="errorMessage" style="color:red;">*</span></label>
                   <!-- pattern="[a-zA-Z]+" ng-pattern-restrict-->
-                  <select  class="form-control"  [(ngModel)]="Order.OrderType" [ngModelOptions]="{standalone: true}"  disabled>
+                  <select  class="form-control"  [(ngModel)]="Order.OrderType" [ngModelOptions]="{standalone: true}" disabled>
                     <option value="" selected>--Select--</option>
-                    <option *ngFor="let option of OrderTdata" value="{{option.MstFlag}}">{{option.Name}}</option>
+                    <option *ngFor="let opt of OrderTdata" [value]="opt.MstFlag">{{opt.Name}}</option>
                     </select>
               </div>
             </div>

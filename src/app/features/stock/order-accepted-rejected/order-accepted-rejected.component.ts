@@ -70,6 +70,7 @@ export class OrderAcceptedRejectedComponent implements OnInit, OnDestroy {
     this.Order.data=this.stockOrdersData,
     this.Order.Flag='UP';
     this.Order.OrderStage='AC';
+    this.Order.ParentCPCode=this.cpInfo.ParentCPCode==null?'':this.cpInfo.ParentCPCode;
     this.stockService.acceptSDSFOrder(this.Order).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
@@ -87,6 +88,7 @@ export class OrderAcceptedRejectedComponent implements OnInit, OnDestroy {
     this.Order.Flag='UP';
     this.Order.OrderStage='RJ';
     this.Order.RejectRemark="";
+    this.Order.ParentCPCode=this.cpInfo.ParentCPCode==null?'':this.cpInfo.ParentCPCode;
     this.stockService.acceptSDSFOrder(this.Order).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {

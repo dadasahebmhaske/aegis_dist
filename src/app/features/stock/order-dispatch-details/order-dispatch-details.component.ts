@@ -11,12 +11,14 @@ import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import * as angular from 'angular';
 import { Config } from 'protractor'; 
+import { MasterService } from '@app/core/custom-services/master.service';
 @Component({
   selector: 'sa-order-dispatch-details',
   templateUrl: './order-dispatch-details.component.html',
   styleUrls: ['./order-dispatch-details.component.css']
 })
 export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
+  public cpInfo: any;
   gridOptions: IGridoption;
   prodtype:any={};
   Order:any={};
@@ -29,26 +31,28 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
   ProductData:any=[];
   rowIndex:number;
   DispatchRemark:string;
-  constructor(private http: HttpClient,private appService: AppService, public dataShare: DatashareService, public stockService: StockService) { }
+  constructor(private http: HttpClient,private appService: AppService, public dataShare: DatashareService,public masterService:MasterService, public stockService: StockService) { }
 
   ngOnInit() {
-   
-    this.gridhide =  true;
-
-    this.http.get(AppComponent.BaseUrl +'Master/GetMasterRecords?MasterCode=PSM&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=',{headers:AppComponent.headers}).subscribe((res:Config)=>{
-      if (res.StatusCode != 0){
-        this.ProdSegdata=res.Data;
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.stockService.getProductSegmentDetails().subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.ProdSegdata = resR.Data;
+    });
+    this.stockService.getOrderType().subscribe((resOD: any) => {
+      if (resOD.StatusCode != 0) {
+        this.OrderTdata = resOD.Data;
       }
     });
-
-    this.http.get(AppComponent.BaseUrl +'Master/GetMasterRecords?MasterCode=ORDT&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=',{headers:AppComponent.headers}).subscribe((res:Config)=>{
-      if (res.StatusCode != 0){
-        this.OrderTdata=res.Data;
-      }
-    });
+    // this.http.get(AppComponent.BaseUrl +'Master/GetMasterRecords?MasterCode=ORDT&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=',{headers:AppComponent.headers}).subscribe((res:Config)=>{
+    //   if (res.StatusCode != 0){
+    //     this.OrderTdata=res.Data;
+    //   }
+    // });
     this.dataShare.GetSharedData.subscribe(data => {
       this.Order = this.olddata = data;
       this.getOderDetails(this.Order.StkOrdId);
+      console.log(this.Order);
     });
     // if(sessionStorage.actionData!=null){
     //   this.gridhide= false;
@@ -59,20 +63,31 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
 
   }
 
-  getOderDetails(par)
+  getOderDetails(OrdId)
   {
-    this.http.get(AppComponent.BaseUrl+'Stock/GetStockOrderDtls?StkOrdId='+par+'&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=PE&IsActive=Y&OrderCode=&Flag=DI',{headers:AppComponent.headers}).subscribe((res:Config)=>{
+    this.stockService.getSFSDAcceptedOrders(OrdId).subscribe((res: any) => {
       if (res.StatusCode != 0) {
-        this.gridhide= false;
+        this.OrderTdata = res.Data;
         this.actionData=res.Data;
         this.configureGrid();
-      } else {
+      }else {
         this.actionData = [{}];
-        this.gridhide =  true;
         AppComponent.SmartAlert.Errmsg(res.Message);	
         AppComponent.Router.navigate(['stock/order-and-dispatch-details']);  
       }
     });
+    // this.http.get(AppComponent.BaseUrl+'Stock/GetStockOrderDtls?StkOrdId='+par+'&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=PE&IsActive=Y&OrderCode=&Flag=DI',{headers:AppComponent.headers}).subscribe((res:Config)=>{
+    //   if (res.StatusCode != 0) {
+    //     this.gridhide= false;
+    //     this.actionData=res.Data;
+    //     this.configureGrid();
+    //   } else {
+    //     this.actionData = [{}];
+    //     this.gridhide =  true;
+    //     AppComponent.SmartAlert.Errmsg(res.Message);	
+    //     AppComponent.Router.navigate(['stock/order-and-dispatch-details']);  
+    //   }
+    // });
   }
 
   getProduct(Id){
@@ -83,15 +98,21 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
     }
     this.Order.CPCode = this.Order.CPCode == undefined || this.Order.CPCode == null ? '' : this.Order.CPCode;
     this.Order.PlantId = this.Order.PlantId == undefined || this.Order.PlantId == null ? '' : this.Order.PlantId;
-    this.http.get(AppComponent.BaseUrl +'Settings/GetAdminPriceAllocation?CPCode='+this.Order.CPCode+'&PlantId='+this.Order.PlantId+'&ProdSegId='+Id+'&ProdType='+this.prodtype+'&IsActive=Y',{headers:AppComponent.headers}).subscribe((res:Config)=>{
-      if (res.StatusCode != 0){
-         this.ProductData=res.Data;
-         this.getPrice();
-      } else {
-        this.ProductData=[];
-        this.Order.ProdId='';
-      }
+
+    this.masterService.getNewProducts(this.cpInfo.CPCode, this.Order.PlantId, Id, this.prodtype).subscribe((resPT: any) => {
+      if (resPT.StatusCode != 0) {
+        this.ProductData = resPT.Data;
+      } else { this.ProductData = [];this.Order.ProdId=''; }
     });
+    // this.http.get(AppComponent.BaseUrl +'Settings/GetAdminPriceAllocation?CPCode='+this.Order.CPCode+'&PlantId='+this.Order.PlantId+'&ProdSegId='+Id+'&ProdType='+this.prodtype+'&IsActive=Y',{headers:AppComponent.headers}).subscribe((res:Config)=>{
+    //   if (res.StatusCode != 0){
+    //      this.ProductData=res.Data;
+    //      this.getPrice();
+    //   } else {
+    //     this.ProductData=[];
+    //     this.Order.ProdId='';
+    //   }
+    // });
   }
 
   getPrice(){
@@ -136,20 +157,20 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
         name: 'Edit', displayName: 'Edit', cellTemplate: '<button  style="margin-left:10px; margin-top:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Edit&nbsp;</button> ',
         width: '60', headerCellTemplate: '<div style="text-align: center;margin-top: 22px;">Edit</div>', enableFiltering: false },
 
-      { name: 'ProdSeg', displayName: 'Product Segment', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'Product', displayName: 'Product', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'ProdSeg', displayName: 'Product Segment', width: '200', cellTooltip: true, filterCellFiltered: true},
+      { name: 'Product', displayName: 'Product', width: '200', cellTooltip: true, filterCellFiltered: true},
       { name: 'OrderTypeName', displayName: 'Order Type', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'ProdRate', displayName: 'Product Rate', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'ProdQty', displayName: 'Product Qty', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'SubTotal', displayName: 'Product Subtotal',  width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'CgstAmt', displayName: 'CGST Amount', width: '150', cellTooltip: true, filterCellFiltered: true},    
-      { name: 'SgstAmt', displayName: 'SGST Amount',  width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'IgstAmt', displayName: 'IGST Amount', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'DiscountAmt', displayName: 'Discount Amount', width: '150', cellTooltip: true, filterCellFiltered: true},    
+      { name: 'ProdRate', displayName: 'Product Rate',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'ProdQty', displayName: 'Product Qty',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'SubTotal', displayName: 'Product Subtotal',cellClass: 'cell-right',  width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'CgstAmt', displayName: 'CGST Amount',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},    
+      { name: 'SgstAmt', displayName: 'SGST Amount',cellClass: 'cell-right',  width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'IgstAmt', displayName: 'IGST Amount',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'DiscountAmt', displayName: 'Discount Amount',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},    
       // { name: 'PlantId', displayName: 'PlantId', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'ProdAmt', displayName: 'Grand Total',  width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'RefundRate', displayName: 'Refund Rate', width: '150', cellTooltip: true, filterCellFiltered: true},
-      { name: 'RefundAmt', displayName: 'Refund Amount',  width: '150', cellTooltip: true, filterCellFiltered: true},     
+      { name: 'ProdAmt', displayName: 'Grand Total',cellClass: 'cell-right',  width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'RefundRate', displayName: 'Refund Rate',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'RefundAmt', displayName: 'Refund Amount',cellClass: 'cell-right',  width: '150', cellTooltip: true, filterCellFiltered: true},     
       
     ];
     this.gridOptions.columnDefs = columnDefs;
@@ -199,17 +220,26 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
       LatPos:"",
       LanPos:"",
       IsActive:"Y",
-      UserCode: sessionStorage.UserCode,
-      Flag:"IN"
+      UserCode: this.cpInfo.EmpId,
+      Flag:"IN",
+      ParentCPCode:this.cpInfo.ParentCPCode==null?'':this.cpInfo.ParentCPCode,
+      
     }
-
-    this.http.post(AppComponent.BaseUrl +'Stock/ProcessOrderDispatch',SendData,{headers:AppComponent.headers}).subscribe((res:Config)=>{
-      if (res.StatusCode != 0){      
+    this.stockService.postDispatchOrders(SendData).subscribe((resData: any) => {
+      //this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        AppComponent.SmartAlert.Success(resData.Message);
         AppComponent.Router.navigate(['stock/order-and-dispatch-details']);
-      } else {
-        AppComponent.SmartAlert.Errmsg(res.Message);
       }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
+    // this.http.post(AppComponent.BaseUrl +'Stock/ProcessOrderDispatch',SendData,{headers:AppComponent.headers}).subscribe((res:Config)=>{
+    //   if (res.StatusCode != 0){      
+    //     AppComponent.Router.navigate(['stock/order-and-dispatch-details']);
+    //   } else {
+    //     AppComponent.SmartAlert.Errmsg(res.Message);
+    //   }
+    // });
 
   }
 
