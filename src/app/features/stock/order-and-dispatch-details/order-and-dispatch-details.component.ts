@@ -57,7 +57,7 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
       width: '90', exporterSuppressExport: true, enableFiltering: true, },
 
     { name: 'OrderNo', displayName: 'Order No', cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true,visible:false},
-    { name: 'PlantName', displayName: 'Plant', width: '190', cellTooltip: true, filterCellFiltered: true},
+    { name: 'PlantName', displayName: 'Plant', width: '190', cellTooltip: true, filterCellFiltered: true,visible:false},
     { name: 'CPCode', displayName: 'CP Code', cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true},
     { name: 'CPName', displayName: 'Channel Partner', width: '200', cellTooltip: true, filterCellFiltered: true},
     { name: 'Vehicle', displayName: 'Vehicle', cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true},
@@ -109,8 +109,9 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
     this.accvis = this.order.OrderStage == 'AC' ? true : false;
     this.dispvis = this.order.OrderStage == 'DI' ? true : false;
     this.rjvis = this.order.OrderStage == 'RJ' ? true : false;
+    this.order.CPCode=this.order.CPCode==undefined?'':this.order.CPCode;
     this.order.ParentCPCode=this.cpInfo.ParentCPCode==null?this.cpInfo.CPCode:this.cpInfo.ParentCPCode;
-    this.stockService.getSFSDStockOrderDetails(this.cpInfo.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.order).subscribe((resData: any) => {
+    this.stockService.getSFSDStockOrderDetails(this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.order).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.stockOrdersData = resData.Data;

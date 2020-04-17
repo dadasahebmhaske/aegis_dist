@@ -20,6 +20,7 @@ import { MasterService } from '@app/core/custom-services/master.service';
 export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
   public cpInfo: any;
   gridOptions: IGridoption;
+  public loaderbtn:boolean = true;
   prodtype:any={};
   Order:any={};
   olddata:any={};
@@ -177,6 +178,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
   }
 
   PostDispatchOrder(fl){
+    this.loaderbtn = false;
     let TtlQty=0;
     let DiscountAmt=0;
     let SubTotal=0;
@@ -226,7 +228,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
       
     }
     this.stockService.postDispatchOrders(SendData).subscribe((resData: any) => {
-      //this.loaderbtn = true;
+      this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);
         AppComponent.Router.navigate(['stock/order-and-dispatch-details']);

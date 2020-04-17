@@ -32,14 +32,17 @@
                         <a class=" btn btn-default pull-right" routerLink="/stock/order-and-dispatch-details" style="margin-top:4px;margin-right:10px;">
                                 <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
                         </a>
-      
-                        <a class="btn btn-danger pull-right" (click)="PostDispatchOrder(1)" style="margin-top:4px;margin-right:10px;">
+                        <button class="btn btn-danger pull-right fix-btn" type="submit" (click)="PostDispatchOrder(1)" [disabled]="!loaderbtn">
+                          <i class="fa fa-fw" [ngClass]="{'fa-close':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Reject':'Loading'}}</button>
+                        <!-- <a class="btn btn-danger pull-right" (click)="PostDispatchOrder(1)" style="margin-top:4px;margin-right:10px;">
                           <i class="glyphicon glyphicon-remove"></i> &nbsp;&nbsp;Reject
-                        </a>
-      
-                        <a class=" btn btn-success pull-right"  (click)="PostDispatchOrder(0)" style="margin-top:4px;margin-right:10px;">
+                        </a> -->
+
+                        <button class="btn btn-success pull-right fix-btn" type="submit" (click)="PostDispatchOrder(0)" [disabled]="!loaderbtn">
+                          <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Dispatch':'Loading'}}</button>
+                        <!-- <a class=" btn btn-success pull-right"  (click)="PostDispatchOrder(0)" style="margin-top:4px;margin-right:10px;">
                              <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Dispatch
-                        </a>
+                        </a> -->
       
                       </div>
                     </div>

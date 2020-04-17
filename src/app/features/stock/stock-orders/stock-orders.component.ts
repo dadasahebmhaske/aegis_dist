@@ -77,7 +77,8 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       }
       if (this.product.OrderType != null)
         this.product.ProdType = this.product.OrderType == 'RO' || this.product.OrderType == 'DR' ? 'F' : 'E';
-      this.masterService.getNewProducts(this.cpInfo.CPCode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType).subscribe((resPT: any) => {
+        let cpcode = this.cpInfo.ParentCPCode == null ? this.cpInfo.CPCode : this.cpInfo.ParentCPCode;
+      this.masterService.getNewProducts(cpcode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType).subscribe((resPT: any) => {
         if (resPT.StatusCode != 0) {
           this.productDataSelected = resPT.Data;
         } else { this.productDataSelected = []; }

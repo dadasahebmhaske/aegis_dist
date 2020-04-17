@@ -27,8 +27,8 @@ export class StockService {
     public postBulkOrders(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrder`, data);
     }
-    public getSFSDStockOrderDetails(cpcode, StartDate, EndDate, order) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=${order.PlantId}&VehicleId=&OrderStatus=&OrderStage=${order.OrderStage}&ParentCPCode=${order.ParentCPCode}&IsActive=Y`);
+    public getSFSDStockOrderDetails(StartDate, EndDate, order) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${order.CPCode}&PlantId=${order.PlantId}&VehicleId=&OrderStatus=&OrderStage=${order.OrderStage}&ParentCPCode=${order.ParentCPCode}&IsActive=Y`);
     }
     public getStockOrderDetails(cpcode, StartDate, EndDate, stage) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${cpcode}&PlantId=&VehicleId=&OrderStatus=&OrderStage=${stage}&IsActive=Y`);
