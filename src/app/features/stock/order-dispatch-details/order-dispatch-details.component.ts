@@ -149,7 +149,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
     this.gridOptions = <IGridoption> {};
     this.gridOptions.enableGridMenu = false;
     this.gridOptions.exporterMenuPdf = false;
-    // this.gridOptions.exporterExcelFilename = 'Customer_List_Details.xlsx';
+     this.gridOptions.exporterExcelFilename = 'Sub Dealer Dispatch Order .xlsx';
     // this.gridOptions.exporterSuppressColumns = ['Edit', 'Activate / Delete'];
     // this.gridOptions.exporterColumnScaleFactor = 5;
     let columnDefs = [];

@@ -25,7 +25,6 @@ export class AppService {
   getDecryptedData() {
     var decrypted = CryptoJs.AES.decrypt(localStorage.appData, AppComponent.secureKey, { iv: AppComponent.secureKey });
     return JSON.parse(decrypted.toString(CryptoJs.enc.Utf8));
-
   }
   setProperty(property: any, storeProp: boolean = false) {
     if (storeProp)

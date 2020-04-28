@@ -14,13 +14,17 @@ import { TodoListComponent } from './todo-widget/todo-list.component';
 import {FlotChartModule} from "@app/shared/graphs/flot-chart/flot-chart.module";
 import {D3Module} from "@app/shared/graphs/d3/d3.module";
 import { ChartJsModule } from '@app/shared/graphs/chart-js/chart-js.module';
+import {AnalyticsService} from './analytics.service';
+import { BsDatepickerModule } from 'ngx-bootstrap';
+
 @NgModule({
   imports: [
     SharedModule,
     AnalyticsRoutingModule,
     FlotChartModule,
     D3Module,
-    ChartJsModule
+    ChartJsModule,
+    BsDatepickerModule.forRoot(),
   ],
   declarations: [
     AnalyticsComponent,
@@ -32,7 +36,7 @@ import { ChartJsModule } from '@app/shared/graphs/chart-js/chart-js.module';
     TodoWidgetComponent,
     TodoListComponent
   ],
-  providers: [],
+  providers: [AnalyticsService],
 })
 export class AnalyticsModule {
 

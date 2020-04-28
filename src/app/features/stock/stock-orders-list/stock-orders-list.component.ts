@@ -21,7 +21,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   public gridOptions: IGridoption;
   public ProductArray: any = [];
   public StartDate: any = '';
-  public stage: any = '';
+  public stage: any = ''; 
   public stock: any = {};
   public stockOrdersData: any = [];
   public showcol: boolean = true;

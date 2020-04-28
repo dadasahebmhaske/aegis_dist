@@ -8,6 +8,7 @@ import { SharedModule } from '@app/shared/shared.module';
   imports: [
     SharedModule,
     routing,
+   
   ],
   declarations: [],
   providers: [],

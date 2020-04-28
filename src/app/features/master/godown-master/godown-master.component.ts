@@ -36,6 +36,8 @@ export class GodownMasterComponent implements OnInit {
       { name: 'GodownId', displayName: 'Godown ID', cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'GodownName', displayName: 'Godown', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'Capacity', displayName: 'Capacity', cellClass: 'cell-right', width: "90", cellTooltip: true, filterCellFiltered: true },
+      { name: 'StateDesc', displayName: 'State', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CityName', displayName: 'City', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ContactName', displayName: 'Contact Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ContactNo', displayName: 'Contact No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
       { name: 'LicNo', displayName: 'License No.', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },

@@ -19,20 +19,22 @@
           <header>
             <span class="widget-icon">
               <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
-           
-            <h2 class="hidden-mobile"> Live Feeds As On
-            </h2>  
-            <form class="smart-form">
-              <div class="col-sm-12 col-xs-4 input-date" >
 
-<label class="input posticon">
-  <i class="icon-append fa fa-calendar"></i><input class="input-xs" type="text" placeholder="31-Mar-2020"></label>
-                
+            <h2 class="hidden-mobile"> Live Feeds As On
+            </h2>
+            <form class="smart-form">
+              <div class="col-sm-12 col-xs-4 input-date">
+
+                <label class="input posticon">
+                  <i class="icon-append fa fa-calendar"></i><input class="input-xs" type="text"
+                    placeholder="31-Mar-2020" [(ngModel)]="selectedDate" name="selectedDate" bsDatepicker
+                    [bsConfig]="datePickerConfig" onkeydown="return false"></label>
               </div>
               <div class="col-sm-12 col-xs-4 go-btn">
 
-              <button class="btn btn-block btn-success " type="submit" [disabled]="!loaderbtn" style="padding: 2px;">
-                  <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'GO':'Loading'}}</button>
+                <button class="btn btn-block btn-success " type="submit" [disabled]="!loaderbtn" style="padding: 2px;">
+                  <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                  {{loaderbtn==true? 'GO':'Loading'}}</button>
               </div>
             </form>
             <ul class="nav nav-tabs pull-right in" id="myTab">
@@ -62,17 +64,16 @@
               <div id="myTabContent" class="tab-content">
                 <!-- <revenue-feed class="tab-pane fade active in" id="s1" ></revenue-feed> -->
                 <div class="row tab-pane fade active in" id="s1">
-                  <div class="col-sm-8">
+                  <div class="col-sm-9">
                     <div>
 
                       <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
                         <div class="btn-group hidden-phone pull-left">
                           <form class="smart-form">
                             <div class="col-sm-12 col-xs-4">
-
-                              <select class="input-sm">
-                                <option selected> Delivery Man Wise</option>
-                                <option value=""> Area Wise</option>
+                              <select class="input-sm" [(ngModel)]="statusWise" name="statusWise">
+                                <option  value="DM"> Delivery Man Wise</option>
+                                <option value="AM"> Area Wise</option>
                               </select>
                             </div>
                           </form>
@@ -119,7 +120,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
                       <div class=" hidden-phone text-center">
                         <span class="text-center"> Order Delivery</span>
@@ -134,6 +135,10 @@
                       <strong class="pull-left">Top Delivery Man</strong>
                       <strong class="pull-right"> Total Delivery</strong>
                     </div>
+                    <!-- <div class="top_deliverylsit"  *ngFor="let x of topThreeDelBoy;index as i">
+                      <span class="pull-left">{{i+1}} . {{x.DManName}}</span>
+                      <span class="pull-right"> {{x.TotalDeliveredCount}}</span>
+                    </div> -->
                     <div class="top_deliverylsit">
                       <span class="pull-left">1 . Raju Rathor</span>
                       <span class="pull-right"> 191</span>
@@ -354,8 +359,9 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr >
-                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60"  src="assets/img/avatars/male.png"></td>
+                          <tr>
+                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60"
+                                src="assets/img/avatars/male.png"></td>
                             <td class="text-center ">Aalska Jogi</td>
                             <td class="text-center ">32</td>
                             <!-- <td class="text-center ">30</td>
@@ -367,17 +373,22 @@
                             <td class="text-center ">25,472.32</td>
                             <td class="text-center ">0</td>
                             <!-- <td class="text-center ">0</td> -->
-                            <td class="text-center"><img class="bat_image" src="assets/img/battery.png"> <span>27%</span></td>
-                            <td class="text-center">   <div style="width: 100px;display: block;margin: auto;">
-                              <sa-chart-js type="pie" [data]="chartjsData['pie-chart']"></sa-chart-js>
-                            </div></td>
-                            <td class="text-center"><a  class="btn btn-primary btn-xs" routerLink="/dashboard/analytics" ><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Details</a></td>
-                        </tr>
+                            <td class="text-center"><img class="bat_image" src="assets/img/battery.png">
+                              <span>27%</span></td>
+                            <td class="text-center">
+                              <div style="width: 100px;display: block;margin: auto;">
+                                <sa-chart-js type="pie" [data]="chartjsData['pie-chart']"></sa-chart-js>
+                              </div>
+                            </td>
+                            <td class="text-center"><a class="btn btn-primary btn-xs"
+                                routerLink="/dashboard/analytics"><i class="fa fa-eye" aria-hidden="true"></i>
+                                &nbsp;Details</a></td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
-                 
+
                 </div>
 
 

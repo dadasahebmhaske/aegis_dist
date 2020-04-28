@@ -45,7 +45,7 @@ export class TransferCustomerComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Customer list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Customer In list.xlsx';
     let columnDefs = [];
     // this.gridOptions.multiSelect = true;
     // this.gridOptions.enableRowSelection = true;

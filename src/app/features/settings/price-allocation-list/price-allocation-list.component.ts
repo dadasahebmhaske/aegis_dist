@@ -39,7 +39,7 @@ export class PriceAllocationListComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Refill Booking Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Price Allocation list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

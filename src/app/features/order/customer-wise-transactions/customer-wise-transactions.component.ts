@@ -45,7 +45,7 @@ export class CustomerWiseTransactionsComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Delivered Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Customer Wise Transaction list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

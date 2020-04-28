@@ -45,6 +45,8 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "140", cellTooltip: true, filterCellFiltered: true },
       { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'EmailId', displayName: 'Email Id', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'StateDesc', displayName: 'State', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CityName', displayName: 'City', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'Category', displayName: 'Discount Category', width: "160", cellTooltip: true, filterCellFiltered: true, },
       { name: 'OpeningCylQty', displayName: 'Opening Cyl. Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'OpeningBalAmt', displayName: 'Opening Bal Amt', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
@@ -73,7 +75,7 @@ export class CustomerMasterComponent implements OnInit {
   onLoad() {
     this.masterService.getCustomer(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
-        this.custData = resData.Data;
+        this.custData = resData.Data;console.log(resData.Data)
         this.custDataStored = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }

@@ -28,10 +28,10 @@ export class VehicleMasterComponent implements OnInit {
     columnDefs = [
       {
         name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-primary btn-xs"  ng-click="grid.appScope.editEmployee(row.entity)" ng-if="row.entity.IsActive!=null"  >&nbsp;Edit&nbsp;</button> '
-        , width: "48",
+        , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
+     //{ name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'VehicleNo', displayName: 'Vehicle No', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'VehicleType', displayName: 'Vehicle Type', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'CylCapacity', displayName: 'Cylinder Capacity', cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -51,7 +51,7 @@ export class VehicleMasterComponent implements OnInit {
     this.masters.getVehicles(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.vehicleData = resData.Data;
-        AppComponent.SmartAlert.Success(resData.Message);
+        AppComponent.SmartAlert.Success(resData .Message);
       }
       else { this.vehicleData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });

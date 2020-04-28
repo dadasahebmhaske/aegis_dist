@@ -41,7 +41,7 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Delivered Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Instant Delivered Orders list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

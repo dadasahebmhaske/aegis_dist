@@ -41,7 +41,7 @@ export class OrderAcceptedRejectedComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Stock Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Sub Dealer Stock Orders list.xlsx';
     let columnDefs = [];
     columnDefs = [
       { name: 'ProdSeg', displayName: 'Product Segment', width: '*', cellTooltip: true, filterCellFiltered: true},

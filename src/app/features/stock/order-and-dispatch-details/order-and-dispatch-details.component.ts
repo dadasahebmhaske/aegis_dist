@@ -45,7 +45,7 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'SF / SD Orders & Dispatched list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'SF / SD Orders & Dispatch list.xlsx';
     let columnDefs = [];
     columnDefs = [
 
