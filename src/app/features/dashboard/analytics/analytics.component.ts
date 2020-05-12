@@ -20,7 +20,7 @@ export class AnalyticsComponent implements OnInit {
     signupsShow: true
   };
   public revenueData: Array<any>;
-  public chartjsData: any={};
+  public chartjsData: any={};chartjsData1: any={};
   public calendar$
   public loaderbtn:boolean=true;
 
@@ -34,6 +34,7 @@ export class AnalyticsComponent implements OnInit {
   public maxDate: Date = new Date();
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public topThreeDelBoy:any=[];
+  public transactionSummary:any;
   constructor(
     private store: Store<any>,private analyicsService:AnalyticsService,private appService: AppService, private datashare: DatashareService, private masters: MasterService
   ) {
@@ -49,8 +50,8 @@ export class AnalyticsComponent implements OnInit {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.statusWise='DM';
     this.updateData();
-    this.pieChartOption();
-    
+    this.pieChartOption(); this.DMPieChartOption();
+   
   }
   pieChartOption(){
     this.chartjsData={
@@ -75,8 +76,6 @@ export class AnalyticsComponent implements OnInit {
                 // "#616774"
             ],
           "label":"My dataset"}],      
-    
-        
         "labels":[
            "Pending",
             "Delivered",
@@ -133,7 +132,7 @@ export class AnalyticsComponent implements OnInit {
     },
     xaxis: {
       tickLength: 0,
-      ticks: [[0,'Funsuk'],[1,'Wangud'],[2,'Alimili shdbfd dhbfdhfdhbfdhf'],[3,'Gupchili'],[4,'Kakkar'],[5,'Thakkar'],[6,'Khali bali dil wali'],[7,'Bhahubali'],[8,'Kattapa'],[9,'Devsena'],[10,'Jaydrath'],[11,'Mandakshi wangukasdae']],//this.ticks,
+      ticks: [[0,'Funsuk'],[1,'Wangud'],[2,'Ali khan'],[3,'Gupchili'],[4,'Kakkar'],[5,'Thakkar'],[6,'Khali bawali'],[7,'Bhahubali'],[8,'Kattapa'],[9,'Devsena'],[10,'Jaydrath'],[11,'Mandakshi wangukasdae']],//this.ticks,
       rotateTicks: 45,
     
     },
@@ -179,7 +178,6 @@ export class AnalyticsComponent implements OnInit {
       }
     }
   }
-
   
   private getActualsData() {
     return {
@@ -241,6 +239,30 @@ getpieChartData(){
     else {  AppComponent.SmartAlert.Errmsg(resP.Message); }
  });
 }
+getRefillTransactionSummary(){
+  this.analyicsService.getRefillTransactionSummary(this.cpInfo.CPCode,this.appService.DateToString(this.selectedDate)).subscribe((resTS: any) => {
+    if(resTS.StatusCode!=0){                     
+      this.transactionSummary = resTS.Data; }
+    else {  AppComponent.SmartAlert.Errmsg(resTS.Message); }
+ });
+}
+getDeliveryBoyWiseAnalysis(){
+  this.analyicsService.getRefillTransactionSummary(this.cpInfo.CPCode,this.appService.DateToString(this.selectedDate)).subscribe((resDS: any) => {
+    if(resDS.StatusCode!=0){                     
+      this.transactionSummary = resDS.Data; }
+    else {  AppComponent.SmartAlert.Errmsg(resDS.Message); }
+ });
+}
 
+DMPieChartOption(){
+  this.chartjsData1={
+      "datasets":[{
+        "data":[40,39,27],
+         "backgroundColor": ["#a84242","#71843F","#3276B1" ],
+         "hoverBackgroundColor": [ "#a84242", "#71843F", "#3276B1"],
+        "label":"My dataset"}],      
+      "labels":["Pending", "Delivered","Undelivered"]
+  
+}}
 
 }
