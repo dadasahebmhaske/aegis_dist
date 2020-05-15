@@ -1,0 +1,472 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Channel Partner Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row">
+                <form novalidate="novalidate">
+                  <div class="col-sm-12">
+                    <div class="form-bootstrapWizard clearfix">
+                      <ul class="bootstrapWizard">
+                        <li *ngFor="let pane of steps; let i = index" [class.active]="activeStep == pane">
+                          <a (click)="setActiveStep(pane)">
+                            <span class="step">
+                              <span *ngIf="!pane.checked">{{i + 1}}</span>
+                              <i class="fa fa-check" *ngIf="pane.checked"></i>
+                            </span>
+                            <span class="title">{{pane.title}}</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="tab-content">
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step1'">
+                        <br>
+                        <h3>
+                          <strong>Step 1 </strong> - Channel Partner Details</h3>
+                        <form name="channelPartneForm" #channelPartneForm="ngForm" (ngSubmit)="onsubmitCPDeatils()" autocomplete="off" ngNativeValidate>
+                          <!-- <div class="row">
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Designation <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
+                                  <option value="" selected hidden> Select Designation </option>
+                                  <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}} </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">First Name <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="employee.FirstName" name="FirstName" saCommonDir dirType="alphaonly" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Last Name <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="employee.LastName" name="LastName" saCommonDir dirType="alphaonly" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Date of Birth <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Date of Birth" [(ngModel)]="employee.DateOfBirth" name="DateOfBirth" bsDatepicker
+                                  [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Gender <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.Gender" name="Gender" required>
+                                  <option value="" selected hidden> Select Gender </option>
+                                  <option value="M">Male</option>
+                                  <option value="F">Female</option>
+                                  <option value="T">Transgender</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Mobile No. <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="employee.MobileNo" name="MobileNo" minlength="10" maxlength="10" saCommonDir
+                                  dirType="number" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Alternative Mobile No. </label>
+                                <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="employee.AltrMobileNo" name="AltrMobileNo" minlength="10" maxlength="10" saCommonDir
+                                  dirType="number" />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Blood Group <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.BloodGrp" name="BloodGrp" required>
+                                  <option value="" selected hidden> Select Group </option>
+                                  <option value="A +ve">A +ve</option>
+                                  <option value="A -ve">A -ve</option>
+                                  <option value="B +ve">B +ve</option>
+                                  <option value="B -ve">B -ve</option>
+                                  <option value="AB +ve">AB +ve</option>
+                                  <option value="AB -ve">AB -ve</option>
+                                  <option value="O +ve">O +ve</option>
+                                  <option value="O -ve">O -ve</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Marital Status <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.MaritalStatus" name="MaritalStatus" required>
+                                  <option value="" selected hidden> Select Status </option>
+                                  <option value="Single">Single</option>
+                                  <option value="Married">Married</option>
+                                  <option value="Divorced">Divorced</option>
+                                  <option value="Widowed">Widowed </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Marriage Date <span class="errorMessage" [hidden]="employee.MaritalStatus=='Single'">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Anniversary Date" [(ngModel)]="employee.MarriageAnniversaryDate" name="MarriageAnniversaryDate" bsDatepicker
+                                  [bsConfig]="datePickerConfig" onkeydown="return false" [required]="employee.MaritalStatus!='Single'" />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Edu. Qualification <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Qualification" [(ngModel)]="employee.Qualification" name="Qualification" saCommonDir dirType="alphanumeric"
+                                  required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Date of Joining <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Date of Joining" [(ngModel)]="employee.DateOfJoining" name="DateOfJoining" bsDatepicker
+                                  [bsConfig]="datePickerConfig" onkeydown="return false" required />
+                              </div>
+                            </div>
+                 
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Emergency Contact Person <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Contact Person" [(ngModel)]="employee.ContactPerson" name="ContactPerson" saCommonDir dirType="alphaonly"
+                                  required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Contact No. <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Contact No." minlength="10" maxlength="15" [(ngModel)]="employee.EmergencyContactNo"
+                                  name="EmergencyContactNo" saCommonDir dirType="number" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-3 btn-marg">
+                              <label>
+                                <input type="checkbox" [(ngModel)]="employee.IsActive" *ngIf="employee.IsActive!=null" name="IsActive" trueFalseValue trueValue="Y" falseValue="N" /> Is Active </label>
+                            </div>
+                          </div> -->
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                  <label for="sel1">SAP ID<span class="errorMessage">*</span></label>
+                                  <input type="text" class="form-control" placeholder="Enter SAP ID" 
+                                  [(ngModel)]="channal.SAPId" maxlength="20" [ngModelOptions]="{standalone: true}" 
+                                  saCommonDir dirType="alphanumeric" minlength="5" maxlength="20" title="Alphanumeric Only!" required />
+                              </div>
+                          </div>
+                          <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="sel1">Channel <span class="errorMessage">*</span></label>
+                                <select  class="form-control"  [(ngModel)]="channal.ChannelId" [ngModelOptions]="{standalone: true}" 
+                                (change)="getChType(channal.ChannelId)" required>
+                                    <option value="" selected hidden> Select Channel</option>
+                                    <option *ngFor="let option of chantype" value="{{option.ChannelId}}">{{option.Channel}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                              <label for="sel1">Channel Partner Type <span class="errorMessage">*</span></label>
+                              <select  class="form-control"  [(ngModel)]="channal.CPTypeId" [ngModelOptions]="{standalone: true}" 
+                              (change)="hidePL()" required>
+                                  <option value="" selected hidden> Select Channel Partner Type</option>
+                                  <option *ngFor="let option of CType" value="{{option.ChannelTypeId}}">{{option.ChannelType}}</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="sel1">RO Type</label>
+                            <select  class="form-control"  [(ngModel)]="channal.ROTypeId" [ngModelOptions]="{standalone: true}" 
+                            required [disabled]="!hideRO">
+                                <option value="" selected hidden> Select RO Type</option>
+                                <option *ngFor="let option of ROType" value="{{option.Id}}">{{option.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="sel1">Pack Type</label>
+                            <select  class="form-control"  [(ngModel)]="channal.PackTypeId" [ngModelOptions]="{standalone: true}" 
+                            [disabled]="hideRO" required >
+                                <option value="" selected hidden> Select Pack Type</option>
+                                <option *ngFor="let option of PackType" value="{{option.Id}}">{{option.Name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                          <label for="sel1">Firm Name / Agency Name<span class="errorMessage">*</span></label>
+                          <input type="text" class="form-control" placeholder="Enter Firm Name / Agency Name" 
+                          [(ngModel)]="channal.CPName" [ngModelOptions]="{standalone: true}" maxlength="100" 
+                          saCommonDir dirType="alphanumeric" minlength="2" maxlength="30" required />
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                      <div class="form-group">
+                          <label for="sel1">Agency / Firm Contact No. <span class="errorMessage">*</span></label>
+                          <input type="text" class="form-control" placeholder="Enter Agency / Firm Contact No." 
+                          [(ngModel)]="channal.CPContactNo" [ngModelOptions]="{standalone: true}"
+                          saCommonDir dirType="number" minlength="10" maxlength="10" required />
+                      </div>
+                  </div>
+
+
+                  <div class="col-sm-3">
+                      <div class="form-group">
+                          <label for="sel1">Alternate Contact No.</label>
+                          <input type="text" class="form-control" placeholder="Enter Alternate Contact No."
+                          [(ngModel)]="channal.AltCPCpntactNo" [ngModelOptions]="{standalone: true}"
+                          saCommonDir dirType="number"  minlength="10" maxlength="10" />
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                      <div class="form-group">
+                          <label for="sel1">Type Of Firm</label>
+                          <select class="form-control" id="sel1" [(ngModel)]="channal.FirmTypeId" [ngModelOptions]="{standalone: true}">
+                              <option value="" selected  hidden>Select Type Of Firm</option>
+                              <option *ngFor="let ct of firmtype" value="{{ct.Id}}">{{ct.Name}}</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group btn-marg">
+                        <label >
+                            <input type="checkbox" [(ngModel)]="channal.LocBill" trueFalseValue trueValue="Y" falseValue="N"  [ngModelOptions]="{standalone: true}"> Lock Billing?
+                        </label>
+                    </div>
+                </div>
+                  <div class="col-sm-3">
+                    <div class="form-group btn-marg">
+                        <label>
+                            <input type="checkbox"  [(ngModel)]="channal.IsActive" trueFalseValue trueValue="Y" falseValue="N"  [ngModelOptions]="{standalone: true}"> Is Active?
+                        </label>
+                    </div>
+                </div>
+
+
+                          </div>
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a routerLink="/master/channel-partner-master" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                                    <!-- <a (click)="nextToAddress()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                              Next
+                                          </a> -->
+                                    <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit" [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step2'">
+                        <br>
+                        <h3>
+                          <strong>Step 2</strong> - Address Details</h3>
+                        <form name="addressForm" #addressForm="ngForm" autocomplete="off" (ngSubmit)="nextToDocumentDeatils()" autocomplete="off" ngNativeValidate>
+                          <div class="row">
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 1 <span class="errorMessage" style="color:red;">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineOne" name="AddressLine1"
+                                  required />
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 2</label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineTwo"
+                                  name="AddressLine2" />
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label for="sel1">Address Line 3</label>
+                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric" [(ngModel)]="employee.AddressLineThree"
+                                  name="AddressLine3" />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>State <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" name="StateCode" [(ngModel)]="employee.StateCode" (change)="getCityData()" required>
+                                  <option value="" selected hidden>Select State</option>
+                                  <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>City <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="employee.CityCode" name="CityCode" required>
+                                  <option value="" selected hidden>Select City</option>
+                                  <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}} </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Pin Code <span class="errorMessage" style="color:red;">*</span>
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Pin" saCommonDir dirType="number" [(ngModel)]="employee.PinCode" name="Pin" minlength="6" maxlength="6"
+                                  numericonly required />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                                    <!-- <a (click)="nextToDocumentDeatils()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                Next
+                                            </a> -->
+                                    <button class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit" [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step3'">
+                        <br>
+                        <h3>
+                          <strong>Step 3</strong> - Document Details</h3>
+                        <form name="goDocForm" #goDocForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label>Document Type <span class="errorMessage">*</span>
+                                </label>
+                                <select class="form-control" [(ngModel)]="document.DocTypId" name="DocTypeId" required>
+                                  <option value="" [selected]="true" hidden>Select Document Type</option>
+                                  <option [value]="doc.DocTypId" *ngFor="let doc of docTypeData">{{doc.DocType}} </option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="form-group">
+                                <label>Select File <span class="errorMessage">*</span>
+                                </label>
+                                <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label>Document No. <span class="errorMessage">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir dirType="alphanumericupper" required />
+                              </div>
+                            </div>
+                            <div class="col-sm-1">
+                              <div class="form-group">
+                                <label>&nbsp; </label>
+                                <button class="btn btn-block btn-warning ">
+                                  <i class="glyphicon glyphicon-plus"></i> Add </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="table-responsive">
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Document Type</th>
+                                      <th>Document</th>
+                                      <th>Document No.</th>
+                                      <th>View</th>
+                                      <th>Remove</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let docs of bdata;index as i">
+                                      <td>{{i+1}}</td>
+                                      <td>{{docs.DocType}}</td>
+                                      <td>{{docs.DocFileName}} </td>
+                                      <td>{{docs.DocNo}} </td>
+                                      <td>
+                                        <a href="{{imgUrl}}{{docs.DocFileName}}" *ngIf="docs.DocId!=null && docs.DocId!=''" target="_blank" class="btn btn-xs btn-success">View</a>
+                                        <a (click)="viewDocument(docs.filepreview)" *ngIf="docs.DocId==null || docs.DocId==''" target="_blank" class="btn btn-xs btn-success">View</a>
+                                      </td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="form-actions">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <ul class="pager wizard no-margin">
+                                <li class="previous">
+                                  <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                </li>
+                                <li class="next">
+                                  <!-- <a (click)="nextToSave()" [class.disabled]="activeStep.submitted && !activeStep.valid" class="btn btn-lg txt-color-darken">
+                                                Save & Submit
+                                            </a> -->
+                                  <button (click)="nextToSave()" class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
+                                    [disabled]="!loaderbtn">
+                                    <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

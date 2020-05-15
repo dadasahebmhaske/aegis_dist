@@ -6,10 +6,11 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { EmployeeService } from '@app/features/master/employee/employee.service';
 import { AppComponent } from '@app/app.component';
+import { ChannelPartnerService } from '@app/features/master/channel-partner/channel-partner.service';
 @Component({
-  selector: 'sa-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.css'],
+  selector: 'sa-channel-partner',
+  templateUrl: './channel-partner.component.html',
+  styleUrls: ['./channel-partner.component.css'],
   animations: [
     trigger('changePane', [
       state('out', style({
@@ -23,7 +24,7 @@ import { AppComponent } from '@app/app.component';
     ])
   ]
 })
-export class EmployeeComponent implements OnInit, OnDestroy {
+export class ChannelPartnerComponent implements OnInit, OnDestroy {
   public addArray: any = [];
   public bsValue = new Date();
   public bdata: any = [];
@@ -46,7 +47,15 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public designationData: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
 
-  constructor(private appService: AppService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
+  public channal: any = {ChannelId:'',CPTypeId:'',ROTypeId:'',PackTypeId:'',FirmTypeId:'',IsActive: 'Y'};
+  public chantype: any = [];
+  public CType: any = [];
+  public ROType: any = [];
+  public PackType:any=[];
+  public firmtype:any=[];
+  public hideRO: boolean;
+
+  constructor(private appService: AppService, private channelPartnerService: ChannelPartnerService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -74,7 +83,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public steps = [
     {
       key: 'step1',
-      title: 'Employee Details',
+      title: 'Channel Partner Details',
       valid: true,
       checked: false,
       submitted: false,
@@ -103,7 +112,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         this.activeStep = steo;
         break;
       case 'step2':
-        if (steo.key == "step2" && this.employee.EmpId != null) {
+        if (steo.key == "step2") { //&& this.employee.EmpId != null
           this.activeStep = steo;
           this.getEmployeeAddressDetails();
         } else {
@@ -111,7 +120,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
         }
         break;
       case 'step3':
-        if (steo.key == "step3" && this.employee.EmpId != null && this.employee.AddressId != null) {
+        if (steo.key == "step3") { //&& this.employee.EmpId != null && this.employee.AddressId != null
           this.activeStep = steo;
           this.getEmployeeDocumentDetails();
         } else {
@@ -146,7 +155,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       }
     }
   }
-  nextToAddress() {
+  onsubmitCPDeatils() {
     this.loaderbtn = false;
     this.employee.Flag = this.employee.EmpId == null || this.employee.EmpId == '' ? 'IN' : 'UP';
     this.employee.EmpId = this.employee.EmpId == null ? '' : this.employee.EmpId;
@@ -238,6 +247,42 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       (resData: any) => {
         this.docTypeData = resData.Data;
       });
+    this.channelPartnerService.getChannelType().subscribe(
+      (resChData: any) => {
+        this.chantype = resChData.Data;
+      });
+    this.channelPartnerService.getROType().subscribe(
+      (resROData: any) => {
+        this.ROType = resROData.Data;
+      });
+      this.channelPartnerService.getPackType().subscribe(
+        (resPKData: any) => {
+          this.PackType = resPKData.Data;
+        });
+        this.channelPartnerService.getFirmType().subscribe(
+          (resFMData: any) => {
+            this.firmtype = resFMData.Data;
+          });
+      
+      
+  }
+  getChType(code) {
+    this.channelPartnerService.getChannelPartnerType(code).subscribe(
+      (resChPData: any) => {
+        this.CType = resChPData.Data;
+      });
+     this.hideShow();
+  }
+  hideShow(){
+
+    let docobj;
+    docobj = this.masterService.filterData(this.chantype, this.channal.ChannelId, 'ChannelId');
+  
+   if( (docobj[0].Channel).toUpperCase() == 'AUTOGAS' ){
+    this.hideRO = true;
+  } else {
+    this.hideRO = false;
+  }
   }
   onFileSelected(event) {
     var reader = new FileReader();

@@ -1,0 +1,54 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-database"></i> Channel Partner Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                  <form name="employeeForm" #employeeForm="ngForm" (ngSubmit)="onSelectDesignation()" autocomplete="off" ngNativeValidate>
+                <div class="col-sm-2 col-xs-8">
+                  <div class="form-group">
+                      <select class="form-control"  [(ngModel)]="designation" name="designation" required>
+                          <option value="" selected hidden> Select Designation </option>
+                          <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}}</option>
+                       </select>                 
+                  </div>
+                </div>
+                <div class="col-sm-1 col-xs-4">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-success get_details">
+                      <i class="fa fa-search"></i> Get Details</button>
+                  </div>
+                </div>
+                </form>
+                <div class="col-sm-9 ">
+                <div class="form-group  pull-right">
+                  <a routerLink="/master/channel-partner" class="btn btn-block btn-warning get_details pull-right">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    Add Channel Partner
+                  </a>
+                </div>
+              </div>
+                <div class="col-sm-12  table-responsive">
+                    <ui-grid [data]="empData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </article>
+    </div>
+
+
+  </sa-widgets-grid>
+</div>
