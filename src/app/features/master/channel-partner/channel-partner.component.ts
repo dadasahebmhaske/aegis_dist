@@ -47,13 +47,24 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   public designationData: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
 
-  public channal: any = {ChannelId:'',CPTypeId:'',ROTypeId:'',PackTypeId:'',FirmTypeId:'',IsActive: 'Y'};
+  public channal: any = { ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y' };
   public chantype: any = [];
   public CType: any = [];
   public ROType: any = [];
-  public PackType:any=[];
-  public firmtype:any=[];
+  public PackType: any = [];
+  public firmtype: any = [];
   public hideRO: boolean;
+  public own: any = {MatrixId:'',MRoleId:'',ManagerId:'',RRoleId:''};
+  public RepDesi: any = [];
+  public RepEmp:any=[];
+  public MatDesi:any=[];
+  public MatEmp:any=[];
+  public inputType1 = 'password';
+  public className = 'glyphicon-eye-close';
+  public address: any = { AddressType: '', StateCode: '', CityCode: '' };
+  public AccountTypeData: any = [];
+  public addressTypeData:any=[];
+  public removeAddressUpdate: any = [];
 
   constructor(private appService: AppService, private channelPartnerService: ChannelPartnerService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -90,13 +101,20 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     },
     {
       key: 'step2',
-      title: 'Address Details',
+      title: 'Owner Details',
       valid: true,
       checked: false,
       submitted: false,
     },
     {
       key: 'step3',
+      title: 'Address Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    },
+    {
+      key: 'step4',
       title: 'Document Details',
       valid: false,
       checked: false,
@@ -114,13 +132,21 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       case 'step2':
         if (steo.key == "step2") { //&& this.employee.EmpId != null
           this.activeStep = steo;
-          this.getEmployeeAddressDetails();
+          //this.getEmployeeAddressDetails();
         } else {
           AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
         }
         break;
       case 'step3':
-        if (steo.key == "step3") { //&& this.employee.EmpId != null && this.employee.AddressId != null
+        if (steo.key == "step3") { //&& this.employee.EmpId != null
+          this.activeStep = steo;
+          this.getEmployeeAddressDetails();
+        } else {
+          AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+        }
+        break;
+      case 'step4':
+        if (steo.key == "step4") { //&& this.employee.EmpId != null && this.employee.AddressId != null
           this.activeStep = steo;
           this.getEmployeeDocumentDetails();
         } else {
@@ -157,55 +183,78 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   }
   onsubmitCPDeatils() {
     this.loaderbtn = false;
-    this.employee.Flag = this.employee.EmpId == null || this.employee.EmpId == '' ? 'IN' : 'UP';
-    this.employee.EmpId = this.employee.EmpId == null ? '' : this.employee.EmpId;
-    this.employee.DeptId = null;
-    this.employee.CPCode = this.cpInfo.CPCode;
-    this.employee.UserCode = this.cpInfo.EmpId;
-    let ciphertext = this.appService.getEncrypted(this.employee);
-    this.employeeService.postEmployeeDetails(ciphertext).subscribe((resData: any) => {
+    // this.employee.Flag = this.employee.EmpId == null || this.employee.EmpId == '' ? 'IN' : 'UP';
+    // this.employee.EmpId = this.employee.EmpId == null ? '' : this.employee.EmpId;
+    // this.employee.DeptId = null;
+    // this.employee.CPCode = this.cpInfo.CPCode;
+    // this.employee.UserCode = this.cpInfo.EmpId;
+    // let ciphertext = this.appService.getEncrypted(this.employee);
+
+    this.channal.UserCode = this.cpInfo.EmpId;
+    this.channal.Flag = this.channal.CPCode == null || this.channal.CPCode == undefined || this.channal.CPCode == "" ? 'IN' : 'UP';
+    this.channal.CPCode = this.channal.Flag == 'IN' ? '' : this.channal.CPCode;
+    this.channal.ParentCPCode = this.cpInfo.CPCode;
+    this.channal.data = '';
+    this.channelPartnerService.postCPDetails(this.channal).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);
-        this.employee.EmpId = resData.Data[0].EmpId;
+        this.channal.CPCode = resData.Data[0].EmpId;
         this.nextStep();
-        this.getEmployeeAddressDetails();
+        //this.getEmployeeAddressDetails();
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
-  nextToDocumentDeatils() {
-    this.loaderbtn = false;
-    this.addArray.push({
-      "AddressId": this.employee.AddressId == null ? '' : this.employee.AddressId,
-      "AddressType": 'H',
-      "StateCode": this.employee.StateCode,
-      "CityCode": this.employee.CityCode,
-      "PinCode": this.employee.PinCode,
-      "AddressLineOne": this.employee.AddressLineOne,
-      "AddressLineTwo": this.employee.AddressLineTwo,
-      "AddressLineThree": this.employee.AddressLineThree,
-      "IsActive": "Y"
-    });
-    this.bulkAdd.Flag = this.employee.AddressId == null ? "IN" : "UP";
-    this.bulkAdd.data = this.addArray;
-    this.bulkAdd.RefId = this.employee.EmpId;
-    this.bulkAdd.FormFlag = 'EMP';
-    //this.bulkAdd.AddressType = 'H';
-    this.bulkAdd.UserCode = this.cpInfo.EmpId;
-    //let ciphertext = this.appService.getEncrypted(this.bulkAdd);
-    // this.fd.append('CipherText', ciphertext);
-    this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {
-      this.loaderbtn = true;
-      if (resData.StatusCode != 0) {
-        this.employee.AddressId = resData.Data[0].AddressId
-        AppComponent.SmartAlert.Success(resData.Message);
-        this.nextStep();
-        this.getEmployeeDocumentDetails();
+  onSubmitOwnerDetails() {
+    this.loaderbtn = true;
+   this.own.UserCode = this.cpInfo.EmpId;
+      this.own.Flag =this.own.EmpId==null||this.own.EmpId==undefined||this.own.EmpId==""?'IN':'UP';
+      this.own.EmpId=this.own.Flag=='IN'?null:this.own.EmpId;
+      this.own.RoleCode='OWNE';
+      this.own.IsActive='D';
+      this.own.CPCode= this.channal.CPCode;
+      if(this.own.ManagerId === this.own.MatrixId){
+        AppComponent.SmartAlert.Errmsg('Reporting to Employee and Matrix Reporting to Employee Should Not Be Same!');                 
+      } else {
+        let ciphertext = this.appService.getEncrypted(this.own);
+        this.channelPartnerService.postOwnDetails(ciphertext).subscribe((resData: any) => {
+          this.loaderbtn = true;
+          if (resData.StatusCode != 0) {
+            AppComponent.SmartAlert.Success(resData.Message);
+            this.nextStep();
+            //this.getEmployeeAddressDetails();
+          }
+          else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+        });
+      } 
+  }
+  onSubmitAddressDeatils() {
+    if (this.addArray.length > 0 || this.removeAddressUpdate.length > 0) {
+      this.bulkAdd.AddressId= this.bulkAdd.AddressId==undefined?null: this.bulkAdd.AddressId;
+      this.loaderbtn = false;
+      this.bulkAdd.Flag = this.address.AddressId == null ? "IN" : "UP";
+      if (this.removeAddressUpdate.length > 0) {
+        this.addArray = this.addArray.concat(this.removeAddressUpdate);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-    });
-
+      this.bulkAdd.data = this.addArray;
+      this.bulkAdd.RefId = this.channal.CPCode;
+      this.bulkAdd.FormFlag = 'CP';
+      this.bulkAdd.UserCode = this.cpInfo.EmpId;
+      this.masterService.postBulkAddress(this.bulkAdd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          this.address.AddressId = resData.Data[0].AddressId
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.addArray = [];
+          this.nextStep();
+          // this. this.getCustomerAddressDetails();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one record.`);
+    }
   }
   nextToSave() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
@@ -255,34 +304,66 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       (resROData: any) => {
         this.ROType = resROData.Data;
       });
-      this.channelPartnerService.getPackType().subscribe(
-        (resPKData: any) => {
-          this.PackType = resPKData.Data;
-        });
-        this.channelPartnerService.getFirmType().subscribe(
-          (resFMData: any) => {
-            this.firmtype = resFMData.Data;
-          });
-      
-      
+    this.channelPartnerService.getPackType().subscribe(
+      (resPKData: any) => {
+        this.PackType = resPKData.Data;
+      });
+    this.channelPartnerService.getFirmType().subscribe(
+      (resFMData: any) => {
+        this.firmtype = resFMData.Data;
+      });
+    this.channelPartnerService.getAddressType().subscribe(
+      (resAddData: any) => {
+        this.addressTypeData = resAddData.Data;
+      });   
   }
+  getRepEmp(id){ 
+    //if((this.own.Flag == 'UP' && this.own.ManagerId == null) || (this.own.Flag == 'IN')){this.own.ManagerId = ''};
+    if(id != ''){
+      this.channelPartnerService.getRepotEMployee(id).subscribe(
+        (resRPTEMPData: any) => {
+          this.RepEmp=resRPTEMPData.Data;
+          this.own.ManagerId = '';
+        });
+    } else {
+     this.own.ManagerId = '';
+    }
+  }
+  getMatEmp(id){ 
+    if(id != ''){
+      this.channelPartnerService.getMatrixRepotEMployee(id).subscribe(
+        (resRPTEMPData: any) => {
+          this.MatEmp=resRPTEMPData.Data;
+          this.own.MatrixId = '';
+        });
+    } else {
+     this.own.MatrixId = '';
+    }
+  } 
   getChType(code) {
     this.channelPartnerService.getChannelPartnerType(code).subscribe(
       (resChPData: any) => {
         this.CType = resChPData.Data;
       });
-     this.hideShow();
+    this.hideShow();
   }
-  hideShow(){
-
+  hideShow() {
     let docobj;
     docobj = this.masterService.filterData(this.chantype, this.channal.ChannelId, 'ChannelId');
-  
-   if( (docobj[0].Channel).toUpperCase() == 'AUTOGAS' ){
-    this.hideRO = true;
-  } else {
-    this.hideRO = false;
+    if ((docobj[0].Channel).toUpperCase() == 'AUTOGAS') {
+      this.hideRO = true;
+    } else {
+      this.hideRO = false;
+    }
   }
+  HideShowPassword1() {
+    if (this.inputType1 === 'password') {
+      this.inputType1 = 'text';
+      this.className = 'glyphicon-eye-open';
+    } else {
+      this.inputType1 = 'password';
+      this.className = 'glyphicon-eye-close';
+    }
   }
   onFileSelected(event) {
     var reader = new FileReader();
@@ -351,7 +432,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   }
   private lastModel;
   getCityData() {
-    this.masterService.getCity(this.employee.StateCode).subscribe((res) => {
+    this.masterService.getCity(this.address.StateCode).subscribe((res) => {
       console.log(res);
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
@@ -370,6 +451,66 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.employee.ReTypePassword = null;
     }
   }
+  onSubmitAddress() {
+    let docobj;
+    docobj = this.masterService.filterData(this.StateData, this.address.StateCode, 'StateCode');
+    let StateName = docobj[0].StateDesc;
+    docobj = this.masterService.filterData(this.CityData, this.address.CityCode, 'CityCode');
+    let CityName = docobj[0].CityName;
+    docobj = this.masterService.filterData(this.addressTypeData, this.address.AddressType, 'MstFlag');
+    let AddressTypeName = docobj[0].Name;
+    if (this.addArray.some(obj => obj.AddressType === docobj[0].MstFlag)) {
+      AppComponent.SmartAlert.Errmsg("The Address is already added in list.");
+      this.address = { AddressType: '', StateCode: '', CityCode: '' };
+    } else {
+      this.addArray.push({
+        "AddressId": '',
+        "AddressType": this.address.AddressType,
+        "StateCode": this.address.StateCode,
+        "CityCode": this.address.CityCode,
+        "PinCode": this.address.PinCode,
+        "AddressLineOne": this.address.AddressLineOne,
+        "AddressLineTwo": this.address.AddressLineTwo,
+        "AddressLineThree": this.address.AddressLineThree,
+        "IsActive": "Y",
+        "AddressTypeName": AddressTypeName,
+        "StateName": StateName,
+        "CityName": CityName
+      });
+      this.address = { AddressType: '', StateCode: '', CityCode: '' };
+    }
+  }
+  onRemoveAddress(data, index) {
+    if (data.AddressId != '' && data.AddressId != null) {
+      data.IsActive = 'N';
+      this.removeAddressUpdate.push(data);
+    }
+    this.addArray.splice(index - 1, 1)
+  }
+  // getCustomerAddressDetails() {
+  //   this.masterService.getAddressDetails('CUSTM', this.customer.ConsId).subscribe((resp: any) => {
+  //     if (resp.StatusCode != 0)
+  //       this.addArray = resp.Data;
+  //     if (this.addArray.length > 0) {
+  //       this.customer.AddressId = this.addArray[0].AddressId;
+  //     }
+  //     for (let i = 0; i < this.addArray.length; i++) {
+  //       this.masterService.getCity(this.addArray[i].StateCode).subscribe((res) => {
+  //         if (res.StatusCode != 0) {
+  //           this.CityData = res.Data;
+  //           let docobj;
+  //           docobj = this.masterService.filterData(this.addressTypeData, this.addArray[i].AddressType, 'MstFlag');
+  //           this.addArray[i].AddressTypeName = docobj[0].Name;
+  //           docobj = this.masterService.filterData(this.StateData, this.addArray[i].StateCode, 'StateCode');
+  //           this.addArray[i].StateName = docobj[0].StateDesc;
+  //           docobj = this.masterService.filterData(this.CityData, this.addArray[i].CityCode, 'CityCode');
+  //           this.addArray[i].CityName = docobj[0].CityName;
+  //         } else { this.CityData = []; }
+  //       });
+  //     }
+  //   });
+  // }
+  
   //custom change detection
   // ngDoCheck() {
   //   if (!this.lastModel) {

@@ -9,11 +9,10 @@
     min-height: 583px;
     box-shadow: 0 0 5px #534d81;
 }
-
 .bootstrapWizard li {
     display: block;
     float: left;
-    width: 33%;
+    width: 25%;
     text-align: center;
     padding-left: 0;
 }
@@ -27,3 +26,14 @@
     border-radius: 15px;
     float:right;
 }
+.form-control-feedback {
+    position: absolute;
+    top: 21px;
+    right: 10px;
+    z-index: 2;
+    display: block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    pointer-events: none;}  
