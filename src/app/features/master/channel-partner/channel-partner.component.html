@@ -533,7 +533,7 @@
                                 <div class="form-group">
                                   <label>State <span class="errorMessage">*</span>
                                   </label>
-                                  <select class="form-control" name="StateCode" [(ngModel)]="address.StateCode" (change)="getCityData()" required>
+                                  <select class="form-control" name="StateCode" [(ngModel)]="address.StateCode" (change)="getCityData(address.StateCode)" required>
                                     <option value="" selected hidden>Select State</option>
                                     <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
                                   </select>
@@ -620,6 +620,204 @@
                           </div>
                       </div>
                       <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
+                        <br>
+                        <h3>
+                          <strong>Step 4</strong> - Address Details</h3>
+                          <form name="areaForm" #areaForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
+                            <div class="row">
+                              <div class="col-sm-4 col-sm-offset-4">
+                                  <div class="row">
+                                      <div class="col-sm-6">
+                                          <div class="form-group">
+                                              <label for="sel1">State <span class="errorMessage">*</span></label>
+                                              <!-- <select class="form-control" id="sel1" [(ngModel)]="area.StateCode" [ngModelOptions]="{standalone: true}"
+                                              (change)="getCity(area.StateCode)">
+                                                  <option value="" selected disabled>--Select--</option>
+                                                  <option *ngFor="let st of State" value="{{st.StateCode}}">{{st.StateDesc}}</option>
+                                              </select> -->
+                                              <select class="form-control" name="StateCode" [(ngModel)]="area.StateCode" (change)="getCityData(area.StateCode)" required>
+                                                <option value="" selected hidden>Select State</option>
+                                                <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-sm-6">
+                                          <div class="form-group">
+                                              <label for="sel1">City <span class="errorMessage">*</span></label>                                                                    
+                                                  <!-- <select class="form-control" id="sel1" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" [ngModelOptions]="{standalone: true}"  >
+                                                      <option value="" selected disabled>--Select--</option>
+                                                      <option *ngFor="let ct of City" value="{{ct.CityCode}}">{{ct.CityName}}</option>
+                                                  </select> -->
+                                                  <select class="form-control" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" name="CityCode" required>
+                                                    <option value="" selected hidden>Select City</option>
+                                                    <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
+                                                  </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-sm-4 col-sm-offset-4">
+                                  <div class="row">
+                                      <div class="col-sm-12">
+                                          <div class="table-responsive">
+                                              <table class="table tbl">
+                                                  <thead>
+                                                      <tr>
+                                                          <th class="text-center"></th>
+                                                          <th class="text-center">Pin Code </th>
+                                                          <th class="text-center">Area </th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                      <tr *ngFor="let data of AreaData; let index=index">
+                                                          <td>
+                                                              <input type="checkbox" [(ngModel)]="AreaData[index].Check"  [ngModelOptions]="{standalone: true}" (change)="onBlur($event, index, data)"/>
+                                                          </td>
+                                                          <td class="text-center">{{AreaData[index].PinCode}}</td>
+                                                          <td class="text-center">{{AreaData[index].AreaName}}</td>
+                                                      </tr>                                                                         
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                
+                          </div>
+                          
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                                    <button  class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
+                                      [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step5'">
+                        <br>
+                        <h3>
+                          <strong>Step 5</strong> - Bank Details</h3>
+                          <form name="bankForm" #bankForm="ngForm" (ngSubmit)="onSubmitBankData()" ngNativeValidate>
+                            <div class="row">
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Account Type <span class="errorMessage">*</span>
+                                  </label>
+                                  <select class="form-control" [(ngModel)]="bank.AccountType" name="AccountType" required>
+                                    <option value="" selected hidden>Select Product</option>
+                                    <option [value]="acc.MstFlag" *ngFor="let acc of AccountTypeData">{{acc.Name}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Account No. <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Account No." [(ngModel)]="bank.AccountNo" name="AccountNo" minlength="9" maxlength="17" saCommonDir
+                                    dirType="number" oninvalid="this.setCustomValidity('Enter Valid Account Number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Account Holder Name <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Holder Name" [(ngModel)]="bank.AccountHolderName" name="AccountHolderName" saCommonDir dirType="alphaonly"
+                                    required />
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="form-group">
+                                  <label for="sel1">Bank Name <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="bank.BankName" name="BankName" saCommonDir dirType="alphanumeric" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">Branch Name <span class="errorMessage">*</span>
+                                  </label>
+                                  <input type="text" class="form-control" placeholder="Enter Branch Name" [(ngModel)]="bank.BranchName" name="BranchName" saCommonDir dirType="alphanumeric" required />
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="form-group">
+                                  <label for="sel1">IFSC Code</label>
+                                  <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" [(ngModel)]="bank.IFSCCode" name="IFSCCode"
+                                    oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" saCommonDir dirType="alphanumericupper" />
+                                </div>
+                              </div>
+                              <div class="col-sm-1">
+                                <div class="form-group">
+                                  <label>&nbsp; </label>
+                                  <button class="btn btn-block btn-warning ">
+                                    <i class="glyphicon glyphicon-plus"></i> Add </button>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="table-responsive">
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Account Type</th>
+                                      <th>Account No.</th>
+                                      <th>Account Holder Name</th>
+                                      <th>Bank Name</th>
+                                      <th>Branch Name</th>
+                                      <th>IFSC Code</th>
+                                      <th>Remove</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let ban of bankArray;index as i">
+                                      <td>{{i+1}}</td>
+                                      <td>{{ban.AccountTypeName}}</td>
+                                      <td>{{ban.AccountNo}} </td>
+                                      <td>{{ban.AccountHolderName}} </td>
+                                      <td>{{ban.BankName}} </td>
+                                      <td>{{ban.BranchName}} </td>
+                                      <td>{{ban.IFSCCode}}</td>
+                                      <td>
+                                        <button class="btn btn-xs btn-danger" (click)=onRemoveBank(ban,i)>Remove</button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-actions">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="pager wizard no-margin">
+                                  <li class="previous">
+                                    <a (click)="prevStep()" [class.disabled]="steps.indexOf(activeStep) == 0" class="btn btn-lg btn-default"> Previous </a>
+                                  </li>
+                                  <li class="next">
+                                    <button (click)="onSubmitBankDetails()" class="btn btn-lg txt-color-darken next_button" [class.disabled]="activeStep.submitted && !activeStep.valid" type="submit"
+                                      [disabled]="!loaderbtn">
+                                      <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Save & Next':'Loading'}}</button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="tab-pane" [class.active]="activeStep.key == 'step6'">
                         <br>
                         <h3>
                           <strong>Step 4</strong> - Document Details</h3>

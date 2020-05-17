@@ -7,6 +7,7 @@ import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { EmployeeService } from '@app/features/master/employee/employee.service';
 import { AppComponent } from '@app/app.component';
 import { ChannelPartnerService } from '@app/features/master/channel-partner/channel-partner.service';
+import { CustomerService } from '@app/features/customer/customer.service';
 @Component({
   selector: 'sa-channel-partner',
   templateUrl: './channel-partner.component.html',
@@ -65,16 +66,26 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   public AccountTypeData: any = [];
   public addressTypeData:any=[];
   public removeAddressUpdate: any = [];
+  public AreaData:any=[];
+  public area:any={ StateCode: '', CityCode: '' };
+  public i=0;
+  public bank: any = { AccountType: '' };
+  public bankArray: any = [];
+  public bulkBank: any = {};
+  public removeBankUpdate: any = [];
+  
 
-  constructor(private appService: AppService, private channelPartnerService: ChannelPartnerService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
+  constructor(private appService: AppService, private channelPartnerService: ChannelPartnerService,private customerService:CustomerService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' } : data);
+    this.datashare.GetSharedData.subscribe(data =>{
+       this.channal = data == null ? { ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y'} : data;
+       this.getChType(this.channal.ChannelId);});
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.getDesignation(this.dept);
     this.allOnloadMethods();
-    this.imgUrl = `${AppComponent.ImageUrl}EmpDocs/`;
+    this.imgUrl = `${AppComponent.ImageUrl}CPDocs/`;
     this.employee.ReTypePassword = this.employee.Password;
     this.employee.StateCode = this.employee.StateCode == null ? '' : this.employee.StateCode;
     this.employee.CityCode = this.employee.CityCode == null ? '' : this.employee.CityCode;
@@ -113,8 +124,22 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       checked: false,
       submitted: false,
     },
-    {
+     {
       key: 'step4',
+      title: 'Area Allocation Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    },
+    {
+      key: 'step5',
+      title: 'Bank Details',
+      valid: true,
+      checked: false,
+      submitted: false,
+    },
+    {
+      key: 'step6',
       title: 'Document Details',
       valid: false,
       checked: false,
@@ -140,13 +165,29 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       case 'step3':
         if (steo.key == "step3") { //&& this.employee.EmpId != null
           this.activeStep = steo;
-          this.getEmployeeAddressDetails();
+          this.getCPAddressDetails();
         } else {
           AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
         }
         break;
-      case 'step4':
-        if (steo.key == "step4") { //&& this.employee.EmpId != null && this.employee.AddressId != null
+        case 'step4':
+          if (steo.key == "step4") { //&& this.employee.EmpId != null
+            this.activeStep = steo;
+           // this.getEmployeeAddressDetails();
+          } else {
+            AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+          }
+          break;
+          case 'step5':
+            if (steo.key == "step5") { //&& this.employee.EmpId != null
+              this.activeStep = steo;
+              this.getCPBankDetails();
+            } else {
+              AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+            }
+            break;
+      case 'step6':
+        if (steo.key == "step6") { //&& this.employee.EmpId != null && this.employee.AddressId != null
           this.activeStep = steo;
           this.getEmployeeDocumentDetails();
         } else {
@@ -226,7 +267,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
             //this.getEmployeeAddressDetails();
           }
           else { AppComponent.SmartAlert.Errmsg(resData.Message); }
-        });
+        }); 
       } 
   }
   onSubmitAddressDeatils() {
@@ -256,11 +297,56 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one record.`);
     }
   }
+  onSubmitArea(){
+    if(this.AreaData.length>0){
+      this.loaderbtn = false;
+      this.area={"data":this.AreaData,"IsActive":'Y',"Flag":'IN',"UserCode":this.cpInfo.EmpId};
+      this.channelPartnerService.postAreaDetails(this.area).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.nextStep();
+          //this.getEmployeeAddressDetails();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    }else{
+      AppComponent.SmartAlert.Errmsg("Please submit at least 1 Area");
+    }
+  }
+  onSubmitBankDetails() {
+    if (this.bankArray.length > 0 || this.removeBankUpdate.length > 0) {
+      this.loaderbtn = false;
+      this.bulkBank.Flag = "IN";
+      if (this.removeBankUpdate.length > 0) {
+        this.bankArray = this.bankArray.concat(this.removeBankUpdate);
+      }
+      this.bulkBank.data = this.bankArray;
+      this.bulkBank.RefId = this.channal.CPCode;
+      this.bulkBank.FormFlag = 'CP';
+      this.bulkBank.UserCode = this.cpInfo.EmpId;
+      this.customerService.postBulkBank(this.bulkBank).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          //this.bank.AddressId = resData.Data[0].AddressId
+          AppComponent.SmartAlert.Success(resData.Message);
+          this.bankArray = [];
+          AppComponent.Router.navigate(['/customer/customer-master']);
+          this.nextStep();
+          // this. this.getCustomerAddressDetails();();
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please add atleast one bank.`);
+    }
+
+  }
   nextToSave() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
       this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
-      this.bulkDoc.RefId = this.employee.EmpId;
-      this.bulkDoc.FormFlag = 'EMP';
+      this.bulkDoc.RefId = this.channal.CPCode;
+      this.bulkDoc.FormFlag = 'CP';
       this.bulkDoc.UserCode = this.cpInfo.EmpId;
       if (this.removeDocUpdate.length > 0) {
         this.bdata = this.bdata.concat(this.removeDocUpdate);
@@ -292,7 +378,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       (res: any) => {
         this.StateData = res.Data;
       });
-    this.masterService.getDocumentType('EMP').subscribe(
+    this.masterService.getDocumentType('CP').subscribe(
       (resData: any) => {
         this.docTypeData = resData.Data;
       });
@@ -316,6 +402,10 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       (resAddData: any) => {
         this.addressTypeData = resAddData.Data;
       });   
+      this.customerService.getAccountType().subscribe((resACT: any) => {
+        if (resACT.StatusCode != 0)
+          this.AccountTypeData = resACT.Data;
+      });
   }
   getRepEmp(id){ 
     //if((this.own.Flag == 'UP' && this.own.ManagerId == null) || (this.own.Flag == 'IN')){this.own.ManagerId = ''};
@@ -340,7 +430,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
      this.own.MatrixId = '';
     }
   } 
-  getChType(code) {
+  getChType(code) { 
     this.channelPartnerService.getChannelPartnerType(code).subscribe(
       (resChPData: any) => {
         this.CType = resChPData.Data;
@@ -365,6 +455,49 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.className = 'glyphicon-eye-close';
     }
   }
+   // bank
+   onSubmitBankData() {
+    if (this.bankArray.some(obj => parseInt(obj.AccountNo) === parseInt(this.bank.AccountNo))) {
+      AppComponent.SmartAlert.Errmsg("Bank Account is already added in list.");
+      this.bank = { AccountType: '' };
+    } else {
+      let docobj;
+      docobj = this.masterService.filterData(this.AccountTypeData, this.bank.AccountType, 'MstFlag');
+      let AccountTypeName = docobj[0].Name;
+      this.bankArray.push({
+        "BankId": '',
+        "AccountNo": this.bank.AccountNo,
+        "AccountType": this.bank.AccountType,
+        "AccountHolderName": this.bank.AccountHolderName,
+        "BankName": this.bank.BankName,
+        "BranchName": this.bank.BranchName,
+        "IFSCCode": this.bank.IFSCCode,
+        "IsActive": "Y",
+        "AccountTypeName": AccountTypeName
+      });
+      this.bank = { AccountType: '' };
+    }
+  }
+  onRemoveBank(data, index) {
+    if (data.BankId != '' && data.BankId != null) {
+      data.IsActive = 'N';
+      this.removeBankUpdate.push(data);
+    }
+    this.bankArray.splice(index, 1)
+  }
+  getCPBankDetails() {
+    this.customerService.getBankDetails('CP', this.channal.CPCode).subscribe((resp: any) => {
+      if (resp.StatusCode != 0)
+        this.bankArray = resp.Data;
+      for (let i = 0; i < this.bankArray.length; i++) {
+        let docobj;
+        docobj = this.masterService.filterData(this.AccountTypeData, this.bankArray[i].AccountType, 'MstFlag');
+        this.bankArray[i].AccountTypeName = docobj[0].Name;
+      }
+    });
+  }
+ 
+  //doc
   onFileSelected(event) {
     var reader = new FileReader();
     this.selectedFile = <File>event.target.files[0];
@@ -417,26 +550,28 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     win.document.write(`<iframe src="${base64URL}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
   }
   getEmployeeDocumentDetails() {
-    this.masterService.getDocumentDetails('EMP', this.employee.EmpId).subscribe((response: any) => {
+    this.masterService.getDocumentDetails('CP', this.channal.CPCode).subscribe((response: any) => {
       if (response.StatusCode != 0)
         if (response.Data != null)
           this.bdata = response.Data;
     });
   }
-  getEmployeeAddressDetails() {
-    this.masterService.getAddressDetails('EMP', this.employee.EmpId).subscribe((resp: any) => {
-      if (resp.StatusCode != 0)
-        this.employee = Object.assign(this.employee, resp.Data[0]);
-      this.getCityData();
-    });
-  }
+  // getEmployeeAddressDetails() {
+  //   this.masterService.getAddressDetails('EMP', this.employee.EmpId).subscribe((resp: any) => {
+  //     if (resp.StatusCode != 0)
+  //       this.employee = Object.assign(this.employee, resp.Data[0]);
+  //     this.getCityData(this.address.StateCode);
+  //   });
+  // }
   private lastModel;
-  getCityData() {
-    this.masterService.getCity(this.address.StateCode).subscribe((res) => {
+  getCityData(stateCode) {
+    this.masterService.getCity(stateCode).subscribe((res) => {
       console.log(res);
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }
+
+ 
   getDesignation(dept) {
     this.dept = AppComponent.DeptId;
     this.masterService.getDesignation(this.dept).subscribe((res) => {
@@ -487,30 +622,71 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     }
     this.addArray.splice(index - 1, 1)
   }
-  // getCustomerAddressDetails() {
-  //   this.masterService.getAddressDetails('CUSTM', this.customer.ConsId).subscribe((resp: any) => {
-  //     if (resp.StatusCode != 0)
-  //       this.addArray = resp.Data;
-  //     if (this.addArray.length > 0) {
-  //       this.customer.AddressId = this.addArray[0].AddressId;
-  //     }
-  //     for (let i = 0; i < this.addArray.length; i++) {
-  //       this.masterService.getCity(this.addArray[i].StateCode).subscribe((res) => {
-  //         if (res.StatusCode != 0) {
-  //           this.CityData = res.Data;
-  //           let docobj;
-  //           docobj = this.masterService.filterData(this.addressTypeData, this.addArray[i].AddressType, 'MstFlag');
-  //           this.addArray[i].AddressTypeName = docobj[0].Name;
-  //           docobj = this.masterService.filterData(this.StateData, this.addArray[i].StateCode, 'StateCode');
-  //           this.addArray[i].StateName = docobj[0].StateDesc;
-  //           docobj = this.masterService.filterData(this.CityData, this.addArray[i].CityCode, 'CityCode');
-  //           this.addArray[i].CityName = docobj[0].CityName;
-  //         } else { this.CityData = []; }
-  //       });
-  //     }
-  //   });
-  // }
+  getCPAddressDetails() {
+    this.masterService.getAddressDetails('CP', this.channal.CPCode).subscribe((resp: any) => {
+      if (resp.StatusCode != 0)
+        this.addArray = resp.Data;
+      // if (this.addArray.length > 0) {
+      //   this.customer.AddressId = this.addArray[0].AddressId;
+      // }
+      for (let i = 0; i < this.addArray.length; i++) {
+        this.masterService.getCity(this.addArray[i].StateCode).subscribe((res) => {
+          if (res.StatusCode != 0) {
+            this.CityData = res.Data;
+            let docobj;
+            docobj = this.masterService.filterData(this.addressTypeData, this.addArray[i].AddressType, 'MstFlag');
+            this.addArray[i].AddressTypeName = docobj[0].Name;
+            docobj = this.masterService.filterData(this.StateData, this.addArray[i].StateCode, 'StateCode');
+            this.addArray[i].StateName = docobj[0].StateDesc;
+            docobj = this.masterService.filterData(this.CityData, this.addArray[i].CityCode, 'CityCode');
+            this.addArray[i].CityName = docobj[0].CityName;
+          } else { this.CityData = []; }
+        });
+      }
+    });
+  }
   
+  
+  
+  getArea(city)
+  {
+    this.AreaData=[];
+    this.channelPartnerService.getAreaData(city).subscribe((resAreaData: any) => {
+        if (resAreaData.StatusCode != 0){  
+          for(let i=0;i<resAreaData.Data.length;i++){
+            var AreatTData=[];
+            AreatTData = this.AreaData.filter(abc => abc.AreaID == resAreaData.Data[i].AreaCode);    
+            if(AreatTData.length==0){
+              this.AreaData.push({
+                "AreaID": resAreaData.Data[i].AreaCode,
+                "AreaName": resAreaData.Data[i].AreaName,
+                "CPCode":sessionStorage.CPCode,
+                "PinCode":resAreaData.Data[i].PinCode,
+                "CPAreaId":null,
+                "IsActive":"Y"
+              });
+            }
+          }
+        }   
+        else{ this.AreaData=[];}
+            });
+
+  }
+  onBlur(e,idx, dat: any){
+    if(e.target.checked){  
+      var Count = this.AreaData.filter(AreaData => AreaData.AreaID === dat.DocTypId);
+      if(Count=0){
+        // this.arr[idx] = dat;
+        this.AreaData[this.i] = dat
+      }else{
+        this.AreaData[idx].IsActive='Y';
+      }
+    }else{
+      this.AreaData[idx].IsActive='N';
+      // this.area2[this.j] = dat
+      // this.j++;
+    }
+  }   
   //custom change detection
   // ngDoCheck() {
   //   if (!this.lastModel) {
