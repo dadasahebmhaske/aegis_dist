@@ -79,16 +79,15 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data =>{
-       this.channal = data == null ? { ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y'} : data;
-       this.getChType(this.channal.ChannelId);});
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.getDesignation(this.dept);
     this.allOnloadMethods();
+    this.datashare.GetSharedData.subscribe(data =>{
+      this.channal = data == null ? { ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y'} : data;
+       if(this.channal!=null && this.channal!=undefined){this.getChType(this.channal.ChannelId);}
+       this.channal.ROTypeId=this.channal.ROTypeId==null?'':this.channal.ROTypeId; });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    
+  
     this.imgUrl = `${AppComponent.ImageUrl}CPDocs/`;
-    this.employee.ReTypePassword = this.employee.Password;
-    this.employee.StateCode = this.employee.StateCode == null ? '' : this.employee.StateCode;
-    this.employee.CityCode = this.employee.CityCode == null ? '' : this.employee.CityCode;
   }
 
   // public model = {
@@ -155,43 +154,43 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         this.activeStep = steo;
         break;
       case 'step2':
-        if (steo.key == "step2") { //&& this.employee.EmpId != null
+        if (steo.key == "step2" && this.channal.CPCode != null && this.channal.CPCode != undefined) {
           this.activeStep = steo;
-          //this.getEmployeeAddressDetails();
+          this.getOwnerDetails();
         } else {
-          AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+          AppComponent.SmartAlert.Errmsg(`Please add Channel Partner details first`)
         }
         break;
       case 'step3':
-        if (steo.key == "step3") { //&& this.employee.EmpId != null
+        if (steo.key == "step3" && this.own.EmpId!=null && this.own.EmpId!=undefined ) { //&& this.employee.EmpId != null
           this.activeStep = steo;
           this.getCPAddressDetails();
         } else {
-          AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+          AppComponent.SmartAlert.Errmsg(`Please add Owner details first`)
         }
         break;
         case 'step4':
-          if (steo.key == "step4") { //&& this.employee.EmpId != null
+          if (steo.key == "step4" && this.addArray.length > 0 || this.removeAddressUpdate.length > 0) {
             this.activeStep = steo;
-           // this.getEmployeeAddressDetails();
+           this.getAreaAllocationDetails();
           } else {
-            AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+            AppComponent.SmartAlert.Errmsg(`Please add Address details first`)
           }
           break;
           case 'step5':
-            if (steo.key == "step5") { //&& this.employee.EmpId != null
+            if (steo.key == "step5" && this.AreaData.length>0) { 
               this.activeStep = steo;
               this.getCPBankDetails();
             } else {
-              AppComponent.SmartAlert.Errmsg(`Please add Employee details first`)
+              AppComponent.SmartAlert.Errmsg(`Please add Area Allocation details first`)
             }
             break;
       case 'step6':
-        if (steo.key == "step6") { //&& this.employee.EmpId != null && this.employee.AddressId != null
+        if (steo.key == "step6" && this.bankArray.length > 0 || this.removeBankUpdate.length > 0) { //&& this.employee.EmpId != null && this.employee.AddressId != null
           this.activeStep = steo;
           this.getEmployeeDocumentDetails();
         } else {
-          AppComponent.SmartAlert.Errmsg(`Please add Address details first`)
+          AppComponent.SmartAlert.Errmsg(`Please add Bank details first`)
         }
         break;
     }
@@ -240,15 +239,15 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);
-        this.channal.CPCode = resData.Data[0].EmpId;
+        if(resData.Data.length!=0)
+        {this.channal.CPCode = resData.Data[0].CPCode;}
         this.nextStep();
-        //this.getEmployeeAddressDetails();
+        this.getOwnerDetails();
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   onSubmitOwnerDetails() {
-    this.loaderbtn = true;
    this.own.UserCode = this.cpInfo.EmpId;
       this.own.Flag =this.own.EmpId==null||this.own.EmpId==undefined||this.own.EmpId==""?'IN':'UP';
       this.own.EmpId=this.own.Flag=='IN'?null:this.own.EmpId;
@@ -258,13 +257,14 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       if(this.own.ManagerId === this.own.MatrixId){
         AppComponent.SmartAlert.Errmsg('Reporting to Employee and Matrix Reporting to Employee Should Not Be Same!');                 
       } else {
+        this.loaderbtn = false;
         let ciphertext = this.appService.getEncrypted(this.own);
         this.channelPartnerService.postOwnDetails(ciphertext).subscribe((resData: any) => {
           this.loaderbtn = true;
           if (resData.StatusCode != 0) {
             AppComponent.SmartAlert.Success(resData.Message);
             this.nextStep();
-            //this.getEmployeeAddressDetails();
+            this.getCPAddressDetails();
           }
           else { AppComponent.SmartAlert.Errmsg(resData.Message); }
         }); 
@@ -287,9 +287,10 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         if (resData.StatusCode != 0) {
           this.address.AddressId = resData.Data[0].AddressId
           AppComponent.SmartAlert.Success(resData.Message);
-          this.addArray = [];
-          this.nextStep();
-          // this. this.getCustomerAddressDetails();
+//          this.addArray = [];
+          this.nextStep();this.removeAddressUpdate=[];
+          this.getCPAddressDetails();
+         this.getAreaAllocationDetails();
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -299,14 +300,19 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   }
   onSubmitArea(){
     if(this.AreaData.length>0){
-      this.loaderbtn = false;
-      this.area={"data":this.AreaData,"IsActive":'Y',"Flag":'IN',"UserCode":this.cpInfo.EmpId};
+      this.loaderbtn = false; 
+      // this.area.Flag='IN';
+      // this.area.UserCode=this.cpInfo.EmpId;
+      // this.area.IsActive='Y';
+      this.area={"data":JSON.stringify(this.AreaData),"IsActive":'Y',"Flag":'IN',"UserCode":this.cpInfo.EmpId};
+     // this.area.data=this.AreaData;
       this.channelPartnerService.postAreaDetails(this.area).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
           this.nextStep();
-          //this.getEmployeeAddressDetails();
+          this.getCPBankDetails();
+          this.getAreaAllocationDetails();
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -328,12 +334,11 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.customerService.postBulkBank(this.bulkBank).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          //this.bank.AddressId = resData.Data[0].AddressId
           AppComponent.SmartAlert.Success(resData.Message);
-          this.bankArray = [];
-          AppComponent.Router.navigate(['/customer/customer-master']);
+          this.bankArray = [];this.removeBankUpdate=[];
           this.nextStep();
-          // this. this.getCustomerAddressDetails();();
+          this.getEmployeeDocumentDetails();
+          this.getCPBankDetails();
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -357,11 +362,11 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          this.bdata = []; this.removeDocUpdate = [];
+          this.removeDocUpdate = [];
           if (resData.Data.length != 0)
-            this.employee.DocId = resData.Data[0].DocId;
+            this.document.DocId = resData.Data[0].DocId;
           AppComponent.SmartAlert.Success(resData.Message);
-          AppComponent.Router.navigate(['/master/employee-master']);
+          AppComponent.Router.navigate(['/master/channel-partner-master']);
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -406,6 +411,13 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         if (resACT.StatusCode != 0)
           this.AccountTypeData = resACT.Data;
       });
+      this.channelPartnerService.getRepotDesignation().subscribe((resRPDES: any) => {
+        if (resRPDES.StatusCode != 0)
+          this.RepDesi = resRPDES.Data;
+          this.MatDesi = resRPDES.Data;
+      });
+  
+      
   }
   getRepEmp(id){ 
     //if((this.own.Flag == 'UP' && this.own.ManagerId == null) || (this.own.Flag == 'IN')){this.own.ManagerId = ''};
@@ -413,7 +425,6 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.channelPartnerService.getRepotEMployee(id).subscribe(
         (resRPTEMPData: any) => {
           this.RepEmp=resRPTEMPData.Data;
-          this.own.ManagerId = '';
         });
     } else {
      this.own.ManagerId = '';
@@ -424,7 +435,6 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.channelPartnerService.getMatrixRepotEMployee(id).subscribe(
         (resRPTEMPData: any) => {
           this.MatEmp=resRPTEMPData.Data;
-          this.own.MatrixId = '';
         });
     } else {
      this.own.MatrixId = '';
@@ -434,12 +444,14 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.channelPartnerService.getChannelPartnerType(code).subscribe(
       (resChPData: any) => {
         this.CType = resChPData.Data;
+        this.hideShow();
       });
     this.hideShow();
   }
   hideShow() {
     let docobj;
     docobj = this.masterService.filterData(this.chantype, this.channal.ChannelId, 'ChannelId');
+    if(docobj.length>0)
     if ((docobj[0].Channel).toUpperCase() == 'AUTOGAS') {
       this.hideRO = true;
     } else {
@@ -550,7 +562,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     win.document.write(`<iframe src="${base64URL}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
   }
   getEmployeeDocumentDetails() {
-    this.masterService.getDocumentDetails('CP', this.channal.CPCode).subscribe((response: any) => {
+    this.channelPartnerService.getDocumentDetails('CP', this.channal.CPCode).subscribe((response: any) => {
       if (response.StatusCode != 0)
         if (response.Data != null)
           this.bdata = response.Data;
@@ -572,20 +584,20 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   }
 
  
-  getDesignation(dept) {
-    this.dept = AppComponent.DeptId;
-    this.masterService.getDesignation(this.dept).subscribe((res) => {
-      if (res.StatusCode != 0) {
-        this.designationData = res.Data;
-      }
-    });
-  }
-  checkingPassword() {
-    if (this.employee.Password != this.employee.ReTypePassword && this.employee.ReTypePassword != null) {
-      AppComponent.SmartAlert.Errmsg('Password and Re-enter Password must be same');
-      this.employee.ReTypePassword = null;
-    }
-  }
+  // getDesignation(dept) {
+  //   this.dept = AppComponent.DeptId;
+  //   this.masterService.getDesignation(this.dept).subscribe((res) => {
+  //     if (res.StatusCode != 0) {
+  //       this.designationData = res.Data;
+  //     }
+  //   });
+  // }
+  // checkingPassword() {
+  //   if (this.employee.Password != this.employee.ReTypePassword && this.employee.ReTypePassword != null) {
+  //     AppComponent.SmartAlert.Errmsg('Password and Re-enter Password must be same');
+  //     this.employee.ReTypePassword = null;
+  //   }
+  // }
   onSubmitAddress() {
     let docobj;
     docobj = this.masterService.filterData(this.StateData, this.address.StateCode, 'StateCode');
@@ -645,9 +657,42 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       }
     });
   }
+  getOwnerDetails()
+    {
+          this.channelPartnerService.getOwnerDetails(this.channal.CPCode).subscribe((res) => {
+            if (res.StatusCode != 0) {
+          this.own=res.Data[0];
+          // this.samp=this.own.RoleCode;
   
-  
-  
+          this.own.RRoleId = this.own.RRoleId == null ? '' : this.own.RRoleId;
+          this.own.ManagerId = this.own.ManagerId == null ? '' : this.own.ManagerId;
+          this.own.MRoleId = this.own.MRoleId == null ? '' : this.own.MRoleId;
+          this.own.MatrixId = this.own.MatrixId == null ? '' : this.own.MatrixId;
+          this.own.Flag = this.own.FirstName == null || this.own.FirstName == undefined ? 'IN' : 'UP';
+          this.getRepEmp(this.own.RRoleId);        
+          this.getMatEmp(this.own.MRoleId);
+        }
+      });
+    }
+    getAreaAllocationDetails(){
+      this.channelPartnerService.getAreaAllocationDetails(this.channal.CPCode).subscribe((res) => {
+        if (res.StatusCode != 0){
+          this.AreaData=[];   
+             for(let i=0;i<res.Data.length;i++){
+               this.AreaData.push({
+                "AreaID": res.Data[i].AreaId,
+                "AreaName": res.Data[i].AreaName,
+                "CPCode":res.Data[i].CPCode,
+                "PinCode":res.Data[i].PinCode,
+                "CPAreaId":res.Data[i].CPAreaId,
+                "IsActive":res.Data[i].IsActive,
+                "Check":res.Data[i].IsActive=='Y'?true:false,
+                })
+              }  
+       }  
+    
+  });
+    }
   getArea(city)
   {
     this.AreaData=[];
@@ -660,7 +705,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
               this.AreaData.push({
                 "AreaID": resAreaData.Data[i].AreaCode,
                 "AreaName": resAreaData.Data[i].AreaName,
-                "CPCode":sessionStorage.CPCode,
+                "CPCode":this.channal.CPCode,
                 "PinCode":resAreaData.Data[i].PinCode,
                 "CPAreaId":null,
                 "IsActive":"Y"

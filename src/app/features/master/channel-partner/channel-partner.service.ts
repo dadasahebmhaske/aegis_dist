@@ -45,10 +45,21 @@ export class ChannelPartnerService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=AM&StateCode&CityCode=${city}&UserCode&IsActive=Y`);
   }
   public postAreaDetails(data:any) {
-    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCPArea`,{data:data},AppComponent.httpOptions);            
+    return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCPArea`,data,AppComponent.httpOptions);            
     }
     public getChannelPartner() {
       return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetChannelPartner?CPAreaId=&CPCode=&AreaId=&IsActive`);
     }
     
+    public getOwnerDetails(cpcode) {
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&UserCode&IsActive=D&RoleCode=OWNE`);
+    }
+    public getAreaAllocationDetails(cpcode){
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPA&CPCode=${cpcode}&UserCode&IsActive=Y`);
+    }
+    getDocumentDetails(formFlag, RefId) {
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DOC&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
+    } //MasterCode=DTM
+
+  
 }

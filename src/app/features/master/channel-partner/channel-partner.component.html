@@ -33,142 +33,6 @@
                         <h3>
                           <strong>Step 1 </strong> - Channel Partner Details</h3>
                         <form name="channelPartneForm" #channelPartneForm="ngForm" (ngSubmit)="onsubmitCPDeatils()" autocomplete="off" ngNativeValidate>
-                          <!-- <div class="row">
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Designation <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control" [(ngModel)]="employee.RoleCode" name="RoleCode" required>
-                                  <option value="" selected hidden> Select Designation </option>
-                                  <option [value]="des.RoleCode" *ngFor="let des of designationData">{{des.RoleDesc}} </option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">First Name <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="employee.FirstName" name="FirstName" saCommonDir dirType="alphaonly" required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Last Name <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="employee.LastName" name="LastName" saCommonDir dirType="alphaonly" required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Date of Birth <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Date of Birth" [(ngModel)]="employee.DateOfBirth" name="DateOfBirth" bsDatepicker
-                                  [bsConfig]="datePickerConfig" onkeydown="return false" required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Gender <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control" [(ngModel)]="employee.Gender" name="Gender" required>
-                                  <option value="" selected hidden> Select Gender </option>
-                                  <option value="M">Male</option>
-                                  <option value="F">Female</option>
-                                  <option value="T">Transgender</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Mobile No. <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="employee.MobileNo" name="MobileNo" minlength="10" maxlength="10" saCommonDir
-                                  dirType="number" required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Alternative Mobile No. </label>
-                                <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="employee.AltrMobileNo" name="AltrMobileNo" minlength="10" maxlength="10" saCommonDir
-                                  dirType="number" />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Blood Group <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control" [(ngModel)]="employee.BloodGrp" name="BloodGrp" required>
-                                  <option value="" selected hidden> Select Group </option>
-                                  <option value="A +ve">A +ve</option>
-                                  <option value="A -ve">A -ve</option>
-                                  <option value="B +ve">B +ve</option>
-                                  <option value="B -ve">B -ve</option>
-                                  <option value="AB +ve">AB +ve</option>
-                                  <option value="AB -ve">AB -ve</option>
-                                  <option value="O +ve">O +ve</option>
-                                  <option value="O -ve">O -ve</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Marital Status <span class="errorMessage">*</span>
-                                </label>
-                                <select class="form-control" [(ngModel)]="employee.MaritalStatus" name="MaritalStatus" required>
-                                  <option value="" selected hidden> Select Status </option>
-                                  <option value="Single">Single</option>
-                                  <option value="Married">Married</option>
-                                  <option value="Divorced">Divorced</option>
-                                  <option value="Widowed">Widowed </option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Marriage Date <span class="errorMessage" [hidden]="employee.MaritalStatus=='Single'">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Anniversary Date" [(ngModel)]="employee.MarriageAnniversaryDate" name="MarriageAnniversaryDate" bsDatepicker
-                                  [bsConfig]="datePickerConfig" onkeydown="return false" [required]="employee.MaritalStatus!='Single'" />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Edu. Qualification <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Qualification" [(ngModel)]="employee.Qualification" name="Qualification" saCommonDir dirType="alphanumeric"
-                                  required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Date of Joining <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Date of Joining" [(ngModel)]="employee.DateOfJoining" name="DateOfJoining" bsDatepicker
-                                  [bsConfig]="datePickerConfig" onkeydown="return false" required />
-                              </div>
-                            </div>
-                 
-                            <div class="col-sm-4">
-                              <div class="form-group">
-                                <label for="sel1">Emergency Contact Person <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Contact Person" [(ngModel)]="employee.ContactPerson" name="ContactPerson" saCommonDir dirType="alphaonly"
-                                  required />
-                              </div>
-                            </div>
-                            <div class="col-sm-2">
-                              <div class="form-group">
-                                <label for="sel1">Contact No. <span class="errorMessage">*</span>
-                                </label>
-                                <input type="text" class="form-control" placeholder="Enter Contact No." minlength="10" maxlength="15" [(ngModel)]="employee.EmergencyContactNo"
-                                  name="EmergencyContactNo" saCommonDir dirType="number" required />
-                              </div>
-                            </div>
-                            <div class="col-sm-3 btn-marg">
-                              <label>
-                                <input type="checkbox" [(ngModel)]="employee.IsActive" *ngIf="employee.IsActive!=null" name="IsActive" trueFalseValue trueValue="Y" falseValue="N" /> Is Active </label>
-                            </div>
-                          </div> -->
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
@@ -240,7 +104,7 @@
                       <div class="form-group">
                           <label for="sel1">Alternate Contact No.</label>
                           <input type="text" class="form-control" placeholder="Enter Alternate Contact No."
-                          [(ngModel)]="channal.AltCPCpntactNo" [ngModelOptions]="{standalone: true}"
+                          [(ngModel)]="channal.AltCPContactNo" [ngModelOptions]="{standalone: true}"
                           saCommonDir dirType="number"  minlength="10" maxlength="10" />
                       </div>
                   </div>
@@ -357,7 +221,7 @@
                                     <option value="" selected>--Select--</option>
                                     <option *ngFor="let option of gender" value="{{option.Gender}}">{{option.GenderDesc}}</option>
                                     </select> -->
-                                    <select class="form-control" [(ngModel)]="employee.Gender" name="Gender" required>
+                                    <select class="form-control" [(ngModel)]="own.Gender" name="Gender" required>
                                       <option value="" selected hidden> Select Gender </option>
                                       <option value="M">Male</option>
                                       <option value="F">Female</option>
@@ -622,7 +486,7 @@
                       <div class="tab-pane" [class.active]="activeStep.key == 'step4'">
                         <br>
                         <h3>
-                          <strong>Step 4</strong> - Address Details</h3>
+                          <strong>Step 4</strong> - Area Allocation Details</h3>
                           <form name="areaForm" #areaForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
                             <div class="row">
                               <div class="col-sm-4 col-sm-offset-4">
@@ -635,7 +499,7 @@
                                                   <option value="" selected disabled>--Select--</option>
                                                   <option *ngFor="let st of State" value="{{st.StateCode}}">{{st.StateDesc}}</option>
                                               </select> -->
-                                              <select class="form-control" name="StateCode" [(ngModel)]="area.StateCode" (change)="getCityData(area.StateCode)" required>
+                                              <select class="form-control" name="StateCode" [(ngModel)]="area.StateCode" (change)="getCityData(area.StateCode)" >
                                                 <option value="" selected hidden>Select State</option>
                                                 <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
                                               </select>
@@ -648,7 +512,7 @@
                                                       <option value="" selected disabled>--Select--</option>
                                                       <option *ngFor="let ct of City" value="{{ct.CityCode}}">{{ct.CityName}}</option>
                                                   </select> -->
-                                                  <select class="form-control" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" name="CityCode" required>
+                                                  <select class="form-control" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" name="CityCode" >
                                                     <option value="" selected hidden>Select City</option>
                                                     <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
                                                   </select>
