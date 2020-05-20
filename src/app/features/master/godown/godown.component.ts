@@ -216,10 +216,14 @@ export class GodownComponent implements OnInit, OnDestroy {
       this.bulkDoc.RefId = this.godown.GodownId;
       this.bulkDoc.FormFlag = 'GDWN';
       this.bulkDoc.UserCode = this.cpInfo.EmpId;
-      if (this.removeDocUpdate.length > 0) {
-        this.bdata = this.bdata.concat(this.removeDocUpdate);
-      }
       this.bulkDoc.bdata = this.bdata;
+      if (this.removeDocUpdate.length > 0) {
+       // this.bdata = this.bdata.concat(this.removeDocUpdate);
+       let  docArray=this.bdata;
+        docArray=docArray.concat(this.removeDocUpdate);
+        this.bulkDoc.bdata = docArray;
+      }
+    
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
       this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {

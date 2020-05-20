@@ -221,10 +221,13 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     if (this.addArray.length > 0 || this.removeAddressUpdate.length > 0) {
       this.loaderbtn = false;
       this.bulkAdd.Flag = this.address.AddressId == null ? "IN" : "UP";
-      if (this.removeAddressUpdate.length > 0) {
-        this.addArray = this.addArray.concat(this.removeAddressUpdate);
-      }
       this.bulkAdd.data = this.addArray;
+      if (this.removeAddressUpdate.length > 0) {
+        //this.addArray = this.addArray.concat(this.removeAddressUpdate);
+        let  conArray=this.addArray;
+        conArray=conArray.concat(this.removeAddressUpdate);
+        this.bulkAdd.data = conArray;
+      }
       this.bulkAdd.RefId = this.customer.ConsId;
       this.bulkAdd.FormFlag = 'CUSTM';
       //this.bulkAdd.AddressType = 'H';
@@ -277,10 +280,13 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       this.bulkDoc.RefId = this.customer.ConsId;
       this.bulkDoc.FormFlag = 'CUSTM';
       this.bulkDoc.UserCode = this.cpInfo.EmpId;
-      if (this.removeDocUpdate.length > 0) {
-        this.bdata = this.bdata.concat(this.removeDocUpdate);
-      }
       this.bulkDoc.bdata = this.bdata;
+      if (this.removeDocUpdate.length > 0) {
+       // this.bdata = this.bdata.concat(this.removeDocUpdate);
+        let  docArray=this.bdata;
+        docArray=docArray.concat(this.removeDocUpdate);
+        this.bulkDoc.bdata = docArray;
+      }
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
       this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
@@ -304,10 +310,14 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     if (this.bankArray.length > 0 || this.removeBankUpdate.length > 0) {
       this.loaderbtn = false;
       this.bulkBank.Flag = "IN";
-      if (this.removeBankUpdate.length > 0) {
-        this.bankArray = this.bankArray.concat(this.removeBankUpdate);
-      }
       this.bulkBank.data = this.bankArray;
+      if (this.removeBankUpdate.length > 0) {
+        //this.bankArray = this.bankArray.concat(this.removeBankUpdate);
+        let  conArray=this.bankArray;
+        conArray=conArray.concat(this.removeBankUpdate);
+        this.bulkBank.data = conArray;
+      }
+      
       this.bulkBank.RefId = this.customer.ConsId;
       this.bulkBank.FormFlag = 'CUSTM';
       this.bulkBank.UserCode = this.cpInfo.EmpId;

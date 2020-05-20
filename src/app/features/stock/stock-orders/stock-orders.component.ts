@@ -197,10 +197,13 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stock.OrderType = "WB";
       this.stock.UserCode = this.cpInfo.EmpId;
       this.stock.Flag = this.stock.StkOrdId == null || this.stock.StkOrdId == '' ? "IN" : "UP";
-      if (this.removeProductUpdate.length > 0) {
-        this.ProductArray = this.ProductArray.concat(this.removeProductUpdate);
-      }
       this.stock.data = this.ProductArray;
+      if (this.removeProductUpdate.length > 0) {
+       // this.ProductArray = this.ProductArray.concat(this.removeProductUpdate);
+        let  conArray=this.ProductArray;
+        conArray=conArray.concat(this.removeProductUpdate);
+        this.stock.data = conArray;
+      }
       this.stockService.postBulkOrders(this.stock).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {

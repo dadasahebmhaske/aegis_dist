@@ -275,10 +275,13 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.bulkAdd.AddressId= this.bulkAdd.AddressId==undefined?null: this.bulkAdd.AddressId;
       this.loaderbtn = false;
       this.bulkAdd.Flag = this.address.AddressId == null ? "IN" : "UP";
-      if (this.removeAddressUpdate.length > 0) {
-        this.addArray = this.addArray.concat(this.removeAddressUpdate);
-      }
       this.bulkAdd.data = this.addArray;
+      if (this.removeAddressUpdate.length > 0) {
+        //this.addArray = this.addArray.concat(this.removeAddressUpdate);
+        let  conArray=this.addArray;
+        conArray=conArray.concat(this.removeAddressUpdate);
+        this.bulkAdd.data = conArray;
+      }
       this.bulkAdd.RefId = this.channal.CPCode;
       this.bulkAdd.FormFlag = 'CP';
       this.bulkAdd.UserCode = this.cpInfo.EmpId;
@@ -324,10 +327,13 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     if (this.bankArray.length > 0 || this.removeBankUpdate.length > 0) {
       this.loaderbtn = false;
       this.bulkBank.Flag = "IN";
-      if (this.removeBankUpdate.length > 0) {
-        this.bankArray = this.bankArray.concat(this.removeBankUpdate);
-      }
       this.bulkBank.data = this.bankArray;
+      if (this.removeBankUpdate.length > 0) {
+        //this.bankArray = this.bankArray.concat(this.removeBankUpdate);
+        let  conArray=this.bankArray;
+        conArray=conArray.concat(this.removeBankUpdate);
+        this.bulkBank.data = conArray;
+      }
       this.bulkBank.RefId = this.channal.CPCode;
       this.bulkBank.FormFlag = 'CP';
       this.bulkBank.UserCode = this.cpInfo.EmpId;
@@ -335,7 +341,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
-          this.bankArray = [];this.removeBankUpdate=[];
+          this.removeBankUpdate=[];
           this.nextStep();
           this.getEmployeeDocumentDetails();
           this.getCPBankDetails();
@@ -353,10 +359,14 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.bulkDoc.RefId = this.channal.CPCode;
       this.bulkDoc.FormFlag = 'CP';
       this.bulkDoc.UserCode = this.cpInfo.EmpId;
-      if (this.removeDocUpdate.length > 0) {
-        this.bdata = this.bdata.concat(this.removeDocUpdate);
-      }
       this.bulkDoc.bdata = this.bdata;
+      if (this.removeDocUpdate.length > 0) {
+        let  docArray=this.bdata;
+        docArray=docArray.concat(this.removeDocUpdate);
+        this.bulkDoc.bdata = docArray;
+       // this.bdata = this.bdata.concat(this.removeDocUpdate);
+      }
+      
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
       this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {

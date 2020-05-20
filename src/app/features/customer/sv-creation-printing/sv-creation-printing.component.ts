@@ -130,10 +130,13 @@ export class SvCreationPrintingComponent implements OnInit {
     if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
       this.loaderbtn = false;
       this.bulkProd.Flag = this.actionFlag;
-      if (this.removeProductUpdate.length > 0) {
-        this.prodArray = this.prodArray.concat(this.removeProductUpdate);
-      }
       this.bulkProd.data = this.prodArray;
+      if (this.removeProductUpdate.length > 0) {
+        //this.prodArray = this.prodArray.concat(this.removeProductUpdate);
+        let  conArray=this.prodArray;
+        conArray=conArray.concat(this.removeProductUpdate);
+        this.bulkProd.data = conArray;
+      }
       this.bulkProd.RefId = this.custData.ConsId;
       this.bulkProd.UserCode = this.cpInfo.EmpId;
       this.bulkProd.CPCode = this.cpInfo.CPCode
