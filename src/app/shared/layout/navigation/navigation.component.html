@@ -46,7 +46,7 @@
           <li routerLinkActive="active">
             <a routerLink="/master/employee-master">Employee Master</a>
           </li>
-          <li routerLinkActive="active">
+          <li routerLinkActive="active" *ngIf="stockShow">
             <a routerLink="/master/channel-partner-master">Channel Partner Master</a>
           </li>
         </ul>
@@ -77,11 +77,11 @@
       <li>
         <a title="Order">
           <i class="fa fa-lg fa-fw fa-truck"></i>
-          <span class="menu-item-parent">Order</span>
+          <span class="menu-item-parent">Transaction</span>
         </a>
         <ul>
           <li routerLinkActive="active">
-            <a routerLink="/order/refill-booking-list">Refill Booking</a>
+            <a routerLink="/order/refill-booking-list">Order Booking</a>
           </li>
           <li routerLinkActive="active">
             <a routerLink="/order/cash-memo-and-refill-delivery">Cash Memo & Refill Delivery</a>
@@ -90,10 +90,10 @@
             <a routerLink="/order/delivered-orders">Delivered Orders</a>
           </li>
           <li routerLinkActive="active">
-            <a routerLink="/order/undelivered-orders">Undelivered Orders</a>
+            <a routerLink="/order/undelivered-orders">Declined / Cancelled Orders</a>
           </li>
           <li routerLinkActive="active">
-            <a routerLink="/order/instant-delivered-orders">Instant Delivered Orders</a>
+            <a routerLink="/order/instant-delivered-orders">Instant Delivery Challans </a>
           </li>
           <li routerLinkActive="active">
             <a routerLink="/order/cash-flow-register">Cash Flow & Payment Collections</a>

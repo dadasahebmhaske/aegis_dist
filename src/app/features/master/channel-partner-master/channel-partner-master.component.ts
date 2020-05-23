@@ -67,7 +67,7 @@ export class ChannelPartnerMasterComponent implements OnInit {
   }
 
   onLoad() {
-    this.channelPartnerService.getChannelPartner().subscribe((resData: any) => {
+    this.channelPartnerService.getChannelPartner(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.empData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

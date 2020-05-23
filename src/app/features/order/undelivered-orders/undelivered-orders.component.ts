@@ -41,7 +41,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Undelivered Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Declined / Cancelled Orders list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

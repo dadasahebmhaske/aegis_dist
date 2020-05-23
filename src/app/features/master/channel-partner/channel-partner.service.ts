@@ -47,8 +47,8 @@ export class ChannelPartnerService {
   public postAreaDetails(data:any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCPArea`,data,AppComponent.httpOptions);            
     }
-    public getChannelPartner() {
-      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetChannelPartner?CPAreaId=&CPCode=&AreaId=&IsActive`);
+    public getChannelPartner(cpcode) {
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetChannelPartner?CPAreaId=&CPCode=&AreaId=&ParentCPCode=${cpcode}&IsActive`);
     }
     
     public getOwnerDetails(cpcode) {

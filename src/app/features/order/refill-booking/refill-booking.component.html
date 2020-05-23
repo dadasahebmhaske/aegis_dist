@@ -7,7 +7,7 @@
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
             <h2>
-              <i class="fa fa-table"></i> Refill Booking</h2>
+              <i class="fa fa-table"></i> Order Booking</h2>
           </header>
           <div>
             <div class="widget-body">
@@ -199,7 +199,7 @@
                       <hr />
                       <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                      <button class="pull-right btn  marg-right" [ngClass]="{'btn-primary':btnAction=='Book Now'?true:false,'btn-danger':btnAction!='Book Now'?true:false}" type="submit"
+                      <button class="pull-right btn  marg-right" [ngClass]="{'btn-primary':btnAction=='Book Now'?true:false,'btn-danger':btnAction!='Order Now'?true:false}" type="submit"
                         [disabled]="!loaderbtn">
                         <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? btnAction:'Loading'}}</button>
                     </div>

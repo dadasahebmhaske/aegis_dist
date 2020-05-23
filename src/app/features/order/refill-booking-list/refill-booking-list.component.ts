@@ -39,7 +39,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Refill Booking Orders list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'Order Booking list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

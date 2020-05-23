@@ -48,9 +48,9 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Deliver</div>', enableFiltering: false
       },
       {
-        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Undeliver &nbsp;</button> `
-        , width: "85", exporterSuppressExport: true,
-        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Undeliver</div>', enableFiltering: false
+        name: 'Select1', displayName: 'Undeliver Refill', cellTemplate: `<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.ConsNo!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  ">&nbsp;Decline  &nbsp;</button> `
+        , width: "75", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Decline / Cancel</div>', enableFiltering: false
       },
 
       {
