@@ -42,9 +42,9 @@ export class CategoryWiseDiscountAllocationListComponent implements OnInit {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
       { name: 'Category', displayName: 'Category', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'DiscountPer', displayName: 'Discount Percentage', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'DiscountPer', displayName: 'Discount Percentage',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
       //{ name: 'SubAreaId', displayName: 'Sub Area Id', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'IsActive', displayName: 'Is Active', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'IsActive', displayName: 'Is Active',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
   }

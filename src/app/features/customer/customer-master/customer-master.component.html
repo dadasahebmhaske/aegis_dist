@@ -14,7 +14,7 @@
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <input type="text" placeholder="Enter Customer No." class="form-control" oninvalid="this.setCustomValidity('Enter Customer Number')" onchange="this.setCustomValidity('')"
-                        oninput="setCustomValidity(' ')" aCommonDir dirType="number" [(ngModel)]="ConsNo" name="ConsNo" maxlength="8" required />
+                        oninput="setCustomValidity(' ')" aCommonDir dirType="number" [(ngModel)]="ConsNo" (change)="getOnChangeCustomer()" name="ConsNo" maxlength="8" required />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">

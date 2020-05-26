@@ -16,6 +16,7 @@ export class EmployeeMasterComponent implements OnInit {
   public gridOptions: IGridoption;
   public empData: any = {};
   public empDataStored: any;
+  public  loaderbtn:boolean=true;
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService) {
 
   }
@@ -64,7 +65,9 @@ export class EmployeeMasterComponent implements OnInit {
     });
   }
   onLoad() {
+    this.loaderbtn=false;
     this.masterService.getEmpoyees(this.cpInfo.CPCode).subscribe((resData: any) => {
+      this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.empData = resData.Data;
         this.empDataStored = this.empData;
@@ -74,9 +77,12 @@ export class EmployeeMasterComponent implements OnInit {
     });
   }
   onSelectDesignation() {
-    this.empData = this.masterService.filterData(this.empDataStored, this.designation, 'RoleCode');
-    this.empData = this.designation == 'ALL' ? this.empDataStored : this.empData;
+    this.loaderbtn=false;
+      this.empData = this.masterService.filterData(this.empDataStored, this.designation, 'RoleCode');
+      this.empData = this.designation == 'ALL' ? this.empDataStored : this.empData;
     if (this.empData.length == 0)
-      this.empData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found');
-  }
+     { this.empData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found');}
+      this.loaderbtn=true;
+    }
+ 
 }

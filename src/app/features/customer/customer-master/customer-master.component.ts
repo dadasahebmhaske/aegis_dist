@@ -73,17 +73,25 @@ export class CustomerMasterComponent implements OnInit {
   }
 
   onLoad() {
+    this.loaderbtn=false;
     this.masterService.getCustomer(this.cpInfo.CPCode).subscribe((resData: any) => {
+      this.loaderbtn=true;
       if (resData.StatusCode != 0) {
-        this.custData = resData.Data;console.log(resData.Data)
+        this.custData = resData.Data;
         this.custDataStored = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); this.custData = [{}]; }
     });
   }
-  getCustomer() {
+  getCustomer() {    this.loaderbtn=false;
     this.custData = this.masterService.filterData(this.custDataStored, this.ConsNo, 'ConsNo');
     if (this.custData.length == 0) { this.custData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found'); }
+    this.loaderbtn=true;
+  }
+  getOnChangeCustomer() {    this.loaderbtn=false;
+    if (this.custDataStored.length != 0)
+    {this.custData = this.custDataStored;}
+    this.loaderbtn=true;
   }
 }

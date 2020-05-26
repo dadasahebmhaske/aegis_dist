@@ -6,13 +6,24 @@
       <article class="col-sm-6 col-sm-offset-3">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
-            <h2><i class="fa fa-table"></i> Price Allocation</h2>
+            <h2><i class="fa fa-table"></i> SF/SD/POS Price </h2>
           </header>
           <div>
             <div class="widget-body">
               <form name="PAllocationsaveForm" #PAllocationsaveForm="ngForm" (ngSubmit)="SavePriceAllocation()" ngNativeValidate autocomplete="off">
                 <div class="row">
                   <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>SF / SD / POS <span class="errorMessage">*</span></label>
+                      <select class="form-control" [(ngModel)]="Pallocation.CPCode" name="CPCode" required>
+                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                  <div class="row">
+                  <div class="col-sm-6 ">
                     <div class="form-group">
                       <label>Product Segment<span class="errorMessage">*</span></label>
                       <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="Pallocation.ProdSegId" name="ProdSegId" required>
@@ -32,18 +43,34 @@
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label>Effective Price<span class="errorMessage">*</span></label>
-                      <label class="posticon">
-                        <i class="icon-append fa fa-calendar"></i>
+                      <label>Basic Price<span class="errorMessage">*</span></label>
                       <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" saCommonDir dirType="number" required />
-                    </label>
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label>Effective Date<span class="errorMessage">*</span></label>
-                      <input type="text" class="form-control" placeholder="Enter Effective Date" [(ngModel)]="Pallocation.EffectiveDate" name="EffectiveDate" onkeydown="return false" bsDatepicker
-                        [bsConfig]="datePickerConfig" required />
+                      <label>RSP<span class="errorMessage">*</span></label>
+                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.MRPrice" name="Price" saCommonDir dirType="number" required />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>From Date<span class="errorMessage">*</span></label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                      <input type="text" class="form-control" placeholder="Enter From Date" [(ngModel)]="Pallocation.EffectiveFromDate" name="EffectiveFromDate" onkeydown="return false" bsDatepicker
+                      (bsValueChange)="resetEndDate($event)" [bsConfig]="datePickerConfig" required />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label>To Date<span class="errorMessage">*</span></label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                      <input type="text" class="form-control" placeholder="Enter To Date" [(ngModel)]="Pallocation.EffectiveToDate" name="EffectiveToDate" onkeydown="return false" bsDatepicker
+                       [minDate]="minDate" [bsConfig]="datePickerConfig" required />
+                       </label>
                     </div>
                   </div>
                 </div>
@@ -57,13 +84,19 @@
                   <div class="row">
                     <div class="col-sm-12 ">
                       <hr />
-                      <a class="pull-right btn btn-default" routerLink="/settings/price-allocation-list">
+                      <a class="pull-right btn btn-default" routerLink="/settings/sf-sd-price-allocation-list">
                         <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
                       <!-- <button class="pull-right btn btn-primary marg-right" type="submit">
                         <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit </button> -->
                         <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
                           <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+   
                     </div>
+                    <!-- <div class="col-sm-12 " ng-show="divhide">
+                              <button type="button" name="" class="pull-right btn btn-primary marg-right">
+                                  <i class="fa fa-cog fa-spin fa-fw" aria-hidden="true"></i> Loading
+                              </button>
+                          </div> -->
                   </div>
                 </footer>
               </form>

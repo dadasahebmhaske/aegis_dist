@@ -3,21 +3,24 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
           <header class="text-center">
             <h2> <i class="fa fa-table"></i> Cash Memo & Refill Delivery</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row">
-                <form name="cashMemoForm" autocomplete="off" #cashMemoForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                <form name="cashMemoForm" autocomplete="off" #cashMemoForm="ngForm" (ngSubmit)="onLoad()"
+                  autocomplete="off" ngNativeValidate>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <!-- <label for="sel1"
                                       >Route
                                       <span class="errorMessage">*</span>
                                     </label> -->
-                      <select id="elmen" class="form-control" [(ngModel)]="cust.RouteId" name="RouteId" (change)="getSubArea()">
+                      <select id="elmen" class="form-control" [(ngModel)]="cust.RouteId" name="RouteId"
+                        (change)="getSubArea()">
                         <option value="" hidden selected> Select Route </option>
                         <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
                       </select>
@@ -31,28 +34,29 @@
                                     </label> -->
                       <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control">
                         <option value="" selected hidden> Select Sub Area </option>
-                        <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}</option>
+                        <option *ngFor="let sub of SubAreaData" value="{{ sub.SubAreaId }}">{{ sub.SubAreaName }}
+                        </option>
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-3 col-xs-4">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
+                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control"
+                        oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')"
+                        [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{
-                                          'fa-search': loaderbtn,
-                                          'fa-cog fa-spin': !loaderbtn
-                                        }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
+                        <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn,'fa-cog fa-spin': !loaderbtn}"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
                     </div>
                   </div>
                 </form>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="CashMemoData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)" (onSelected)="onSelectedFunction($event)">
+                  <ui-grid [data]="CashMemoData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"
+                    (onDelete)="onDeleteFunction($event)" (onSelected)="onSelectedFunction($event)">
                   </ui-grid>
                 </div>
               </div>

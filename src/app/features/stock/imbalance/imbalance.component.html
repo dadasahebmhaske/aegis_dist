@@ -15,8 +15,11 @@
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Date<span class="errorMessage">*</span></label>
+                                            <label class="posticon">
+                                                <i class="icon-append fa fa-calendar"></i>
                                             <input type="text" id="td" class="form-control" placeholder="dd-mmm-yyyy" [(ngModel)]="imbalance.ImbalanceDate" bsDatepicker [bsConfig]="datePickerConfig"
                                                 onkeydown="return false" name="ImbalanceDate" required />
+                                                </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">

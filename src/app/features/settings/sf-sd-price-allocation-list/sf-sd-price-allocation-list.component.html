@@ -5,15 +5,21 @@
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
             <header class="text-center"> 
-                      <h2> <i class="fa fa-table"></i> Price Allocation List</h2>
+                      <h2> <i class="fa fa-table"></i> SF/SD/POS Price Allocation List</h2>
           </header>
           <div>
             <div class="widget-body">
                 <form name="PAllocationForm" #PAllocationForm="ngForm" (ngSubmit)="onLoad()" ngNativeValidate autocomplete="off">
               <div class="row ">
+                <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                    <!-- <label for="sel1">Channel Partner Code</label> -->
+                    <input type="text" class="form-control" id="pmode" placeholder="SD / SF / POS Code" autocomplete="off" [(ngModel)]="PAllocation.CPCode" [ngModelOptions]="{standalone: true}" />
+                  </div>
+                </div>
                   <div class="col-sm-2 col-xs-4">
                       <div class="form-group">
-                          <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="PAllocation.ProdSegId" name="ProdSegId" required>
+                          <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="PAllocation.ProdSegId" name="ProdSegId" >
                               <option value="" selected hidden>Select Segment</option>
                               <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
                             </select>
@@ -21,7 +27,7 @@
                   </div>
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
-                        <select class="form-control" [(ngModel)]="PAllocation.ProdId" name="ProdId"  required>
+                        <select class="form-control" [(ngModel)]="PAllocation.ProdId" name="ProdId"  >
                             <option value="" selected hidden>Select Product</option>
                             <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                           </select>
@@ -46,7 +52,7 @@
                 </div>
                 <div class="col-sm-2 pull-right">                     
                   <div class="form-group pull-right">
-                    <a routerLink="/settings/price-allocation"  class="btn btn-block btn-warning get_details pull-right">
+                    <a routerLink="/settings/sf-sd-price-allocation"  class="btn btn-block btn-warning get_details pull-right">
                       <i class="glyphicon glyphicon-plus"></i>
                       Add Price
                     </a>

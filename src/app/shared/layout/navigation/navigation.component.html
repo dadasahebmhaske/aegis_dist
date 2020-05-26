@@ -171,7 +171,10 @@
         <ul>
           <li routerLinkActive="active">
             <a routerLink="/settings/price-allocation-list">Price Allocation</a>
-          </li>
+          </li> 
+          <li routerLinkActive="active" *ngIf="stockShow">
+            <a routerLink="/settings/sf-sd-price-allocation-list">SF / SD / POS Price Allocation</a>
+          </li> 
           <li routerLinkActive="active">
             <a routerLink="/settings/category-wise-discount-allocation-list">Category Wise Discount Allocation List</a>
           </li>

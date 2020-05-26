@@ -55,10 +55,12 @@ export class CashFlowRegisterComponent implements OnInit {
     // AppComponent.Router.navigate(['/master/vehicle']);
   }
   onLoad() {
+    this.loaderbtn=false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
     this.cust.StartDate = this.appService.DateToString(this.cust.StartDate)
     this.cust.EndDate = this.appService.DateToString(this.cust.EndDate)
     this.orderService.getCashFlow(this.cpInfo.CPCode, this.cust).subscribe((resData: any) => {
+      this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.cashFlowData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

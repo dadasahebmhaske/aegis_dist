@@ -11,12 +11,11 @@ import { SettingService } from '../../settings/setting.service';
 import { CustomerService } from '@app/features/customer/customer.service';
 
 @Component({
-  selector: 'sa-price-allocation-list',
-  templateUrl: './price-allocation-list.component.html',
-  styleUrls: ['./price-allocation-list.component.css']
+  selector: 'sa-sf-sd-price-allocation-list',
+  templateUrl: './sf-sd-price-allocation-list.component.html',
+  styleUrls: ['./sf-sd-price-allocation-list.component.css']
 })
-export class PriceAllocationListComponent implements OnInit {
-
+export class SfSdPriceAllocationListComponent implements OnInit {
   public cpInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public loaderbtn: boolean = true;
@@ -39,18 +38,22 @@ export class PriceAllocationListComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Price Allocation list.xlsx';
+    this.gridOptions.exporterExcelFilename = 'SF / SD /POS Price Allocation list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs" ng-if="row.entity.IsActive=='Y'"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
+        name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs" ng-if="row.entity.CPCode!=''"  ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
         , width: "50", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-      { name: 'Prodseg', displayName: 'Product segment', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Product', displayName: 'Product ', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Price', displayName: 'Price',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'EffectiveDate', displayName: 'Effective Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CPCode', displayName: 'CP Code',cellClass: 'cell-center', width: '120', cellTooltip: true, filterCellFiltered: true, },
+      { name: 'CPName', displayName: 'SF / SD / POS Name', width: '250', cellTooltip: true, filterCellFiltered: true },
+      { name: 'ProdSeg', displayName: 'Product segment', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Product', displayName: 'Product ', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Price', displayName: 'Price',cellClass: 'cell-right', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'MRPrice', displayName: 'RSP',cellClass: 'cell-right', width: '120', cellTooltip: true, filterCellFiltered: true },
+      { name: 'EffectiveFromDate', displayName: 'From Date',cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true },
+      { name: 'EffectiveToDate', displayName: 'To Date',cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active',cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
 
     ]
@@ -58,7 +61,7 @@ export class PriceAllocationListComponent implements OnInit {
   }
   onEditFunction = ($event) => {
     this.dataShare.updateShareData($event.row);
-    AppComponent.Router.navigate(['/settings/price-allocation']);
+    AppComponent.Router.navigate(['/settings/sf-sd-price-allocation']);
   }
   onloadAll() {
     this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
@@ -75,7 +78,8 @@ export class PriceAllocationListComponent implements OnInit {
   }
   onLoad() {
     this.loaderbtn = false;
-    this.settingService.getPriceAllocationDetails(this.cpInfo.CPCode, this.PAllocation.ProdSegId, this.PAllocation.ProdId).subscribe((resData: any) => {
+    this.PAllocation.CPCode = this.PAllocation.CPCode == null || this.PAllocation.CPCode == undefined ? '' : this.PAllocation.CPCode;
+    this.settingService.getSFSDPriceAllocationDetails(this.cpInfo.CPCode,this.PAllocation.CPCode, this.PAllocation.ProdSegId, this.PAllocation.ProdId).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.PriceAllocationData = resData.Data;

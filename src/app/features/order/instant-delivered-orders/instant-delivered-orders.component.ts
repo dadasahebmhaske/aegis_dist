@@ -100,8 +100,10 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
     //   }
     //   else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     // });
+    this.loaderbtn=false;
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
     this.orderService.getInstantDeliveryDetails(this.cpInfo.CPCode, '', this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+      this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);

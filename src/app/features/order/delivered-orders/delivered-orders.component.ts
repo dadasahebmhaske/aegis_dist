@@ -83,8 +83,10 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
     });
   }
   onLoad() {
+    this.loaderbtn=false;    
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
     this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 4, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+      this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
