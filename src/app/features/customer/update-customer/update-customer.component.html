@@ -101,7 +101,7 @@
                               <div class="form-group">
                                 <label for="sel1">Customer Type <span class="errorMessage">*</span>
                                 </label>
-                                <select class="form-control" [(ngModel)]="customer.CustTypeId" name="CustTypeId" (change)="onSelectCustomerType()" required>
+                                <select class="form-control" [(ngModel)]="customer.CustTypeId" name="CustTypeId" (change)="onSelectCustomerType();HideShowFirm()" required>
                                   <option value="" selected hidden> Select Customer Type</option>
                                   <option [value]="ct.Id" *ngFor="let ct of CustTypeData">{{ct.Name}}</option>
                                 </select>
@@ -149,10 +149,10 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <label for="sel1">Firm Name 
+                                <label for="sel1">Firm Name <span class="errorMessage" *ngIf="firmAction">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Firm Name" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.AddressLineOne" name="AddressLine1"
-                                   />
+                                <input type="text" class="form-control" placeholder="Enter Firm Name" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.FirmName" name="FirmName"
+                                  [required]="firmAction" [disabled]="!firmAction" />
                               </div>
                             </div>
                             <div class="col-sm-3">

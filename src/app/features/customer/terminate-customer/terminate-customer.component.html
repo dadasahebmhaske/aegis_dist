@@ -10,14 +10,10 @@
           </header>
           <div>
             <div class="widget-body">
-              <form name="custListForm" autocomplete="off" #custListForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
+              <!-- <form name="custListForm" autocomplete="off" #custListForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
                 <div class="row">
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <!-- <label for="sel1"
-                        >Route
-                        <span class="errorMessage">*</span>
-                      </label> -->
                       <select id="elmen" class="form-control" [(ngModel)]="cust.RoutId" name="RoutId" (change)="getSubArea()" required>
                         <option value="" hidden selected> Select Route <span id="opt">*</span> </option>
                         <option *ngFor="let rou of RouteData" value="{{ rou.RouteId }}">{{ rou.RouteName }}</option>
@@ -26,10 +22,6 @@
                   </div>
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <!-- <label for="sel1"
-                        >Sub Area
-                        <span class="errorMessage">*</span>
-                      </label> -->
                       <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" class="form-control" required>
                         <option value="" selected hidden> Select Sub Area <span class="errorMessage">*</span>
                         </option>
@@ -53,8 +45,111 @@
                     </div>
                   </div>
                 </div>
-              </form>
+              </form> -->
               <div class="row">
+                <div class="col-sm-12">
+                  <div class="logincDeatils">
+                    <label class="text-primary"><strong>Customer Verification Details : </strong></label>
+                    <div class="row">
+                      <form name="custForm" #custForm="ngForm" (ngSubmit)="onGetCustomer()" ngNativeValidate autocomplete="off">
+                        <div class="col-sm-2">
+                          <div class="form-group pull-right label-center">
+                            <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                              onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
+                              required />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                              <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn, 'fa-cog fa-spin': !loaderbtn }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
+                          </div>
+                        </div>
+                      </form>
+                      <div class="col-sm-3 col-sm-offset-1">
+                        <div class="form-group label-center">
+                          <label><strong> <i class="fa fa-user"></i> Customer Name : {{custData.ConsName}}</strong>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="refill">
+                    <label>
+                      <strong class="text-primary"> Product Details : </strong>
+                    </label>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Issue Date</th>
+                                <th>Product Segment</th>
+                                <th>Product Name</th>
+                                <th class="text-right">Deposite Amount</th>
+                                <th class="text-right">Purchase Quantity</th>
+                                <th class="text-right">Refundable Amount</th>
+                                <th class="text-right">Refund</th>
+                                <!-- <th class="text-right">Monthly Consumption</th>
+                                <th>Remove</th> -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let pr of prodArray;index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{pr.IssueDate | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{pr.ProdSeg}}</td>
+                                <td>{{pr.Product}}</td>
+                                <td class="text-right">{{pr.DepositAmt}}</td>
+                                <td class="text-right">{{pr.PurchaseQty}}</td>
+                                <td class="text-right">{{pr.DepositAmt * pr.PurchaseQty}}</td>
+                                <td class="text-right">Done</td>
+                                <!-- <td class="text-right">{{pr.MonthlyConsumption}}</td>
+                                <td>
+                                  <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
+                                </td> -->
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="transfer-card">
+                    <!-- <label>
+                      <strong class="text-primary">Terminate Details : </strong>
+                    </label> -->
+                    <form name="custTermiForm" #custTermiForm="ngForm" (ngSubmit)="onTerminate()" autocomplete="off" ngNativeValidate>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label>Termination Reason <span class="errorMessage">*</span>
+                            </label>
+                            <textarea class="form-control" rows="2" placeholder="Enter Termination Reason " [(ngModel)]="terminateList.ReqRemark" name="ReqRemark" required></textarea>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                          <button class="btn btn-primary text-center" type="submit" [disabled]="!loaderbtn">
+                            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Terminate':'Loading'}}</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row">
                 <div class="col-sm-8 table-responsive">
                   <div class="transfer-card">
                     <label>
@@ -88,7 +183,7 @@
                     </form>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

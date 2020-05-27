@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { } from '@angular/common/http';
 import { AppComponent } from '@app/app.component';
+import { MasterService } from '@app/core/custom-services/master.service';
 
 @Injectable()
 export class CustomerService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,private masterService:MasterService) { }
   public postCustomerDetails(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}/Operational/ManageCustomer`, { data: data }, AppComponent.httpOptions);
   }
@@ -73,5 +74,15 @@ export class CustomerService {
       cust.MobileNo = '';
     }
     return cust;
+  }
+    HideShowFirm(data,val) {
+    let docobj;
+    docobj = this.masterService.filterData(data, val, 'Id');
+    if(docobj.length>0)
+    if ((docobj[0].Name).toUpperCase() == 'COMMERCIAL') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

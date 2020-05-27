@@ -19,6 +19,7 @@ export class NewCustomerComponent implements OnInit {
   public CityData: any = [];
   public cpInfo: any;
   public FirmData: any = [];
+  public firmAction:boolean=false;
   public loaderbtn: boolean = true;
   public RouteData: any = [];
   public ServiceData: any = [];
@@ -148,7 +149,8 @@ export class NewCustomerComponent implements OnInit {
         this.ServiceData = [];
       }
     });
-
-
+  }
+  HideShowFirm() {
+    this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);
   }
 }

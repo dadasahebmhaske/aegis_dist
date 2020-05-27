@@ -1,13 +1,41 @@
 .transfer-card{
     border: 1px solid #534d81;
     padding: 15px;
-    min-height: 292px;
+    min-height: 152px;
 }
 .transfer-card:hover{
     border: 1px solid #534d81;
     padding: 15px;
-    min-height: 292px;
+    min-height: 152px;
     box-shadow: 0 0 5px #534d81;
+}
+.refill{
+  border: 1px solid #534d81;
+  padding: 15px;
+  min-height: 175px;
+  margin-bottom: 15px;
+}
+.refill:hover{
+  border: 1px solid #534d81;
+  padding: 15px;
+  min-height: 175px;
+  box-shadow: 0 0 5px #534d81;
+  margin-bottom: 15px;
+}
+.logincDeatils {
+   border: 1px solid #534d81;
+  padding: 10px 10px 5px 10px; 
+  min-height: 60px;
+  margin-bottom:10px;
+  border-top: 1px solid #534d81;
+  border-bottom: 1px solid #534d81;
+  background: #534c7f0f;
+}
+.logincDeatils:hover{
+  box-shadow: 0 0 5px #534d81;
+}
+.label-center{
+  margin-top:6px;
 }
 /* .ui-grid.disable-row-selection {
   display: block !important;

@@ -49,6 +49,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public fd = new FormData();
   public filepreview: any;
   public FirmData: any = [];
+  public firmAction:boolean=false;
   public imgUrl: string;
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
@@ -71,7 +72,8 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
-    this.datashare.GetSharedData.subscribe(data => this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data);
+    this.datashare.GetSharedData.subscribe(data =>{ this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data;
+    this.HideShowFirm();})
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allOnloadMethods();
     this.customer.CustTypeId != null && this.customer.CustTypeId != '' ? this.onSelectCustomerType() : '';
@@ -346,6 +348,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.customerService.getCustomerType().subscribe((respCt) => {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
+        this.HideShowFirm();
     });
 
     this.customerService.getFirmType().subscribe((respF) => {
@@ -655,6 +658,9 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
         this.ServiceData = [];
       }
     });
+  }
+  HideShowFirm() {
+    this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);
   }
   private lastModel;
   //custom change detection
