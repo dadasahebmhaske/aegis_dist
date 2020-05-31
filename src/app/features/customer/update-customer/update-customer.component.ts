@@ -24,6 +24,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
   ]
 })
 export class UpdateCustomerComponent implements OnInit, OnDestroy {
+  public AreaData:any =[];
   public address: any = { AddressType: '', StateCode: '', CityCode: '' };
   public AccountTypeData: any = [];
   public addArray: any = [];
@@ -61,6 +62,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public removeProductUpdate: any = [];
   public removeAddressUpdate: any = [];
   public removeBankUpdate: any = [];
+  public RouteArray: any = [];
   public selectedFile: File = null;
   public ServiceData: any = [];
   public StateData: any = [];
@@ -203,6 +205,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.customer.Flag = 'UP';
     this.customer.CPCode = this.cpInfo.CPCode;
     this.customer.UserCode = this.cpInfo.EmpId;
+    this.customer.FirmName=this.firmAction==false?'':this.customer.FirmName;
     let ciphertext = this.appService.getEncrypted(this.customer);
     this.customerService.postCustomerDetails(ciphertext).subscribe((resp: any) => {
       this.loaderbtn = true;
@@ -355,15 +358,22 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
-      if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
+    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+        this.AreaData = resAR.Data;
+        
     });
+
     this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
-        this.GetSubArea();
+        this.getSubArea();
       }
+    });
+    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteArray = resR.Data;
+        this.getRoute();
     });
     this.masterService.getState().subscribe((resSt: any) => {
       if (resSt.StatusCode != 0)
@@ -398,8 +408,12 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     });
 
   }
-  GetSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
+  getSubArea() {
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+  }
+  getRoute() {
+    let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
   }
   //product
   onProductSubmit() {
@@ -661,6 +675,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   }
   HideShowFirm() {
     this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);
+   
   }
   private lastModel;
   //custom change detection

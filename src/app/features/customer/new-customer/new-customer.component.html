@@ -122,7 +122,7 @@
                       <label for="sel1">Firm Name <span class="errorMessage" *ngIf="firmAction">*</span>
                       </label>
                       <input type="text" class="form-control" placeholder="Enter Firm Name" saCommonDir dirType="alphanumeric" [(ngModel)]="customer.FirmName" name="FirmName"
-                        [required]="firmAction" [disabled]="!firmAction" />
+                        [required]="firmAction"  [disabled]="!firmAction" />
                     </div>
                   </div>
                   <div class="col-sm-3">
@@ -137,11 +137,11 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <label for="sel1">Route <span class="errorMessage">*</span>
+                      <label for="sel1">Area <span class="errorMessage">*</span>
                       </label>
-                      <select class="form-control" [(ngModel)]="customer.RoutId" name="RoutId" (change)="getSubArea()" required>
-                        <option value="" selected hidden> Select Route </option>
-                        <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}}</option>
+                      <select [(ngModel)]="customer.AreaId" name="AreaId" (change)="getSubArea()" class="form-control" required>
+                        <option value="" selected hidden> Select Area </option>
+                        <option *ngFor="let ar of AreaData" value="{{ar.AreaId}}">{{ar.AreaName}}</option>
                       </select>
                     </div>
                   </div>
@@ -149,9 +149,19 @@
                     <div class="form-group">
                       <label for="sel1">Sub Area <span class="errorMessage">*</span>
                       </label>
-                      <select [(ngModel)]="customer.SubAreaId" name="SubAreaId" class="form-control" required>
+                      <select [(ngModel)]="customer.SubAreaId" name="SubAreaId" (change)="getRoute()" class="form-control" required>
                         <option value="" selected hidden> Select Sub Area </option>
                         <option *ngFor="let sub of SubAreaData" value="{{sub.SubAreaId}}">{{sub.SubAreaName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label for="sel1">Route <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="customer.RoutId" name="RoutId"  required>
+                        <option value="" selected hidden> Select Route </option>
+                        <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}}</option>
                       </select>
                     </div>
                   </div>

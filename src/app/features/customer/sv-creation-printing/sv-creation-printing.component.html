@@ -15,28 +15,42 @@
                     <label class="text-primary"><strong>Customer Verification Details : </strong></label>
                     <div class="row">
                       <form name="custForm" #custForm="ngForm" (ngSubmit)="onGetCustomer()" ngNativeValidate autocomplete="off">
-                        <div class="col-sm-2">
+                        <div class="col-sm-2" *ngIf="SFSDHS">
+                          <label class="label-center">
+                              <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsSubCust" (change)="isSubSFSD()" [(ngModel)]='cust.IsSubCust' /> Is SF / SD / POS Customer </label>
+                      </div>
+                        <div class="col-sm-3" *ngIf="SFSDHS">
+                          <div class="form-group">
+                            <label>SF / SD / POS <span class="errorMessage" *ngIf="cust.IsSubCust=='Y'">*</span></label>
+                            <select class="form-control" [(ngModel)]="cust.CPCode" name="CPCode"[required]="cust.IsSubCust=='Y'" [disabled]="cust.IsSubCust=='N'">
+                              <option value="" selected hidden>Select SF / SD / POS</option>
+                              <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <!-- <div class="col-sm-2">
                           <div class="form-group pull-right label-center">
                             <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span>
                             </label>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-sm-2">
                           <div class="form-group">
+                            <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span></label>
                             <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
                               onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
                               required />
                           </div>
                         </div>
                         <div class="col-sm-1">
-                          <div class="form-group">
+                          <div class="form-group btn-center">
                             <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
                               <i class="fa fa-fw" [ngClass]="{'fa-search': loaderbtn, 'fa-cog fa-spin': !loaderbtn }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
                           </div>
                         </div>
                       </form>
-                      <div class="col-sm-3 col-sm-offset-1">
-                        <div class="form-group label-center">
+                      <div class="col-sm-3 ">
+                        <div class="form-group label-center1">
                           <label><strong> <i class="fa fa-user"></i> Customer Name : {{custData.ConsName}}</strong>
                           </label>
                         </div>
@@ -150,10 +164,10 @@
                 <div class="row">
                   <div class="col-sm-12 ">
                     <hr />
-                    <button class="pull-right btn btn-success" type="submit" [disabled]="!loaderbtn" (click)="createSVDownload()">
+                    <button class="pull-right btn btn-success" type="submit" [disabled]="!loaderbtn" (click)="onCustomerProdSubmit()">
                       <i class="fa fa-fw" [ngClass]="{'fa-download':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? ' Create SV & Download':'Loading'}}</button>
-                    <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" (click)="onCustomerProdSubmit()">
-                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    <!-- <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn" (click)="onCustomerProdSubmit()">
+                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button> -->
                   </div>
                 </div>
               </footer>

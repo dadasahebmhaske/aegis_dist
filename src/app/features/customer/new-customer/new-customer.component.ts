@@ -9,10 +9,11 @@ import { CustomerService } from '../customer.service';
   styleUrls: ['./new-customer.component.css']
 })
 export class NewCustomerComponent implements OnInit {
+  public AreaData:any =[];
   public addArray: any = [];
   public bulkAdd: any = {};
   public CatDiscountData: any = [];
-  public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
+  public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '',AreaId:'', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
   public ContractData: any = [];
@@ -22,6 +23,7 @@ export class NewCustomerComponent implements OnInit {
   public firmAction:boolean=false;
   public loaderbtn: boolean = true;
   public RouteData: any = [];
+  public RouteArray: any = [];
   public ServiceData: any = [];
   public StateData: any = [];
   public SubAreaData: any = [];
@@ -46,15 +48,20 @@ export class NewCustomerComponent implements OnInit {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
-      if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
+    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+        this.AreaData = resAR.Data;
     });
     this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
       }
     });
+    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteArray = resR.Data;
+    });
+
     this.masterService.getState().subscribe((resSt: any) => {
       if (resSt.StatusCode != 0)
         this.StateData = resSt.Data;
@@ -75,7 +82,11 @@ export class NewCustomerComponent implements OnInit {
     });
   }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+  }
+  getRoute() {
+    let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
   }
   saveAddressDeatils() {
     //this.loaderbtn = false;
@@ -152,5 +163,6 @@ export class NewCustomerComponent implements OnInit {
   }
   HideShowFirm() {
     this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);
+    this.customer.FirmName=this.firmAction==false?'':this.customer.FirmName;
   }
 }

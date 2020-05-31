@@ -304,11 +304,13 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   onSubmitArea(){
     if(this.AreaData.length>0){
       this.loaderbtn = false; 
-      // this.area.Flag='IN';
-      // this.area.UserCode=this.cpInfo.EmpId;
-      // this.area.IsActive='Y';
-      this.area={"data":JSON.stringify(this.AreaData),"IsActive":'Y',"Flag":'IN',"UserCode":this.cpInfo.EmpId};
-     // this.area.data=this.AreaData;
+      let SelectedArray=[];
+    for(let i=0;i<this.AreaData.length;i++){
+      if(this.AreaData[i].Check==true){
+        SelectedArray.push(this.AreaData[i]);
+      }
+    }
+      this.area={"data":JSON.stringify(SelectedArray),"IsActive":'Y',"Flag":'IN',"UserCode":this.cpInfo.EmpId};
       this.channelPartnerService.postAreaDetails(this.area).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {

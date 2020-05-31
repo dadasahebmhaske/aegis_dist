@@ -5,6 +5,7 @@ import { MasterService } from '@app/core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
+import { SettingService } from '@app/features/settings/setting.service';
 
 @Component({
   selector: 'sa-sv-creation-printing',
@@ -15,37 +16,42 @@ export class SvCreationPrintingComponent implements OnInit {
   public actionFlag: string;
   public bulkProd: any = {};
   public cpInfo: any = {};
-  public cust: any = {};
+  public cust: any = {CPCode:'',IsSubCust:'N'};
   public custData: any = {};
+  public chantype:any=[];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public loaderbtn: boolean = true;
   public prodArray: any = [];
   public product: any = { ProdSegId: '', ProdId: '' };
   public productSegmentData: any = [];
   public productDataSelected: any = [];
-  public prodFlag: boolean = false;
+  public prodFlag: boolean = true;
   public removeProductUpdate: any = [];
   public svCustData: any = {};
-  constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService) {
+  public SFSDHS:boolean;
+  constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService,private settingService:SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;
+      this.SFSDHS=(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE') ?true:false; });
     // this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data);
     this.masterService.getProductSegmentDetails().subscribe((resPS: any) => {
       if (resPS.StatusCode != 0)
         this.productSegmentData = resPS.Data;
     });
+    this.allOnload();
   }
   onGetCustomer() {
     this.loaderbtn = false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.customerService.getCustomer(this.cpInfo.CPCode, '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
+    let CPCode=this.cust.CPCode==''|| this.cust.CPCode==null?this.cpInfo.CPCode:this.cust.CPCode;
+    this.customerService.getCustomer(CPCode,'', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.custData = resData.Data[0];
-        this.prodArray = null;
-        this.getCustomerProductDetails();
+        //this.prodArray = null;
+       // this.getCustomerProductDetails();
       }
       else { this.custData = {}; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
@@ -82,10 +88,11 @@ export class SvCreationPrintingComponent implements OnInit {
       let ProdSegName = docobj[0].ProdSeg;
       docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
       let ProdName = docobj[0].Product;
+      let CPCode=this.cust.CPCode==''|| this.cust.CPCode==null?this.cpInfo.CPCode:this.cust.CPCode;
       this.prodArray.push(
         {
           "CustProdId": "",
-          "CPCode": this.cpInfo.CPCode,
+          "CPCode": CPCode,
           "ConsId": this.custData.ConsId,
           "IssueDate": this.product.IssueDate,
           "ProdId": this.product.ProdId,
@@ -101,7 +108,7 @@ export class SvCreationPrintingComponent implements OnInit {
           "Product": ProdName
         }
       );
-      this.prodFlag = true;
+     // this.prodFlag = true;
       this.product = { ProdSegId: '', ProdId: '' };
     }
   }
@@ -111,7 +118,7 @@ export class SvCreationPrintingComponent implements OnInit {
       this.removeProductUpdate.push(data);
     }
     this.prodArray.splice(index, 1);
-    this.prodFlag = true;
+    //this.prodFlag = true;
   }
 
   onSelectProdSegment() {
@@ -126,27 +133,35 @@ export class SvCreationPrintingComponent implements OnInit {
     docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
     this.product.DepositAmt = docobj[0].DepositAmount;
   }
-  onCustomerProdSubmit() {
-    if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
+  onCustomerProdSubmit() {    if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
       this.loaderbtn = false;
-      this.bulkProd.Flag = this.actionFlag;
+      //this.bulkProd.Flag = this.actionFlag;
+      this.bulkProd.Flag = 'IN';
       this.bulkProd.data = this.prodArray;
       if (this.removeProductUpdate.length > 0) {
-        //this.prodArray = this.prodArray.concat(this.removeProductUpdate);
         let  conArray=this.prodArray;
         conArray=conArray.concat(this.removeProductUpdate);
         this.bulkProd.data = conArray;
       }
       this.bulkProd.RefId = this.custData.ConsId;
       this.bulkProd.UserCode = this.cpInfo.EmpId;
-      this.bulkProd.CPCode = this.cpInfo.CPCode
-      this.customerService.postBulkProduct(this.bulkProd).subscribe((resData: any) => {
+      let CPCode=this.cust.CPCode==''|| this.cust.CPCode==null?this.cpInfo.CPCode:this.cust.CPCode;
+      this.bulkProd.CPCode = CPCode;
+      let d=new Date();
+      let day=d.getDate();
+      let m=d.getMonth() + 1;
+      let h=d.getHours();
+      let min=d.getMinutes();
+      let s=d.getSeconds();
+      this.bulkProd.SvNumber=`${this.custData.ConsNo}${day<10?`0${day}`:day}${m<10?`0${m}`:m}${d.getFullYear()}${h<10?`0${h}`:h}${min<10?`0${min}`:min}${s<10?`0${s}`:s}`;
+      this.customerService.postSVBulkProduct(this.bulkProd).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
+          this.createSVDownload();
           this.prodArray = [];
-          this.getCustomerProductDetails();
-          this.prodFlag = false;
+          //this.getCustomerProductDetails();
+         // this.prodFlag = false;
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -158,14 +173,14 @@ export class SvCreationPrintingComponent implements OnInit {
     if (this.custData.ConsId == undefined) {
       AppComponent.SmartAlert.Errmsg("Please verify customer first.");
     } else {
-      if (this.prodFlag == true) { AppComponent.SmartAlert.Errmsg(`Please submit product details first then download SV.`); }
-      else {
+    
         this.loaderbtn = false;
+        let CPCode=this.cust.CPCode==''|| this.cust.CPCode==null?this.cpInfo.CPCode:this.cust.CPCode;
         this.svCustData = {
           "data":
             [
-              {
-                "CPCode": this.cpInfo.CPCode,
+              { "SvNumber":this.bulkProd.SvNumber,
+                "CPCode": CPCode,
                 "ConsId": this.custData.ConsId,
                 "IsActive": "Y"
               }
@@ -174,7 +189,39 @@ export class SvCreationPrintingComponent implements OnInit {
         let para = JSON.stringify(this.svCustData.data);
         window.location.href = `${AppComponent.BaseUrlDist}Operational/GetSV?data=${para}`, '_blank';
         this.loaderbtn = true;
-      }
+      
+    }
+    // if (this.custData.ConsId == undefined) {
+    //   AppComponent.SmartAlert.Errmsg("Please verify customer first.");
+    // } else {
+    //   if (this.prodFlag == true) { AppComponent.SmartAlert.Errmsg(`Please submit product details first then download SV.`); }
+    //   else {
+    //     this.loaderbtn = false;
+    //     this.svCustData = {
+    //       "data":
+    //         [
+    //           {
+    //             "CPCode": this.cpInfo.CPCode,
+    //             "ConsId": this.custData.ConsId,
+    //             "IsActive": "Y"
+    //           }
+    //         ]
+    //     }
+    //     let para = JSON.stringify(this.svCustData.data);
+    //     window.location.href = `${AppComponent.BaseUrlDist}Operational/GetSV?data=${para}`, '_blank';
+    //     this.loaderbtn = true;
+    //   }
+    // }
+  }
+  allOnload(){
+    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        this.chantype = resCP.Data;
+    })
+  }
+  isSubSFSD(){
+    if(this.cust.IsSubCust=='N'){
+      this.cust.CPCode='';
     }
   }
   ngOnDestroy() {

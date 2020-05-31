@@ -6,7 +6,7 @@
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
-            <h2><i class="fa fa-user"></i> Terminate Customer</h2>
+            <h2><i class="fa fa-user"></i> Return Deposit</h2>
           </header>
           <div>
             <div class="widget-body">
@@ -92,28 +92,32 @@
                           <table class="table table-hover">
                             <thead>
                               <tr>
-                                <th>#</th>
+                                  <th>#</th>
+                                <th>Sr No.</th>
+                                <th>SV No.</th>
                                 <th>Issue Date</th>
                                 <th>Product Segment</th>
                                 <th>Product Name</th>
                                 <th class="text-right">Deposite Amount</th>
                                 <th class="text-right">Purchase Quantity</th>
                                 <th class="text-right">Refundable Amount</th>
-                                <th class="text-right">Refund</th>
+                             
                                 <!-- <th class="text-right">Monthly Consumption</th>
                                 <th>Remove</th> -->
                               </tr>
                             </thead>
                             <tbody>
                               <tr *ngFor="let pr of prodArray;index as i">
+                                <td><input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsReturn" (change)="selectedProduct(i)"  /> </td>
                                 <td>{{i+1}}</td>
+                                <td>{{pr.SVNumber}}</td>
                                 <td>{{pr.IssueDate | date:'dd-MMM-yyyy' }}</td>
                                 <td>{{pr.ProdSeg}}</td>
                                 <td>{{pr.Product}}</td>
                                 <td class="text-right">{{pr.DepositAmt}}</td>
                                 <td class="text-right">{{pr.PurchaseQty}}</td>
                                 <td class="text-right">{{pr.DepositAmt * pr.PurchaseQty}}</td>
-                                <td class="text-right">Done</td>
+                         
                                 <!-- <td class="text-right">{{pr.MonthlyConsumption}}</td>
                                 <td>
                                   <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
@@ -123,31 +127,40 @@
                           </table>
                         </div>
                       </div>
+                          <div class="col-sm-12 text-center">
+                            <form name="custTermiForm" #custTermiForm="ngForm" (ngSubmit)="onTerminate()" autocomplete="off" ngNativeValidate>
+                    
+                            <button class="btn btn-primary text-center" type="submit" [disabled]="!loaderbtn">
+                              <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Return':'Loading'}}</button>
+                            </form>
+                            </div>
+                       
+
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12">
+                   <!-- <div class="col-sm-12">
                   <div class="transfer-card">
-                    <!-- <label>
+                 <label>
                       <strong class="text-primary">Terminate Details : </strong>
-                    </label> -->
-                    <form name="custTermiForm" #custTermiForm="ngForm" (ngSubmit)="onTerminate()" autocomplete="off" ngNativeValidate>
+                    </label> 
+                     <form name="custTermiForm" #custTermiForm="ngForm" (ngSubmit)="onTerminate()" autocomplete="off" ngNativeValidate>
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <label>Termination Reason <span class="errorMessage">*</span>
+                            <label>Return Deposite Reason <span class="errorMessage">*</span>
                             </label>
-                            <textarea class="form-control" rows="2" placeholder="Enter Termination Reason " [(ngModel)]="terminateList.ReqRemark" name="ReqRemark" required></textarea>
+                            <textarea class="form-control" rows="2" placeholder="Enter Return Deposite Reason " [(ngModel)]="terminateList.ReqRemark" name="ReqRemark" required></textarea>
                           </div>
                         </div>
                         <div class="col-sm-12 text-center">
                           <button class="btn btn-primary text-center" type="submit" [disabled]="!loaderbtn">
-                            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Terminate':'Loading'}}</button>
+                            <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Return':'Loading'}}</button>
                         </div>
                       </div>
-                    </form>
-                  </div>
-                </div>
+                    </form> -->
+                  <!-- </div>
+                </div> -->
               </div>
               <!-- <div class="row">
                 <div class="col-sm-8 table-responsive">

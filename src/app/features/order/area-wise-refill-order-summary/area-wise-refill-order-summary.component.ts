@@ -19,7 +19,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
   public cmCustData: any = {};
   public cashmemo: any = { areacode: '' };
   public CashMemoData: any = {};
-  public cust: any = { RoutId: '', SubAreaId: '' };
+  public cust: any = {AreaId:'', RoutId: '', SubAreaId: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public gridOptions: IGridoption;
   public loaderbtn: boolean = true;
@@ -28,6 +28,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
   public RouteData: any = [];
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
+  public RouteArray: any = [];
 
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -82,9 +83,13 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     });
   }
   onloadAll() {
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+        this.AreaData = resAR.Data;
+    });
+   this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
+        this.RouteArray = resR.Data;
     });
     this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
@@ -92,8 +97,13 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
       }
     });
   }
+
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RouteId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
+  }
+  getRoute() {
+    let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
   }
   resetEndDate(val) {
     this.minDate = val;

@@ -62,13 +62,16 @@ export class MasterService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y&ProdType=${ProdType}`);
   }                                                    
   public getRoutes(cpcode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}/Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
   public getState() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=SM&IsActive=Y`);
   }
+  public getArea(cpcode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetCPArea?CPAreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
+  }
   public getSubArea(cpcode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&AreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
   public getTransport() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=VTM&IsActive=Y`);

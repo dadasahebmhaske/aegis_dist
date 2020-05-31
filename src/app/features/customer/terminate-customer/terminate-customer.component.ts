@@ -34,14 +34,14 @@ export class TerminateCustomerComponent implements OnInit {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-   // this.configureGrid();
-   // this.allOnLoad()
+    // this.configureGrid();
+    // this.allOnLoad()
     this.custTermiData = [{}];
   }
   onGetCustomer() {
     this.loaderbtn = false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.customerService.getCustomer(this.cpInfo.CPCode, '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
+    this.customerService.getCustomer(this.cpInfo.CPCode, '', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.custData = resData.Data[0];
@@ -53,10 +53,10 @@ export class TerminateCustomerComponent implements OnInit {
   }
   getCustomerProductDetails() {
     this.prodArray = [{}];
-    this.customerService.getProductDetails(this.cpInfo.CPCode, 'CUSTM', this.custData.ConsId).subscribe((resprod: any) => {
+    this.customerService.getCustomerProductDetails(this.cpInfo.CPCode, this.custData.ConsId).subscribe((resprod: any) => {
       if (resprod.StatusCode != 0) {
         this.prodArray = resprod.Data;
-       console.log(this.prodArray);
+        console.log(this.prodArray);
         AppComponent.SmartAlert.Success(resprod.Message);
       }
       else { this.prodArray = []; AppComponent.SmartAlert.Errmsg(resprod.Message); }
@@ -69,39 +69,85 @@ export class TerminateCustomerComponent implements OnInit {
       // }
     });
   }
-onTerminate() {
-    if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
+  onTerminate() {
+    if (this.prodArray.length > 0) {
       this.loaderbtn = false;
       let forData = [];
-      if (this.selectedRows != null) {
-        for (let i = 0; i < this.selectedRows.length; i++) {
-          forData.push({ Id: '', ConsId: this.selectedRows[i].ConsId });
+      if (this.prodArray != null)
+        for (let i = 0; i < this.prodArray.length; i++) {
+          if (this.prodArray[i].IsReturn == 'Y') {
+            forData.push({
+              CustProdId: this.prodArray[i].CustProdId,
+              RefundQty: this.prodArray[i].PurchaseQty,
+              RefundAmount: parseFloat(this.prodArray[i].DepositAmt) * parseFloat(this.prodArray[i].PurchaseQty)
+            });
+          }
         }
-        this.terminateList.data = forData;
-        this.selectedRows = [];
-      }
-      this.terminateList.CPCode = this.cpInfo.CPCode;
-      this.terminateList.UserCode = this.cpInfo.EmpId;
-      this.terminateList.IsActive = 'Y';
-      this.terminateList.Status = 'P';
-      this.customerService.postCustomeTerminate(this.terminateList).subscribe((resp: any) => {
-        this.loaderbtn = true;
-        if (resp.StatusCode != 0) {
-          AppComponent.SmartAlert.Success(resp.Message);
-          this.custTermiData = [{}];
-          this.terminateList.ReqRemark = '';
-          this.cust = { RoutId: '', SubAreaId: '' };
-        } else {
-          AppComponent.SmartAlert.Errmsg(resp.Message);
-          this.custTermiData = [{}];
-        }
-      });
+      this.terminateList.data = forData;
+      //this.prodArray = [];
+
+      if (this.terminateList.data.length > 0) {
+        this.terminateList.CPCode = this.cpInfo.CPCode;
+        this.terminateList.UserCode = this.cpInfo.EmpId;
+        this.customerService.postCustomeTerminateReturn(this.terminateList).subscribe((resp: any) => {
+          this.loaderbtn = true;
+          if (resp.StatusCode != 0) {
+            AppComponent.SmartAlert.Success(resp.Message);
+            this.custTermiData = [{}];
+            this.terminateList.ReqRemark = '';
+            this.cust = { RoutId: '', SubAreaId: '' };
+            this.custData = {};
+            this.prodArray = [];
+          } else {
+            AppComponent.SmartAlert.Errmsg(resp.Message);
+            this.custTermiData = [{}];
+          }
+        });
+      } else { this.loaderbtn = true; AppComponent.SmartAlert.Errmsg(`Please select atleast one product`); }
     } else {
-      AppComponent.SmartAlert.Errmsg(`Please select atleast one customer`);
+      AppComponent.SmartAlert.Errmsg(`Please verify customer first`);
     }
 
 
   }
+  selectedProduct(ind) {
+
+    this.prodArray[ind].IsReturn = this.prodArray[ind].IsReturn == 'Y' ? 'N' : 'Y';
+
+  }
+  // onTerminate() {
+  //     if (this.selectedRows.length > 0 && Object.keys(this.selectedRows[0]).length > 1) {
+  //       this.loaderbtn = false;
+  //       let forData = [];
+  //       if (this.selectedRows != null) {
+  //         for (let i = 0; i < this.selectedRows.length; i++) {
+  //           forData.push({ Id: '', ConsId: this.selectedRows[i].ConsId });
+  //         }
+  //         this.terminateList.data = forData;
+  //         this.selectedRows = [];
+  //       }
+  //       this.terminateList.CPCode = this.cpInfo.CPCode;
+  //       this.terminateList.UserCode = this.cpInfo.EmpId;
+  //       this.terminateList.IsActive = 'Y';
+  //       this.terminateList.Status = 'P';
+  //       this.customerService.postCustomeTerminate(this.terminateList).subscribe((resp: any) => {
+  //         this.loaderbtn = true;
+  //         if (resp.StatusCode != 0) {
+  //           AppComponent.SmartAlert.Success(resp.Message);
+  //           this.custTermiData = [{}];
+  //           this.terminateList.ReqRemark = '';
+  //           this.cust = { RoutId: '', SubAreaId: '' };
+  //         } else {
+  //           AppComponent.SmartAlert.Errmsg(resp.Message);
+  //           this.custTermiData = [{}];
+  //         }
+  //       });
+  //     } else {
+  //       AppComponent.SmartAlert.Errmsg(`Please select atleast one customer`);
+  //     }
+
+
+  //   }
 
   // allOnLoad() {
   //   this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
@@ -163,6 +209,6 @@ onTerminate() {
   //     }
   //   });
   // }
-  
-  
+
+
 }

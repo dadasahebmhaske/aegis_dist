@@ -10,9 +10,12 @@ import { CustomerService } from '../customer.service';
   styleUrls: ['./transfer-customer.component.css']
 })
 export class TransferCustomerComponent implements OnInit {
+  
+  public AreaData:any =[];
   public cpInfo: any;
   public ConsNo: number;
-  public cust: any = { RoutId: '', SubAreaId: '' };
+  public custOutList: any = {};
+  public cust: any = {AreaId:'', RoutId: '', SubAreaId: '' };
   public custOutData: any = {};
   public designationData: any = [];
   public gridOptions: IGridoption;
@@ -22,7 +25,7 @@ export class TransferCustomerComponent implements OnInit {
   public selectedRows: any = [];
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
-  public custOutList: any = {};
+  public RouteArray: any = [];
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
   ngOnInit() {
@@ -32,14 +35,19 @@ export class TransferCustomerComponent implements OnInit {
     this.custOutData = [{}];
   }
   allOnLoad() {
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
-      if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
+   
+    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+        this.AreaData = resAR.Data;
     });
     this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
       }
+    });
+   this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteArray = resR.Data;
     });
   }
   configureGrid() {
@@ -70,13 +78,18 @@ export class TransferCustomerComponent implements OnInit {
     this.selectedRows = $event.row;
     //this.datashare.updateShareData($event.row);
   }
+
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.RoutId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
+  }
+  getRoute() {
+    let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
   }
   onSubmitArea() {
     this.loaderbtn = false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.customerService.getCustomer(this.cpInfo.CPCode, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
+    this.customerService.getCustomer(this.cpInfo.CPCode,this.cust.AreaId, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.custOutData = resData.Data;

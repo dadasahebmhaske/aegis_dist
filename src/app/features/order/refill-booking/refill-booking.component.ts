@@ -142,7 +142,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   onGetCustomer() {
     this.loaderbtn = false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.customerService.getCustomer(this.cpInfo.CPCode, '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
+    this.customerService.getCustomer(this.cpInfo.CPCode,'', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.cust = Object.assign(this.cust, resData.Data[0])

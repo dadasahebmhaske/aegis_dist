@@ -49,8 +49,8 @@ export class CustomerService {
   getProductDetails(cpcode, formFlag, ConsId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPD&CPCode=${cpcode}&FormFlag=${formFlag}&ConsId=${ConsId}&IsActive=Y`);
   }
-  public getCustomer(cpcode, SubAreaId, ConsNo, MobNo) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
+  public getCustomer(cpcode,AreaId, SubAreaId, ConsNo, MobNo) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&AreaId=${AreaId}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
   }
   public getCustomerIn(cpcode, IsTransfer) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetTransCust?TransferId=&CPCode=${cpcode}&ConsId=&IsTransfer=${IsTransfer}&IsActive=Y`);
@@ -60,6 +60,15 @@ export class CustomerService {
   }
   public postCustomeTransfer(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessTransCustomer`, data);
+  }
+  getCustomerProductDetails(cpcode,ConsId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Operational/GetCustProductDtlsToRefund?CPCode=${cpcode}&ConsId=${ConsId}&SAPId=&ProdSegId=`);
+  }
+  postCustomeTerminateReturn(data: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Operational/IUDCustReturnRefundDtl`, data);
+  }
+  public postSVBulkProduct(fd: any) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Operational/ManageCustProd`, fd);
   }
   public checkCustOrMobNo(cust) {
     cust.CustNoMob = cust.CustNoMob == null ? '' : cust.CustNoMob;
