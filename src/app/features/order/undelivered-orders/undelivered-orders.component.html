@@ -3,15 +3,27 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
           <header class="text-center">
             <h2>
-              <i class="fa fa-table"></i> Declined / Cancelled  Orders</h2>
+              <i class="fa fa-table"></i> Declined / Cancelled Orders</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
-                <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                <form name="orderDeliveredForm" #orderDeliveredForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off"
+                  ngNativeValidate>
+                  <div class="col-sm-3" *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="deliverFilter.CPCode" name="CPCode"
+                        (change)="onCPChange(deliverFilter.CPCode)" required>
+                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
                       <select class="form-control" [(ngModel)]="deliverFilter.DelUserCode" name="DelUserCode">
@@ -24,8 +36,10 @@
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="deliverFilter.StartDate" name="Startdate" id="startDate"
-                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker
+                          [(ngModel)]="deliverFilter.StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker
+                          [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
                   </div>
@@ -33,7 +47,8 @@
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="deliverFilter.EndDate" name="EndDate" onkeydown="return false"
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date"
+                          [(ngModel)]="deliverFilter.EndDate" name="EndDate" onkeydown="return false"
                           [minDate]="minDate" bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
@@ -41,12 +56,14 @@
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
                 </form>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)">
+                  </ui-grid>
                 </div>
               </div>
             </div>
@@ -84,6 +101,7 @@
                           <th class="text-right">Discount</th>
                           <th class="text-right">Return Quantity</th>
                           <th class="text-right">Amount</th>
+                          <!-- <th class="text-right">Premium Charge</th> -->
                         </tr>
                       </thead>
                       <tbody>
@@ -97,6 +115,7 @@
                           <td class="text-right">{{pr.Discount}}</td>
                           <td class="text-right">{{pr.EmptyQty}}</td>
                           <td class="text-right">{{pr.AmountPayable}}</td>
+                          <!-- <td class="text-right">{{pr.PremiumCharge}}</td> -->
                         </tr>
                       </tbody>
                     </table>

@@ -13,6 +13,15 @@
               <div class="row">
                 <form name="cashMemoForm" autocomplete="off" #cashMemoForm="ngForm" (ngSubmit)="onLoad()"
                   autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2" *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="cust.CPCode" name="CPCode" (change)="onCPChange(cust.CPCode)" required>
+                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <select [(ngModel)]="cust.AreaId" name="AreaId" (change)="getSubArea()" class="form-control" >
@@ -21,29 +30,25 @@
                       </select>
                     </div>
                   </div>
-
                   <div class="col-sm-2">
                     <div class="form-group">
-                  
                       <select [(ngModel)]="cust.SubAreaId" name="SubAreaId" (change)="getRoute()" class="form-control" >
                         <option value="" selected hidden> Select Sub Area </option>
                         <option *ngFor="let sub of SubAreaData" value="{{sub.SubAreaId}}">{{sub.SubAreaName}}</option>
                       </select>
                     </div>
                   </div>
-
                   <div class="col-sm-2">
                     <div class="form-group">
-              
                       <select class="form-control" [(ngModel)]="cust.RouteId" name="RouteId"  >
                         <option value="" selected hidden> Select Route </option>
                         <option *ngFor="let rou of RouteData" value="{{rou.RouteId}}">{{rou.RouteName}}</option>
                       </select>
                     </div>
                   </div>      
-                  <div class="col-sm-3 col-xs-4">
+                  <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
-                      <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control"
+                      <input type="text" placeholder="Customer No. / Mobile No." class="form-control"
                         oninvalid="this.setCustomValidity('Enter consumer number')"
                         onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')"
                         [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />

@@ -7,6 +7,7 @@ import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
+import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-undelivered-orders',
   templateUrl: './undelivered-orders.component.html',
@@ -14,6 +15,7 @@ import { CustomerService } from '@app/features/customer/customer.service';
 })
 export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
+  public chantype:any=[];
   public DeliveredOrderData: any = [];
   public deliverFilter: any = { DelUserCode: '' };
   public datePickerConfig: Partial<BsDatepickerConfig>;
@@ -23,19 +25,33 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   public minDate: Date;
   public maxDate: Date = new Date();
   public ProductArray: any = [];
-  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService,private settingService:SettingService ) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data,this.deliverFilter.CPCode= this.cpInfo.CPCode; });
     this.deliverFilter.StartDate = this.deliverFilter.EndDate = new Date();
-    this.configureGrid();
     this.allOnLoad();
+     this.configureGrid();
   }
   allOnLoad() {
-    this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+ this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+  if (resCP.StatusCode != 0)
+    this.chantype = resCP.Data;
+    this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
+});
+    // this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+    //   if (respD.StatusCode != 0)
+    //     this.delBoyData = respD.Data;
+    // });
+    this.onCPChange(this.cpInfo.CPCode);
+  }
+  onCPChange(cpcode){
+  this.masterService.getEmpoyeeDelBoy(cpcode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
-        this.delBoyData = respD.Data;
+       { this.delBoyData = respD.Data;}else{
+        this.delBoyData = [];
+       }
     });
   }
   configureGrid() {
@@ -77,7 +93,7 @@ export class UndeliveredOrdersComponent implements OnInit, OnDestroy {
   onLoad() {
     this.loaderbtn=false;
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
-    this.orderService.getRefillDeliveryDetails(this.cpInfo.CPCode, 5, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
+    this.orderService.getRefillDeliveryDetails(this.deliverFilter.CPCode, 5, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
       this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.DeliveredOrderData = resData.Data;

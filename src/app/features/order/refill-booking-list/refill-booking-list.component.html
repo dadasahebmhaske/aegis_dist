@@ -27,6 +27,15 @@
                        </select>
                     </div>
                   </div> -->
+                  <div class="col-sm-3" *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="bookOrder.CPCode" name="CPCode" required>
+                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <label class="posticon">

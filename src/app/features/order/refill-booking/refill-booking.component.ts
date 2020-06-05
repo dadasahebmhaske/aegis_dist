@@ -87,7 +87,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.product.BookNo = '';
 
     if (this.product.ProdQty != null) {
-      this.product.RefillAmount = parseInt(this.product.ProdRate) * parseInt(this.product.ProdQty);
+      this.product.RefillAmount = (parseInt(this.product.ProdRate) + parseInt(this.product.PremiumCharge==null || this.product.PremiumCharge==''?0:this.product.PremiumCharge)  ) * parseInt(this.product.ProdQty);
       // if (this.cpInfo.IsHomeState == 'Y') {
       //   this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
       //   this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);

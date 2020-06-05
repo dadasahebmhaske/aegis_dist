@@ -217,6 +217,26 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       AppComponent.SmartAlert.Errmsg(`Please add atleast one product.`);
     }
   }
+
+  onFileSelected(event) {
+    // var reader = new FileReader();
+    // this.selectedFile = <File>event.target.files[0];
+    // this.DocFileName = event.target.files[0].name;
+    // //this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
+    // reader.onload = (event: ProgressEvent) => {
+    //   this.filepreview = (<FileReader>event.target).result;
+    //   var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
+    //   f1 = f1.toString().toLowerCase();
+    //   if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
+    //   }
+    //   else {
+    //     $("#fileControl").val('');
+    //     this.filepreview = 'assets/img/avatars/male.png'
+    //     AppComponent.SmartAlert.Errmsg(`Choose only valid file `);
+    //   }
+    // }
+    // reader.readAsDataURL(event.target.files[0]);
+  }
   ngOnDestroy() {
     this.dataShare.updateShareData(null);
   }

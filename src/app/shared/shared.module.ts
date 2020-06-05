@@ -22,6 +22,8 @@ import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.m
 import { CalendarComponentsModule } from "@app/shared/calendar/calendar-components.module";
 import {CommonDirDirective} from '../core/directive/common-dir.directive';
 import { TrueFalseValueDirective } from '../core/directive/true-false-value.directive';
+import { ConfirmEqualValidatorDirective } from "@app/core/directive/confirm-equal-validator.directive";
+import { NewpassNotEqualValidatorDirective } from "@app/core/directive/newpass-not-equal-validator";
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +33,7 @@ import { TrueFalseValueDirective } from '../core/directive/true-false-value.dire
     SmartadminLayoutModule,
     BootstrapModule
   ],
-  declarations: [CommonDirDirective,TrueFalseValueDirective],
+  declarations: [CommonDirDirective,TrueFalseValueDirective,ConfirmEqualValidatorDirective,NewpassNotEqualValidatorDirective],
   exports: [
     CommonModule,
     FormsModule,
@@ -62,7 +64,9 @@ import { TrueFalseValueDirective } from '../core/directive/true-false-value.dire
 
     CalendarComponentsModule,
     CommonDirDirective,
-    TrueFalseValueDirective
+    TrueFalseValueDirective,
+    ConfirmEqualValidatorDirective,
+    NewpassNotEqualValidatorDirective
   ]
 })
 export class SharedModule {}

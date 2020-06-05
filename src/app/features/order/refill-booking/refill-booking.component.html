@@ -63,7 +63,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                           <div class="form-group">
                             <label for="sel1">Product <span class="errorMessage">*</span>
                             </label>
@@ -78,6 +78,13 @@
                             <label>Rate </label>
                             <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir dirType="number"
                               disabled required />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label>Premium Charge </label>
+                            <input type="text" class="form-control" placeholder="Rate" name="PremiumCharge" [(ngModel)]="product.PremiumCharge" (change)="onSelectProduct()" saCommonDir dirType="number"
+                                />
                           </div>
                         </div>
                         <div class="col-sm-1">
@@ -129,7 +136,9 @@
                                 <th class="text-right">Refill Amount</th>
                                 <th class="text-right">Discount </th>
                                 <th class="text-right">Amount</th>
+                                <th class="text-right">Premium Charge</th>
                                 <th [hidden]="!hideaddrow"> Remove</th>
+                            
                               </tr>
                             </thead>
                             <tbody>
@@ -137,14 +146,17 @@
                                 <td>{{i+1}}</td>
                                 <td>{{pr.ProdSeg}}</td>
                                 <td>{{pr.Product}}</td>
-                                <td class="text-right">{{pr.ProdRate}}</td>
+                                <td class="text-right">{{pr.ProdRate}}</td> 
+                                
                                 <td class="text-right">{{pr.ProdQty}}</td>
                                 <td class="text-right">{{pr.RefillAmount}}</td>
                                 <td class="text-right">{{pr.Discount}}</td>
                                 <td class="text-right">{{pr.AmountPayable}}</td>
+                                <td class="text-right">{{pr.PremiumCharge}}</td>
                                 <td [hidden]="!hideaddrow">
                                   <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
                                 </td>
+                              
                               </tr>
                               <tr>
                                 <td colspan="4" class="text-right"><strong>Total</strong> :</td>
@@ -152,7 +164,9 @@
                                 <td class="text-right"><strong>{{cust.RefillAmount}}</strong></td>
                                 <td class="text-right"><strong>{{cust.Discount}}</strong></td>
                                 <td class="text-right"><strong>{{cust.TotalAmtPayable}}</strong></td>
+                                <td></td>
                                 <td [hidden]="!hideaddrow"></td>
+                               
                               </tr>
                             </tbody>
                           </table>

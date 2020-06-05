@@ -5,6 +5,8 @@ import { OrderService } from '../order.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
+import { SettingService } from '@app/features/settings/setting.service';
+
 @Component({
   selector: 'sa-cash-flow-register',
   templateUrl: './cash-flow-register.component.html',
@@ -12,6 +14,7 @@ import { CustomerService } from '@app/features/customer/customer.service';
 })
 export class CashFlowRegisterComponent implements OnInit {
   public cpInfo: any = {};
+  public chantype:any=[]; 
   public cust: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public cashFlowData: any = [];
@@ -19,13 +22,21 @@ export class CashFlowRegisterComponent implements OnInit {
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
-  constructor(private appService: AppService, private customerService: CustomerService, private orderService: OrderService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private orderService: OrderService,private settingService:SettingService ) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
     this.cust.StartDate = this.cust.EndDate = new Date();
+    this.onloadAll();
     this.configureGrid();
+  }
+  onloadAll(){
+    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        this.chantype = resCP.Data;
+        this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
+    });
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -59,7 +70,7 @@ export class CashFlowRegisterComponent implements OnInit {
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
     this.cust.StartDate = this.appService.DateToString(this.cust.StartDate)
     this.cust.EndDate = this.appService.DateToString(this.cust.EndDate)
-    this.orderService.getCashFlow(this.cpInfo.CPCode, this.cust).subscribe((resData: any) => {
+    this.orderService.getCashFlow(this.cust.CPCode, this.cust).subscribe((resData: any) => {
       this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.cashFlowData = resData.Data;

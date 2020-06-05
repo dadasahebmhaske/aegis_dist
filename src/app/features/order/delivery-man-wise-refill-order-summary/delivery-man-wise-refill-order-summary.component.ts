@@ -5,6 +5,7 @@ import { OrderService } from '../order.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { MasterService } from '@app/core/custom-services/master.service';
+import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-delivery-man-wise-refill-order-summary',
   templateUrl: './delivery-man-wise-refill-order-summary.component.html',
@@ -12,6 +13,7 @@ import { MasterService } from '@app/core/custom-services/master.service';
 })
 export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
   public cpInfo: any = {};
+  public chantype:any=[]; 
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public deliverFilter: any = { DelUserCode: '' };
   public delBoyData: any = [];
@@ -20,19 +22,35 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
   public minDate: Date;
   public maxDate: Date = new Date();
   public unDeliveredOrderData: any = [];
-  constructor(private appService: AppService, private masterService: MasterService, private orderService: OrderService) {
+  constructor(private appService: AppService, private masterService: MasterService, private orderService: OrderService,private settingService:SettingService ) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.deliverFilter.CPCode= this.cpInfo.CPCode; });
     this.deliverFilter.StartDate = this.deliverFilter.EndDate = new Date();
     this.allOnLoad();
     this.configureGrid();
   }
   allOnLoad() {
-    this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        this.chantype = resCP.Data;
+        this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
+    });
+
+    // this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+    //   if (respD.StatusCode != 0)
+    //     this.delBoyData = respD.Data;
+    // });
+  
+    this.onCPChange(this.cpInfo.CPCode);
+  }
+  onCPChange(cpcode){
+  this.masterService.getEmpoyeeDelBoy(cpcode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
-        this.delBoyData = respD.Data;
+       { this.delBoyData = respD.Data;}else{
+        this.delBoyData = [];
+       }
     });
   }
   configureGrid() {
@@ -66,7 +84,7 @@ export class DeliveryManWiseRefillOrderSummaryComponent implements OnInit {
     this.loaderbtn = false;
     this.deliverFilter.StartDate = this.appService.DateToString(this.deliverFilter.StartDate);
     this.deliverFilter.EndDate = this.appService.DateToString(this.deliverFilter.EndDate);
-    this.orderService.getDelManWiseData(this.cpInfo.CPCode, this.deliverFilter).subscribe((resData: any) => {
+    this.orderService.getDelManWiseData(this.deliverFilter.CPCode, this.deliverFilter).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.unDeliveredOrderData = resData.Data;

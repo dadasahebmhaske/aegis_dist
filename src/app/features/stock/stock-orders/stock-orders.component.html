@@ -220,6 +220,41 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label> Amount 
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Amount" name="Amount" [(ngModel)]="stock.Amount" saCommonDir dirType="decimal" 
+                                                 />
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label> Mode 
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Mode" name="RefNo" [(ngModel)]="stock.Mode" 
+                                                 />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label> Reference No. 
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Enter Reference No." name="RefNo" [(ngModel)]="stock.RefNo" 
+                                                 />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Select File 
+                                            </label>
+                                            <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File"
+                                                required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label>Remark

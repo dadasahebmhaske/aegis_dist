@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
+import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-refill-booking-list',
   templateUrl: './refill-booking-list.component.html',
@@ -15,6 +16,7 @@ import { MasterService } from '@app/core/custom-services/master.service';
 export class RefillBookingListComponent implements OnInit, OnDestroy {
   public bookOrder: any = { StartDate: '', EndDate: '', RoutId: '', SubAreaId: '' };
   public cpInfo: any = {};
+  public chantype:any=[];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public loaderbtn: boolean = true;
   public minDate: Date;
@@ -26,11 +28,12 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   public SubAreaData: any = [];
   public stock: any = {};
   public bookingOrdersData: any = [];
-  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService,private settingService:SettingService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;
+      this.bookOrder.CPCode= this.cpInfo.CPCode;});
     this.configureGrid();
     this.onloadAll();
     this.bookOrder.StartDate = this.bookOrder.EndDate = new Date();
@@ -66,6 +69,11 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
     // this.onLoad();
   }
   onloadAll() {
+    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        this.chantype = resCP.Data;
+        this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
+    });
     this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteData = resR.Data;
@@ -97,7 +105,7 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   onLoad() {
 
     this.loaderbtn = false;
-    this.orderService.getRefillBookingDetails(this.cpInfo.CPCode, this.appService.DateToString(this.bookOrder.StartDate), this.appService.DateToString(this.bookOrder.EndDate)).subscribe((resData: any) => {
+    this.orderService.getRefillBookingDetails(this.bookOrder.CPCode, this.appService.DateToString(this.bookOrder.StartDate), this.appService.DateToString(this.bookOrder.EndDate)).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.bookingOrdersData = resData.Data;

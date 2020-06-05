@@ -8,7 +8,7 @@ import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { CustomerService } from '@app/features/customer/customer.service';
-
+import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-cash-memo-and-refill-delivery',
   templateUrl: './cash-memo-and-refill-delivery.component.html',
@@ -17,6 +17,7 @@ import { CustomerService } from '@app/features/customer/customer.service';
 export class CashMemoAndRefillDeliveryComponent implements OnInit {
   public AreaData = [];
   public cpInfo: any = {};
+  public chantype:any=[]; 
   public cmCustData: any = {};
   public cashmemo: any = { areacode: '' };
   public CashMemoData: any = {};
@@ -28,12 +29,12 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
   public RouteArray: any = [];
-  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService,private settingService:SettingService) { }
 
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
+   this.onloadAll();
     this.configureGrid();
-    this.onloadAll();
   }
 
   configureGrid() {
@@ -80,7 +81,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
     this.cust.SubAreaId = this.cust.SubAreaId == null ? '' : this.cust.SubAreaId;
     this.cust.RouteId = this.cust.RouteId == null ? '' : this.cust.RouteId;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.orderService.getCashMemoDetails(this.cpInfo.CPCode,this.cust.RouteId, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo, '', '').subscribe((resData: any) => {
+    this.orderService.getCashMemoDetails(this.cust.CPCode,this.cust.RouteId, this.cust.SubAreaId, this.cust.ConsNo, this.cust.MobileNo, '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.CashMemoData = resData.Data;
@@ -104,15 +105,36 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   }
 
   onloadAll() {
-    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        this.chantype = resCP.Data;
+        this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
+    });
+  //   this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+  //     if (resAR.StatusCode != 0)
+  //       this.AreaData = resAR.Data;
+  //   });
+  //  this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+  //     if (resR.StatusCode != 0)
+  //       this.RouteArray = resR.Data;
+  //   });
+  //   this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+  //     if (reSA.StatusCode != 0) {
+  //       this.SubAreaArray = reSA.Data;
+  //     }
+  //   });
+    this.onCPChange(this.cpInfo.CPCode)
+  }
+  onCPChange(cpcode){
+    this.masterService.getArea(cpcode).subscribe((resAR: any) => {
       if (resAR.StatusCode != 0)
         this.AreaData = resAR.Data;
     });
-   this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+   this.masterService.getRoutes(cpcode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
     });
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+    this.masterService.getSubArea(cpcode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
       }

@@ -12,6 +12,15 @@
             <div class="widget-body">
               <div class="row ">
                 <form name="cashMemoForm" autocomplete="off" #cashMemoForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2" *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="cust.CPCode" name="CPCode" (change)="onCPChange(cust.CPCode)" required>
+                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-2">
                     <div class="form-group">
                       <select [(ngModel)]="cust.AreaId" name="AreaId" (change)="getSubArea()" class="form-control" >
@@ -40,39 +49,46 @@
                       </select>
                     </div>
                   </div>  
-                  <div class="col-sm-2 col-xs-8">
-                    <div class="form-group">
-                      <label class="posticon">
-                        <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
-                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
-                      </label>
+                  <div class="col-sm-4">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="posticon">
+                            <i class="icon-append fa fa-calendar"></i>
+                            <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+                              (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group">
+                          <label class="posticon">
+                            <i class="icon-append fa fa-calendar"></i>
+                            <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                              bsDatepicker [bsConfig]="datePickerConfig" />
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-xs-4">
+                        <div class="form-group">
+                          <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                            <i class="fa fa-fw" [ngClass]="{
+                                                                    'fa-search': loaderbtn,
+                                                                    'fa-cog fa-spin': !loaderbtn
+                                                                  }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
+                        </div>
+                      </div>
                     </div>
+
                   </div>
-                  <div class="col-sm-2 col-xs-8">
-                    <div class="form-group">
-                      <label class="posticon">
-                        <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
-                          bsDatepicker [bsConfig]="datePickerConfig" />
-                      </label>
-                    </div>
-                  </div>
+            
                   <!-- <div class="col-sm-3 col-xs-4">
                     <div class="form-group">
                       <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
                         onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
                     </div>
                   </div> -->
-                  <div class="col-sm-1 col-xs-4">
-                    <div class="form-group">
-                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{
-                                                                'fa-search': loaderbtn,
-                                                                'fa-cog fa-spin': !loaderbtn
-                                                              }"></i> {{ loaderbtn == true ? "Get Details" : "Loading" }} </button>
-                    </div>
-                  </div>
+               
                 </form>
                 <div class="col-sm-12 table-responsive">
                   <ui-grid [data]="areaOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
