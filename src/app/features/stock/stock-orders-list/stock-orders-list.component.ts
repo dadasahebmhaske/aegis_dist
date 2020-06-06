@@ -56,7 +56,11 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
       { name: 'Vehicle', displayName: 'Vehicle', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'GrandTotal', displayName: 'Amount', width: "100", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
       { name: 'OrdStatus', displayName: 'Order Status', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Remark', displayName: 'Remark', width: "*", cellTooltip: true, filterCellFiltered: true },
+       { name: 'GrandTotal', displayName: 'Amount', width: "100", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
+       { name: 'PaidAmount', displayName: 'Paid Amount', width: "120", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
+       { name: 'PayMode', displayName: 'Payment Mode', width: "140",  cellTooltip: true, filterCellFiltered: true },
+      { name: 'PayTransNo', displayName: 'Transaction No.', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Remark', displayName: 'Remark', width: "200", cellTooltip: true, filterCellFiltered: true },
     ]
     this.gridOptions.columnDefs = columnDefs;
   }

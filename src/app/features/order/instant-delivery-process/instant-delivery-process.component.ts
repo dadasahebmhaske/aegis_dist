@@ -28,19 +28,22 @@ import { OrderService } from '../order.service';
 export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
   public bsValue = new Date();
   public datePickerConfig: Partial<BsDatepickerConfig>;
-
+  public AreaData:any =[];
   public addArray: any = [];
   public bulkAdd: any = {};
   public CatDiscountData: any = [];
-  public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
+  public customer: any = { IsActive: 'Y', Salutation: '',AreaId:'', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
   public ContractData: any = [];
   public CityData: any = [];
   public cpInfo: any;
+  public CPCode:any;
   public FirmData: any = [];
+  public firmAction:boolean=false;
   public loaderbtn: boolean = true;
   public RouteData: any = [];
+  public RouteArray: any = [];
   public ServiceData: any = [];
   public StateData: any = [];
   public SubAreaData: any = [];
@@ -58,9 +61,9 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
   ngOnInit() {
     //this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' } : data);
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.allOnloadMethods();
     this.datashare.GetSharedData.subscribe(data => {
       this.deliverrefill = data == null ? {AllocatedUserCode: '' , IsActive: 'Y' } : data;
+      this.CPCode=this.deliverrefill.CPCode;
       this.customer.ConsName=this.deliverrefill.ConsName;
       this.customer.MobileNo=this.deliverrefill.MobileNo;
       this.customer.ConsId=this.deliverrefill.ConsId;
@@ -72,6 +75,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       this.splittingName();
       this.getCustomerProductDetails();
     });
+    this.allOnloadMethods();
   }
   splittingName(){
     if(this.customer.ConsName!=undefined){
@@ -168,7 +172,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
   onSubmitCustomer() {
       this.loaderbtn = false;
       this.customer.Flag = (this.customer.ConsId !=''&& this.customer.ConsId !=undefined)?'UP':'IN';
-      this.customer.CPCode = this.cpInfo.CPCode;
+      this.customer.CPCode = this.CPCode;
       this.customer.UserCode = this.cpInfo.EmpId;
       if(this.customer.ConsId==undefined)
       {this.customer.ConsId = '';
@@ -194,7 +198,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     if (this.deliverrefill.DelRefNo != null) {
       this.loaderbtn = false;
       this.deliverrefill.InstRefNo=this.deliverrefill.DelRefNo;
-      this.deliverrefill.CPCode = this.cpInfo.CPCode;
+      this.deliverrefill.CPCode = this.CPCode;
       this.deliverrefill.Lat = '';
       this.deliverrefill.Lon = '';
       this.deliverrefill.IsActive = 'Y'
@@ -225,7 +229,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     console.log('basic wizard complete', data)
   }
   allOnloadMethods() {
-    this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
+    this.masterService.getEmpoyeeDelBoy(this.CPCode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
         this.delBoyData = respD.Data;
     });
@@ -238,14 +242,27 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
+    this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteData = resR.Data;
     });
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
+    this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
       if (reSA.StatusCode != 0) {
         this.SubAreaArray = reSA.Data;
       }
+    });
+    this.masterService.getArea(this.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+        this.AreaData = resAR.Data;
+    });
+    this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaArray = reSA.Data;
+      }
+    });
+    this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.RouteArray = resR.Data;
     });
     this.masterService.getState().subscribe((resSt: any) => {
       if (resSt.StatusCode != 0)
@@ -255,7 +272,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (resCo.StatusCode != 0)
         this.ContractData = resCo.Data;
     });
-    this.masterService.getDiscountDetails(this.cpInfo.CPCode).subscribe((resData: any) => {
+    this.masterService.getDiscountDetails(this.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.CatDiscountData = resData.Data;
       }
@@ -267,7 +284,11 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     });
   }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.RoutId, 'RouteId');
+    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+  }
+  getRoute() {
+    let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
   }
   saveAddressDeatils() {
     //this.loaderbtn = false;
@@ -321,7 +342,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     });
   }
   getCustomerProductDetails(){
-    this.orderService.getInstantDeliveryProductDetails(this.cpInfo.CPCode, this.deliverrefill.DelRefNo).subscribe((resp: any) => {
+    this.orderService.getInstantDeliveryProductDetails(this.CPCode, this.deliverrefill.DelRefNo).subscribe((resp: any) => {
       if (resp.StatusCode != 0) {
         this.ProductArray = resp.Data;
         let Discount=this.deliverrefill.Discount;
@@ -368,7 +389,10 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     this.Edeliverrefill = {};
     $('#qtyModal').modal('hide');
   }
-  
+  HideShowFirm() {
+    this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);
+    this.customer.FirmName=this.firmAction==false?'':this.customer.FirmName;
+  }
   ngOnDestroy() {
     this.datashare.updateShareData(null);
     this.appService.removeBackdrop();

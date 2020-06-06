@@ -21,7 +21,7 @@ export const environment = {
   },
   BaseUrl: 'http://192.168.1.198/AEGISAdmin/api/',
   BaseUrlDist: 'http://192.168.1.175:8081/distributorapi/api/',
-  ImageUrl: 'http://192.168.1.198/AEGISAdmin/Documents/',
+  ImageUrl: 'http://192.168.1.198/AEGISAdminApi/Documents/',
   authKey: 'Aegis:Aegis@12345?',
   secureKey: 'AEGIS11223344556',
   deptId: 1012

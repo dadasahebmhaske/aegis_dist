@@ -13,8 +13,13 @@ import Swal from 'sweetalert2'
   styleUrls: ['./stock-orders.component.css']
 })
 export class StockOrdersComponent implements OnInit, OnDestroy {
+  public bdata:any=[];
+  public bulkDoc: any = {};
   public cpInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
+  public fd = new FormData();
+  public filepreview: any;
+  public imgUrl: string;
   public minDate: Date;
   public loaderbtn: boolean = true;
   public orderTypeData: any = [];
@@ -24,16 +29,18 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
   public productSegmentData: any = [];
   public productDataSelected: any = [];
   public removeProductUpdate: any = [];
+  public selectedFile: File = null;
   public stock: any = { OrderStage: 'PE', VehicleId: '', PlantId: '', OrderType: '', IsActive: 'Y' };
   public vehicleData: any = [];
   constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.imgUrl = `${AppComponent.ImageUrl}StockOrderDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.dataShare.GetSharedData.subscribe(data => {
       this.stock = data == null ? { OrderStage: 'PE', VehicleId: '', PlantId: '', OrderType: '', IsActive: 'Y', OrderDt: new Date() } : data;
-      //this.stock.OrderDt = new Date(this.stock.OrderDt);
+       //this.stock.OrderDt = new Date(this.stock.OrderDt);
       this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, '', '').subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
@@ -42,6 +49,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       });
     });
     this.allOnLoad();
+    if (this.stock.StkOrdId != '') { this.getStockDocumentDetails(); }
   }
   allOnLoad() {
     this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
@@ -207,9 +215,12 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stockService.postBulkOrders(this.stock).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
+          if(resData.Data.length>0)
+         this.stock.StkOrdId=resData.Data[0].StkOrdId;
+          this.saveDocument();
           AppComponent.SmartAlert.Success(resData.Message);
           this.ProductArray = [];
-          AppComponent.Router.navigate(['/stock/stock-orders-list']);
+         // AppComponent.Router.navigate(['/stock/stock-orders-list']);
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });
@@ -219,23 +230,60 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event) {
-    // var reader = new FileReader();
-    // this.selectedFile = <File>event.target.files[0];
-    // this.DocFileName = event.target.files[0].name;
-    // //this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
-    // reader.onload = (event: ProgressEvent) => {
-    //   this.filepreview = (<FileReader>event.target).result;
-    //   var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
-    //   f1 = f1.toString().toLowerCase();
-    //   if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
-    //   }
-    //   else {
-    //     $("#fileControl").val('');
-    //     this.filepreview = 'assets/img/avatars/male.png'
-    //     AppComponent.SmartAlert.Errmsg(`Choose only valid file `);
-    //   }
-    // }
-    // reader.readAsDataURL(event.target.files[0]);
+    var reader = new FileReader();
+    this.selectedFile = <File>event.target.files[0];
+    this.stock.ImageName = event.target.files[0].name;
+    //this.DocFileName = `${this.cpInfo.EmpId}_${this.DocFileName}`;
+    reader.onload = (event: ProgressEvent) => {
+      this.filepreview = (<FileReader>event.target).result;
+      var f1 = this.selectedFile.name.substring(this.selectedFile.name.lastIndexOf('.'));
+      f1 = f1.toString().toLowerCase();
+      if (f1 == '.jpg' || f1 == '.png' || f1 == '.gif' || f1 == '.jpeg' || f1 == '.bmp' || f1 == '.txt' || f1 == '.excel' || f1 == '.xlsx' || f1 == '.pdf' || f1 == '.xps') {
+        this.bdata=[];
+        this.bdata.push({
+          DocId: '',
+          DocTypId: 1025,
+          DocFileName: this.stock.ImageName,
+          DocNo: '',
+          IsActive: "Y"
+        });
+        this.fd.append(`image`, this.selectedFile, this.stock.ImageName);    
+     
+      }
+      else {
+        $("#fileControl").val('');
+        this.filepreview = 'assets/img/avatars/male.png'
+        AppComponent.SmartAlert.Errmsg(`Choose only valid file `);
+      }
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
+  saveDocument() {
+    if (this.bdata.length > 0 ) {
+      this.bulkDoc.flag = this.stock.DocId == null ? 'IN' : 'UP';
+      this.bulkDoc.RefId = this.stock.StkOrdId;
+      this.bulkDoc.FormFlag = 'INV';
+      this.bulkDoc.UserCode = this.cpInfo.EmpId; 
+      this.bulkDoc.bdata = this.bdata;
+      let ciphertext = this.appService.getEncrypted(this.bulkDoc);
+      this.fd.append('CipherText', ciphertext);
+      this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          AppComponent.Router.navigate(['/stock/stock-orders-list']);
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      });
+    } else {
+      AppComponent.Router.navigate(['/stock/stock-orders-list']);
+    }
+  }
+  getStockDocumentDetails() {
+    this.masterService.getDocumentDetails('INV', this.stock.StkOrdId).subscribe((response: any) => {
+      if (response.StatusCode != 0)
+        if (response.Data.length > 0) { 
+          this.filepreview=`${this.imgUrl}${response.Data[response.Data.length-1].DocFileName}`; }
+    });
   }
   ngOnDestroy() {
     this.dataShare.updateShareData(null);

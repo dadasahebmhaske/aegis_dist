@@ -3,20 +3,23 @@
     <sa-widgets-grid>
         <div class="row">
             <article class="col-sm-12">
-                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+                    minimize="false" color="blueDark">
                     <header class="text-center">
                         <h2>
                             <i class="fa fa-table"></i> Stock Order</h2>
                     </header>
                     <div>
                         <div class="widget-body">
-                            <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onSubmitOrder()" autocomplete="off" ngNativeValidate>
+                            <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onSubmitOrder()" autocomplete="off"
+                                ngNativeValidate>
                                 <div class="row">
                                     <div class="col-sm-2 col-sm-offset-2">
                                         <div class="form-group">
                                             <label>Order Date
                                                 <!-- <span class="errorMessage">*</span> -->
-                                            </label><input type="text" class="form-control" placeholder="Enter Date" [(ngModel)]="stock.OrderDt" bsDatepicker [bsConfig]="datePickerConfig"
+                                            </label><input type="text" class="form-control" placeholder="Enter Date"
+                                                [(ngModel)]="stock.OrderDt" bsDatepicker [bsConfig]="datePickerConfig"
                                                 onkeydown="return false" name="OrderDt" disabled />
                                         </div>
                                     </div>
@@ -24,19 +27,23 @@
                                         <div class="form-group">
                                             <label>Order Status <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" [(ngModel)]="stock.OrderStage" name="OrderStage" disabled>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.OrderStage"
+                                                name="OrderStage" disabled>
                                                 <option value="" selected hidden>Select Status</option>
                                                 <option value="PE">Pending</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2" *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
+                                    <div class="col-sm-2"
+                                        *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
                                         <div class="form-group">
                                             <label>Plant <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" [(ngModel)]="stock.PlantId" name="PlantId" required>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.PlantId"
+                                                name="PlantId" required>
                                                 <option value="" selected hidden>Select Plant</option>
-                                                <option [value]="pl.PlantId" *ngFor="let pl of plantData">{{pl.PlantName}}</option>
+                                                <option [value]="pl.PlantId" *ngFor="let pl of plantData">
+                                                    {{pl.PlantName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -44,9 +51,11 @@
                                         <div class="form-group">
                                             <label>Vehicle <span class="errorMessage">*</span>
                                             </label>
-                                            <select class="form-control" id="sel" [(ngModel)]="stock.VehicleId" name="VehicleId" required>
+                                            <select class="form-control" id="sel" [(ngModel)]="stock.VehicleId"
+                                                name="VehicleId" required>
                                                 <option value="" selected hidden>Select Vehicle</option>
-                                                <option [value]="veh.VehicleId" *ngFor="let veh of vehicleData">{{veh.VehicleNo}} {{veh.VehicleType}}</option>
+                                                <option [value]="veh.VehicleId" *ngFor="let veh of vehicleData">
+                                                    {{veh.VehicleNo}} {{veh.VehicleType}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -54,15 +63,18 @@
                                         <hr class="simple">
                                     </div>
                                 </div>
-                                <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()" autocomplete="off" ngNativeValidate>
+                                <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()"
+                                    autocomplete="off" ngNativeValidate>
                                     <div class="row">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label>Order Type <span class="errorMessage">*</span>
                                                 </label>
-                                                <select class="form-control" id="sel" [(ngModel)]="product.OrderType" name="OrderType" required>
+                                                <select class="form-control" id="sel" [(ngModel)]="product.OrderType"
+                                                    name="OrderType" required>
                                                     <option value="" selected hidden>Select Type</option>
-                                                    <option [value]="or.MstFlag" *ngFor="let or of orderTypeData">{{or.Name}}</option>
+                                                    <option [value]="or.MstFlag" *ngFor="let or of orderTypeData">
+                                                        {{or.Name}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -70,9 +82,12 @@
                                             <div class="form-group">
                                                 <label for="sel1">Product Segment <span class="errorMessage">*</span>
                                                 </label>
-                                                <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                                                <select class="form-control" (change)="onSelectProdSegment()"
+                                                    [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
                                                     <option value="" selected hidden>Select Segment</option>
-                                                    <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                                                    <option [value]="prod.ProdSegId"
+                                                        *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -80,79 +95,98 @@
                                             <div class="form-group">
                                                 <label for="sel1">Product <span class="errorMessage">*</span>
                                                 </label>
-                                                <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" (change)="onSelectProduct()" required>
+                                                <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId"
+                                                    (change)="onSelectProduct()" required>
                                                     <option value="" selected hidden>Select Product</option>
-                                                    <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                                    <option [value]="pro.ProdId"
+                                                        *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-1"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> <span *ngIf="product.OrderType=='RO'">Rate </span>
                                                     <span *ngIf="product.OrderType=='NC'">Deposite </span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir
-                                                    dirType="number" disabled required />
+                                                <input type="text" class="form-control" placeholder="Rate"
+                                                    name="DepositAmount" [(ngModel)]="product.ProdRate"
+                                                    (change)="onSelectProduct()" saCommonDir dirType="number" disabled
+                                                    required />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label> Quantity <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Qty" name="ProdQty" [(ngModel)]="product.ProdQty" (ngModelChange)="onSelectProduct()"
-                                                    saCommonDir dirType="number" required />
+                                                <input type="text" class="form-control" placeholder="Enter Qty"
+                                                    name="ProdQty" [(ngModel)]="product.ProdQty"
+                                                    (ngModelChange)="onSelectProduct()" saCommonDir dirType="number"
+                                                    required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-2" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-2"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> Sub Total </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="SubTotal" [(ngModel)]="product.SubTotal" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="SubTotal" [(ngModel)]="product.SubTotal" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-1"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> IGST </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="IgstAmt" [(ngModel)]="product.IgstAmt" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="IgstAmt" [(ngModel)]="product.IgstAmt" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-1"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> CGST </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="CgstAmt" [(ngModel)]="product.CgstAmt" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="CgstAmt" [(ngModel)]="product.CgstAmt" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-1" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-1"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> SIGST </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="SgstAmt" [(ngModel)]="product.SgstAmt" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="SgstAmt" [(ngModel)]="product.SgstAmt" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
-                                        <div class="col-sm-2" *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
+                                        <div class="col-sm-2"
+                                            *ngIf="product.OrderType=='RO' || product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label> Amount <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="ProdAmt" [(ngModel)]="product.ProdAmt" saCommonDir dirType="number" disabled
-                                                    required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="ProdAmt" [(ngModel)]="product.ProdAmt" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
                                         <div class="col-sm-2" *ngIf="product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label>Refundable Rate <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="RefundableAmount" [(ngModel)]="product.RefundableAmount" saCommonDir
-                                                    dirType="number" disabled required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="RefundableAmount" [(ngModel)]="product.RefundableAmount"
+                                                    saCommonDir dirType="number" disabled required />
                                             </div>
                                         </div>
                                         <div class="col-sm-2" *ngIf="product.OrderType=='NC'">
                                             <div class="form-group">
                                                 <label>Refundable Amount <span class="errorMessage">*</span>
                                                 </label>
-                                                <input type="text" class="form-control" placeholder="Enter Amount" name="RefundAmt" [(ngModel)]="product.RefundAmt" saCommonDir dirType="number"
-                                                    disabled required />
+                                                <input type="text" class="form-control" placeholder="Enter Amount"
+                                                    name="RefundAmt" [(ngModel)]="product.RefundAmt" saCommonDir
+                                                    dirType="number" disabled required />
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
@@ -191,16 +225,21 @@
                                                         <td>{{pr.OrderTypeName}}</td>
                                                         <td>{{pr.ProdSeg}}</td>
                                                         <td>{{pr.Product}}</td>
-                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdRate}}</td>
+                                                        <td class="text-right"><small class="text-info"
+                                                                *ngIf="pr.OrderType=='NC'">Deposit&nbsp;
+                                                            </small>{{pr.ProdRate}}</td>
                                                         <td class="text-right">{{pr.ProdQty}}</td>
                                                         <td class="text-right">{{pr.SubTotal}}</td>
                                                         <td class="text-right">{{pr.IgstAmt}}</td>
                                                         <td class="text-right">{{pr.CgstAmt}}</td>
                                                         <td class="text-right">{{pr.SgstAmt}}</td>
-                                                        <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.ProdAmt}}</td>
+                                                        <td class="text-right"><small class="text-info"
+                                                                *ngIf="pr.OrderType=='NC'">Deposit&nbsp;
+                                                            </small>{{pr.ProdAmt}}</td>
                                                         <td class="text-right">{{pr.RefundAmt}}</td>
                                                         <td>
-                                                            <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
+                                                            <button class="btn btn-xs btn-danger"
+                                                                (click)=onRemoveProduct(pr,i)>Remove</button>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -211,7 +250,8 @@
                                                         <td class="text-right"><strong>{{stock.CgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.SgstTotal}}</strong></td>
                                                         <td class="text-right"><strong>{{stock.ProdAmt}}</strong></td>
-                                                        <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
+                                                        <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong>
+                                                        </td>
                                                         <td></td>
                                                     </tr>
                                                 </tbody>
@@ -220,64 +260,87 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label> Amount 
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Enter Amount" name="Amount" [(ngModel)]="stock.Amount" saCommonDir dirType="decimal" 
-                                                 />
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label> Paid Amount
+                                                    </label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter Paid Amount" name="PaidAmount"
+                                                        [(ngModel)]="stock.PaidAmount" saCommonDir dirType="decimal" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Payment  Mode
+                                                    </label>
+                                                    <input type="text" class="form-control" placeholder="Enter Payment Mode"
+                                                        name="PayMode" [(ngModel)]="stock.PayMode" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-group">
+                                                    <label> Payment Transaction No.
+                                                    </label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter Transaction No." name="PayTransNo"
+                                                        [(ngModel)]="stock.PayTransNo" />
+                                                </div>
+                                            </div>
+
                                         </div>
-                                    </div>
-                                  
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label> Mode 
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Enter Mode" name="RefNo" [(ngModel)]="stock.Mode" 
-                                                 />
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Remark
+                                                        <!-- <span class="errorMessage">*</span> -->
+                                                    </label>
+                                                    <textarea class="form-control" [(ngModel)]="stock.Remark"
+                                                        name="Remark" placeholder=""></textarea>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label> Reference No. 
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="Enter Reference No." name="RefNo" [(ngModel)]="stock.RefNo" 
-                                                 />
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>
+                                                    <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N"
+                                                        name="IsActive" [(ngModel)]='stock.IsActive' /> Is Active
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Select File 
-                                            </label>
-                                            <input type="file" class="form-control" (change)="onFileSelected($event)" id="fileControl" name="DocFileName" placeholder="Enter File"
-                                                required />
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Payment Proof
+                                                    </label>
+                                                    <input type="file" class="form-control"
+                                                        (change)="onFileSelected($event)" id="fileControl"
+                                                        name="DocFileName" placeholder="Enter File"  />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" *ngIf="stock.ImageName!=null">
+                                                <img src="{{filepreview}}" class="img-responsive"  />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="form-group">
-                                            <label>Remark
-                                                <!-- <span class="errorMessage">*</span> -->
-                                            </label>
-                                            <textarea class="form-control" [(ngModel)]="stock.Remark" name="Remark" placeholder=""></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <label>
-                                            <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='stock.IsActive' /> Is Active </label>
-                                    </div>
-                                </div>
+
                                 <footer>
                                     <div class="row">
                                         <div class="col-sm-12 ">
                                             <hr />
                                             <a class="pull-right btn btn-default" routerLink="/stock/stock-orders-list">
                                                 <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                                            <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
-                                                <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                            <button class="pull-right btn btn-primary marg-right" type="submit"
+                                                [disabled]="!loaderbtn">
+                                                <i class="fa fa-fw"
+                                                    [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                                                {{loaderbtn==true? 'Submit':'Loading'}}</button>
                                         </div>
                                     </div>
                                 </footer>
