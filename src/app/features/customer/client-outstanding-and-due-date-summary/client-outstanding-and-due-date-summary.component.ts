@@ -20,7 +20,7 @@ import { OrderService } from '@app/features/order/order.service';
     public cmCustData: any = {};
     public cashmemo: any = { areacode: '' };
     public CashMemoData: any = {};
-    public cust: any = {AreaId:'', RoutId: '', SubAreaId: '' };
+    public cust: any = {AreaId:'', RouteId: '', SubAreaId: '' };
     public datePickerConfig: Partial<BsDatepickerConfig>;
     public gridOptions: IGridoption;
     public loaderbtn: boolean = true;
@@ -39,7 +39,7 @@ import { OrderService } from '@app/features/order/order.service';
       this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
       this.cust.StartDate = this.cust.EndDate = new Date();
       this.onloadAll();
-      this.configureGrid();
+      this.configureGrid();this.areaOrderData = [{}];
     }
     configureGrid() {
       this.gridOptions = <IGridoption>{}
@@ -47,20 +47,20 @@ import { OrderService } from '@app/features/order/order.service';
       this.gridOptions.exporterExcelFilename = 'Customer Outstanding And Due Date Summary.xlsx';
       let columnDefs = [];
       columnDefs = [
-        { name: 'CustName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'CustType', displayName: 'Customer Type', width: "220", cellTooltip: true, filterCellFiltered: true },
-       { name: 'AreaName', displayName: 'Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-      //  { name: 'SubAreaName', displayName: 'Sub Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'Pincode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'ConsName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'CustType', displayName: 'Customer Type', width: "200", cellTooltip: true, filterCellFiltered: true },
+       { name: 'AreaName', displayName: 'Area', width: "200", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'SubAreaName', displayName: 'Sub Area', width: "200", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'PinCode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'InvoiceNo', displayName: 'Invoice No', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'InvoiceDate', displayName: 'Invoice Date', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'InvoiceDate', displayName: 'Invoice Date', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'InvoiceValue', displayName: 'Invoice Value', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'AmountOS', displayName: 'Amount O/S', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'AmountDueToday', displayName: 'Amount Due Today', cellClass: 'cell-right', width: "130", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'AmountDueDate', displayName: 'Amount Due Date', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'AmountDueToday', displayName: 'Amount Due Today', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'AmountDueDate', displayName: 'Amount Due Date', cellClass: 'cell-center', width: "180", cellTooltip: true, filterCellFiltered: true }, 
       ]
       this.gridOptions.columnDefs = columnDefs;
-      this.onLoad();
+      //this.onLoad();
     }
     onEditFunction = ($event) => {
       // console.log($event.row);

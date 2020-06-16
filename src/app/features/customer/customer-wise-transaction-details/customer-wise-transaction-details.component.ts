@@ -67,7 +67,7 @@
         { name: 'CustName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'AreaName', displayName: 'Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'SubAreaName', displayName: 'Sub Area', width: "220", cellTooltip: true, filterCellFiltered: true }, 
-        { name: 'Pincode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
+        { name: 'PinCode', displayName: 'Pincode', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true }, 
 
       { name: 'ProdSeg', displayName: 'Product Segment', width: "220", cellTooltip: true, filterCellFiltered: true }, 
         { name: 'Product', displayName: 'Product', width: "200", cellTooltip: true, filterCellFiltered: true },
@@ -75,7 +75,7 @@
         { name: 'ProdValue', displayName: 'Value of Product', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
         { name: 'ProdValuePaid', displayName: 'Value of Product Paid', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
         { name: 'ProdValueOs', displayName: 'Value of Product O/S', cellClass: 'cell-right', width: "180", cellTooltip: true, filterCellFiltered: true },
-        { name: 'ProdValueUC', displayName: 'Value of Payments Under Clearing', cellClass: 'cell-right', width: "260", cellTooltip: true, filterCellFiltered: true },
+        //{ name: 'ProdValueUC', displayName: 'Value of Payments Under Clearing', cellClass: 'cell-right', width: "260", cellTooltip: true, filterCellFiltered: true },
       ]
       this.gridOptions.columnDefs = columnDefs;
       //this.onLoad();
