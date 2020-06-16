@@ -7,8 +7,17 @@ import { TransferCustomerComponent } from './transfer-customer/transfer-customer
 import { TerminateCustomerComponent } from './terminate-customer/terminate-customer.component';
 import { SvCreationPrintingComponent } from './sv-creation-printing/sv-creation-printing.component';
 import { TransferCustomerInComponent } from './transfer-customer-in/transfer-customer-in.component';
+import { CustomerWiseTransactionSummaryComponent } from './customer-wise-transaction-summary/customer-wise-transaction-summary.component';
+import { CustomerWiseTransactionDetailsComponent } from './customer-wise-transaction-details/customer-wise-transaction-details.component';
+import { ClientOutstandingAndDueDateSummaryComponent } from './client-outstanding-and-due-date-summary/client-outstanding-and-due-date-summary.component';
 
 const routes: Routes = [
+  { path:'customer-wise-transaction-summary',
+  component:CustomerWiseTransactionSummaryComponent},
+  { path:'customer-wise-transaction-details',
+  component:CustomerWiseTransactionDetailsComponent},
+  { path:'client-outstanding-and-due-date-summary',
+  component:ClientOutstandingAndDueDateSummaryComponent},
   {
     path:'customer-master',
     component:CustomerMasterComponent
@@ -41,4 +50,6 @@ const routes: Routes = [
 ]; 
 
 export const routing=[RouterModule.forChild(routes)];
-export const componentArray=[TransferCustomerInComponent,SvCreationPrintingComponent,TerminateCustomerComponent,TransferCustomerComponent,UpdateCustomerComponent,CustomerMasterComponent,NewCustomerComponent];
+export const componentArray=[TransferCustomerInComponent,SvCreationPrintingComponent,TerminateCustomerComponent,TransferCustomerComponent,UpdateCustomerComponent,CustomerMasterComponent,NewCustomerComponent,  CustomerWiseTransactionSummaryComponent,
+  CustomerWiseTransactionDetailsComponent,
+  ClientOutstandingAndDueDateSummaryComponent];

@@ -5,6 +5,8 @@ import { routing, componentArray } from './customer-routing.module';
 import { UigridcustomerDirective } from '../../core/directive/uigridcustomer.directive';
 import { CustomerService } from './customer.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { OrderService } from '@app/features/order/order.service';
+import { SettingService } from '@app/features/settings/setting.service';
 
 @NgModule({
   declarations: [componentArray, UigridcustomerDirective],
@@ -14,7 +16,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     SharedModule,
     BsDatepickerModule.forRoot(),
   ],
-  providers: [CustomerService],
+  providers: [CustomerService,OrderService,SettingService],
   exports: [UigridcustomerDirective]
 })
 export class CustomerModule { }

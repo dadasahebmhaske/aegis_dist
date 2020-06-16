@@ -70,6 +70,16 @@ export class CustomerService {
   public postSVBulkProduct(fd: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Operational/ManageCustProd`, fd);
   }
+  public getCustomerWiseTransactionSummary(cpcode, DelFilter, fd, td) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustwiseTranSummary?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.DelUserCode}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
+}                                              
+public getCustomerWiseTransactionDetails(cpcode, DelFilter, fd, td) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustTransactionDetails?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.DelUserCode}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
+}
+public getClientOutsatandingDueDateSummary(cpcode, cust) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliverySummaryAreawise?pCPCode=${cpcode}&pRouteId=${cust.RouteId}&pSubAreaId=${cust.SubAreaId}&pFDate=${cust.StartDate}&pTDate=${cust.EndDate}`);
+}
+
   public checkCustOrMobNo(cust) {
     cust.CustNoMob = cust.CustNoMob == null ? '' : cust.CustNoMob;
     if (cust.CustNoMob == '') {

@@ -19,7 +19,7 @@
                       <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
                       <select class="form-control" [(ngModel)]="deliverFilter.CPCode" name="CPCode"
                         (change)="onCPChange(deliverFilter.CPCode)" required>
-                        <option value="" selected hidden>Select SF / SD / POS</option>
+                        <option value="" selected disabled>Select SF / SD / POS</option>
                         <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
                       </select>
                     </div>
@@ -27,7 +27,7 @@
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
                       <select class="form-control" [(ngModel)]="deliverFilter.DelUserCode" name="DelUserCode">
-                        <option value="" selected hidden>Select Delivery Boy</option>
+                        <option value="" selected disabled>Select Delivery Boy</option>
                         <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
                       </select>
                     </div>

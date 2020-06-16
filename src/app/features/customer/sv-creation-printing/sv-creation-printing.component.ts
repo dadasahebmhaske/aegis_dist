@@ -101,7 +101,8 @@ export class SvCreationPrintingComponent implements OnInit {
           "DepositAmt": this.product.DepositAmt,
           "MonthlyConsumption": this.product.MonthlyConsumption,
           "IsActive": "Y",
-          "RefundableAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].RefundableAmount),
+          "HandlingCharge":parseFloat(this.product.HandlingCharge),
+          "RefundableAmt": parseFloat(this.product.PurchaseQty)  * parseFloat(docobj[0].RefundableAmount),
           "TotalDepositAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].DepositAmount),
           "TotalRefundableAmt": parseFloat(this.product.PurchaseQty) * parseFloat(docobj[0].RefundableAmount),
           "ProdSeg": ProdSegName,
@@ -132,6 +133,8 @@ export class SvCreationPrintingComponent implements OnInit {
     let docobj;
     docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
     this.product.DepositAmt = docobj[0].DepositAmount;
+    this.product.HandlingChargeShow = docobj[0].HandlingCharge!=0?true:false;
+    this.product.HandlingCharge=docobj[0].HandlingCharge;
   }
   onCustomerProdSubmit() {    if (this.prodArray.length > 0 || this.removeProductUpdate.length > 0) {
       this.loaderbtn = false;

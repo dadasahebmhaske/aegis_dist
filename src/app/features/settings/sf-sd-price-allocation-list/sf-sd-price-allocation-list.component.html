@@ -20,7 +20,7 @@
                   <div class="col-sm-2 col-xs-4">
                       <div class="form-group">
                           <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="PAllocation.ProdSegId" name="ProdSegId" >
-                              <option value="" selected hidden>Select Segment</option>
+                              <option value="" selected disabled>Select Segment</option>
                               <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
                             </select>
                       </div>
@@ -28,7 +28,7 @@
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
                         <select class="form-control" [(ngModel)]="PAllocation.ProdId" name="ProdId"  >
-                            <option value="" selected hidden>Select Product</option>
+                            <option value="" selected disabled>Select Product</option>
                             <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                           </select>
                     </div>

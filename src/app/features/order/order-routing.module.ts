@@ -15,7 +15,9 @@ import { PaymentCollectionsComponent } from './payment-collections/payment-colle
 import { InstantDeliveredOrdersComponent } from './instant-delivered-orders/instant-delivered-orders.component';
 import { InstantDeliveryProcessComponent } from './instant-delivery-process/instant-delivery-process.component';
 
+
 const routes: Routes = [
+
   { path:'refill-booking-list',
    component:RefillBookingListComponent},
    { path:'refill-booking',

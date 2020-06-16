@@ -81,7 +81,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
         this.areaOrderData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
-      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
+      else {this.areaOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   onloadAll() {

@@ -600,3 +600,6 @@ option {
     left: 0;
     border: none;
 }
+.menu-on-top nav ul ul, .menu-on-top nav ul ul ul {
+  width: 250px;
+}
