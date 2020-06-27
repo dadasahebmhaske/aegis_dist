@@ -348,7 +348,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     console.log('basic wizard complete', data)
   }
   allOnloadMethods() {
-    this.customerService.getCustomerType().subscribe((respCt) => {
+    this.customerService.getCustomerType(this.cpInfo.ChannelId).subscribe((respCt) => {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
         this.HideShowFirm();
@@ -410,6 +410,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+    
   }
   getRoute() {
     let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');

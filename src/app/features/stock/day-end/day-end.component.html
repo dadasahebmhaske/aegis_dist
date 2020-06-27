@@ -3,14 +3,16 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
           <header class="text-center">
             <h2> <i class="fa fa-table"></i> Day End</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
-                <form name="dayEndSearchForm" #dayEndSearchForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                <form name="dayEndSearchForm" #dayEndSearchForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off"
+                  ngNativeValidate>
                   <div class="col-sm-1 col-xs-8 marg-top">
                     <div class="form-group ">
                       <label class="pull-right">Last Day End</label>
@@ -20,8 +22,9 @@
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="dayEndFilt.lastDayEnd" name="lastDayEnd" id="lastDayEnd"
-                          onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" disabled />
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker
+                          [(ngModel)]="dayEndFilt.lastDayEnd" name="lastDayEnd" id="lastDayEnd" onkeydown="return false"
+                          bsDatepicker [bsConfig]="datePickerConfig" disabled />
                       </label>
                     </div>
                   </div>
@@ -34,7 +37,8 @@
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="dayEndFilt.CurrentDate" name="EndDate" onkeydown="return false"
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date"
+                          [(ngModel)]="dayEndFilt.CurrentDate" name="EndDate" onkeydown="return false"
                           [minDate]="minDate" [maxDate]="maxDate" bsDatepicker [bsConfig]="datePickerConfig1" />
                       </label>
                     </div>
@@ -42,7 +46,8 @@
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
                 </form>
@@ -57,6 +62,9 @@
                     <li [class.active]="state.tabs.demo1 == 2">
                       <a (click)="state.tabs.demo1 = 2;showGrid('D')"> Defective</a>
                     </li>
+                    <li [class.active]="state.tabs.demo1 == 3">
+                      <a (click)="state.tabs.demo1 = 3;showGrid('N')"> New Connection</a>
+                    </li>
                     <li class="pull-right">
                       <!-- <a (click)="(null)">
                             <div class="sparkline txt-color-pinkDark text-align-right" data-sparkline-height="18px"
@@ -64,10 +72,13 @@
                               5,10,6,7,4,3
                             </div>
                           </a> -->
-                      <form name="processform" #processform="ngForm" (ngSubmit)="dayEndProcess()" autocomplete="off" ngNativeValidate>
+                      <form name="processform" #processform="ngForm" (ngSubmit)="dayEndProcess()" autocomplete="off"
+                        ngNativeValidate>
                         <div>
-                          <label class="stock-check"><input type="checkbox" required> All stock values are correct </label>
-                          <button class="btn btn-danger pull-right dayend-btn" type="submit" [disabled]="!loaderbtn"><span class="hidden-xs">Process</span>
+                          <label class="stock-check"><input type="checkbox" required> All stock values are correct
+                          </label>
+                          <button class="btn btn-danger pull-right dayend-btn" type="submit"
+                            [disabled]="!loaderbtn"><span class="hidden-xs">Process</span>
                             {{loaderbtn==true? 'Day End':'Loading'}}</button>
                         </div>
                       </form>
@@ -92,6 +103,13 @@
                       <div class="row">
                         <div class="col-sm-12 " *ngIf="flag=='D'">
                           <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions"></ui-grid>
+                        </div>
+                      </div>
+                    </tab>
+                    <tab [active]="state.tabs.demo1 == 3">
+                      <div class="row">
+                        <div class="col-sm-12 table-responsive" *ngIf="flag=='N'">
+                          <ui-grid [data]="newConnectionData" [gridOptions]="gridnewConnectionOptions"></ui-grid>
                         </div>
                       </div>
                     </tab>

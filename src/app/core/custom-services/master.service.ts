@@ -88,7 +88,20 @@ export class MasterService {
   public getDiscountDetails(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DISCT&CPCode=${cpcode}&IsActive=Y`);
   }
+  public getSFSDPOS(pcpcode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetChannelPartner?CPAreaId=&ParentCPCode=${pcpcode}&CPCode=&AreaId=&IsActive`, AppComponent.httpOptions);
+    }
+  public getRouteMapping(cpcode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
+  }
+  public getAreaAllocated(cpcode,RouteId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubAreaForMapping?CPCode=${cpcode}&RouteId=${RouteId}&IsActive=Y`, AppComponent.httpOptions);
+  }
+  public postRouteMapping(data:string) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Master/IUDCPRouteMapping`,{Data:data},AppComponent.httpOptions);      
+  }
   // public getProductSegment() {
   //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
   // }
+  
 }

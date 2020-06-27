@@ -1,0 +1,56 @@
+<!-- MAIN CONTENT -->
+<div id="content">  
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">    
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+            <header class="text-center">   
+            <h2><i class="fa fa-database"></i> Route Mapping Master</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+                <div class="row ">
+                       <form name="mapFilterForm" #mapFilterForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate >
+                  <div class="col-sm-3" >
+                    <div class="form-group" [hidden]="cpInfo.ChannelTypeFlag!='DI'&& cpInfo.ChannelTypeFlag!='DE'">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="mapFilter.CPCode" name="CPCode"  required>
+                        <option value="" selected disabled>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4" >
+                    <div class="form-group" [hidden]="cpInfo.ChannelTypeFlag!='DI'&& cpInfo.ChannelTypeFlag!='DE'">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+                    <div class="col-sm-8">
+                        <div class="form-group  pull-right">
+                            <a routerLink="/master/route-mapping" class="btn btn-block btn-warning ">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add Route Mapping
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                      <ui-grid [data]="routeMappingData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  </div>
+                </div>
+
+            </div>
+          </div>
+        </div>
+
+      
+
+      </article>
+
+     
+    </div>
+  
+  </sa-widgets-grid>
+</div>

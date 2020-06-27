@@ -5,7 +5,7 @@ import { OrderService } from '../order.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
-import { SettingService } from '@app/features/settings/setting.service';
+import { MasterService } from '@app/core/custom-services/master.service';
 
 @Component({
   selector: 'sa-cash-flow-register',
@@ -22,7 +22,7 @@ export class CashFlowRegisterComponent implements OnInit {
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
-  constructor(private appService: AppService, private customerService: CustomerService, private orderService: OrderService,private settingService:SettingService ) {
+  constructor(private appService: AppService, private customerService: CustomerService, private orderService: OrderService,private masterService:MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -32,7 +32,7 @@ export class CashFlowRegisterComponent implements OnInit {
     this.configureGrid();
   }
   onloadAll(){
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});

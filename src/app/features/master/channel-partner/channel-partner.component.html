@@ -487,18 +487,17 @@
                         <br>
                         <h3>
                           <strong>Step 4</strong> - Area Allocation Details</h3>
-                          <form name="areaForm" #areaForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
+                       
                             <div class="row">
-                              <div class="col-sm-4 col-sm-offset-4">
+                          
+                              <div class="col-sm-12">
                                   <div class="row">
+                                    <div class="col-sm-6">
+                                              <div class="row">
                                       <div class="col-sm-6">
                                           <div class="form-group">
                                               <label for="sel1">State <span class="errorMessage">*</span></label>
-                                              <!-- <select class="form-control" id="sel1" [(ngModel)]="area.StateCode" [ngModelOptions]="{standalone: true}"
-                                              (change)="getCity(area.StateCode)">
-                                                  <option value="" selected disabled>--Select--</option>
-                                                  <option *ngFor="let st of State" value="{{st.StateCode}}">{{st.StateDesc}}</option>
-                                              </select> -->
+                                  
                                               <select class="form-control" name="StateCode" [(ngModel)]="area.StateCode" (change)="getCityData(area.StateCode)" >
                                                 <option value="" selected hidden>Select State</option>
                                                 <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
@@ -508,10 +507,7 @@
                                       <div class="col-sm-6">
                                           <div class="form-group">
                                               <label for="sel1">City <span class="errorMessage">*</span></label>                                                                    
-                                                  <!-- <select class="form-control" id="sel1" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" [ngModelOptions]="{standalone: true}"  >
-                                                      <option value="" selected disabled>--Select--</option>
-                                                      <option *ngFor="let ct of City" value="{{ct.CityCode}}">{{ct.CityName}}</option>
-                                                  </select> -->
+                                           
                                                   <select class="form-control" [(ngModel)]="area.CityCode"  (change)="getArea(area.CityCode)" name="CityCode" >
                                                     <option value="" selected hidden>Select City</option>
                                                     <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}}</option>
@@ -519,10 +515,65 @@
                                           </div>
                                       </div>
                                   </div>
-                              </div>
-                              <div class="col-sm-4 col-sm-offset-4">
-                                  <div class="row">
-                                      <div class="col-sm-12">
+                                      <div class="table-responsive">
+                                        <table class="table tbl">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Sr No.</th>
+                                                    <th class="text-center">Pin Code </th>
+                                                    <th class="text-center">Area </th>
+                                                    <th class="text-center">Sub Area </th>
+                                                    <th class="text-center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of AreaSubAreaData; let index=index">
+                                                    <td class="text-center">
+                                                      {{index + 1}}
+                                                    </td>
+                                                    <td class="text-center">{{data.PinCode}}</td>
+                                                    <td class="text-center">{{data.AreaName}}</td>
+                                                    <td class="text-center">{{data.SubAreaName}}</td>
+                                                    <td  class="text-center"><button class="btn btn-xs btn-warning" (click)=onAreaSubArea(data)>Add</button></td>
+                                                </tr>                                                                         
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                  </div>
+                                    <div class="col-sm-6">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                      <h4 class="text-center text-primary mar-top">Allocated Area</h4>
+                                            </div>
+                                            </div>  
+                                      </div>
+                                      <div class="table-responsive">
+                                        <table class="table tbl">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Sr No.</th>
+                                                    <th class="text-center">Pin Code </th>
+                                                    <th class="text-center">Area </th>
+                                                    <th class="text-center">Sub Area </th>
+                                                    <th class="text-center"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of SelectedAreaSubAreaData; let index=index">
+                                                    <td class="text-center">
+                                                      {{index + 1}}
+                                                    </td>
+                                                    <td class="text-center">{{data.PinCode}}</td>
+                                                    <td class="text-center">{{data.AreaName}}</td>
+                                                    <td class="text-center">{{data.SubAreaName}}</td>
+                                                    <td  class="text-center"><button class="btn btn-xs btn-danger" (click)=removeAreaSub(data,index)>Remove</button></td>
+                                                </tr>                                                                         
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>
+                                      <!-- <div class="col-sm-12">
                                           <div class="table-responsive">
                                               <table class="table tbl">
                                                   <thead>
@@ -530,6 +581,7 @@
                                                           <th class="text-center"></th>
                                                           <th class="text-center">Pin Code </th>
                                                           <th class="text-center">Area </th>
+                                                          <th class="text-center">Sub Area </th>
                                                       </tr>
                                                   </thead>
                                                   <tbody>
@@ -539,17 +591,16 @@
                                                           </td>
                                                           <td class="text-center">{{AreaData[index].PinCode}}</td>
                                                           <td class="text-center">{{AreaData[index].AreaName}}</td>
+                                                          <td class="text-center">{{AreaData[index].SubAreaName}}</td>
                                                       </tr>                                                                         
                                                   </tbody>
                                               </table>
                                           </div>
-                                      </div>
+                                      </div> -->
                                   </div>
                               </div>
-                              
-                
                           </div>
-                          
+                          <form name="areaForm" #areaForm="ngForm" (ngSubmit)="onSubmitArea()" autocomplete="off" ngNativeValidate>
                           <div class="form-actions">
                             <div class="row">
                               <div class="col-sm-12">

@@ -5,7 +5,6 @@
   import { BsDatepickerConfig } from 'ngx-bootstrap';
   import { MasterService } from '@app/core/custom-services/master.service';
   import { CustomerService } from '@app/features/customer/customer.service';
-  import { SettingService } from '@app/features/settings/setting.service';
 import { OrderService } from '@app/features/order/order.service';
   @Component({
     selector: 'sa-client-outstanding-and-due-date-summary',
@@ -31,7 +30,7 @@ import { OrderService } from '@app/features/order/order.service';
     public SubAreaData: any = [];
     public RouteArray: any = [];
   
-    constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService,private settingService:SettingService ) {
+    constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService ) {
       this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
     }
   
@@ -83,7 +82,7 @@ import { OrderService } from '@app/features/order/order.service';
       });
     }
     onloadAll() {
-      this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
         if (resCP.StatusCode != 0)
           this.chantype = resCP.Data;
           this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});

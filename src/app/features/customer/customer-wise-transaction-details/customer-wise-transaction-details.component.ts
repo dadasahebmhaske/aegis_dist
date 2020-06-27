@@ -8,7 +8,6 @@
   import { MasterService } from '@app/core/custom-services/master.service';
   import { BsDatepickerConfig } from 'ngx-bootstrap';
   import { CustomerService } from '@app/features/customer/customer.service';
-  import { SettingService } from '@app/features/settings/setting.service';
   @Component({
     selector: 'sa-customer-wise-transaction-details',
     templateUrl: './customer-wise-transaction-details.component.html',
@@ -28,7 +27,7 @@
     public StartMindate: Date;
     public maxDate: Date = new Date();
    // public ProductArray: any = [];
-    constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService,private settingService:SettingService) {
+    constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
       this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
     }
     ngOnInit() {
@@ -38,12 +37,12 @@
       this.configureGrid(); this.DeliveredOrderData = [{}];
     }
     allOnLoad() {
-      this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
         if (resCP.StatusCode != 0)
           this.chantype = resCP.Data;
           this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
       });
-      this.customerService.getCustomerType().subscribe((respCt) => {
+      this.customerService.getCustomerType(this.cpInfo.ChannelId).subscribe((respCt) => {
         if (respCt.StatusCode != 0)
           this.CustTypeData = respCt.Data;
       });

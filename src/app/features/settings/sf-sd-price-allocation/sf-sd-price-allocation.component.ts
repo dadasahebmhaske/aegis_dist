@@ -40,7 +40,7 @@ public  chantype:any=[];
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
     })

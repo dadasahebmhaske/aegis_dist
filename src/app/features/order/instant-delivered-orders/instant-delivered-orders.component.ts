@@ -25,7 +25,7 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
   public minDate: Date;
   public maxDate: Date = new Date();
   public ProductArray: any = [];
-  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService,private settingService:SettingService) {
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -35,7 +35,7 @@ export class InstantDeliveredOrdersComponent implements OnInit , OnDestroy {
      this.configureGrid();
   }
   allOnLoad() {
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});

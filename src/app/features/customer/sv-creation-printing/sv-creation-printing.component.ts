@@ -5,7 +5,6 @@ import { MasterService } from '@app/core/custom-services/master.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
-import { SettingService } from '@app/features/settings/setting.service';
 
 @Component({
   selector: 'sa-sv-creation-printing',
@@ -29,7 +28,7 @@ export class SvCreationPrintingComponent implements OnInit {
   public removeProductUpdate: any = [];
   public svCustData: any = {};
   public SFSDHS:boolean;
-  constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService,private settingService:SettingService) {
+  constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -217,7 +216,7 @@ export class SvCreationPrintingComponent implements OnInit {
     // }
   }
   allOnload(){
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
     })

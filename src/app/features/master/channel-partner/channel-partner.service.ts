@@ -27,13 +27,13 @@ export class ChannelPartnerService {
   return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageChannelPartner`,data,AppComponent.httpOptions);            
   }
   public getRepotDesignation(){
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?Roleid=&flag=1`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=1&ChannelId=`);
   }
   public getRepotEMployee(id){
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode@RoleId=${id}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode&RoleId=${id}`);
   }
   public getMatrixRepotEMployee(id){
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode@RoleId=${id}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode&RoleId=${id}`);
   }
  public postOwnDetails(data:any) {
   return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageEmployee`,{data:data},AppComponent.httpOptions);            
@@ -42,7 +42,7 @@ export class ChannelPartnerService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CPADT&StartDate=&EndDate&UserCode&IsActive=Y`);
   }
   public getAreaData(city) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=AM&StateCode&CityCode=${city}&UserCode&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=SUBAM&StateCode&CityCode=${city}&UserCode&IsActive=Y`);
   }
   public postAreaDetails(data:any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCPArea`,data,AppComponent.httpOptions);            
@@ -63,3 +63,4 @@ export class ChannelPartnerService {
 
   
 }
+

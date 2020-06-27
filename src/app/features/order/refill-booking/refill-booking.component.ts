@@ -66,7 +66,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   onSelectProdSegment() {
     this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId).subscribe((resCPA: any) => {
       if (resCPA.StatusCode != 0) {
-        this.productDataSelected = resCPA.Data;
+        this.productDataSelected = resCPA.Data; 
       } else { this.productDataSelected = []; }
     });
   }
@@ -145,7 +145,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.customerService.getCustomer(this.cpInfo.CPCode,'', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.cust = Object.assign(this.cust, resData.Data[0])
+        this.cust = Object.assign(this.cust, resData.Data[0]); console.log(resData.Data);
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }

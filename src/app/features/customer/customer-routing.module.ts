@@ -10,8 +10,11 @@ import { TransferCustomerInComponent } from './transfer-customer-in/transfer-cus
 import { CustomerWiseTransactionSummaryComponent } from './customer-wise-transaction-summary/customer-wise-transaction-summary.component';
 import { CustomerWiseTransactionDetailsComponent } from './customer-wise-transaction-details/customer-wise-transaction-details.component';
 import { ClientOutstandingAndDueDateSummaryComponent } from './client-outstanding-and-due-date-summary/client-outstanding-and-due-date-summary.component';
+import { CustomerWiseProductDetailsComponent } from './customer-wise-product-details/customer-wise-product-details.component';
 
 const routes: Routes = [
+  { path:'customer-wise-product-details',
+  component:CustomerWiseProductDetailsComponent},
   { path:'customer-wise-transaction-summary',
   component:CustomerWiseTransactionSummaryComponent},
   { path:'customer-wise-transaction-details',
@@ -52,4 +55,5 @@ const routes: Routes = [
 export const routing=[RouterModule.forChild(routes)];
 export const componentArray=[TransferCustomerInComponent,SvCreationPrintingComponent,TerminateCustomerComponent,TransferCustomerComponent,UpdateCustomerComponent,CustomerMasterComponent,NewCustomerComponent,  CustomerWiseTransactionSummaryComponent,
   CustomerWiseTransactionDetailsComponent,
+  CustomerWiseProductDetailsComponent,
   ClientOutstandingAndDueDateSummaryComponent];

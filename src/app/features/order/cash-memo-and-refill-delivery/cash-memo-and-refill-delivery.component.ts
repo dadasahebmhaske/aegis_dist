@@ -8,7 +8,6 @@ import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { CustomerService } from '@app/features/customer/customer.service';
-import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-cash-memo-and-refill-delivery',
   templateUrl: './cash-memo-and-refill-delivery.component.html',
@@ -29,7 +28,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   public SubAreaArray: any = [];
   public SubAreaData: any = [];
   public RouteArray: any = [];
-  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService,private settingService:SettingService) { }
+  constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
@@ -105,7 +104,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   }
 
   onloadAll() {
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});

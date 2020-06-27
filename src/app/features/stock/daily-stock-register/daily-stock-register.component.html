@@ -3,20 +3,24 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
+          minimize="false" color="blueDark">
           <header class="text-center">
             <h2> <i class="fa fa-table"></i> Daily Stock Register</h2>
           </header>
           <div>
             <div class="widget-body">
               <div class="row ">
-                <form name="dailyStockForm" #dailyStockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                <form name="dailyStockForm" #dailyStockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off"
+                  ngNativeValidate>
                   <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="stockFilter.StartDate" name="Startdate" id="startDate"
-                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker
+                          [(ngModel)]="stockFilter.StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker
+                          [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
                   </div>
@@ -24,7 +28,8 @@
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>
-                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="stockFilter.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date"
+                          [(ngModel)]="stockFilter.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
                           bsDatepicker [bsConfig]="datePickerConfig" />
                       </label>
                     </div>
@@ -33,9 +38,11 @@
                     <div class="form-group">
                       <!-- <label for="sel1">Product Segment <span class="errorMessage">*</span>
                       </label> -->
-                      <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="stockFilter.ProdSegId" name="ProdSegId">
+                      <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="stockFilter.ProdSegId"
+                        name="ProdSegId">
                         <option value="" selected disabled>Select Segment</option>
-                        <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
+                        <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -43,7 +50,8 @@
                     <div class="form-group">
                       <!-- <label for="sel1">Product <span class="errorMessage">*</span>
                       </label> -->
-                      <select class="form-control" [(ngModel)]="stockFilter.ProdId" name="ProdId" [required]="stockFilter.ProdSegId!='' && stockFilter.ProdSegId!=null">
+                      <select class="form-control" [(ngModel)]="stockFilter.ProdId" name="ProdId"
+                        [required]="stockFilter.ProdSegId!='' && stockFilter.ProdSegId!=null">
                         <option value="" selected disabled>Select Product</option>
                         <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                       </select>
@@ -52,7 +60,8 @@
                   <div class="col-sm-1 col-xs-4">
                     <div class="form-group">
                       <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
-                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                        {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                     </div>
                   </div>
                 </form>
@@ -66,6 +75,9 @@
                     </li>
                     <li [class.active]="state.tabs.demo1 == 2">
                       <a (click)="state.tabs.demo1 = 2;showGrid('D')"> Defective</a>
+                    </li>
+                    <li [class.active]="state.tabs.demo1 == 3">
+                      <a (click)="state.tabs.demo1 = 3;showGrid('N')"> New Connection</a>
                     </li>
                   </ul>
                   <tabset class="padding-10">
@@ -87,6 +99,13 @@
                       <div class="row">
                         <div class="col-sm-12 table-responsive">
                           <ui-grid [data]="defectiveData" [gridOptions]="gridDefectiveOptions"></ui-grid>
+                        </div>
+                      </div>
+                    </tab>
+                    <tab [active]="state.tabs.demo1 == 3" *ngIf="flag=='N'">
+                      <div class="row">
+                        <div class="col-sm-12 " >
+                          <ui-grid [data]="newConnectionData" [gridOptions]="gridnewConnectionOptions"></ui-grid>
                         </div>
                       </div>
                     </tab>

@@ -15,6 +15,9 @@ import { EmployeeMasterComponent } from './employee-master/employee-master.compo
 import { EmployeeComponent } from './employee/employee.component';
 import { ChannelPartnerMasterComponent } from './channel-partner-master/channel-partner-master.component';
 import { ChannelPartnerComponent } from './channel-partner/channel-partner.component';
+import { RouteMappingMasterComponent } from './route-mapping-master/route-mapping-master.component';
+import { RouteMappingComponent } from './route-mapping/route-mapping.component';
+
 const routes: Routes = [
   { path: 'channel-partner-master', component: ChannelPartnerMasterComponent },
   { path: 'channel-partner', component: ChannelPartnerComponent },
@@ -22,6 +25,8 @@ const routes: Routes = [
   { path: 'vehicle', component: VehicleComponent },
   { path: 'route-master', component: RouteMasterComponent },
   { path: 'route', component: RouteComponent },
+  { path: 'route-mapping-master', component: RouteMappingMasterComponent },
+  { path: 'route-mapping', component: RouteMappingComponent },
   { path: 'godown-master', component: GodownMasterComponent },
   { path: 'godown', component: GodownComponent },
   { path: 'transport-master', component: TransportMasterComponent },
@@ -41,4 +46,4 @@ export const routing = [RouterModule.forChild(routes)]
 export const componentArray = [
   ChannelPartnerMasterComponent,
   ChannelPartnerComponent,
-  EmployeeComponent, EmployeeMasterComponent, SubAreaComponent, SubAreaMasterComponent, TransportComponent, TransportMasterComponent, GodownComponent, GodownMasterComponent, RouteComponent, RouteMasterComponent, VehicleComponent, VehicleMasterComponent];
+  EmployeeComponent, EmployeeMasterComponent, SubAreaComponent, SubAreaMasterComponent, TransportComponent, TransportMasterComponent, GodownComponent, GodownMasterComponent, RouteComponent, RouteMasterComponent,RouteMappingMasterComponent,RouteMappingComponent, VehicleComponent, VehicleMasterComponent];

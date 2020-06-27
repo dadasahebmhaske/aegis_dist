@@ -5,15 +5,18 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { StockService } from '../stock.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { MasterService } from '@app/core/custom-services/master.service';
 @Component({
   selector: 'sa-order-and-dispatch-details',
   templateUrl: './order-and-dispatch-details.component.html',
   styleUrls: ['./order-and-dispatch-details.component.css']
 })
-export class OrderAndDispatchDetailsComponent implements OnInit {
+export class OrderAndDispatchDetailsComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public EndDate: any = '';
+  public filepreview: any;
+  public imgUrl: string;
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
@@ -28,10 +31,11 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
   public rjvis:boolean;
   Status:any=[];
   plantId:any;
-  constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService) {
+  constructor(private appService: AppService, private datashare: DatashareService,private masterService:MasterService,private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
+    this.imgUrl = `${AppComponent.ImageUrl}StockOrderDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.order.OrderStage='PE';
     this.accvis=false;  
@@ -72,6 +76,13 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
     { name: 'TtlCgstAmt', displayName: 'CGST Amount',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
     { name: 'TtlSgstAmt', displayName: 'SGST Amount',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
     { name: 'GrandTotal', displayName: 'Grand Total',cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true},
+    { name: 'PaidAmount', displayName: 'Paid Amount', width: "120", cellClass: 'cell-right', cellTooltip: true, filterCellFiltered: true },
+       { name: 'PayMode', displayName: 'Payment Mode', width: "140",  cellTooltip: true, filterCellFiltered: true },
+      { name: 'PayTransNo', displayName: 'Transaction No.', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ImageName', displayName: 'Payment Proof', width: "180", cellTooltip: true, filterCellFiltered: true,visible:false },
+      {
+        name: 'ImageName', displayName: 'Payment Proof', cellTemplate: `<button  style="margin:2px 0; width:100%;" class="btn-success btn-xs" ng-if="row.entity.IsActive=='Y'"   ng-click="grid.appScope.deleteEmployee(row.entity)"   >&nbsp;View&nbsp;</button> `
+        , width: "140", exporterSuppressExport: true,filterCellFiltered: true},
     { name: 'Remarks', displayName: 'Remarks', width: '250', cellTooltip: true, filterCellFiltered: true},
     { name: 'RejectRemark', displayName: 'Reject Remark', width: '150', cellTooltip: true, filterCellFiltered: true, visible:this.rjvis},
     { name: 'CreatedBy', displayName: 'Created By',  width: '190', cellTooltip: true, filterCellFiltered: true},
@@ -101,6 +112,16 @@ export class OrderAndDispatchDetailsComponent implements OnInit {
       AppComponent.Router.navigate(['/stock/order-accepted-rejected-dispatched']); 
     }
      this.datashare.updateShareData($event.row);
+  }
+  onDeleteFunction = ($event) => {
+    this.stock = $event.row;
+    this.masterService.getDocumentDetails('INV', this.stock.StkOrdId).subscribe((response: any) => {
+      if (response.StatusCode != 0)
+        if (response.Data.length > 0) { 
+          this.filepreview=`${this.imgUrl}${response.Data[response.Data.length-1].DocFileName}`;
+          //window.open(`${this.filepreview}`, '_blank');
+          $('#paymentModal').modal('show');}
+    });
   }
   onLoad() {
     this.loaderbtn = false;

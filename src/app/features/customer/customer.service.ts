@@ -13,8 +13,8 @@ export class CustomerService {
   public postInstantCustomerDetails(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}/Operational/ManageInstantCustomer`, { data: data }, AppComponent.httpOptions);
   }
-  public getCustomerType() {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CTM&IsActive=Y`);
+  public getCustomerType(ChannelId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CTM&IsActive=Y&ChannelId=${ChannelId}`);
   }
   public getVolumeType(RefId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CBVLIST&FormFlag=CBV&RefId=${RefId}&IsActive=Y`);
@@ -71,14 +71,17 @@ export class CustomerService {
     return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Operational/ManageCustProd`, fd);
   }
   public getCustomerWiseTransactionSummary(cpcode, DelFilter, fd, td) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustwiseTranSummary?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.DelUserCode}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustwiseTranSummary?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.ConsNo}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
 }                                              
 public getCustomerWiseTransactionDetails(cpcode, DelFilter, fd, td) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustTransactionDetails?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.DelUserCode}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustTransactionDetails?CPCode=${cpcode}&CustTypeId=${DelFilter.CustTypeId}&ConsNo=${DelFilter.ConsNo}&MobileNo=${DelFilter.MobileNo}&FDate=${fd}&TDate=${td}`);
 }
 public getClientOutsatandingDueDateSummary(cpcode, cust) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustOutstandingDetails?CPCode=${cpcode}&ConsId=&ConsNo=&MobileNo=&RouteId=${cust.RouteId}&AreaCode=${cust.AreaId}&SubAreaId=${cust.SubAreaId}&FDate=${cust.StartDate}&TDate=${cust.EndDate}`);
-}                                                                                                          
+}  
+public getCustomerWiseProductDetails(cpcode, DelFilter, fd, td) {
+  return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}ReportsDashboards/GetCustProductReport?CPCode=${cpcode}&ConsNo=${DelFilter.ConsNo}&MobileNo=${DelFilter.MobileNo}&SapId=&ProgSegId=&FromDate=${fd}&ToDate=${td}`);
+}                                                                                                           
 
   public checkCustOrMobNo(cust) {
     cust.CustNoMob = cust.CustNoMob == null ? '' : cust.CustNoMob;

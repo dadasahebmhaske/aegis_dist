@@ -7,7 +7,6 @@ import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../../order/order.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { CustomerService } from '@app/features/customer/customer.service';
-import { SettingService } from '@app/features/settings/setting.service';
 @Component({
   selector: 'sa-area-wise-refill-order-summary',
   templateUrl: './area-wise-refill-order-summary.component.html',
@@ -32,7 +31,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
   public SubAreaData: any = [];
   public RouteArray: any = [];
 
-  constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService,private settingService:SettingService ) {
+  constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
 
@@ -85,7 +84,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     });
   }
   onloadAll() {
-    this.settingService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});

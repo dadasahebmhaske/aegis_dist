@@ -19,9 +19,11 @@ export class DailyStockRegisterComponent implements OnInit {
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public defectiveData: any = [];
   public emptyData: any = [];
+  public newConnectionData:any=[]; 
   public flag: string = 'S';
   public gridDefectiveOptions: IGridoption;
   public gridEmptyOptions: IGridoption;
+   public gridnewConnectionOptions: IGridoption;
   public gridOptions: IGridoption;
   public stockFilter: any = { ProdSegId: '', ProdId: '' };
   public loaderbtn: boolean = true;
@@ -50,6 +52,7 @@ export class DailyStockRegisterComponent implements OnInit {
     this.configureSoundGrid();
     this.configureDefectiveGrid();
     this.configureEmptyGrid();
+    this.configureNewConnectionGrid();
     this.onLoad();
   }
   allLoad() {
@@ -126,6 +129,25 @@ export class DailyStockRegisterComponent implements OnInit {
     ]
     this.gridOptions.columnDefs = columnDefs;
   }
+  configureNewConnectionGrid() {
+    this.gridnewConnectionOptions = <IGridoption>{}
+    this.gridnewConnectionOptions.exporterMenuPdf = false;
+    this.gridnewConnectionOptions.exporterExcelFilename = 'Daily Stock Register.xlsx';
+    let columnDefs = [];
+    columnDefs = [
+      { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
+      { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170", cellTooltip: true },
+      // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
+      // { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      // { name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true }
+    ]
+    this.gridnewConnectionOptions.columnDefs = columnDefs;
+  }
   onLoad() {
     this.loaderbtn = false;
     this.stockFilter.CPCode = this.cpInfo.CPCode;
@@ -137,6 +159,7 @@ export class DailyStockRegisterComponent implements OnInit {
         this.soundData = resData.Data.Table == null ? [{}] : resData.Data.Table;
         this.emptyData = resData.Data.Table1 == null ? [{}] : resData.Data.Table1;
         this.defectiveData = resData.Data.Table2 == null ? [{}] : resData.Data.Table2;
+        this.newConnectionData = resData.Data.Table3 == null ? [{}] : resData.Data.Table3;
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else {

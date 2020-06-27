@@ -13,11 +13,12 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { AuthenticationGuard } from '../app/core/guards/authentication.guard';
 import { LoggedInGuard } from '../app/core/guards/loggedIn.guard';
 import { environment } from '../environments/environment';
+import { OnlineStatusComponent } from './features/online-status/online-status.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent, UiGridDirective
+    AppComponent, UiGridDirective, OnlineStatusComponent
   ],
   imports: [
     BrowserModule,

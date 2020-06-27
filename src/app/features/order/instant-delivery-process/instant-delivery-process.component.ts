@@ -233,7 +233,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (respD.StatusCode != 0)
         this.delBoyData = respD.Data;
     });
-    this.customerService.getCustomerType().subscribe((respCt) => {
+    this.customerService.getCustomerType(this.cpInfo.ChannelId).subscribe((respCt) => {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
     });
@@ -242,15 +242,15 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
-      if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
-    });
-    this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
+    // this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
+    //   if (resR.StatusCode != 0)
+    //     this.RouteData = resR.Data;
+    // });
+    // this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
+    //   if (reSA.StatusCode != 0) {
+    //     this.SubAreaArray = reSA.Data;
+    //   }
+    // });
     this.masterService.getArea(this.CPCode).subscribe((resAR: any) => {
       if (resAR.StatusCode != 0)
         this.AreaData = resAR.Data;
@@ -285,6 +285,8 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
   }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+    let obj=this.masterService.filterData(this.AreaData, this.customer.AreaId, 'AreaId');
+    this.customer.PinCode=obj[0].PinCode;
   }
   getRoute() {
     let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');

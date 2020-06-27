@@ -1,17 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import * as CryptoJs from '../../node_modules/crypto-js';
 import { HttpHeaders } from '@angular/common/http';
 import { Router, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 import { environment } from '@env/environment';
 import { NotificationService } from './../app/core/services/notification.service';
 import { OnInit } from '@angular/core';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-root',
   template: `<router-outlet></router-outlet><ng-container *ngIf="loading">
   <img class="loader-center" src="assets/img/loader.gif">
-</ng-container>`,
+</ng-container>
+<sa-online-status
+  [onlineStatusMessage]="connectionStatusMessage"
+  [onlineStatus]="connectionStatus">
+</sa-online-status>`,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'sa';
   static BaseUrl;
   static BaseUrlDist;
@@ -23,6 +28,12 @@ export class AppComponent implements OnInit {
   static secureKey;
   static SmartAlert: NotificationService;
   public loading: boolean = false;
+
+  onlineEvent: Observable<Event>;
+  offlineEvent: Observable<Event>;
+  subscriptions: Subscription[] = [];
+  connectionStatusMessage: string;
+  connectionStatus: string;
   constructor(public router: Router, public SmartAlert: NotificationService) {
     AppComponent.httpOptions = {
       headers: new HttpHeaders({
@@ -46,8 +57,10 @@ export class AppComponent implements OnInit {
         this.loading = true;
       } else if (event instanceof RouteConfigLoadEnd) {
         this.loading = false;
+        window.scrollTo(0, 0);
       }
     });
+    
   }
   ngOnInit() {
     window.addEventListener('storage', (event) => {
@@ -71,5 +84,23 @@ export class AppComponent implements OnInit {
         }
       }
     }, false);
+
+    this.onlineEvent = fromEvent(window, 'online');
+    this.offlineEvent = fromEvent(window, 'offline');
+    this.subscriptions.push(this.onlineEvent.subscribe(e => {
+      this.connectionStatusMessage = 'Back to online';
+      this.connectionStatus = 'online';
+    }));
+    this.subscriptions.push(this.offlineEvent.subscribe(e => {
+      this.connectionStatusMessage = 'Connection lost!  You are not connected to internet';
+      this.connectionStatus = 'offline';
+    }));
+
+  }
+  ngOnDestroy() {
+    /**
+    * Unsubscribe all subscriptions to avoid memory leak
+    */
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

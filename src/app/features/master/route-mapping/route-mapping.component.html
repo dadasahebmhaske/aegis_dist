@@ -1,0 +1,83 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+      <div class="row">
+          <article class="col-sm-6 col-sm-offset-3">
+              <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+                  <header class="text-center">
+                      <h2>
+                          <i class="fa fa-database"></i> Route Mapping Master</h2>
+                  </header>
+                  <div>
+                      <div class="widget-body">
+                          <form name="routeMappingForm" #routeMappingForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate>
+                              <div class="row">
+                                <!-- <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>State <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" name="StateCode" [(ngModel)]="routeMapping.StateCode" (change)="getCityData()" required>
+                                      <option value="" selected hidden>Select State</option>
+                                      <option [value]="st.StateCode" *ngFor="let st of StateData">{{st.StateDesc}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>City <span class="errorMessage">*</span>
+                                    </label>
+                                    <select class="form-control" [(ngModel)]="routeMapping.CityCode" name="CityCode" required>
+                                      <option value="" selected hidden>Select City</option>
+                                      <option [value]="city.CityCode" *ngFor="let city of CityData">{{city.CityName}} </option>
+                                    </select>
+                                  </div>
+                                </div> -->
+                                <div class="col-sm-5" >
+                                  <div class="form-group">
+                                    <label> Dealer / SF / SD / POS <span class="errorMessage">*</span></label>
+                                    <select class="form-control" [(ngModel)]="routeMapping.CPCode" name="CPCode" [disabled]="routeMapping.RouteId!=null" (change)="getAreaAllocated(0)" required>
+                                      <option value="" selected disabled>Select SF / SD / POS</option>
+                                      <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                  <div class="col-sm-7">
+                                      <div class="form-group">
+                                          <label>Route Name <span class="errorMessage">*</span>
+                                          </label>
+                                          <input type="text" class="form-control" placeholder="Enter Route Name" name="RouteName" [(ngModel)]="routeMapping.RouteName" saCommonDir
+                                              dirType="alphanumeric" required />
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <label>
+                                          <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='routeMapping.IsActive' /> Is Active </label>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-12 table-responsive" >
+                                  <ui-grid [data]="allocData" [gridOptions]="gridOptions" (onCheckBox)="onCheckData($event)">
+                                  </ui-grid>
+                              </div>
+                              </div>
+                              <footer>
+                                  <div class="row">
+                                      <div class="col-sm-12 ">
+                                          <hr />
+                                          <a class="pull-right btn btn-default" routerLink="/master/route-mapping-master">
+                                              <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                                          <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                                              <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                                      </div>
+                                  </div>
+                              </footer>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </article>
+      </div>
+  </sa-widgets-grid>
+</div>

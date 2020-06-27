@@ -24,7 +24,9 @@ export class DayEndComponent implements OnInit {
   public maxDate: Date;
   public defectiveData: any = [];
   public emptyData: any = [];
+  public newConnectionData:any=[];
   public gridDefectiveOptions: IGridoption;
+  public gridnewConnectionOptions: IGridoption;
   public gridShow: string = 'S';
   public gridEmptyOptions: IGridoption;
   public gridOptions: IGridoption;
@@ -50,6 +52,7 @@ export class DayEndComponent implements OnInit {
     this.configureSoundGrid();
     this.configureDefectiveGrid();
     this.configureEmptyGrid();
+    this.configureNewConnectionGrid();
     this.onLoad();
   }
   configureEmptyGrid() {
@@ -109,6 +112,25 @@ export class DayEndComponent implements OnInit {
     ]
     this.gridOptions.columnDefs = columnDefs;
   }
+  configureNewConnectionGrid() {
+    this.gridnewConnectionOptions = <IGridoption>{}
+    this.gridnewConnectionOptions.exporterMenuPdf = false;
+    this.gridnewConnectionOptions.exporterExcelFilename = 'New Connection Day End Details.xlsx';
+    let columnDefs = [];
+    columnDefs = [ 
+      { name: 'ProdSeg', displayName: 'Product Segment', width: "*", cellTooltip: true },
+      { name: 'Product', displayName: 'Product Name', width: "*", cellTooltip: true },
+      { name: 'OpeningBal', displayName: 'Opening New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOut', displayName: 'NC to Customer', cellClass: 'cell-right', width: "*", cellTooltip: true },
+       { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "150", cellTooltip: true },
+      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "150", cellTooltip: true },
+      //{ name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      //{ name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'ClosingBal', displayName: 'Closing New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true }
+    ]
+    this.gridnewConnectionOptions.columnDefs = columnDefs;
+  }
   onLoad() {
     this.loaderbtn = false;
     this.stockService.getLastDayEnd(this.cpInfo.CPCode).subscribe((resDay: any) => {
@@ -127,9 +149,10 @@ export class DayEndComponent implements OnInit {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.stock = resData.Data;
-        this.soundData = resData.Data.Table;
-        this.emptyData = resData.Data.Table1;
-        this.defectiveData = resData.Data.Table2;
+        this.soundData = resData.Data.Table == null ? [{}] : resData.Data.Table;
+        this.emptyData = resData.Data.Table1 == null ? [{}] : resData.Data.Table1;
+        this.defectiveData = resData.Data.Table2 == null ? [{}] : resData.Data.Table2;
+        this.newConnectionData = resData.Data.Table3 == null ? [{}] : resData.Data.Table3;
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
@@ -159,6 +182,7 @@ export class DayEndComponent implements OnInit {
     this.stock.DataSound = this.stock.Table;
     this.stock.DataEmpty = this.stock.Table1;
     this.stock.DataDefective = this.stock.Table2;
+    this.stock.DataNewConnection = this.stock.Table3;
     this.stockService.postDayend(this.stock).subscribe((resD: any) => {
       this.loaderbtn = true;
       if (resD.StatusCode != 0) {

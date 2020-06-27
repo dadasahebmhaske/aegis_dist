@@ -10,6 +10,7 @@ export class StockService {
             for (let i = 0; i < ProductArray.length; i++) {
                 stock.ProdAmt = parseFloat(stock.ProdAmt) + parseFloat(ProductArray[i].ProdAmt);
                 stock.TtlRefundAmt = parseFloat(stock.TtlRefundAmt) + parseFloat(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
+                if (ProductArray[i].OrderType == 'RO') 
                 stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 stock.SubTotal = parseFloat(stock.SubTotal) + parseFloat(ProductArray[i].SubTotal);
                 stock.IgstTotal = parseFloat(stock.IgstTotal) + parseFloat(ProductArray[i].IgstAmt);

@@ -39,7 +39,7 @@ export class NewCustomerComponent implements OnInit {
     // this.employee.CityCode= this.employee.CityCode==null?'': this.employee.CityCode;
   }
   allOnloadMethods() {
-    this.customerService.getCustomerType().subscribe((respCt) => {
+    this.customerService.getCustomerType(this.cpInfo.ChannelId).subscribe((respCt) => {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
     });
@@ -83,6 +83,8 @@ export class NewCustomerComponent implements OnInit {
   }
   getSubArea() {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+    let obj=this.masterService.filterData(this.AreaData, this.customer.AreaId, 'AreaId');
+    this.customer.PinCode=obj[0].PinCode;
   }
   getRoute() {
     let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
