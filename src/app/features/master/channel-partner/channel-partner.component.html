@@ -250,7 +250,7 @@
                                     <label for="sel1">Telephone No.<span class="errorMessage">*</span></label>
                                     <input type="text" class="form-control" placeholder="Enter Telephone No."
                                     [(ngModel)]="own.LandLineNo" [ngModelOptions]="{standalone: true}" 
-                                    saCommonDir dirType="nummber" required />
+                                    pattern="^[0-9]\d{2,5}-[0-9]\d{6,8}$" title="Example: 02221-234567" saCommonDir dirType="nummber" required />
                                 </div>
                             </div>
                             <div class="col-sm-3">
