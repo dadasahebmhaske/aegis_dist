@@ -26,8 +26,11 @@ export class ChannelPartnerService {
    public postCPDetails(data:any) {
   return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageChannelPartner`,data,AppComponent.httpOptions);            
   }
-  public getRepotDesignation(){
+  public getMatRepotDesignation(){
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=1&ChannelId=`);
+  }
+  public getRepotDesignation(ChannelId,DeptId){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=1&ChannelId=${ChannelId}&DeptId=${DeptId}`);
   }
   public getRepotEMployee(id){
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode&RoleId=${id}`);
@@ -60,7 +63,9 @@ export class ChannelPartnerService {
     getDocumentDetails(formFlag, RefId) {
       return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DOC&FormFlag=${formFlag}&RefId=${RefId}&IsActive=Y`);
     } //MasterCode=DTM
-
+    public getDepartment(ChannelId){
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=DM&IsActive=Y&ChannelId=${ChannelId}`);
+    }
   
 }
 

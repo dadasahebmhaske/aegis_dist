@@ -76,7 +76,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   public bankArray: any = [];
   public bulkBank: any = {};
   public removeBankUpdate: any = [];
-
+  public DeptData:any=[];
 
   constructor(private appService: AppService, private channelPartnerService: ChannelPartnerService, private customerService: CustomerService, private datashare: DatashareService, private employeeService: EmployeeService, private masterService: MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -260,6 +260,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.own.RoleCode = 'OWNE';
     this.own.IsActive = 'D';
     this.own.CPCode = this.channal.CPCode;
+    this.own.DeptId='';
     if (this.own.ManagerId === this.own.MatrixId) {
       AppComponent.SmartAlert.Errmsg('Reporting to Employee and Matrix Reporting to Employee Should Not Be Same!');
     } else {
@@ -437,13 +438,22 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       if (resACT.StatusCode != 0)
         this.AccountTypeData = resACT.Data;
     });
-    this.channelPartnerService.getRepotDesignation().subscribe((resRPDES: any) => {
+    this.channelPartnerService.getDepartment(this.cpInfo.ChannelId).subscribe((resRPDEt: any) => {
+      if (resRPDEt.StatusCode != 0)
+        this.DeptData = resRPDEt.Data;
+        this.getReportDesignation(this.channal.DeptId);
+    });
+    this.channelPartnerService.getMatRepotDesignation().subscribe((resRPDES: any) => {
       if (resRPDES.StatusCode != 0)
-        this.RepDesi = resRPDES.Data;
       this.MatDesi = resRPDES.Data;
     });
-
-
+   
+  }
+  getReportDesignation(DeptId){
+    this.channelPartnerService.getRepotDesignation(this.cpInfo.ChannelId,DeptId).subscribe((resRPDES: any) => {
+      if (resRPDES.StatusCode != 0)
+        this.RepDesi = resRPDES.Data;
+    });
   }
   getRepEmp(id) {
     //if((this.own.Flag == 'UP' && this.own.ManagerId == null) || (this.own.Flag == 'IN')){this.own.ManagerId = ''};
@@ -696,9 +706,12 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         this.own.ManagerId = this.own.ManagerId == null ? '' : this.own.ManagerId;
         this.own.MRoleId = this.own.MRoleId == null ? '' : this.own.MRoleId;
         this.own.MatrixId = this.own.MatrixId == null ? '' : this.own.MatrixId;
+        this.own.DeptId = this.channal.DeptId == null ? '' : this.channal.DeptId; 
         this.own.Flag = this.own.FirstName == null || this.own.FirstName == undefined ? 'IN' : 'UP';
         this.getRepEmp(this.own.RRoleId);
         this.getMatEmp(this.own.MRoleId);
+      }else{
+        this.own ={RRoleId:'',ManagerId:'',MRoleId:'',MatrixId:'',DeptId:''}
       }
     });
   }

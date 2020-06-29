@@ -294,10 +294,19 @@
                                     <span class="showPass glyphicon {{className}} form-control-feedback " (click)="HideShowPassword1()"
                                         style="cursor: pointer; margin-top: 2px;pointer-events: all; color: rgb(80, 80, 80);">
                                     </span>
-
                                 </div>
                             </div>
-                    
+                            <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Department<span class="errorMessage" >*</span>
+                                </label>
+                                <select  class="form-control"  [(ngModel)]="own.DeptId" [ngModelOptions]="{standalone: true}"
+                                (change)="getReportDesignation(own.DeptId)" required>
+                                  <option value="" selected hidden>Select Department</option>
+                                  <option *ngFor="let option of DeptData" value="{{option.DeptId}}">{{option.Department}}</option>
+                                  </select>
+                              </div>
+                          </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label for="sel1">Reporting to Designation<span class="errorMessage" >*</span></label>
