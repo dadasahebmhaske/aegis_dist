@@ -372,6 +372,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   }
   nextToSave() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
+      this.loaderbtn = false;
       this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
       this.bulkDoc.RefId = this.channal.CPCode;
       this.bulkDoc.FormFlag = 'CP';
@@ -441,7 +442,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.channelPartnerService.getDepartment(this.cpInfo.ChannelId).subscribe((resRPDEt: any) => {
       if (resRPDEt.StatusCode != 0)
         this.DeptData = resRPDEt.Data;
-        this.getReportDesignation(this.channal.DeptId);
+        this.getReportDesignation(AppComponent.DeptId);
     });
     this.channelPartnerService.getMatRepotDesignation().subscribe((resRPDES: any) => {
       if (resRPDES.StatusCode != 0)
@@ -458,8 +459,8 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   getRepEmp(id) {
     //if((this.own.Flag == 'UP' && this.own.ManagerId == null) || (this.own.Flag == 'IN')){this.own.ManagerId = ''};
     if (id != '') {
-      this.channelPartnerService.getRepotEMployee(id).subscribe(
-        (resRPTEMPData: any) => {
+      this.channelPartnerService.getRepotEMployee(this.cpInfo.CPCode,id).subscribe(
+        (resRPTEMPData: any) => { 
           this.RepEmp = resRPTEMPData.Data;
         });
     } else {
@@ -706,12 +707,12 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         this.own.ManagerId = this.own.ManagerId == null ? '' : this.own.ManagerId;
         this.own.MRoleId = this.own.MRoleId == null ? '' : this.own.MRoleId;
         this.own.MatrixId = this.own.MatrixId == null ? '' : this.own.MatrixId;
-        this.own.DeptId = this.channal.DeptId == null ? '' : this.channal.DeptId; 
+        this.own.DeptId = AppComponent.DeptId; 
         this.own.Flag = this.own.FirstName == null || this.own.FirstName == undefined ? 'IN' : 'UP';
         this.getRepEmp(this.own.RRoleId);
         this.getMatEmp(this.own.MRoleId);
       }else{
-        this.own ={RRoleId:'',ManagerId:'',MRoleId:'',MatrixId:'',DeptId:''}
+        this.own ={RRoleId:'',ManagerId:'',MRoleId:'',MatrixId:'',DeptId:AppComponent.DeptId}
       }
     });
   }

@@ -200,6 +200,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   }
   nextToSave() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
+      this.loaderbtn = false;
       this.bulkDoc.flag = this.employee.DocId == null ? 'IN' : 'UP';
       this.bulkDoc.RefId = this.employee.EmpId;
       this.bulkDoc.FormFlag = 'EMP';

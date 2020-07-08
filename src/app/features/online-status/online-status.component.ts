@@ -1,6 +1,6 @@
 
 import { Component,Input, OnInit, AfterContentChecked } from '@angular/core';
-
+import { AppComponent } from '@app/app.component';
 @Component({
   selector: 'sa-online-status',
   templateUrl: './online-status.component.html',
@@ -15,7 +15,12 @@ export class OnlineStatusComponent implements OnInit,AfterContentChecked {
   ngAfterContentChecked(){
     if(this.onlineStatus ==='online'&& this.flag=='F')
     {this.flag='O';
-    location.reload();}
+    location.reload();
+  // let currentUrl = AppComponent.Router.url;
+  // AppComponent.Router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+  //   AppComponent.Router.navigate([currentUrl]);
+  //});
+  }
     if(this.onlineStatus === 'offline')
     this.flag='F';
   }

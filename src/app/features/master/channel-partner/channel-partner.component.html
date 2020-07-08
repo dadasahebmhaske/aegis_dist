@@ -46,7 +46,7 @@
                             <div class="form-group">
                                 <label for="sel1">Channel <span class="errorMessage">*</span></label>
                                 <select  class="form-control"  [(ngModel)]="channal.ChannelId" [ngModelOptions]="{standalone: true}" 
-                                (change)="getChType(channal.ChannelId)" required>
+                                (change)="getChType(channal.ChannelId)" disabled required>
                                     <option value="" selected hidden> Select Channel</option>
                                     <option *ngFor="let option of chantype" value="{{option.ChannelId}}">{{option.Channel}}</option>
                                 </select>
@@ -301,7 +301,7 @@
                                 <label for="sel1">Department<span class="errorMessage" >*</span>
                                 </label>
                                 <select  class="form-control"  [(ngModel)]="own.DeptId" [ngModelOptions]="{standalone: true}"
-                                (change)="getReportDesignation(own.DeptId)" required>
+                                (change)="getReportDesignation(own.DeptId)" disabled required>
                                   <option value="" selected hidden>Select Department</option>
                                   <option *ngFor="let option of DeptData" value="{{option.DeptId}}">{{option.Department}}</option>
                                   </select>

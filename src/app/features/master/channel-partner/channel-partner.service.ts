@@ -30,10 +30,10 @@ export class ChannelPartnerService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=1&ChannelId=`);
   }
   public getRepotDesignation(ChannelId,DeptId){
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=1&ChannelId=${ChannelId}&DeptId=${DeptId}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/getdesighierarchy?RoleId=&flag=0&ChannelId=${ChannelId}&DeptId=${DeptId}`);
   }
-  public getRepotEMployee(id){
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode&RoleId=${id}`);
+  public getRepotEMployee(CPCode,id){
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?CPCode=${CPCode}&UserId=&IsActive=Y&RoleCode&RoleId=${id}`);
   }
   public getMatrixRepotEMployee(id){
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetEmpDetails?UserId=&IsActive=Y&RoleCode&RoleId=${id}`);

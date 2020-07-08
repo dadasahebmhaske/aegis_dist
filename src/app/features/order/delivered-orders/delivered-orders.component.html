@@ -54,7 +54,7 @@
                   </div>
                 </form>
                 <div class="col-sm-12 table-responsive">
-                  <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                  <ui-grid [data]="DeliveredOrderData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onSelected)="onSelectedFunction($event)"></ui-grid>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
     </div>
   </sa-widgets-grid>
 </div>
-<!-- Modal -->
+<!-- Product Modal -->
 <div class="modal fade" id="productsModal" role="dialog">
   <div class="modal-dialog modal-lg">
     <!-- Modal content-->
@@ -114,6 +114,120 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CashMemo Modal -->
+<div class="modal fade" id="cashmemoModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Invoice Details</h4>
+      </div>
+      <div class="modal-body">
+        <style>
+          /* table > tbody > tr > td {
+              vertical-align: middle !important;
+              border: 1px solid #ccc;
+          } */
+         #invctbl table,
+         #invctbl th,
+         #invctbl   td {
+              border: 1px solid black;
+              border-collapse: collapse;
+              vertical-align: middle !important;
+          }
+  
+          th,
+          td {
+              padding: 5px;
+          }
+  
+          th>span {
+              text-align: left;
+          }
+      </style>
+        <div class="row" id="invctbl">
+          <div class="col-sm-12 table-responsive">
+            <table style="width:100%;">
+              <tbody style="width:100%;">
+                  <tr>
+                      <td align="center" rowspan="2"><img
+                              src="assets/img/AegisLogoWithoutBackground.png"
+                              width="70px"></td>
+                      <th align="center" colspan="8" class="text-center">AEGIS GAS</th>
+                  </tr>
+                  <tr>
+                      <th align="center" colspan="8" class="text-center"><span style="font-size: 19px;"> {{cpInfo.CPName}} </span>
+                          <br><br>
+                          <small>SAP ID : {{cpInfo.SAPId}}</small>
+                      </th>
+                  </tr>
+                  <tr align="left">
+                      <th colspan="5"> To : {{custData.ConsName}}
+                          <br><br>
+                          Customer No. : {{custData.ConsNo}}
+                      </th>
+                      <th colspan="4"> Bill Date : {{custData.DelDate}} 
+                          <br>Bill No. : {{custData.DelRefNo}} 
+                          <br> GST No. : {{custData.GstNo}}   
+                      </th>
+                  </tr>
+                  <tr align="center" class="text-center">
+                      <th rowspan="2" class="text-center">
+                          Product
+                      </th>
+                      <th colspan="3" class="text-center"> GST</th>
+                      <th rowspan="2" class="text-center">Discount</th>
+                      <th rowspan="2" class="text-center">Product <br>Rate</th>
+                      <th rowspan="2" class="text-center">Product <br>Quantity</th>
+                      <th rowspan="2" class="text-center">Total </th>
+                      <th rowspan="2" class="text-center">Payable <br>Amount</th>
+                  </tr>
+                  <tr align="center" class="text-center">
+                      <th class="text-center"><strong>CGST(%)</strong></th>
+                      <th class="text-center">SGST(%)</th>
+                      <th class="text-center">IGST(%)</th>
+                  </tr>
+                 
+                  <tr *ngFor="let pr of ProductArray;index as i" >
+                    
+                    <th>{{pr.Product}}</th>
+                    <td align="right">9.00</td>
+                    <td align="right">9.00</td>
+                    <td align="right">18.00</td>
+                    <td align="right">{{pr.Discount}}</td>
+                    <td align="right">{{pr.ProdRate}}</td>
+                    <td align="right">{{pr.ProdQty}}</td>
+                    <td align="right">{{pr.RefillAmount}}</td>
+                    <td align="right">{{pr.AmountPayable}}</td>
+                    
+                </tr>
+                  <tr>
+                      <th align="right" colspan="8" class="text-right">Total</th>
+                      <th align="right" class="text-right">{{custData.TotalAmtPayable}}</th> 
+                  </tr>
+                  <tr>
+                      <th align="left" colspan="9">Rupees : {{totalAmtWord}}.
+                          <br>Delivered By : {{custData.DelUserName}}.
+                      </th>
+                  </tr>
+                  <tr>
+                      <td colspan="9"><strong style=" float:right" align="right">For : {{cpInfo.CPName}}</strong>
+                          <br><br><strong>Receiver Signature</strong>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
           </div>
         </div>
       </div>

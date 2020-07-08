@@ -212,6 +212,7 @@ export class GodownComponent implements OnInit, OnDestroy {
   }
   nextToSave() {
     if (this.bdata.length > 0 || this.removeDocUpdate.length > 0) {
+      this.loaderbtn = false;
       this.bulkDoc.flag = this.godown.DocId == null ? 'IN' : 'UP';
       this.bulkDoc.RefId = this.godown.GodownId;
       this.bulkDoc.FormFlag = 'GDWN';
@@ -223,7 +224,6 @@ export class GodownComponent implements OnInit, OnDestroy {
         docArray=docArray.concat(this.removeDocUpdate);
         this.bulkDoc.bdata = docArray;
       }
-    
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
       this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
