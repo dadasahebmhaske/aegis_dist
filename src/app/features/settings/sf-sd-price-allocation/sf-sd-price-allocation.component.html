@@ -35,7 +35,7 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>Product <span class="errorMessage">*</span></label>
-                      <select class="form-control" [(ngModel)]="Pallocation.ProdId" name="ProdId" required>
+                      <select class="form-control" [(ngModel)]="Pallocation.ProdId"  name="ProdId" required>
                         <option value="" selected hidden>Select Product</option>
                         <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
                       </select>
@@ -44,13 +44,13 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>Basic Price<span class="errorMessage">*</span></label>
-                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" saCommonDir dirType="number" required />
+                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>RSP<span class="errorMessage">*</span></label>
-                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.MRPrice" name="Price" saCommonDir dirType="number" required />
+                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.MRPrice" name="Price" saCommonDir dirType="decimal" required />
                     </div>
                   </div>
                   <div class="col-sm-6">

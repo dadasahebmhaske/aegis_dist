@@ -173,6 +173,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       this.loaderbtn = false;
       this.customer.Flag = (this.customer.ConsId !=''&& this.customer.ConsId !=undefined)?'UP':'IN';
       this.customer.CPCode = this.CPCode;
+      this.customer.ServiceTypeId='';
       this.customer.UserCode = this.cpInfo.EmpId;
       if(this.customer.ConsId==undefined)
       {this.customer.ConsId = '';
@@ -289,8 +290,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
     this.customer.PinCode=obj[0].PinCode;
   }
   getRoute() {
-    let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
-    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, this.customer.SubAreaId, 'SubAreaId');
   }
   saveAddressDeatils() {
     //this.loaderbtn = false;
@@ -335,13 +335,13 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
         this.ConsumptionData = [];
       }
     });
-    this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
-      if (respS.StatusCode != 0) {
-        this.ServiceData = respS.Data;
-      } else {
-        this.ServiceData = [];
-      }
-    });
+    // this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
+    //   if (respS.StatusCode != 0) {
+    //     this.ServiceData = respS.Data;
+    //   } else {
+    //     this.ServiceData = [];
+    //   }
+    // });
   }
   getCustomerProductDetails(){
     this.orderService.getInstantDeliveryProductDetails(this.CPCode, this.deliverrefill.DelRefNo).subscribe((resp: any) => {

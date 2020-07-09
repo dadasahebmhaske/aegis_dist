@@ -50,7 +50,8 @@ export class PriceAllocationListComponent implements OnInit {
       { name: 'Prodseg', displayName: 'Product segment', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'Product', displayName: 'Product ', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'Price', displayName: 'Price',cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'EffectiveDate', displayName: 'Effective Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'EffectiveDate', displayName: 'Effective From Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
+        { name: 'EffectiveToDate', displayName: 'Effective To Date',cellClass: 'cell-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Is Active',cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
 
     ]
@@ -61,7 +62,7 @@ export class PriceAllocationListComponent implements OnInit {
     AppComponent.Router.navigate(['/settings/price-allocation']);
   }
   onloadAll() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });

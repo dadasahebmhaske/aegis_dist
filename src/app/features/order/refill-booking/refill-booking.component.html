@@ -75,6 +75,13 @@
                         </div>
                         <div class="col-sm-1">
                           <div class="form-group">
+                            <label>SV Qty</label>
+                            <input type="text" class="form-control" placeholder="Qty" name="SVQty" [(ngModel)]="product.SVQty"  saCommonDir dirType="number"
+                              disabled required />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
                             <label>Rate </label>
                             <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir dirType="number"
                               disabled required />

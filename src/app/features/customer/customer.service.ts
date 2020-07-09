@@ -14,7 +14,7 @@ export class CustomerService {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}/Operational/ManageInstantCustomer`, { data: data }, AppComponent.httpOptions);
   }
   public getCustomerType(ChannelId) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CTM&IsActive=Y&ChannelId=${ChannelId}`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CTM&IsActive=Y&ChannelId=${ChannelId}`);
   }
   public getVolumeType(RefId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CBVLIST&FormFlag=CBV&RefId=${RefId}&IsActive=Y`);
@@ -101,7 +101,7 @@ public getCustomerWiseProductDetails(cpcode, DelFilter, fd, td) {
     let docobj;
     docobj = this.masterService.filterData(data, val, 'Id');
     if(docobj.length>0)
-    if ((docobj[0].Name).toUpperCase() == 'COMMERCIAL') {
+    if ((docobj[0].Name).toUpperCase() == 'INDUSTRIAL') {
       return true;
     } else {
       return false;

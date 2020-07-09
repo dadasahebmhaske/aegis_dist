@@ -125,8 +125,8 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
   }
   getRoute() {
-    let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');
-    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
+    //let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, this.cust.SubAreaId, 'SubAreaId');
   }
   resetEndDate(val) {
     this.minDate = val;

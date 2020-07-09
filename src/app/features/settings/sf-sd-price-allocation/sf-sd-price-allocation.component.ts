@@ -17,14 +17,14 @@ import { CustomerService } from '@app/features/customer/customer.service';
 export class SfSdPriceAllocationComponent implements OnInit {
   public cpInfo: any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
-  public minDate: Date;
+  public minDate: Date=new Date();
   public loaderbtn: boolean = true;
   public Pallocation: any = {};
   public productSegmentData: any = [];
   public productDataSelected: any = [];
 public  chantype:any=[];
   constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private settingService: SettingService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY',minDate:this.minDate, showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
 
   ngOnInit() {
@@ -36,7 +36,7 @@ public  chantype:any=[];
   }
 
   onloadAll() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
@@ -48,19 +48,20 @@ public  chantype:any=[];
   }
 
   onSelectProdSegment() {
-
     if (this.Pallocation.Flag != 'UP') {
       this.Pallocation.ProdId = "";
     }
-
-
     this.masterService.getProducts(this.Pallocation.ProdSegId,'F').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
-        this.productDataSelected = resPT.Data;
+        this.productDataSelected = resPT.Data; console.log(resPT.Data);
       } else { this.productDataSelected = []; }
     });
   }
-
+  // getRSp(){
+  //   let docobj;
+  //   docobj = this.masterService.filterData(this.productDataSelected, this.Pallocation.ProdId, 'ProdId');
+  //   this.Pallocation.MRPrice = docobj[0].MRPrice;
+  // }
 
   SavePriceAllocation() {
     this.loaderbtn = false;

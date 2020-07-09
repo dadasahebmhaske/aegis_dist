@@ -44,7 +44,7 @@
                                                         </div>
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
-                                                                <label for="sel1">Godown Capacity (In MT)  <span class="errorMessage" style="color:red;">*</span>
+                                                                <label for="sel1">Godown Capacity (In Kg)  <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Capacity" [(ngModel)]="godown.Capacity" name="Capacity" saCommonDir
                                                                     dirType="number" required />
@@ -110,18 +110,18 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">Start Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Lease  Start Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
+                                                                <input type="text" class="form-control" placeholder="Enter Lease Start Date" bsDatepicker [(ngModel)]="godown.Startdate" name="Startdate"
                                                                     id="startDate" (bsValueChange)="resetEndDate($event,'LP')" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig"
                                                                     [disabled]="GodownType=='O'" [required]="GodownType!='O'" (ngModelChange)="setMinDate()" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <div class="form-group">
-                                                                <label for="sel1">End Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
+                                                                <label for="sel1">Lease End Date <span class="errorMessage" [hidden]="GodownType=='O'">*</span>
                                                                 </label>
-                                                                <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="godown.EndDate" name="EndDate"
+                                                                <input type="text" id="endDate" class="form-control" placeholder="Enter Lease End Date" [(ngModel)]="godown.EndDate" name="EndDate"
                                                                     [disabled]="GodownType=='O'" [required]="GodownType!='O'" (ngModelChange)="calculateMonths()" onkeydown="return false"
                                                                     [minDate]="LeaseMinDate" bsDatepicker [bsConfig]="datePickerConfig" />
                                                             </div>

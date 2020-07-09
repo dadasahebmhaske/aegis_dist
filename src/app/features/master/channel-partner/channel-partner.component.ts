@@ -8,6 +8,7 @@ import { EmployeeService } from '@app/features/master/employee/employee.service'
 import { AppComponent } from '@app/app.component';
 import { ChannelPartnerService } from '@app/features/master/channel-partner/channel-partner.service';
 import { CustomerService } from '@app/features/customer/customer.service';
+import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 @Component({
   selector: 'sa-channel-partner',
   templateUrl: './channel-partner.component.html',
@@ -40,6 +41,8 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   public employee: any = { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' };
   public fd = new FormData();
   public filepreview: any;
+  public gridOptions: IGridoption;
+  public gridOptions1: IGridoption;
   public imgUrl: string;
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
@@ -92,6 +95,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       this.channal.ChannelId = this.cpInfo.ChannelId;
     });
     //this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+   
 
 
     this.imgUrl = `${AppComponent.ImageUrl}CPDocs/`;
@@ -717,6 +721,9 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     });
   }
   getAreaAllocationDetails() {
+    this.getArea();
+    this.configureGrid();
+    this.configureGrid1();
     this.channelPartnerService.getAreaAllocationDetails(this.channal.CPCode).subscribe((res) => {
       if (res.StatusCode != 0) {
         this.AreaData = [];
@@ -738,17 +745,17 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
 
     });
   }
-  getArea(city) {
+  getArea() {
     this.AreaData = [];
-    this.channelPartnerService.getAreaData(city).subscribe((resAreaData: any) => {
+    this.channelPartnerService.getAreaData(this.cpInfo.CPCode).subscribe((resAreaData: any) => {
       if (resAreaData.StatusCode != 0) {
-        console.log(resAreaData.Data);
+       // console.log(resAreaData.Data);
         for (let i = 0; i < resAreaData.Data.length; i++) {
           var AreatTData = [];
-          AreatTData = this.AreaData.filter(abc => abc.AreaID == resAreaData.Data[i].AreaCode);
-          if (AreatTData.length == 0) {
+         // AreatTData = this.AreaData.filter(abc => abc.AreaID == resAreaData.Data[i].AreaCode);
+         // if (AreatTData.length == 0) {
             this.AreaData.push({
-              "AreaID": resAreaData.Data[i].AreaCode,
+              "AreaID": resAreaData.Data[i].AreaId,
               "AreaName": resAreaData.Data[i].AreaName,
               "SubAreaId": resAreaData.Data[i].SubAreaId,
               "SubAreaName": resAreaData.Data[i].SubAreaName,
@@ -758,30 +765,14 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
               "IsActive": "Y"
             });
             this.AreaSubAreaData = this.AreaData;
-          }
+          
         }
       }
       else { this.AreaData = []; }
     });
 
   }
-  onAreaSubArea(data) {
-    
-    if (this.SelectedAreaSubAreaData.some(obj => parseInt(obj.SubAreaId) === parseInt(data.SubAreaId))) {
-      AppComponent.SmartAlert.Errmsg("Area is already added in list.");
- 
-    } else {
-      // let docobj;
-      // docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
-      // let ProdSegName = docobj[0].ProdSeg;
-      this.SelectedAreaSubAreaData.push(data);
-     }
-  }
-  removeAreaSub(data, index) {
-      data.IsActive = 'N';
-      this.removeAreaSubArea.push(data);
-    this.SelectedAreaSubAreaData.splice(index, 1);
-  }
+  
   // onBlur(e, idx, dat: any) {
   //   if (e.target.checked) {
   //     var Count = this.AreaData.filter(AreaData => AreaData.AreaID === dat.DocTypId);
@@ -811,6 +802,73 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   //     }
   //   }
   // }
+  configureGrid() {
+    this.gridOptions = <IGridoption>{}
+    this.gridOptions.exporterMenuPdf = false;
+    this.gridOptions.exporterExcelFilename = 'Area list.xlsx';
+    this.gridOptions.selectionRowHeaderWidth = 0;
+    let columnDefs = [];
+    columnDefs = [
+      {
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.IsActive!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Add&nbsp;</button> '
+        , width: "48", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Add</div>', enableFiltering: false
+      },
+      { name: 'PinCode', displayName: 'Pin Code', cellClass: 'cell-center', width: "100", cellTooltip: true, filterCellFiltered: true},
+      { name: 'AreaName', displayName: 'Area Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name',  width: "220", cellTooltip: true, filterCellFiltered: true },
+       ]
+    this.gridOptions.columnDefs = columnDefs;
+  }
+  configureGrid1() {
+    this.gridOptions1 = <IGridoption>{}
+    this.gridOptions1.exporterMenuPdf = false;
+    this.gridOptions1.exporterExcelFilename = 'Assign Area Allocation.xlsx';
+    this.gridOptions1.selectionRowHeaderWidth = 0;
+    let columnDefs = [];
+    columnDefs = [
+      {
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Remove&nbsp;</button> '
+        , width: "70", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Remove</div>', enableFiltering: false
+      },
+      { name: 'PinCode', displayName: 'Pin Code', cellClass: 'cell-center', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'AreaName', displayName: 'Area Name', width: "220", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area Name',  width: "220", cellTooltip: true, filterCellFiltered: true },
+   ]
+    this.gridOptions1.columnDefs = columnDefs;
+  }
+  onEditFunction = ($event) => {
+    if (this.SelectedAreaSubAreaData.some(obj => parseInt(obj.SubAreaId) === parseInt($event.row.SubAreaId))) {
+      AppComponent.SmartAlert.Errmsg("Area is already added in list.");
+ 
+    } else {
+      this.SelectedAreaSubAreaData.push($event.row);
+     }
+  }
+  // onAreaSubArea(data) {
+    
+  //   if (this.SelectedAreaSubAreaData.some(obj => parseInt(obj.SubAreaId) === parseInt(data.SubAreaId))) {
+  //     AppComponent.SmartAlert.Errmsg("Area is already added in list.");
+ 
+  //   } else {
+  //     this.SelectedAreaSubAreaData.push(data);
+  //    }
+  // }
+
+  onEditFunction1 = ($event) => {
+    $event.row.IsActive = 'N';
+    let index = this.SelectedAreaSubAreaData.findIndex(std=> std.SubAreaName === $event.row.SubAreaName);
+    this.removeAreaSubArea.push($event.row);
+  this.SelectedAreaSubAreaData.splice(index, 1);
+   
+  }
+//   removeAreaSub(data) {
+//     data.IsActive = 'N';
+  
+//     this.removeAreaSubArea.push(data);
+//   this.SelectedAreaSubAreaData.splice(index, 1);
+// }
   ngOnDestroy() {
     this.datashare.updateShareData(null);
   }

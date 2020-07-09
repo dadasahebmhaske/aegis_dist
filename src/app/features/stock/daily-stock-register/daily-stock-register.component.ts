@@ -65,7 +65,7 @@ export class DailyStockRegisterComponent implements OnInit {
       }
       else { AppComponent.SmartAlert.Errmsg(resDay.Message); this.loaderbtn = true; }
     });
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });

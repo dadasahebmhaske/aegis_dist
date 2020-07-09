@@ -35,7 +35,7 @@ export class SvCreationPrintingComponent implements OnInit {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data;
       this.SFSDHS=(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE') ?true:false; });
     // this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data);
-    this.masterService.getProductSegmentDetails().subscribe((resPS: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resPS: any) => {
       if (resPS.StatusCode != 0)
         this.productSegmentData = resPS.Data;
     });

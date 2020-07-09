@@ -24,6 +24,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
+  public selectedCP:any={};
   public ProductArray: any = [];
   public totalAmtWord:string;
   constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private orderService: OrderService) {
@@ -38,8 +39,8 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
   allOnLoad() {
     this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
       if (resCP.StatusCode != 0)
-        this.chantype = resCP.Data;
-      this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+        this.chantype = resCP.Data; 
+      this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName,SAPId:this.cpInfo.SAPId,Address:this.cpInfo.Address });
     });
     // this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
     //   if (respD.StatusCode != 0)
@@ -103,11 +104,19 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
+  // getCPinfo(CPCode) {
+  //   let obj
+  //   obj = this.masterService.filterData(this.chantype, CPCode, 'CPCode');
+  //      this.custData.CPCode= obj[0].CPCode;
+  //      this.custData.CPName= obj[0].CPName;  
+  //       this.custData.SAPId= obj[0].SAPId;
+  //       this.custData.Address=obj[0].Address;
+  // }
   onSelectedFunction = (event) => {
     let temp ;
     this.ProductArray=[];
-        this.custData=event.row;
-        this.totalAmtWord=this.convertNumberToWords( this.custData.TotalAmtPayable);
+        this.custData=event.row; console.log(event.row);
+        //this.totalAmtWord=this.convertNumberToWords( this.custData.TotalAmtPayable);
         this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
           if (resData.StatusCode != 0) {
           temp  = resData.Data;
@@ -123,6 +132,10 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
         });
    
   }
+
+  onDownloadInvoice() {
+    window.location.href = `${AppComponent.BaseUrlDist}Document/GetRefillDeliveryInvoice?DelRefNo=${this.custData.DelRefNo}&CPCode=&ConsId=`, '_blank';
+  }
   onLoad() {
     this.loaderbtn = false;
     this.deliverFilter = this.customerService.checkCustOrMobNo(this.deliverFilter);
@@ -135,6 +148,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
       else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
+
   resetEndDate(val) {
     this.minDate = val;
     if (val != undefined && val != null && this.deliverFilter.EndDate != null) {

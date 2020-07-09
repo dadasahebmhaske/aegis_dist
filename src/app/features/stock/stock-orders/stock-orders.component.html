@@ -47,7 +47,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-2" *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
                                         <div class="form-group">
                                             <label>Vehicle <span class="errorMessage">*</span>
                                             </label>

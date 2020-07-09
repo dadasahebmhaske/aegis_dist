@@ -64,7 +64,7 @@ export class SfSdPriceAllocationListComponent implements OnInit {
     AppComponent.Router.navigate(['/settings/sf-sd-price-allocation']);
   }
   onloadAll() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });

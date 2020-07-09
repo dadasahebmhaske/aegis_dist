@@ -43,6 +43,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   public ContractData: any = [];
   public CityData: any = [];
   public cpInfo: any;
+  public chantype: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public DocFileName: string;
   public document: any = { DocTypId: '' };
@@ -74,10 +75,11 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
-    this.datashare.GetSharedData.subscribe(data =>{ this.customer = data == null ? { IsActive: 'Y', Salutation: '', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data;
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.datashare.GetSharedData.subscribe(data =>{ this.customer = data == null ? { IsActive: 'Y', Salutation: '',CPCode:'', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data;
     this.customer.CustCatId=this.customer.CustCatId==null?'':this.customer.CustCatId;
     this.HideShowFirm();})
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+  
     this.allOnloadMethods();
     this.customer.CustTypeId != null && this.customer.CustTypeId != '' ? this.onSelectCustomerType() : '';
   }
@@ -204,7 +206,8 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   nextToAddress() {
     this.loaderbtn = false;
     this.customer.Flag = 'UP';
-    this.customer.CPCode = this.cpInfo.CPCode;
+   // this.customer.CPCode = this.cpInfo.CPCode;
+   this.customer.ServiceTypeId='';
     this.customer.UserCode = this.cpInfo.EmpId;
     this.customer.FirmName=this.firmAction==false?'':this.customer.FirmName;
     let ciphertext = this.appService.getEncrypted(this.customer);
@@ -354,7 +357,12 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
         this.CustTypeData = respCt.Data;
         this.HideShowFirm();
     });
-
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+      this.chantype = resCP.Data;
+        this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+     //if(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){ this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });}
+    });
     this.customerService.getFirmType().subscribe((respF) => {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
@@ -398,7 +406,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
       if (resACT.StatusCode != 0)
         this.AccountTypeData = resACT.Data;
     });
-    this.masterService.getProductSegmentDetails().subscribe((resPS: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resPS: any) => {
       if (resPS.StatusCode != 0)
         this.productSegmentData = resPS.Data;
     });
@@ -413,9 +421,9 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
     this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
     
   }
+
   getRoute() {
-    let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
-    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, this.customer.SubAreaId, 'SubAreaId');
   }
   //product
   onProductSubmit() {

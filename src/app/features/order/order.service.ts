@@ -58,8 +58,8 @@ export class OrderService {
     public getCashMemoProducts(cpcode, CashMemoRefNo) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCashMemoProducts?CashMemoRefNo=${CashMemoRefNo}&CPCode=${cpcode}`, AppComponent.httpOptions);
     }
-    public getCPPriceAllocation(cpcode, ProdSegId) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPProdPriceAllocation?PriceCode=&CPCode=${cpcode}&IsActive=Y&ProdSegId=${ProdSegId}&ProdId=&ProdType=F`, AppComponent.httpOptions);
+    public getCPPriceAllocation(cpcode, ProdSegId,ConsId) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPProdPriceAllocation?PriceCode=&CPCode=${cpcode}&IsActive=Y&ProdSegId=${ProdSegId}&ProdId=&ProdType=F&ConsId=${ConsId}`, AppComponent.httpOptions);
     }
     public getReasonRemark() {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=RRR&IsActive=Y`);

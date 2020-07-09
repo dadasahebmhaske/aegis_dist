@@ -13,11 +13,12 @@ export class NewCustomerComponent implements OnInit {
   public addArray: any = [];
   public bulkAdd: any = {};
   public CatDiscountData: any = [];
-  public customer: any = { IsActive: 'Y', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '',AreaId:'', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
+  public customer: any = { IsActive: 'Y',CPCode:'', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '',AreaId:'', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
   public ContractData: any = [];
   public CityData: any = [];
+  public chantype: any = [];
   public cpInfo: any;
   public FirmData: any = [];
   public firmAction:boolean=false;
@@ -32,7 +33,8 @@ export class NewCustomerComponent implements OnInit {
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;
+    this.customer.CPCode=this.cpInfo.CPCode; });
     this.allOnloadMethods();
     // this.employee.ReTypePassword=this.employee.Password;
     // this.employee.StateCode= this.employee.StateCode==null?'': this.employee.StateCode;
@@ -43,7 +45,12 @@ export class NewCustomerComponent implements OnInit {
       if (respCt.StatusCode != 0)
         this.CustTypeData = respCt.Data;
     });
-
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+    this.chantype = resCP.Data;
+    this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+     //if(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){ this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });}
+    });
     this.customerService.getFirmType().subscribe((respF) => {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
@@ -88,7 +95,7 @@ export class NewCustomerComponent implements OnInit {
   }
   getRoute() {
     let obj=this.masterService.filterData(this.SubAreaArray, this.customer.SubAreaId, 'SubAreaId');
-    this.RouteData = this.masterService.filterData(this.RouteArray, obj[0].RouteId, 'RouteId');
+    this.RouteData = this.masterService.filterData(this.RouteArray, this.customer.SubAreaId, 'SubAreaId');
   }
   saveAddressDeatils() {
     //this.loaderbtn = false;
@@ -124,7 +131,8 @@ export class NewCustomerComponent implements OnInit {
   onSubmit() {
     this.loaderbtn = false;
     this.customer.Flag = 'IN';
-    this.customer.CPCode = this.cpInfo.CPCode;
+    //this.customer.CPCode = this.cpInfo.CPCode;
+    this.customer.ServiceTypeId='';
     this.customer.UserCode = this.cpInfo.EmpId;
     this.customer.ConsId = '';
     this.customer.ConsNo = null;
@@ -155,13 +163,13 @@ export class NewCustomerComponent implements OnInit {
         this.ConsumptionData = [];
       }
     });
-    this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
-      if (respS.StatusCode != 0) {
-        this.ServiceData = respS.Data;
-      } else {
-        this.ServiceData = [];
-      }
-    });
+    // this.customerService.getServiceType(this.customer.CustTypeId).subscribe((respS) => {
+    //   if (respS.StatusCode != 0) {
+    //     this.ServiceData = respS.Data;
+    //   } else {
+    //     this.ServiceData = [];
+    //   }
+    // });
   }
   HideShowFirm() {
     this.firmAction=this.customerService.HideShowFirm(this.CustTypeData, this.customer.CustTypeId);

@@ -157,6 +157,7 @@
           }
       </style>
         <div class="row" id="invctbl">
+          
           <div class="col-sm-12 table-responsive">
             <table style="width:100%;">
               <tbody style="width:100%;">
@@ -167,9 +168,9 @@
                       <th align="center" colspan="8" class="text-center">AEGIS GAS</th>
                   </tr>
                   <tr>
-                      <th align="center" colspan="8" class="text-center"><span style="font-size: 19px;"> {{cpInfo.CPName}} </span>
-                          <br><br>
-                          <small>SAP ID : {{cpInfo.SAPId}}</small>
+                      <th align="center" colspan="8" class="text-center"><span style="font-size: 19px;"> {{custData.CPName}} </span>
+                          <br> <small> {{custData.CPAddress}}</small><br>
+                          <small>SAP ID : {{custData.SAPID}}</small>
                       </th>
                   </tr>
                   <tr align="left">
@@ -217,7 +218,7 @@
                       <th align="right" class="text-right">{{custData.TotalAmtPayable}}</th> 
                   </tr>
                   <tr>
-                      <th align="left" colspan="9">Rupees : {{totalAmtWord}}.
+                      <th align="left" colspan="9">Rupees : {{custData.TotalPayAmtWords}}.
                           <br>Delivered By : {{custData.DelUserName}}.
                       </th>
                   </tr>
@@ -232,7 +233,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button> -->
+        <button type="button" (click)="onDownloadInvoice()" class="btn btn-success" > <i class="fa fa-fw fa-download" ></i> Download Invoice</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

@@ -44,8 +44,8 @@ export class ChannelPartnerService {
   public getAddressType() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=CPADT&StartDate=&EndDate&UserCode&IsActive=Y`);
   }
-  public getAreaData(city) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=SUBAM&StateCode&CityCode=${city}&UserCode&IsActive=Y`);
+  public getAreaData(CPCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPA&CPCode=${CPCode}&StateCode&CityCode=&UserCode&IsActive=Y`);
   }
   public postAreaDetails(data:any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageCPArea`,data,AppComponent.httpOptions);            

@@ -58,6 +58,15 @@
                         required />
                     </div>
                   </div>
+                  <div class="col-sm-3" >
+                    <div class="form-group">
+                      <label>Service Through <span class="errorMessage">*</span></label>
+                      <select class="form-control" [(ngModel)]="customer.CPCode" name="CPCode"  required>
+                        <option value="" selected disabled>Select Service Through</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Discount Category </label>
@@ -97,7 +106,7 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-3">
+                  <!-- <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Service Type <span class="errorMessage">*</span>
                       </label>
@@ -106,7 +115,7 @@
                         <option [value]="sd.Id" *ngFor="let sd of ServiceData">{{sd.ServiceTypeName}}</option>
                       </select>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-sm-3">
                     <div class="form-group">
                       <label for="sel1">Type Of Firm <span class="errorMessage">*</span>

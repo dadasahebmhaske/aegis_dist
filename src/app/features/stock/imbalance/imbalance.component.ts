@@ -38,7 +38,7 @@ export class ImbalanceComponent implements OnInit, OnDestroy {
     this.allOnLoad();
   }
   allOnLoad() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });

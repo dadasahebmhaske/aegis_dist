@@ -52,7 +52,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     if (this.stock.StkOrdId != '') { this.getStockDocumentDetails(); }
   }
   allOnLoad() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
@@ -82,6 +82,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     } else {
       if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
         this.stock.PlantId = '';
+        this.stock.VehicleId='';
       }
       if (this.product.OrderType != null)
         this.product.ProdType = this.product.OrderType == 'RO' || this.product.OrderType == 'DR' ? 'F' : 'E';

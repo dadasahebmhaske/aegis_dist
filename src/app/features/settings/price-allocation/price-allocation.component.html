@@ -30,23 +30,35 @@
                       </select>
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
                     <div class="form-group">
                       <label>Effective Price<span class="errorMessage">*</span></label>
-                      <label class="posticon">
-                        <i class="icon-append fa fa-calendar"></i>
-                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" saCommonDir dirType="number" required />
-                    </label>
+                      <input type="text" class="form-control" placeholder="Enter Price" [(ngModel)]="Pallocation.Price" name="Price" saCommonDir dirType="decimal" required />
+                    
                     </div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-sm-4">
                     <div class="form-group">
-                      <label>Effective Date<span class="errorMessage">*</span></label>
-                      <input type="text" class="form-control" placeholder="Enter Effective Date" [(ngModel)]="Pallocation.EffectiveDate" name="EffectiveDate" onkeydown="return false" bsDatepicker
-                        [bsConfig]="datePickerConfig" required />
+                      <label>Effective From Date<span class="errorMessage">*</span></label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                      <input type="text" class="form-control" placeholder="Enter From Date" [(ngModel)]="Pallocation.EffectiveDate" name="EffectiveDate" onkeydown="return false" bsDatepicker
+                      (bsValueChange)="resetEndDate($event)"   [bsConfig]="datePickerConfig" required />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Effective To Date<span class="errorMessage">*</span></label>
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                      <input type="text" class="form-control" placeholder="Enter To Date" [(ngModel)]="Pallocation.EffectiveToDate" name="EffectiveToDate" onkeydown="return false" bsDatepicker
+                        [bsConfig]="datePickerConfig" [minDate]="minDate" required />
+                      </label>
                     </div>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="col-sm-6">
                     <label>

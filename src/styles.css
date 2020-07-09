@@ -100,7 +100,10 @@
   );
   background-color: #584475;
 }
-
+.style-2 nav ul li.open>a, .smart-style-2 nav ul li.open>a b {
+  color: #584475 !important;
+  font-weight: 700;
+}
 .smart-style-2 nav ul li a {
   color: #584475 !important;
   font-size: 12px !important;

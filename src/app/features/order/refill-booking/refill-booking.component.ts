@@ -54,7 +54,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.allOnLoad();
   }
   allOnLoad() {
-    this.masterService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
     });
@@ -64,7 +64,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
-    this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId).subscribe((resCPA: any) => {
+    this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId,this.cust.ConsId).subscribe((resCPA: any) => {
       if (resCPA.StatusCode != 0) {
         this.productDataSelected = resCPA.Data; 
       } else { this.productDataSelected = []; }
@@ -79,6 +79,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.product.ProdRate = docobj[0].Price;
     this.product.Product = docobj[0].Product; //extra
     this.product.ProdCode = docobj[0].ProductCode;
+    this.product.SVQty= docobj[0].SVQty;
     // this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
     // this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
     // this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
