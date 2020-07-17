@@ -31,7 +31,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
   constructor(private appService: AppService, private customerService: CustomerService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) { }
 
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode;this.getArea(); });
    this.onloadAll();
     this.configureGrid();
   }
@@ -109,19 +109,7 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
     });
-  //   this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
-  //     if (resAR.StatusCode != 0)
-  //       this.AreaData = resAR.Data;
-  //   });
-  //  this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
-  //     if (resR.StatusCode != 0)
-  //       this.RouteArray = resR.Data;
-  //   });
-  //   this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
-  //     if (reSA.StatusCode != 0) {
-  //       this.SubAreaArray = reSA.Data;
-  //     }
-  //   });
+
     this.onCPChange(this.cpInfo.CPCode)
   }
   onCPChange(cpcode){
@@ -133,14 +121,25 @@ export class CashMemoAndRefillDeliveryComponent implements OnInit {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
     });
-    this.masterService.getSubArea(cpcode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
+ 
+  }
+  getArea(){
+    this.masterService.getArea(this.cust.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+       { this.AreaData = resAR.Data; }else{
+        this.AreaData=[];
+       }
+       this.getSubArea();
     });
+
   }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
+    this.masterService.getSubArea(this.cust.CPCode,this.cust.AreaId).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaData= this.SubAreaArray = reSA.Data; 
+      }else{this.SubAreaData= this.SubAreaArray =[]; }
+      this.getRoute();
+    });
   }
   getRoute() {
     //let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');

@@ -14,11 +14,26 @@ export class MasterService {
     }
   }
   public getYearsDiff(d1, d2) {
+    // if (d2 != null && d1 != null) {
+    //   let date1 = new Date(d1);
+    //   let date2 = new Date(d2);
+    //   let yearsDiff = date2.getFullYear() - date1.getFullYear();
+    //   return yearsDiff;
+    // }
     if (d2 != null && d1 != null) {
-      let date1 = new Date(d1);
-      let date2 = new Date(d2);
-      let yearsDiff = date2.getFullYear() - date1.getFullYear();
-      return yearsDiff;
+      d2=new Date(d2); d1=new Date(d1);
+      var diff = (d2.getTime() - d1.getTime()) / 1000;
+      diff /= (60 * 60 * 24);
+      var yr = Math.abs(diff / 365.25);
+      var month = (diff % 365.25) / 30.30;
+      yr = parseInt(`${yr}`);
+      month = parseInt(`${month}`);
+      if (month == 12) {
+        return parseFloat(`${yr + 1}.0`);
+      } else {
+        return parseFloat( `${yr}.${month}`);
+      }
+
     }
   }
   public filterData(data, DocTypId, para) {
@@ -58,9 +73,9 @@ export class MasterService {
   public getNewProducts(cpcode, plantId, Pscode, Prodtype) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&IsActive=Y`);
   }
-  public getProducts(Pscode,ProdType) {
+  public getProducts(Pscode, ProdType) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y&ProdType=${ProdType}`);
-  }                                                    
+  }
   public getRoutes(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
@@ -70,8 +85,8 @@ export class MasterService {
   public getArea(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetCPArea?CPAreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
-  public getSubArea(cpcode) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubArea?SubAreaId=&AreaId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
+  public getSubArea(cpcode, AreaId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPA&AreaCode=${AreaId}&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
   public getTransport() {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=VTM&IsActive=Y`);
@@ -90,18 +105,18 @@ export class MasterService {
   }
   public getSFSDPOS(pcpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetChannelPartner?CPAreaId=&ParentCPCode=${pcpcode}&CPCode=&AreaId=&IsActive`, AppComponent.httpOptions);
-    }
+  }
   public getRouteMapping(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPRoute?RouteId=&CPCode=${cpcode}&IsActive=Y`, AppComponent.httpOptions);
   }
-  public getAreaAllocated(cpcode,RouteId) {
+  public getAreaAllocated(cpcode, RouteId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Master/GetCPSubAreaForMapping?CPCode=${cpcode}&RouteId=${RouteId}&IsActive=Y`, AppComponent.httpOptions);
   }
-  public postRouteMapping(data:string) {
-    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Master/IUDCPRouteMapping`,{Data:data},AppComponent.httpOptions);      
+  public postRouteMapping(data: string) {
+    return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Master/IUDCPRouteMapping`, { Data: data }, AppComponent.httpOptions);
   }
   // public getProductSegment() {
   //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
   // }
-  
+
 }

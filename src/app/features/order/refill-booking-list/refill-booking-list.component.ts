@@ -22,9 +22,6 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
   public maxDate: Date = new Date();
   public gridOptions: IGridoption;
   public ProductArray: any = [];
-  public RouteData: any = [];
-  public SubAreaArray: any = [];
-  public SubAreaData: any = [];
   public stock: any = {};
   public bookingOrdersData: any = [];
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private stockService: StockService, private orderService: OrderService) {
@@ -73,19 +70,6 @@ export class RefillBookingListComponent implements OnInit, OnDestroy {
         this.chantype = resCP.Data;
         this.chantype.unshift(  {CPCode: this.cpInfo.CPCode,CPName: this.cpInfo.CPName});
     });
-    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
-      if (resR.StatusCode != 0)
-        this.RouteData = resR.Data;
-    });
-
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
-  }
-  getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.bookOrder.RoutId, 'RouteId');
   }
   onEditFunction = ($event) => {
     this.datashare.updateShareData($event.row);

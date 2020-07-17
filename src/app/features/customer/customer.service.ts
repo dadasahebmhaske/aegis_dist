@@ -53,7 +53,7 @@ export class CustomerService {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CUSTM&CPCode=${cpcode}&AreaId=${AreaId}&SubAreaId=${SubAreaId}&ConsNo=${ConsNo}&MobileNo=${MobNo}&IsActive=Y`);
   }
   public getCustomerIn(cpcode, IsTransfer) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetTransCust?TransferId=&CPCode=${cpcode}&ConsId=&IsTransfer=${IsTransfer}&IsActive=Y`);
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Operational/GetTransCust?TransferId=&NewCPCode=${cpcode}&ConsId=&IsTransfer=${IsTransfer}&IsActive=Y`);
   }
   public postCustomeTerminate(data: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ProcessCustomerTermination`, data);
@@ -101,7 +101,7 @@ public getCustomerWiseProductDetails(cpcode, DelFilter, fd, td) {
     let docobj;
     docobj = this.masterService.filterData(data, val, 'Id');
     if(docobj.length>0)
-    if ((docobj[0].Name).toUpperCase() == 'INDUSTRIAL') {
+    if ((docobj[0].Name).toUpperCase() == 'INDUSTRIAL' || (docobj[0].Name).toUpperCase() == 'COMMERCIAL') {
       return true;
     } else {
       return false;

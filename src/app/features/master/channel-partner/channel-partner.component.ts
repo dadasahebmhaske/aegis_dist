@@ -262,7 +262,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.own.Flag = this.own.EmpId == null || this.own.EmpId == undefined || this.own.EmpId == "" ? 'IN' : 'UP';
     this.own.EmpId = this.own.Flag == 'IN' ? null : this.own.EmpId;
     this.own.RoleCode = 'OWNE';
-    this.own.IsActive = 'D';
+    this.own.IsActive = 'Y';
     this.own.CPCode = this.channal.CPCode;
     this.own.DeptId='';
     if (this.own.ManagerId === this.own.MatrixId) {
@@ -729,7 +729,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
         this.AreaData = [];
         for (let i = 0; i < res.Data.length; i++) {
           this.AreaData.push({
-            "AreaID": res.Data[i].AreaId,
+            "AreaID": res.Data[i].AreaCode,
             "AreaName": res.Data[i].AreaName,
             "SubAreaId": res.Data[i].SubAreaId,
             "SubAreaName": res.Data[i].SubAreaName,
@@ -755,7 +755,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
          // AreatTData = this.AreaData.filter(abc => abc.AreaID == resAreaData.Data[i].AreaCode);
          // if (AreatTData.length == 0) {
             this.AreaData.push({
-              "AreaID": resAreaData.Data[i].AreaId,
+              "AreaID": resAreaData.Data[i].AreaCode,
               "AreaName": resAreaData.Data[i].AreaName,
               "SubAreaId": resAreaData.Data[i].SubAreaId,
               "SubAreaName": resAreaData.Data[i].SubAreaName,

@@ -55,7 +55,7 @@ export class ChannelPartnerService {
     }
     
     public getOwnerDetails(cpcode) {
-      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&UserCode&IsActive=D&RoleCode=OWNE`);
+      return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=EMP&CPCode=${cpcode}&UserCode&IsActive=Y&RoleCode=OWNE`);
     }
     public getAreaAllocationDetails(cpcode){
       return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=CPA&CPCode=${cpcode}&UserCode&IsActive=Y`);

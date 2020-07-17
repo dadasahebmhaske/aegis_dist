@@ -342,7 +342,7 @@ export class GodownComponent implements OnInit, OnDestroy {
   calculateMonths() {
     if (this.godown.Startdate != undefined && this.godown.EndDate != undefined)
       this.godown.LeasePeriod = this.masterService.getYearsDiff(this.godown.Startdate, this.godown.EndDate);
-    this.godown.LeasePeriod = this.godown.LeasePeriod + 1;
+    //this.godown.LeasePeriod = this.godown.LeasePeriod + 1;
   }
   resetEndDate(val, flag) {
 
@@ -365,8 +365,8 @@ export class GodownComponent implements OnInit, OnDestroy {
   }
   setMinDate() {
     if (this.godown.Startdate != null && this.godown.Startdate != undefined) {
-      this.LeaseMinDate = this.godown.Startdate;
-      this.LeaseMinDate.setFullYear(this.LeaseMinDate.getFullYear() + 1);
+       this.LeaseMinDate = this.godown.Startdate;
+      // this.LeaseMinDate.setFullYear(this.LeaseMinDate.getFullYear() + 1);
     }
   }
 

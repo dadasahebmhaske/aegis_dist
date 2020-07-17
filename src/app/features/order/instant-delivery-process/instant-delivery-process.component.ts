@@ -67,6 +67,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       this.customer.ConsName=this.deliverrefill.ConsName;
       this.customer.MobileNo=this.deliverrefill.MobileNo;
       this.customer.ConsId=this.deliverrefill.ConsId;
+      this.getArea();
       if(this.customer.ConsId !=''&& this.customer.ConsId !=undefined && this.customer.ConsId !=null)
       this.nextStep();
       this.deliverrefill.AllocatedUserCode=this.deliverrefill.DelUserCode;
@@ -243,24 +244,7 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    // this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
-    //   if (resR.StatusCode != 0)
-    //     this.RouteData = resR.Data;
-    // });
-    // this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
-    //   if (reSA.StatusCode != 0) {
-    //     this.SubAreaArray = reSA.Data;
-    //   }
-    // });
-    this.masterService.getArea(this.CPCode).subscribe((resAR: any) => {
-      if (resAR.StatusCode != 0)
-        this.AreaData = resAR.Data;
-    });
-    this.masterService.getSubArea(this.CPCode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
+    
     this.masterService.getRoutes(this.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
@@ -284,11 +268,27 @@ export class InstantDeliveryProcessComponent implements OnInit, OnDestroy {
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }
+  getArea(){
+    this.masterService.getArea(this.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+       { this.AreaData = resAR.Data; }else{
+        this.AreaData=[];
+       }
+       this.getSubArea();
+    });
+
+  }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+    this.masterService.getSubArea(this.CPCode,this.customer.AreaId).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaData= this.SubAreaArray = reSA.Data; 
+      }else{this.SubAreaData= this.SubAreaArray =[]; }
+      this.getRoute();
+    });
     let obj=this.masterService.filterData(this.AreaData, this.customer.AreaId, 'AreaId');
     this.customer.PinCode=obj[0].PinCode;
   }
+
   getRoute() {
     this.RouteData = this.masterService.filterData(this.RouteArray, this.customer.SubAreaId, 'SubAreaId');
   }

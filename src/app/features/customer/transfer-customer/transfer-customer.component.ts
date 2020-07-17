@@ -29,22 +29,13 @@ export class TransferCustomerComponent implements OnInit {
   constructor(private appService: AppService, private customerService: CustomerService, private masterService: MasterService) {
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.getArea(); });
     this.configureGrid();
     this.allOnLoad()
     this.custOutData = [{}];
   }
   allOnLoad() {
    
-    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
-      if (resAR.StatusCode != 0)
-        this.AreaData = resAR.Data;
-    });
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
    this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
@@ -79,8 +70,23 @@ export class TransferCustomerComponent implements OnInit {
     //this.datashare.updateShareData($event.row);
   }
 
+  getArea(){
+    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+       { this.AreaData = resAR.Data; }else{
+        this.AreaData=[];
+       }
+       this.getSubArea();
+    });
+
+  }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
+    this.masterService.getSubArea(this.cpInfo.CPCode,this.cust.AreaId).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaData= this.SubAreaArray = reSA.Data; 
+      }else{this.SubAreaData= this.SubAreaArray =[]; }
+      this.getRoute();
+    });
   }
   getRoute() {
     //let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');

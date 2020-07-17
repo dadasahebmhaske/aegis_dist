@@ -36,7 +36,7 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode; });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data;this.cust.CPCode= this.cpInfo.CPCode;this.getArea(); });
     this.cust.StartDate = this.cust.EndDate = new Date();
     this.onloadAll();
     this.configureGrid();
@@ -106,23 +106,30 @@ export class AreaWiseRefillOrderSummaryComponent implements OnInit {
     this.onCPChange(this.cpInfo.CPCode)
   }
   onCPChange(cpcode){
-    this.masterService.getArea(cpcode).subscribe((resAR: any) => {
-      if (resAR.StatusCode != 0)
-        this.AreaData = resAR.Data;
-    });
+  
    this.masterService.getRoutes(cpcode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
     });
-    this.masterService.getSubArea(cpcode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
+  
   }
- 
+  getArea(){
+    this.masterService.getArea(this.cust.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+       { this.AreaData = resAR.Data; }else{
+        this.AreaData=[];
+       }
+       this.getSubArea();
+    });
+
+  }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.cust.AreaId, 'AreaCode');
+    this.masterService.getSubArea(this.cust.CPCode,this.cust.AreaId).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaData= this.SubAreaArray = reSA.Data; 
+      }else{this.SubAreaData= this.SubAreaArray =[]; }
+      this.getRoute();
+    });
   }
   getRoute() {
     //let obj=this.masterService.filterData(this.SubAreaArray, this.cust.SubAreaId, 'SubAreaId');

@@ -34,7 +34,8 @@ export class NewCustomerComponent implements OnInit {
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data;
-    this.customer.CPCode=this.cpInfo.CPCode; });
+    this.customer.CPCode=this.cpInfo.CPCode;
+    this.getArea(); });
     this.allOnloadMethods();
     // this.employee.ReTypePassword=this.employee.Password;
     // this.employee.StateCode= this.employee.StateCode==null?'': this.employee.StateCode;
@@ -55,15 +56,7 @@ export class NewCustomerComponent implements OnInit {
       if (respF.StatusCode != 0)
         this.FirmData = respF.Data;
     });
-    this.masterService.getArea(this.cpInfo.CPCode).subscribe((resAR: any) => {
-      if (resAR.StatusCode != 0)
-        this.AreaData = resAR.Data;
-    });
-    this.masterService.getSubArea(this.cpInfo.CPCode).subscribe((reSA: any) => {
-      if (reSA.StatusCode != 0) {
-        this.SubAreaArray = reSA.Data;
-      }
-    });
+ 
     this.masterService.getRoutes(this.cpInfo.CPCode).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.RouteArray = resR.Data;
@@ -88,8 +81,24 @@ export class NewCustomerComponent implements OnInit {
       if (res.StatusCode != 0) { this.CityData = res.Data; } else { this.CityData = []; }
     });
   }
+  getArea(){
+    this.customer.AreaId='';
+    this.customer.SubAreaId='';
+    this.customer.RoutId='';
+    this.masterService.getArea(this.customer.CPCode).subscribe((resAR: any) => {
+      if (resAR.StatusCode != 0)
+       { this.AreaData = resAR.Data;}else{
+        this.AreaData=[];
+       }
+    });
+
+  }
   getSubArea() {
-    this.SubAreaData = this.masterService.filterData(this.SubAreaArray, this.customer.AreaId, 'AreaCode');
+    this.masterService.getSubArea(this.customer.CPCode,this.customer.AreaId).subscribe((reSA: any) => {
+      if (reSA.StatusCode != 0) {
+        this.SubAreaData= this.SubAreaArray = reSA.Data;
+      }else{this.SubAreaData= this.SubAreaArray =[];}
+    });
     let obj=this.masterService.filterData(this.AreaData, this.customer.AreaId, 'AreaId');
     this.customer.PinCode=obj[0].PinCode;
   }

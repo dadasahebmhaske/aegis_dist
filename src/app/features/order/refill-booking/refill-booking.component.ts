@@ -64,11 +64,19 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     });
   }
   onSelectProdSegment() {
+    if (this.cust.ConsNo == null)
+   { AppComponent.SmartAlert.Errmsg("Please verify customer first");}
+  else{
+    this.product.ProdId= '';
+    this.product.SVQty= '';
+    this.product.ProdRate= '';
     this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId,this.cust.ConsId).subscribe((resCPA: any) => {
       if (resCPA.StatusCode != 0) {
         this.productDataSelected = resCPA.Data; 
       } else { this.productDataSelected = []; }
     });
+  }
+ 
   }
   onSelectProduct() {
     let docobj;
@@ -142,11 +150,12 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
 
   onGetCustomer() {
     this.loaderbtn = false;
+    this.product={ ProdSegId: '', ProdId: '' };
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
     this.customerService.getCustomer(this.cpInfo.CPCode,'', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.cust = Object.assign(this.cust, resData.Data[0]); console.log(resData.Data);
+        this.cust = Object.assign(this.cust, resData.Data[0]); 
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }

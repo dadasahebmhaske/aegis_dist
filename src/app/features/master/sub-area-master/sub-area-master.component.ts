@@ -44,7 +44,7 @@ export class SubAreaMasterComponent implements OnInit {
     AppComponent.Router.navigate(['/master/sub-area']);
   }
   onLoad() {
-    this.masters.getSubArea(this.cpInfo.CPCode).subscribe((resData: any) => {
+    this.masters.getSubArea(this.cpInfo.CPCode,20).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
         this.subAreaData = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
