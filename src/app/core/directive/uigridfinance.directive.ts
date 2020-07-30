@@ -1,4 +1,5 @@
 
+
 import {
     Directive, ElementRef, Injector, Input, OnInit, SimpleChanges, OnChanges, DoCheck,
     OnDestroy, Output, EventEmitter, SimpleChange
@@ -8,7 +9,7 @@ import {
   @Directive({
     selector: 'ui-grid'
   })
-  export class UigridmasterDirective extends UpgradeComponent implements OnInit, OnChanges, DoCheck,
+  export class UigridfinanceDirective extends UpgradeComponent implements OnInit, OnChanges, DoCheck,
   OnDestroy {
   
     @Input() data: {};

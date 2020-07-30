@@ -30,6 +30,7 @@ export class DayEndComponent implements OnInit {
   public gridShow: string = 'S';
   public gridEmptyOptions: IGridoption;
   public gridOptions: IGridoption;
+  public showCol:boolean=true;
   public soundData: any = [];
   public stock: any = {};
   public state: any = {
@@ -52,7 +53,12 @@ export class DayEndComponent implements OnInit {
     this.configureSoundGrid();
     this.configureDefectiveGrid();
     this.configureEmptyGrid();
-    this.configureNewConnectionGrid();
+    if( this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){
+      this.showCol=true;
+      this.configureNewConnectionGrid();
+    }else{this.showCol=false;
+      this.configureNewConnectionGrid();
+    }
     this.onLoad();
   }
   configureEmptyGrid() {
@@ -123,8 +129,8 @@ export class DayEndComponent implements OnInit {
       { name: 'OpeningBal', displayName: 'Opening New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'NC to Customer', cellClass: 'cell-right', width: "*", cellTooltip: true },
-       { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "150", cellTooltip: true },
-      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "150", cellTooltip: true },
+       { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "150", cellTooltip: true,visible:this.showCol },
+      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "150", cellTooltip: true,visible:this.showCol },
       //{ name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       //{ name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true }

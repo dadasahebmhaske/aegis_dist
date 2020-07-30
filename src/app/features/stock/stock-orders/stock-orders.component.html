@@ -14,7 +14,16 @@
                             <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onSubmitOrder()" autocomplete="off"
                                 ngNativeValidate>
                                 <div class="row">
-                                    <div class="col-sm-2 col-sm-offset-2">
+                                    <div class="col-sm-3"  *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
+                                        <div class="form-group">
+                                          <label>DE / SD / SF / POS <span class="errorMessage">*</span></label>
+                                          <select class="form-control" [(ngModel)]="stock.CPCode" name="CPCode" (change)="onsSelectSFSD()" required>
+                                            <option value="" selected disabled>Select DE / SD / SF / POS</option>
+                                            <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Order Date
                                                 <!-- <span class="errorMessage">*</span> -->
@@ -35,7 +44,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-2"
-                                        *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
+                                        *ngIf="showPltVcle">
                                         <div class="form-group">
                                             <label>Plant <span class="errorMessage">*</span>
                                             </label>
@@ -47,7 +56,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2" *ngIf="this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'">
+                                    <div class="col-sm-2" *ngIf="showPltVcle">
                                         <div class="form-group">
                                             <label>Vehicle <span class="errorMessage">*</span>
                                             </label>

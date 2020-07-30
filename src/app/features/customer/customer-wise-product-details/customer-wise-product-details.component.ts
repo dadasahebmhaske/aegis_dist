@@ -53,11 +53,11 @@
       this.gridOptions.exporterExcelFilename = 'Customer Wise Product Details.xlsx';
       let columnDefs = [];
       columnDefs = [
-        // {
-        //   name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null" ng-click="grid.appScope.editEmployee(row.entity)"  data-toggle="modal" data-target="#productsModal">&nbsp;Product&nbsp;</button> '
-        //   , width: "71", exporterSuppressExport: true,
-        //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
-        // },
+        {
+          name: 'Select', displayName: 'Download', cellTemplate: '<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.ConsNo !=null" ng-click="grid.appScope.editEmployee(row.entity)"  >&nbsp;Download SV&nbsp;</button> '
+          , width: "102", exporterSuppressExport: true,
+          headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Download</div>', enableFiltering: false
+        },
         { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
         { name: 'ConsName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
         { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
@@ -78,6 +78,21 @@
       //this.onLoad();
     }
     onEditFunction = (event) => {
+    
+            let svCustData = {
+              "data":
+                [
+                  { "SvNumber":event.row.SVNumber,
+                    "CPCode": this.deliverFilter.CPCode,
+                    "ConsId": event.row.ConsId,
+                    "IsActive": "Y"
+                  }
+                ]
+            }
+            let para = JSON.stringify(svCustData.data);
+            window.location.href = `${AppComponent.BaseUrlDist}Operational/GetSV?data=${para}`, '_blank';
+            
+      
     }
     onLoad() {
       this.loaderbtn = false;
@@ -85,7 +100,7 @@
       this.customerService.getCustomerWiseProductDetails(this.deliverFilter.CPCode, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          this.customerProductData = resData.Data; console.log(resData.Data);
+          this.customerProductData = resData.Data; 
           AppComponent.SmartAlert.Success(resData.Message);
         }
         else { this.customerProductData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

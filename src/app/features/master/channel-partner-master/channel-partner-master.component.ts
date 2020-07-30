@@ -42,7 +42,12 @@ export class ChannelPartnerMasterComponent implements OnInit {
       { name: 'CPType', displayName: 'Channel Partner Type', width: '270', cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'ROType', displayName: 'RO Type', width: '270', cellTooltip: true, filterCellFiltered: true },
       { name: 'PackType', displayName: 'Pack Type', width: '270', cellTooltip: true, filterCellFiltered: true },
-
+      { name: 'ReportingEmpName', displayName: 'Reporting Head', width: '270', cellTooltip: true, filterCellFiltered: true },
+      { name: 'StateName', displayName: 'State', width: '200', cellTooltip: true, filterCellFiltered: true },
+      { name: 'CityName', displayName: 'City', width: '200', cellTooltip: true, filterCellFiltered: true },
+      
+      
+      
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();

@@ -57,7 +57,7 @@
                           <div class="form-group">
                             <label for="sel1">Product Segment <span class="errorMessage">*</span>
                             </label>
-                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                            <select class="form-control" (change)="onSelectProdSegment();makequantitydisable()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
                               <option value="" selected hidden>Select Segment</option>
                               <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
                             </select>
@@ -99,7 +99,7 @@
                             <label> Quantity <span class="errorMessage">*</span>
                             </label>
                             <input type="text" class="form-control" placeholder="Enter Qty" name="ProdQty" [(ngModel)]="product.ProdQty" (ngModelChange)="onSelectProduct()" saCommonDir
-                              dirType="number" required />
+                              dirType="number" required [disabled]="disQty"/>
                           </div>
                         </div>
                         <div class="col-sm-2">
@@ -198,7 +198,7 @@
                   <div class="col-sm-2">
                     <div class="form-group">
                       <label>Discount </label>
-                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" name="Discount" saCommonDir dirType="number" disabled />
+                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" (input)="onEditDiscount()" name="Discount" saCommonDir dirType="number"  />
                     </div>
                   </div>
                   <div class="col-sm-2">

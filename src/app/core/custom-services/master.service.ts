@@ -70,8 +70,8 @@ export class MasterService {
   public getProductSegmentDetails(ChannelId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&IsActive=Y&ChannelId=${ChannelId}`);
   }
-  public getNewProducts(cpcode, plantId, Pscode, Prodtype) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&IsActive=Y`);
+  public  getNewProducts(cpcode, plantId, Pscode, Prodtype,flag) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&FormFlag=${flag}&IsActive=Y`);
   }
   public getProducts(Pscode, ProdType) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PM&ProdSegId=${Pscode}&IsActive=Y&ProdType=${ProdType}`);
@@ -118,5 +118,8 @@ export class MasterService {
   // public getProductSegment() {
   //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
   // }
+  public getNavMenu(RoleCode, RoleId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAllocated?AllocationId=&AppId=&DeptId=&RoleCode=${RoleCode}&RoleId=${RoleId}&IsActive=Y&Status=&AFlag=DI`, AppComponent.httpOptions);
+  }
 
 }

@@ -7,6 +7,7 @@ import { StockService } from './stock.service';
 import { CustomerService } from '../customer/customer.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { OrderService } from '../order/order.service';
+
 @NgModule({
   declarations: [compArray, UigridstockDirective],
   imports: [

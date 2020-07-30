@@ -118,6 +118,12 @@ const routes: Routes = [
         data: { pageTitle: "Master" }
       },
       {
+        path: "finance",
+        loadChildren: "./features/finance/finance.module#FinanceModule",
+        canActivate: [AuthenticationGuard],
+        data: { pageTitle: "Finance" }
+      },
+      {
         path: "crm",
         loadChildren: "./features/crm/crm.module#CrmModule",
         canActivate: [AuthenticationGuard],

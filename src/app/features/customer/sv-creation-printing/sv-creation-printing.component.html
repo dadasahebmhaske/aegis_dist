@@ -76,7 +76,7 @@
                           <div class="form-group">
                             <label for="sel1">Product Segment <span class="errorMessage">*</span>
                             </label>
-                            <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                            <select class="form-control" (change)="onSelectProdSegment();makeQuantityCheck()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
                               <option value="" selected hidden>Select Segment</option>
                               <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}</option>
                             </select>
@@ -111,7 +111,7 @@
                             <label for="sel1">Purchase Qty <span class="errorMessage">*</span>
                             </label>
                             <input type="text" maxlength="3" minlength="1" class="form-control" placeholder="Enter Quantity" [(ngModel)]="product.PurchaseQty" saCommonDir dirType="number"
-                              name="PurchaseQty" required />
+                              name="PurchaseQty" (blur)="makeQuantityCheck()" required />
                           </div>
                         </div>
                         <div class="col-sm-2">

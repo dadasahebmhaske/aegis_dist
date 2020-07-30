@@ -29,16 +29,13 @@ export class SvCreationPrintingComponent implements OnInit {
   public svCustData: any = {};
   public SFSDHS:boolean;
   constructor(private appService: AppService, private datashare: DatashareService, private customerService: CustomerService, private masterService: MasterService) {
-    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange',minDate:new Date(), dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data;
       this.SFSDHS=(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE') ?true:false; });
     // this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data);
-    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resPS: any) => {
-      if (resPS.StatusCode != 0)
-        this.productSegmentData = resPS.Data;
-    });
+
     this.allOnload();
   }
   onGetCustomer() {
@@ -49,10 +46,21 @@ export class SvCreationPrintingComponent implements OnInit {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.custData = resData.Data[0];
+        this.getProdSegmentDetails();
         //this.prodArray = null;
        // this.getCustomerProductDetails();
       }
       else { this.custData = {}; AppComponent.SmartAlert.Errmsg(resData.Message); }
+    });
+  }
+  getProdSegmentDetails(){
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resPS: any) => {
+      if (resPS.StatusCode != 0)
+      if((this.custData.CustTypeName).toUpperCase() ==='COMMERCIAL'){this.productSegmentData = this.masterService.filterData(resPS.Data, this.custData.ProdSegId, 'ProdSegId');
+    }else{
+        this.productSegmentData = resPS.Data;
+      }
+    
     });
   }
   getCustomerProductDetails() {
@@ -191,7 +199,6 @@ export class SvCreationPrintingComponent implements OnInit {
         let para = JSON.stringify(this.svCustData.data);
         window.location.href = `${AppComponent.BaseUrlDist}Operational/GetSV?data=${para}`, '_blank';
         this.loaderbtn = true;
-      
     }
     // if (this.custData.ConsId == undefined) {
     //   AppComponent.SmartAlert.Errmsg("Please verify customer first.");
@@ -225,6 +232,20 @@ export class SvCreationPrintingComponent implements OnInit {
     if(this.cust.IsSubCust=='N'){
       this.cust.CPCode='';
     }
+  }
+  makeQuantityCheck() {
+    let docobj;
+    docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
+    if(docobj.length>0)
+    if ((docobj[0].ProdSeg).toUpperCase() == 'DOMESTIC' ) {
+      if(this.product.PurchaseQty==null){
+        this.product.PurchaseQty=1;
+      }else if(this.product.PurchaseQty > 2){
+        this.product.PurchaseQty=2;
+        AppComponent.SmartAlert.Errmsg('Maximum Quantity should be 2');
+      }
+
+    } 
   }
   ngOnDestroy() {
     this.datashare.updateShareData(null);

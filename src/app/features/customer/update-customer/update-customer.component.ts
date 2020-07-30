@@ -76,7 +76,7 @@ export class UpdateCustomerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}CustDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.datashare.GetSharedData.subscribe(data =>{ this.customer = data == null ? { IsActive: 'Y', Salutation: '',CPCode:'', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data;
+    this.datashare.GetSharedData.subscribe(data =>{ this.customer = data == null ? { IsActive: 'Y', Salutation: '',CPCode:'',BloodGrp:'', CustCatId: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '', RoutId: '', SubAreaId: '', StateCode: '', CityCode: '' } : data;
     this.getArea();
     this.customer.CustCatId=this.customer.CustCatId==null?'':this.customer.CustCatId;
     this.HideShowFirm();})

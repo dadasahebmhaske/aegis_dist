@@ -741,6 +741,8 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
           });
           this.SelectedAreaSubAreaData=this.AreaData;
         }
+      }else{
+        this.SelectedAreaSubAreaData=[{}];
       }
 
     });
@@ -828,7 +830,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     let columnDefs = [];
     columnDefs = [
       {
-        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive!=null"  ng-click="grid.appScope.editEmployee(row.entity)"  data-title="Close" ">&nbsp;Remove&nbsp;</button> '
+        name: 'Select', displayName: 'Details', cellTemplate: '<button  style="margin:3px;" class="btn-danger btn-xs" ng-if="row.entity.IsActive!=null"  ng-click="grid.appScope.deleteEmployee(row.entity)"  data-title="Close" ">&nbsp;Remove&nbsp;</button> '
         , width: "70", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Remove</div>', enableFiltering: false
       },
@@ -843,7 +845,11 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
       AppComponent.SmartAlert.Errmsg("Area is already added in list.");
  
     } else {
+      if(this.SelectedAreaSubAreaData.length==1 && this.SelectedAreaSubAreaData[0].PinCode==null){
+        this.SelectedAreaSubAreaData.splice(0, 1);
+      }
       this.SelectedAreaSubAreaData.push($event.row);
+      this.configureGrid1()
      }
   }
   // onAreaSubArea(data) {
@@ -856,7 +862,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
   //    }
   // }
 
-  onEditFunction1 = ($event) => {
+  onDeleteFunction = ($event) => {
     $event.row.IsActive = 'N';
     let index = this.SelectedAreaSubAreaData.findIndex(std=> std.SubAreaName === $event.row.SubAreaName);
     this.removeAreaSubArea.push($event.row);

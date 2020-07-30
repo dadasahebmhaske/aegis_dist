@@ -115,7 +115,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
   onSelectedFunction = (event) => {
     let temp ;
     this.ProductArray=[];
-        this.custData=event.row; console.log(event.row);
+        this.custData=event.row; 
         //this.totalAmtWord=this.convertNumberToWords( this.custData.TotalAmtPayable);
         this.orderService.getRefillDeliveryProductDetails(this.cpInfo.CPCode, event.row.DelRefNo).subscribe((resData: any) => {
           if (resData.StatusCode != 0) {

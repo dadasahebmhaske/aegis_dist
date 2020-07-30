@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { AppComponent } from '../../../app.component';
 import { AppService } from '@app/core/custom-services/app.service';
 import * as CryptoJs from 'crypto-js';
+import { MasterService } from '@app/core/custom-services/master.service';
 //import { User } from '../../../../models/user.model';
 
 @Component({
@@ -13,6 +14,7 @@ import * as CryptoJs from 'crypto-js';
 })
 export class LoginComponent implements OnInit {
   public loaderbtn:boolean=true;
+  public CPInfo:any={};
   public state: any = {
     tabs: {
       demo1: 0,
@@ -38,7 +40,7 @@ export class LoginComponent implements OnInit {
       }
     }
   };
-  constructor(private router: Router,private authservice:AuthService,private appService:AppService) { }
+  constructor(private router: Router,private authservice:AuthService,private appService:AppService,private masterService:MasterService) { }
 
   ngOnInit() {
   }
@@ -53,8 +55,10 @@ export class LoginComponent implements OnInit {
     let ciphertext = this.appService.getEncrypted(form.value);
     this.authservice.logIn(ciphertext).subscribe(resData=>{
       this.loaderbtn=true;
-    if(resData.StatusCode==1) {      
-      this.appService.doEncryptionOf(resData.Data[0]);
+    if(resData.StatusCode==1) {     
+      this.CPInfo= resData.Data[0];
+      this.getNavMenu();
+      //this.appService.doEncryptionOf(resData.Data[0]);
          console.log(resData); 
         AppComponent.SmartAlert.bigBox({
           title: `Welcome  ${resData.Data[0].EmpName}`,
@@ -64,7 +68,8 @@ export class LoginComponent implements OnInit {
           number: "1",
           timeout: 6000
         });
-         this.router.navigate(['/dashboard']); }
+        // this.router.navigate(['/dashboard']); 
+        }
          else{
            AppComponent.SmartAlert.Errmsg(resData.Message);
          }
@@ -73,6 +78,20 @@ export class LoginComponent implements OnInit {
      
       }
       );
+  }
+  getNavMenu(){
+    let menu=[];
+    this.masterService.getNavMenu(this.CPInfo.RoleCode,this.CPInfo.RoleId).subscribe((resMData: any) => {
+      if (resMData.StatusCode != 0) {
+        for(let i=0;i<resMData.Data.length;i++){
+          menu[i] = resMData.Data[i].AllowdedMenu;
+        }
+        this.CPInfo.Menu=menu;
+        this.appService.doEncryptionOf(this.CPInfo);
+        this.router.navigate(['/dashboard']); 
+      }
+    });
+   
   }
 
 }

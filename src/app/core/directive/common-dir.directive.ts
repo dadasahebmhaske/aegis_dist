@@ -9,7 +9,7 @@ export class CommonDirDirective {
 
   private regex = {
     number: new RegExp(/^\d+$/),
-    decimal: new RegExp(/^[0-9]+(\.[0-9]*){0,1}$/g),
+    decimal: new RegExp(/^\d{1,18}(\.\d{0,2})?$/),   //^[0-9]+(\.[0-9]*){0,1}$/g
     alphanumeric: new RegExp(/^[a-zA-Z0-9\s-/]+$/),
     alphaonly: new RegExp(/^[a-zA-Z\s]+$/),
     alphanumericupper:new RegExp(/^[a-zA-Z0-9\s-/]+$/)

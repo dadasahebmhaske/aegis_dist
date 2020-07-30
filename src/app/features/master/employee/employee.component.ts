@@ -31,6 +31,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public bulkAdd: any = {};
   public CityData: any = [];
   public cpInfo: any;
+  public chantype: any = [];
   public docTypeData: any = [];
   public DocFileName: string;
   public document: any = { DocTypId: '' };
@@ -38,6 +39,8 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   public employee: any = { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' };
   public fd = new FormData();
   public filepreview: any;
+  public inputType1 = 'password';
+  public className = 'glyphicon-eye-close';
   public imgUrl: string;
   public loaderbtn: boolean = true;
   public removeDocUpdate: any = [];
@@ -50,8 +53,9 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? { IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' } : data);
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data; this.employee.CPCode=this.cpInfo.CPCode; });
+    this.datashare.GetSharedData.subscribe(data => this.employee = data == null ? {CPCode:this.cpInfo.CPCode, IsActive: 'Y', RoleCode: '', Gender: '', MaritalStatus: '', BloodGrp: '', StateCode: '', CityCode: '' } : data);
+    
     this.getDesignation(this.dept);
     this.allOnloadMethods();
     this.imgUrl = `${AppComponent.ImageUrl}EmpDocs/`;
@@ -151,7 +155,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     this.employee.Flag = this.employee.EmpId == null || this.employee.EmpId == '' ? 'IN' : 'UP';
     this.employee.EmpId = this.employee.EmpId == null ? '' : this.employee.EmpId;
     this.employee.DeptId = null;
-    this.employee.CPCode = this.cpInfo.CPCode;
+    //this.employee.CPCode = this.cpInfo.CPCode;
     this.employee.UserCode = this.cpInfo.EmpId;
     let ciphertext = this.appService.getEncrypted(this.employee);
     this.employeeService.postEmployeeDetails(ciphertext).subscribe((resData: any) => {
@@ -243,6 +247,12 @@ export class EmployeeComponent implements OnInit, OnDestroy {
       (resData: any) => {
         this.docTypeData = resData.Data;
       });
+      this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+        if (resCP.StatusCode != 0)
+      this.chantype = resCP.Data;
+      this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+       //if(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){ this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });}
+      });
   }
   onFileSelected(event) {
     var reader = new FileReader();
@@ -328,6 +338,20 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     if (this.employee.Password != this.employee.ReTypePassword && this.employee.ReTypePassword != null) {
       AppComponent.SmartAlert.Errmsg('Password and Re-enter Password must be same');
       this.employee.ReTypePassword = null;
+    }
+  }
+  checkMaritalStatus(){
+    if(this.employee.MaritalStatus=='unmarried'){
+      this.employee.MarriageAnniversaryDate='';
+    }
+  }
+  HideShowPassword1() {
+    if (this.inputType1 === 'password') {
+      this.inputType1 = 'text';
+      this.className = 'glyphicon-eye-open';
+    } else {
+      this.inputType1 = 'password';
+      this.className = 'glyphicon-eye-close';
     }
   }
   //custom change detection

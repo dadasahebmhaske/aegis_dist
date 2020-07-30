@@ -59,6 +59,11 @@ export class OrderAndDispatchDetailsComponent implements OnInit, OnDestroy {
       <button ng-if="row.entity.OrderStage=='DI'||row.entity.OrderStage=='AC' ||row.entity.OrderStage=='RJ'" class="btn-primary btn-xs" style="margin-left:19px; margin-top:3px;"
       ng-click="grid.appScope.editEmployee(row.entity)" data-title="View">&nbsp;View &nbsp;</button>`,
       width: '90', exporterSuppressExport: true, enableFiltering: true, },
+      {
+        name: 'Select', displayName: 'Details', cellTemplate: `<button  style="margin-left:15px; margin-top:3px;" class="btn-warning btn-xs" ng-if="row.entity.OrderStage=='DI'"   ng-click="grid.appScope.deleteEmployee(row.entity)"   >&nbsp;Invoice&nbsp;</button> `
+        , width: "91", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Download</div>', enableFiltering: false
+      },
 
     { name: 'OrderNo', displayName: 'Order No', cellClass: 'cell-center', width: '150', cellTooltip: true, filterCellFiltered: true,visible:false},
     { name: 'PlantName', displayName: 'Plant', width: '190', cellTooltip: true, filterCellFiltered: true,visible:false},
@@ -114,15 +119,30 @@ export class OrderAndDispatchDetailsComponent implements OnInit, OnDestroy {
      this.datashare.updateShareData($event.row);
   }
   onDeleteFunction = ($event) => {
-    this.stock = $event.row;
-    this.masterService.getDocumentDetails('INV', this.stock.StkOrdId).subscribe((response: any) => {
-      if (response.StatusCode != 0)
-        if (response.Data.length > 0) { 
-          this.filepreview=`${this.imgUrl}${response.Data[response.Data.length-1].DocFileName}`;
-          //window.open(`${this.filepreview}`, '_blank');
-          $('#paymentModal').modal('show');}
-    });
+    // let svCustData = {
+    //   "data":
+    //     [
+    //       { "SvNumber":event.row.SVNumber,
+    //         "CPCode": this.deliverFilter.CPCode,
+    //         "ConsId": event.row.ConsId,
+    //         "IsActive": "Y"
+    //       }
+    //     ]
+    // }
+    // let para = JSON.stringify(svCustData.data);
+    window.location.href = `${AppComponent.BaseUrlDist}Document/GetStockInvoice?StkOrdId=${$event.row.StkOrdId}&CPCode=&ConsId=`, '_blank';
+    
   }
+  // onDeleteFunction = ($event) => {
+  //   this.stock = $event.row;
+  //   this.masterService.getDocumentDetails('INV', this.stock.StkOrdId).subscribe((response: any) => {
+  //     if (response.StatusCode != 0)
+  //       if (response.Data.length > 0) { 
+  //         this.filepreview=`${this.imgUrl}${response.Data[response.Data.length-1].DocFileName}`;
+  //         //window.open(`${this.filepreview}`, '_blank');
+  //         $('#paymentModal').modal('show');}
+  //   });
+  // }
   onLoad() {
     this.loaderbtn = false;
     //this.order.PlantId=4;

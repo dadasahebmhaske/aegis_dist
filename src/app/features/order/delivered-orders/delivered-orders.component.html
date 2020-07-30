@@ -201,11 +201,10 @@
                   </tr>
                  
                   <tr *ngFor="let pr of ProductArray;index as i" >
-                    
                     <th>{{pr.Product}}</th>
-                    <td align="right">9.00</td>
-                    <td align="right">9.00</td>
-                    <td align="right">18.00</td>
+                    <td align="right">{{pr.CgstPer}}</td>
+                    <td align="right">{{pr.SgstPer}}</td>
+                    <td align="right">{{pr.IgstPer}}</td>
                     <td align="right">{{pr.Discount}}</td>
                     <td align="right">{{pr.ProdRate}}</td>
                     <td align="right">{{pr.ProdQty}}</td>

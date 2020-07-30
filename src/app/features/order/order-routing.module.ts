@@ -10,8 +10,6 @@ import { UndeliveredOrdersComponent } from './undelivered-orders/undelivered-ord
 import { DeliveryManWiseRefillOrderSummaryComponent } from './delivery-man-wise-refill-order-summary/delivery-man-wise-refill-order-summary.component';
 import { AreaWiseRefillOrderSummaryComponent } from './area-wise-refill-order-summary/area-wise-refill-order-summary.component';
 import { CustomerWiseTransactionsComponent } from './customer-wise-transactions/customer-wise-transactions.component';
-import  { CashFlowRegisterComponent } from './cash-flow-register/cash-flow-register.component';
-import { PaymentCollectionsComponent } from './payment-collections/payment-collections.component';
 import { InstantDeliveredOrdersComponent } from './instant-delivered-orders/instant-delivered-orders.component';
 import { InstantDeliveryProcessComponent } from './instant-delivery-process/instant-delivery-process.component';
 
@@ -42,24 +40,21 @@ const routes: Routes = [
    component:AreaWiseRefillOrderSummaryComponent},
    { path:'customer-wise-transactions',
    component:CustomerWiseTransactionsComponent},
-   { path:'cash-flow-register',
-   component:CashFlowRegisterComponent},
-   { path:'payment-collections',
-   component:PaymentCollectionsComponent},
+
 ]; 
 
 export const routing=[RouterModule.forChild(routes)];
 export const compArray=[
   AreaWiseRefillOrderSummaryComponent,
   CashMemoAndRefillDeliveryComponent,
-  CashFlowRegisterComponent,
+
   CustomerWiseTransactionsComponent,
   DeliveredOrdersComponent,
   DeliverRefillComponent,
   DeliveryManWiseRefillOrderSummaryComponent,
   InstantDeliveredOrdersComponent,
   InstantDeliveryProcessComponent,
-  PaymentCollectionsComponent,
+
   RefillBookingListComponent,
   RefillBookingComponent,
   UndeliveredOrdersComponent,

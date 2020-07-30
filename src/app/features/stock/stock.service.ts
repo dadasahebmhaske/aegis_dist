@@ -65,8 +65,8 @@ export class StockService {
     public getCustomerDailyStockRegister(data) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetCustomerStock?pCPCode=${data.CPCode}&pSegId=&pProdId=&pMobileNo=${data.MobileNo}&pConsNo=${data.ConsNo}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}`);
     }
-    public  getProductSegmentDetails() {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=`);
+    public  getProductSegmentDetails(ChannelId) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=&ChannelId=${ChannelId}`);
     }
     public getSFSDOrderReportAcRjDi(data, action) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtls?StkOrdId=${data}&OrderNo=&OrderType=&CPCode=&PlantId=&VehicleId=&OrderStage=${action}&IsActive=Y&OrderCode=&Flag=${action}`);
@@ -76,6 +76,9 @@ export class StockService {
     }
     public postDispatchOrders(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrderDispatch`, data);
+    }
+    public getProductorderWiseOrderDetails(ParentCPCode,cpcode, StartDate, EndDate,empid) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetPrimarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&UserCode=${empid}`);
     }
     
 }

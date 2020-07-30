@@ -19,6 +19,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   public custData: any = {};
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public delBoyData: any = [];
+  public disQty:boolean=false;
   public btnAction: string;
   public hideaddrow: boolean = true;
   public loaderbtn: boolean = true;
@@ -66,7 +67,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   onSelectProdSegment() {
     if (this.cust.ConsNo == null)
    { AppComponent.SmartAlert.Errmsg("Please verify customer first");}
-  else{
+  else{ 
     this.product.ProdId= '';
     this.product.SVQty= '';
     this.product.ProdRate= '';
@@ -76,8 +77,8 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       } else { this.productDataSelected = []; }
     });
   }
- 
   }
+ 
   onSelectProduct() {
     let docobj;
     docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
@@ -146,7 +147,9 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       this.product = data;
     }
   }
-
+  onEditDiscount(){
+    this.cust.TotalAmtPayable=parseInt(this.cust.RefillAmount)-parseInt(this.cust.Discount== null || this.cust.Discount==''? 0 :this.cust.Discount);
+  }
 
   onGetCustomer() {
     this.loaderbtn = false;
@@ -216,7 +219,19 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       });
     }
   }
+  makequantitydisable() {
+    let docobj;
+    docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
+    if(docobj.length>0)
+    if ((docobj[0].ProdSeg).toUpperCase() == 'DOMESTIC' ) {
+      this.product.ProdQty=1;
+      this.disQty=true;
+    } else{
+      this.disQty=false;
+    }
+  }
   ngOnDestroy() {
     this.dataShare.updateShareData(null);
   }
+
 }

@@ -6,6 +6,7 @@ import { DatashareService } from '@app/core/custom-services/datashare.service';
 import { StockService } from '../stock.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
+import { MasterService } from '@app/core/custom-services/master.service';
 @Component({
   selector: 'sa-stock-orders-list',
   templateUrl: './stock-orders-list.component.html',
@@ -13,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class StockOrdersListComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
+  public chantype: any = [];
+  public CPCode:any;
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public EndDate: any = '';
   public loaderbtn: boolean = true;
@@ -25,14 +28,21 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   public stock: any = {};
   public stockOrdersData: any = [];
   public showcol: boolean = true;
-  constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService) {
+  constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService,private masterService:MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
-    this.appService.getAppData().subscribe(data => { this.cpInfo = data });
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data ; this.CPCode=this.cpInfo.CPCode; this.onloadAll()});
     this.configureGrid();
     this.StartDate = this.EndDate = new Date();
     this.onLoad();
+  }
+  onloadAll(){
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+    this.chantype = resCP.Data;
+    this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+    });
   }
   configureGrid() {
     this.gridOptions = <IGridoption>{}
@@ -82,7 +92,7 @@ export class StockOrdersListComponent implements OnInit, OnDestroy {
   }
   onLoad() {
     this.loaderbtn = false;
-    this.stockService.getStockOrderDetails(this.cpInfo.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.stage).subscribe((resData: any) => {
+    this.stockService.getStockOrderDetails(this.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.stage).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.stockOrdersData = resData.Data;

@@ -69,7 +69,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.masterService.getEmpoyees(this.cpInfo.CPCode).subscribe((resData: any) => {
       this.loaderbtn=true;
       if (resData.StatusCode != 0) {
-        this.empData = resData.Data;
+        this.empData = resData.Data;  console.log(resData.Data);
         this.empDataStored = this.empData;
         AppComponent.SmartAlert.Success(resData.Message);
       }

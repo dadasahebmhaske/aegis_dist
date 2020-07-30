@@ -11,7 +11,16 @@
             <div class="widget-body">
               <div class="row ">
                 <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
-                  <div class="col-sm-2 col-xs-8">
+                 
+                  <div class="col-sm-3"  *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>DE / SD / SF / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="CPCode" name="CPCode" (change)="onsSelectSFSD()" required>
+                        <option value="" selected disabled>Select DE / SD / SF / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div> <div class="col-sm-2 col-xs-8">
                     <div class="form-group">
                       <label class="posticon">
                         <i class="icon-append fa fa-calendar"></i>

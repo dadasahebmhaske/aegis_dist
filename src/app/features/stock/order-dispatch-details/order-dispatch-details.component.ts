@@ -36,7 +36,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.stockService.getProductSegmentDetails().subscribe((resR: any) => {
+    this.stockService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.ProdSegdata = resR.Data;
     });
@@ -53,7 +53,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
     this.dataShare.GetSharedData.subscribe(data => {
       this.Order = this.olddata = data;
       this.getOderDetails(this.Order.StkOrdId);
-      console.log(this.Order);
+     // console.log(this.Order);
     });
     // if(sessionStorage.actionData!=null){
     //   this.gridhide= false;
@@ -100,7 +100,7 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
     this.Order.CPCode = this.Order.CPCode == undefined || this.Order.CPCode == null ? '' : this.Order.CPCode;
     this.Order.PlantId = this.Order.PlantId == undefined || this.Order.PlantId == null ? '' : this.Order.PlantId;
 
-    this.masterService.getNewProducts(this.cpInfo.CPCode, this.Order.PlantId, Id, this.prodtype).subscribe((resPT: any) => {
+    this.masterService.getNewProducts(this.Order.CPCode, this.Order.PlantId, Id, this.prodtype,'STSPA').subscribe((resPT: any) => {
       if (resPT.StatusCode != 0) {
         this.ProductData = resPT.Data;
       } else { this.ProductData = [];this.Order.ProdId=''; }
@@ -134,16 +134,18 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
   }
 
   onEditFunction = ($event) => {
+    let cpcode=this.Order.CPCode;
     this.Order = {};
     this.RowData = JSON.stringify($event.row);
     this.Order = angular.fromJson(this.RowData);
+    this.Order.CPCode=cpcode;
     this.getProduct(this.Order.ProdSegId);
     $("#myModal").modal('show');
   }
 
-  onDeleteFunction = ($event) => {
-    this.Order = $event.row; 
-  }
+  // onDeleteFunction = ($event) => {
+  //   this.Order = $event.row; 
+  // }
 
   configureGrid() {
     this.gridOptions = <IGridoption> {};
@@ -231,6 +233,8 @@ export class OrderDispatchDetailsComponent implements OnInit, OnDestroy {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         AppComponent.SmartAlert.Success(resData.Message);
+        window.location.href = `${AppComponent.BaseUrlDist}Document/GetStockInvoice?StkOrdId=${this.olddata.StkOrdId}&CPCode=&ConsId=`, '_blank';
+    
         AppComponent.Router.navigate(['stock/order-and-dispatch-details']);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }

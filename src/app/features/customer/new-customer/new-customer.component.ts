@@ -13,7 +13,7 @@ export class NewCustomerComponent implements OnInit {
   public addArray: any = [];
   public bulkAdd: any = {};
   public CatDiscountData: any = [];
-  public customer: any = { IsActive: 'Y',CPCode:'', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '',AreaId:'', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
+  public customer: any = {BloodGrp:'', IsActive: 'Y',CPCode:'', Salutation: '', CustTypeId: '', VolumeTypeId: '', ConsuptionTypeId: '', ServiceTypeId: '', FirmTypeId: '', ContractualId: '',AreaId:'', RoutId: '', SubAreaId: '', CustCatId: '', StateCode: '', CityCode: '' };
   public CustTypeData: any = [];
   public ConsumptionData: any = [];
   public ContractData: any = [];

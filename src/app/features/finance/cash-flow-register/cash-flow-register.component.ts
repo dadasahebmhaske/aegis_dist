@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IGridColumnDefs, IGridoption } from '../../../interface/igridoption';
 import { AppComponent } from '../../../app.component';
-import { OrderService } from '../order.service';
 import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 import { MasterService } from '@app/core/custom-services/master.service';
+import { OrderService } from '@app/features/order/order.service';
 
 @Component({
   selector: 'sa-cash-flow-register',

@@ -6,7 +6,7 @@ import { AppService } from '@app/core/custom-services/app.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 import { StockService } from '@app/features/stock/stock.service';
-import { OrderService } from '../order.service';
+import { OrderService } from '@app/features/order/order.service';
 @Component({
   selector: 'sa-payment-collections',
   templateUrl: './payment-collections.component.html',

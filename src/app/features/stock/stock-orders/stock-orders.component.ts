@@ -16,6 +16,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
   public bdata:any=[];
   public bulkDoc: any = {};
   public cpInfo: any;
+  public chantype: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public fd = new FormData();
   public filepreview: any;
@@ -31,6 +32,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
   public removeProductUpdate: any = [];
   public selectedFile: File = null;
   public stock: any = { OrderStage: 'PE', VehicleId: '', PlantId: '', OrderType: '', IsActive: 'Y' };
+  public showPltVcle:boolean;
   public vehicleData: any = [];
   constructor(private appService: AppService, private customerService: CustomerService, private dataShare: DatashareService, private masterService: MasterService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -39,19 +41,24 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     this.imgUrl = `${AppComponent.ImageUrl}StockOrderDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.dataShare.GetSharedData.subscribe(data => {
-      this.stock = data == null ? { OrderStage: 'PE', VehicleId: '', PlantId: '', OrderType: '', IsActive: 'Y', OrderDt: new Date() } : data;
+      this.stock = data == null ? { CPCode:this.cpInfo.CPCode,OrderStage: 'PE', VehicleId: '', PlantId: '', OrderType: '', IsActive: 'Y', OrderDt: new Date() } : data;
        //this.stock.OrderDt = new Date(this.stock.OrderDt);
-      this.stockService.getStockOrderProductDetails(this.cpInfo.CPCode, this.stock.StkOrdId, this.stock.OrderNo, '', '').subscribe((resp: any) => {
+      this.stockService.getStockOrderProductDetails(this.stock.CPCode, this.stock.StkOrdId, this.stock.OrderNo, '', '').subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
           this.stock = this.stockService.calculateQtyGTotal(this.stock, this.ProductArray);
         }
       });
     });
-    this.allOnLoad();
+    this.allOnLoad();this.onsSelectSFSD();
     if (this.stock.StkOrdId != '') { this.getStockDocumentDetails(); }
   }
   allOnLoad() {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+    this.chantype = resCP.Data;
+    this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName });
+    });
     this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.productSegmentData = resR.Data;
@@ -75,19 +82,20 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
   onSelectProdSegment() {
     if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
       this.stock.PlantId = 11;
-    }
+    }else if(this.stock.CPCode!=this.cpInfo.CPCode){ this.stock.PlantId = 11;}
     if (this.stock.PlantId == undefined || this.stock.PlantId == null || this.stock.PlantId == '') {
       this.product.ProdSegId = '';
       AppComponent.SmartAlert.Errmsg(`Please select plant first`);
     } else {
-      if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
+      if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE' || this.stock.CPCode!=this.cpInfo.CPCode) {
         this.stock.PlantId = '';
         this.stock.VehicleId='';
       }
+      
       if (this.product.OrderType != null)
         this.product.ProdType = this.product.OrderType == 'RO' || this.product.OrderType == 'DR' ? 'F' : 'E';
-        let cpcode = this.cpInfo.ParentCPCode == null ? this.cpInfo.CPCode : this.cpInfo.ParentCPCode;
-      this.masterService.getNewProducts(cpcode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType).subscribe((resPT: any) => {
+       // let cpcode = this.cpInfo.ParentCPCode == null ? this.cpInfo.CPCode : this.cpInfo.ParentCPCode;
+     this.masterService.getNewProducts(this.stock.CPCode, this.stock.PlantId, this.product.ProdSegId, this.product.ProdType,'STSPA').subscribe((resPT: any) => {
         if (resPT.StatusCode != 0) {
           this.productDataSelected = resPT.Data;
         } else { this.productDataSelected = []; }
@@ -99,8 +107,12 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     if (this.cpInfo.ChannelTypeFlag != 'DI' && this.cpInfo.ChannelTypeFlag != 'DE') {
       plantStateCode = this.cpInfo.StateCode;
     } else {
-      docobj = this.masterService.filterData(this.plantData, this.stock.PlantId, 'PlantId');
+      if(this.cpInfo.CPCode==this.stock.CPCode){
+          docobj = this.masterService.filterData(this.plantData, this.stock.PlantId, 'PlantId');
       plantStateCode = docobj[0].StateCode;
+     }else{
+      plantStateCode = this.cpInfo.StateCode;
+      }
     }
     if (plantStateCode == null || plantStateCode == undefined || plantStateCode == '') {
       Swal.fire({
@@ -143,10 +155,13 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
           this.product.SgstAmt = parseFloat(this.product.ProdAmt) * (parseFloat(this.product.SgstPer) / 100);
           this.product.ProdAmt = parseFloat(this.product.ProdAmt) + (parseFloat(this.product.CgstAmt) + parseFloat(this.product.SgstAmt));
           this.product.IgstAmt = 0;
+          this.product.CgstAmt=this.product.CgstAmt.toFixed(2);
+          this.product.SgstAmt=this.product.SgstAmt.toFixed(2);
         } else {
           this.product.IgstAmt = parseFloat(this.product.ProdAmt) * (parseFloat(this.product.IgstPer) / 100);
           this.product.ProdAmt = parseFloat(this.product.ProdAmt) + (parseFloat(this.product.IgstAmt));
           this.product.CgstAmt = this.product.SgstAmt = 0;
+          this.product.IgstAmt=this.product.IgstAmt.toFixed(2);
         }
         if (this.product.OrderType == 'ER' || this.product.OrderType == 'DR') { this.product.ProdAmt = 0; this.product.SubTotal = 0; }
         if (this.product.OrderType == 'NC') {
@@ -196,8 +211,13 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
       this.stock.StkOrdId = this.stock.StkOrdId == null || this.stock.StkOrdId == '' ? '' : this.stock.StkOrdId;
       this.stock.OrderNo = this.stock.OrderNo == null || this.stock.OrderNo == '' ? '' : this.stock.OrderNo;
       this.stock.OrderCode = this.stock.OrderCode == null || this.stock.OrderCode == '' ? '' : this.stock.OrderCode;
-      this.stock.CPCode = this.cpInfo.CPCode;
-      this.stock.ParentCPCode = this.cpInfo.ParentCPCode == null ? '' : this.cpInfo.ParentCPCode;
+      //this.stock.CPCode = this.stock.CPCode;
+      //this.stock.ParentCPCode = this.cpInfo.ParentCPCode == null ? '' : this.cpInfo.ParentCPCode;
+      if(this.stock.CPCode==this.cpInfo.CPCode && this.cpInfo.ParentCPCode == null){
+        this.stock.ParentCPCode ='';
+      }else{
+        this.stock.ParentCPCode =this.cpInfo.ParentCPCode== null?this.cpInfo.CPCode:this.cpInfo.ParentCPCode; 
+      }
       //this.stock.ProdAmt = this.stock.SubTotal
       this.stock.GrandTotal = this.stock.ProdAmt;
       this.stock.DiscountAmt = '';
@@ -285,6 +305,11 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
         if (response.Data.length > 0) { 
           this.filepreview=`${this.imgUrl}${response.Data[response.Data.length-1].DocFileName}`; }
     });
+  }
+  onsSelectSFSD(){
+    if(this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){
+      if(this.cpInfo.CPCode==this.stock.CPCode){ this.showPltVcle=true;}else{this.showPltVcle=false;}
+     } else{  this.showPltVcle=false;}
   }
   ngOnDestroy() {
     this.dataShare.updateShareData(null);

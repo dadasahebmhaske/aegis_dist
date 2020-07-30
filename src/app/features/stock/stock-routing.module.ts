@@ -13,6 +13,7 @@ import { OrderAndDispatchDetailsComponent } from './order-and-dispatch-details/o
 import { OrderAcceptedRejectedComponent } from './order-accepted-rejected/order-accepted-rejected.component';
 import { OrderAcceptedRejectedDispatchedComponent } from './order-accepted-rejected-dispatched/order-accepted-rejected-dispatched.component';
 import { OrderDispatchDetailsComponent } from './order-dispatch-details/order-dispatch-details.component';
+import { ProductWiseOrderReportComponent } from './product-wise-order-report/product-wise-order-report.component';
 const routes: Routes = [ 
   { path:'add-imbalance',component:AddImbalanceComponent},
   { path:'daily-stock-register',component:DailyStockRegisterComponent},
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path:'order-accepted-rejected',component:OrderAcceptedRejectedComponent},
   { path:'order-dispatch-details',component:OrderDispatchDetailsComponent},
   { path:'order-accepted-rejected-dispatched',component:OrderAcceptedRejectedDispatchedComponent},
+  {path:'product-wise-order-report',component:ProductWiseOrderReportComponent},
   { path:'stock-orders',component:StockOrdersComponent},
   { path:'stock-orders-list',component:StockOrdersListComponent},
   { path:'return-stock',component:ReturnStockComponent},
@@ -42,6 +44,7 @@ export const compArray=[
   OrderAcceptedRejectedComponent,
   OrderDispatchDetailsComponent,
   OrderAcceptedRejectedDispatchedComponent,
+  ProductWiseOrderReportComponent,
   StockOrdersComponent,
   StockOrdersListComponent
 ];
