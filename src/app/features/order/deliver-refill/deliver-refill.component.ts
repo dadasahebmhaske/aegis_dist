@@ -53,10 +53,12 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
   onEditProduct(data, index) {
     $('#qtyModal').modal('show');
     this.Edeliverrefill.ProdQty = data.ProdQty;
-    this.Edeliverrefill.ReturnQty = data.ReturnQty;
+    //this.Edeliverrefill.ReturnQty = data.ReturnQty;
+    this.Edeliverrefill.ReturnQty = data.ProdQty;
     this.Edeliverrefill.index = index;
   }
   onSubmitqty() {
+    this.Edeliverrefill.ReturnQty=this.Edeliverrefill.ProdQty;
     this.ProductArray[this.Edeliverrefill.index].ProdQty = this.Edeliverrefill.ProdQty;
     this.ProductArray[this.Edeliverrefill.index].RefillAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].ProdRate) * parseInt(this.Edeliverrefill.ProdQty);
     this.ProductArray[this.Edeliverrefill.index].Discount = parseInt(this.ProductArray[this.Edeliverrefill.index].RefillAmount) * parseInt(this.deliverrefill.DiscountPer) / 100;

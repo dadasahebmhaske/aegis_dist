@@ -1,0 +1,130 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-8 col-sm-offset-2">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Cheque & DD Payment Status</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="row">
+                    <div class="col-sm-12 text-center ">
+                      <div class="form-group label-center">
+                        <label>
+                          <strong >  Customer No : <span class="text-success">{{cust.ConsNo}}</span></strong>
+                        </label>
+                        <label>
+                          <strong style="margin-left:20px">
+                            <i class="fa fa-user"></i> Customer Name : <span class="text-custname">{{cust.ConsName}}</span></strong>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- <div class="col-sm-12">
+                      <hr class="simple">
+                    </div> -->
+                    <div class="col-sm-12 text-center ">
+                      <div class="form-group label-center">
+                   
+                        <label>
+                          <strong style="margin-left:20px"> Advance Balance : <span class="text-success">{{cust.AdvanceAmt}}</span></strong>
+                        </label>
+                        <label>
+                          <strong style="margin-left:20px"> Pending Balance : <span class="text-danger">{{cust.PendingAmt}}</span></strong>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <hr class="simple">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form name="custPayForm" #custPayForm="ngForm" (ngSubmit)="onSubmitPayment()" ngNativeValidate autocomplete="off">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Cheque Amount <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" minlength="1" maxlength="8" [(ngModel)]="cust.PaidAmount" name="TotalReceivedAmount" saCommonDir dirType="number"
+                            placeholder="Enter Amount " required disabled/>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Pay Mode <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="cust.PayModeId" name="PayModeId" required disabled>
+                            <option value="" selected hidden>Select Mode </option>
+                            <option [value]="pay.PayModeId" *ngFor="let pay of PayModeData">{{pay.PayDesc}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Cheque No. <span class="errorMessage" [hidden]="cust.PayMode!='CQ'">*</span> </label>
+                          <input type="text" class="form-control" minlength="6" maxlength="23" [(ngModel)]="cust.ChequeNo" name="ChequeNo" saCommonDir dirType="number" placeholder="Enter Cheque No."
+                            [disabled]="cust.PayMode!='CQ'" [required]="cust.PayMode!='CQ'" />
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Cheque Date <span class="errorMessage" [hidden]="cust.PayMode!='CQ'">*</span></label>
+                          <input type="text" id="ChequeDate" class="form-control" placeholder="Enter Date" [(ngModel)]="cust.ChequeDate" name="ChequeDate" onkeydown="return false" bsDatepicker
+                            [bsConfig]="datePickerConfig" [disabled]="cust.PayMode!='CQ'" [required]="cust.PayMode!='CQ'" />
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Payment Status <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="cust.PayStatusId" name="PayStatusId" required >
+                            <option value="" selected hidden>Select Mode </option>
+                            <option [value]="pay.Id" *ngFor="let pay of PayStatusData">{{pay.Name}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Payment Status Date <span class="errorMessage" >*</span></label>
+                          <input type="text" id="payStatusDate" class="form-control" placeholder="Enter Date" [(ngModel)]="cust.PayStatusDate" name="PayStatusDate" onkeydown="return false" bsDatepicker
+                            [bsConfig]="datePickerConfig" [minDate]="minDate"  [required] />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Remark  </label>
+                         <textarea  class="form-control"row="1"  [(ngModel)]="cust.Remark" name="Remark" placeholder="Enter Remark"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/finance/cheque-and-dd-payment-status-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

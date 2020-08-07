@@ -1,0 +1,92 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Transfer To Petty Cash & Bank Deposit</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="custCashFlowForm" #custCashFlowForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                  <div class="col-sm-2" *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="cust.CPCode" name="CPCode" required>
+                        <option value="" selected disabled>Select SF / SD / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-4">
+                    <div class="form-group">
+                      <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
+                    </div>
+                  </div>
+<div class="col-sm-3">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="posticon">
+          <i class="icon-append fa fa-calendar"></i>
+          <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="cust.StartDate" name="Startdate" id="startDate"
+            (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+        </label>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="posticon">
+          <i class="icon-append fa fa-calendar"></i>
+          <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="cust.EndDate" name="EndDate" onkeydown="return false" [minDate]="minDate"
+            bsDatepicker [bsConfig]="datePickerConfig" />
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+                  <!-- <div class="col-sm-2 col-xs-8">
+                
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    
+                  </div> -->
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                </form>
+                <div class="col-sm-2 ">
+                  <div class="form-group">
+                    <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
+                    <select class="form-control" [(ngModel)]="cust.TransferTo" name="TransferTo" required>
+                      <option value="" selected disabled>Transfer to </option>
+                      <option value="" selected disabled>Transfer to Petty Cash</option>
+                      <option value="" selected disabled>Transfer to Bank Account</option>
+                      <!-- <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-2 pull-right">
+                  <div class="form-group pull-right">
+                    <a routerLink="/finance/petty-cash-and-bank-deposit" class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i> Transfer </a>
+                  </div>
+                </div>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="cashFlowData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onSelect)="onSelectFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

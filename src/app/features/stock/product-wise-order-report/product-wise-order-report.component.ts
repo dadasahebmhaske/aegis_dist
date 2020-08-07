@@ -12,52 +12,56 @@ import { MasterService } from '@app/core/custom-services/master.service';
   styleUrls: ['./product-wise-order-report.component.css']
 })
 export class ProductWiseOrderReportComponent implements OnInit {
-    public cpInfo: any = {};
-    public CPCode: any = '';
-    public chantype: any = [];
-    public datePickerConfig: Partial<BsDatepickerConfig>;
-    public EndDate: any = '';
-    public loaderbtn: boolean = true;
-    public minDate: Date;
-    public maxDate: Date = new Date();
-    public gridOptions: IGridoption;
-    public StartDate: any = '';
-    public ProdOrderData: any = [];
-    constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService,private masterService:MasterService) {
-      this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
-    }
-    ngOnInit() {
-      this.appService.getAppData().subscribe(data => { this.cpInfo = data; this.CPCode=this.cpInfo.CPCode; });
-      this.StartDate = this.EndDate = new Date();
-      this.allOnLoad();
-      this.configureGrid();
-    }
-    allOnLoad() {
-      this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
-        if (resCP.StatusCode != 0)
-          this.chantype = resCP.Data; 
-        this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName,SAPId:this.cpInfo.SAPId,Address:this.cpInfo.Address });
-      });
-    }
-    configureGrid() {
-      this.gridOptions = <IGridoption>{}
-      this.gridOptions.exporterMenuPdf = false;
-      this.gridOptions.exporterExcelFilename = 'Product Wise Order Report.xlsx';
-      let columnDefs = [];
-      columnDefs = [
-        // {
-        //   name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-if="row.entity.Status=='PE" ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
-        //   , width: "48", exporterSuppressExport: true,
-        //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
-        // },
- 
+  public cpInfo: any = {};
+  public CPCode: any = '';
+  public chantype: any = [];
+  public datePickerConfig: Partial<BsDatepickerConfig>;
+  public EndDate: any = '';
+  public loaderbtn: boolean = true;
+  public minDate: Date;
+  public maxDate: Date = new Date();
+  public gridOptions: IGridoption;
+  public StartDate: any = '';
+  public ProdOrderData: any = [];
+  constructor(private appService: AppService, public datashare: DatashareService, public stockService: StockService, private masterService: MasterService) {
+    this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
+  }
+  ngOnInit() {
+    this.appService.getAppData().subscribe(data => { this.cpInfo = data; this.CPCode = this.cpInfo.CPCode; });
+    this.StartDate = this.EndDate = new Date();
+    this.allOnLoad();
+ //   this.configureGrid();
+  }
+  allOnLoad() {
+    this.masterService.getSFSDPOS(this.cpInfo.CPCode).subscribe((resCP: any) => {
+      if (resCP.StatusCode != 0)
+        {this.chantype = resCP.Data;
+      this.chantype.unshift({ CPCode: this.cpInfo.CPCode, CPName: this.cpInfo.CPName, SAPId: this.cpInfo.SAPId, Address: this.cpInfo.Address ,ParentCPCode:''});
+      this.configureGrid();}else{
+        this.configureGrid();
+      }
+    });
+   
+  }
+  configureGrid() {
+    this.gridOptions = <IGridoption>{}
+    this.gridOptions.exporterMenuPdf = false;
+    this.gridOptions.exporterExcelFilename = 'Product Wise Order Report.xlsx';
+    let columnDefs = [];
+    columnDefs = [
+      // {
+      //   name: 'Select1', displayName: 'Edit', cellTemplate: `<button  style="margin:3px;" class="btn-primary btn-xs"  ng-if="row.entity.Status=='PE" ng-click="grid.appScope.editEmployee(row.entity)"  ">&nbsp;Edit&nbsp;</button> `
+      //   , width: "48", exporterSuppressExport: true,
+      //   headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
+      // },
+
       { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: '130', cellTooltip: true, filterCellFiltered: true },
       { name: 'State', displayName: 'State', width: '170', cellTooltip: true, filterCellFiltered: true },
-      { name: 'Plant', displayName: 'Plant', width: '150', cellTooltip: true, filterCellFiltered: true},
+      { name: 'Plant', displayName: 'Plant', width: '200', cellTooltip: true, filterCellFiltered: true },
       { name: 'Channel', displayName: 'Channel', width: '150', cellTooltip: true, filterCellFiltered: true },
       { name: 'CPName', displayName: 'CP Name', width: '250', cellTooltip: true, filterCellFiltered: true },
       { name: 'SegmentProduct', displayName: 'Product Segment', width: '200', cellTooltip: true, filterCellFiltered: true },
-      { name: 'Product', displayName: 'Product', width: '200', cellTooltip: true, filterCellFiltered: true },      
+      { name: 'Product', displayName: 'Product', width: '200', cellTooltip: true, filterCellFiltered: true },
       { name: 'VolmNos', displayName: 'Volume(Nos)', cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true },
       { name: 'VolmKgs', displayName: 'Volume(Kgs)', cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true },
       { name: 'ValueBasic', displayName: 'Value(Basic)', cellClass: 'cell-right', width: '150', cellTooltip: true, filterCellFiltered: true },
@@ -67,36 +71,54 @@ export class ProductWiseOrderReportComponent implements OnInit {
       { name: 'EmployeeName', displayName: 'Executive Name', width: '250', cellTooltip: true, filterCellFiltered: true },
       { name: 'City', displayName: 'City', width: '170', cellTooltip: true, filterCellFiltered: true },
       { name: 'Region', displayName: 'Region', width: '150', cellTooltip: true, filterCellFiltered: true },
-      ]
-      this.gridOptions.columnDefs = columnDefs;
-      this.onLoad();
-    }
-    // onEditFunction = ($event) => {
-    //   console.log($event.row);
-    //   this.datashare.updateShareData($event.row);
-    //   AppComponent.Router.navigate(['/stock/imbalance']);
-    // }
-    onLoad() {
-      this.loaderbtn = false;
-          let ParentCPCode = this.cpInfo.ParentCPCode == null ? this.cpInfo.CPCode : this.cpInfo.ParentCPCode;
-      this.stockService.getProductorderWiseOrderDetails(ParentCPCode,this.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate),this.cpInfo.EmpId).subscribe((resData: any) => {
+    ]
+    this.gridOptions.columnDefs = columnDefs;
+    this.onLoad();
+  }
+  // onEditFunction = ($event) => {
+  //   console.log($event.row);
+  //   this.datashare.updateShareData($event.row);
+  //   AppComponent.Router.navigate(['/stock/imbalance']);
+  // }
+  onLoad() {
+    this.loaderbtn = false;
+    let ParentCPCode = this.cpInfo.ParentCPCode == null ? this.cpInfo.CPCode : this.cpInfo.ParentCPCode;
+    let condition;
+  if(this.cpInfo.ChannelTypeFlag == 'DI' || this.cpInfo.ChannelTypeFlag == 'DE')
+   { let obj=this.masterService.filterData(this.chantype, this.CPCode, 'CPCode');
+   condition= obj[0].ParentCPCode==''?true:false;
+  }else{
+   condition=false;
+   }
+  
+    if ( condition ) {
+      this.stockService.getProductorderWiseOrderDetails(ParentCPCode, this.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.cpInfo.EmpId).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
-          this.ProdOrderData = resData.Data; console.log(resData.Data);
+          this.ProdOrderData = resData.Data;
           AppComponent.SmartAlert.Success(resData.Message);
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); this.ProdOrderData = [{}] }
-  
+      });
+    } else {
+      this.stockService.getSFSDProductorderWiseOrderDetails(ParentCPCode, this.CPCode, this.appService.DateToString(this.StartDate), this.appService.DateToString(this.EndDate), this.cpInfo.EmpId).subscribe((resData: any) => {
+        this.loaderbtn = true;
+        if (resData.StatusCode != 0) {
+          this.ProdOrderData = resData.Data;
+          AppComponent.SmartAlert.Success(resData.Message);
+        }
+        else { AppComponent.SmartAlert.Errmsg(resData.Message); this.ProdOrderData = [{}] }
       });
     }
-    resetEndDate(val) {
-      this.minDate = val;
-      if (val != undefined && val != null && this.EndDate != null) {
-        if ((new Date(this.EndDate).getTime()) < (new Date(val).getTime())) {
-          this.EndDate = '';
-        }
-      }
-  
-    }
-  
   }
+  resetEndDate(val) {
+    this.minDate = val;
+    if (val != undefined && val != null && this.EndDate != null) {
+      if ((new Date(this.EndDate).getTime()) < (new Date(val).getTime())) {
+        this.EndDate = '';
+      }
+    }
+
+  }
+
+}

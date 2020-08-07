@@ -78,7 +78,11 @@ export class StockService {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrderDispatch`, data);
     }
     public getProductorderWiseOrderDetails(ParentCPCode,cpcode, StartDate, EndDate,empid) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetPrimarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&UserCode=${empid}`);
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetPrimarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&UserCode=`);
+    }
+    public getSFSDProductorderWiseOrderDetails(ParentCPCode,cpcode, StartDate, EndDate,empid) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetSecondarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&CPTypeId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&OrderType=&UserCode=`);
+        
     }
     
 }

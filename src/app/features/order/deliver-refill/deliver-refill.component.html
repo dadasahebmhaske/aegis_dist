@@ -160,7 +160,7 @@
     <form name="EditdeliverRefillForm" #EditdeliverRefillForm="ngForm" (ngSubmit)="onSubmitqty()" autocomplete="off" ngNativeValidate>
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" (click)="onSubmitqty()" data-dismiss="modal">&times;</button>
           <h4 class="modal-title text-center">Refill Quantity Details</h4>
         </div>
         <div class="modal-body">
@@ -176,14 +176,14 @@
               <div class="form-group">
                 <label>Return Quantity <span class="errorMessage">*</span>
                 </label>
-                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty" name="ReturnQty" required />
+                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty" name="ReturnQty" disabled required />
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" (click)="onSubmitqty()" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </form>

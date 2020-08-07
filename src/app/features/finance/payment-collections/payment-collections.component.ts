@@ -65,7 +65,7 @@ export class PaymentCollectionsComponent implements OnInit {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);
-          AppComponent.Router.navigate(['/order/cash-flow-register']);
+          AppComponent.Router.navigate(['/finance/cash-flow-register']);
         }
         else { AppComponent.SmartAlert.Errmsg(resData.Message); }
       });

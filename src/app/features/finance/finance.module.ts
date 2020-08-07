@@ -8,6 +8,7 @@ import { CustomerService } from '../customer/customer.service';
 import { UigridfinanceDirective } from '@app/core/directive/uigridfinance.directive';
 import { OrderService } from '../order/order.service';
 import { StockService } from '../stock/stock.service';
+import {FinanceService } from './finance.service';
 
 @NgModule({
   declarations: [componentArray,UigridfinanceDirective],
@@ -18,7 +19,7 @@ import { StockService } from '../stock/stock.service';
     BsDatepickerModule.forRoot(),
   ],
   exports:[UigridfinanceDirective],
-  providers:[ChannelPartnerService,CustomerService,OrderService,StockService]
+  providers:[ChannelPartnerService,CustomerService,OrderService,StockService,FinanceService]
 })
 export class FinanceModule { }
 
