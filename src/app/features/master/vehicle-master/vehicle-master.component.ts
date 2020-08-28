@@ -22,8 +22,8 @@ export class VehicleMasterComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Vehicle Master list.xlsx';
     this.gridOptions.selectionRowHeaderWidth = 0;
+    this.gridOptions.exporterExcelFilename = 'Vehicle Master list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

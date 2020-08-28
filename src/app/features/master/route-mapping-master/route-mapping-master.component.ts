@@ -33,8 +33,9 @@
     configureGrid() {
       this.gridOptions = <IGridoption>{}
       this.gridOptions.exporterMenuPdf = false;
-      this.gridOptions.exporterExcelFilename = 'Route Mapping Master list.xlsx';
       this.gridOptions.selectionRowHeaderWidth = 0;
+      this.gridOptions.exporterExcelFilename = 'Route Mapping Master list.xlsx';
+      
       let columnDefs = [];
       columnDefs = [
         {

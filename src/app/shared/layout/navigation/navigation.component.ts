@@ -18,10 +18,10 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.appService.getAppData().subscribe(data => {
       this.CPSD = data; 
- 
-      this.stockShow=(this.CPSD.ChannelTypeFlag=='DI'|| this.CPSD.ChannelTypeFlag=='DE') ?true:false;
-      console.log(this.stockShow);
       this.getNavMenu();
+      setTimeout(()=>{this.stockShow=(this.CPSD.ChannelTypeFlag=='DI'|| this.CPSD.ChannelTypeFlag=='DE') ?true:false;
+      console.log(this.stockShow);},5000);
+      
     });
   }
 getNavMenu(){
@@ -33,6 +33,8 @@ getNavMenu(){
       $("[formflag="+ element +"]").hide();
     }
   });
+
+
   // this.masterService.getNavMenu(this.CPSD.RoleCode,this.CPSD.RoleId).subscribe((resData: any) => {
   //   if (resData.StatusCode != 0) {
   //     for(let i=0;i<resData.Data.length;i++){

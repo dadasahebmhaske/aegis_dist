@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '@app/features/order/order.service';
+import { FinanceService } from '../finance.service';
 @Component({
   selector: 'sa-payment-collections',
   templateUrl: './payment-collections.component.html',
@@ -18,7 +19,7 @@ export class PaymentCollectionsComponent implements OnInit {
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public loaderbtn: boolean = true;
   public PayModeData: any = [];
-  constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
+  constructor(private appService: AppService,private financeService:FinanceService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -26,7 +27,7 @@ export class PaymentCollectionsComponent implements OnInit {
     this.allOnLoad();
   }
   allOnLoad() {
-    this.orderService.getPayMode().subscribe((resR: any) => {
+    this.financeService.getPayMode().subscribe((resR: any) => {
       if (resR.StatusCode != 0)
         this.PayModeData = resR.Data;
     });
@@ -34,7 +35,7 @@ export class PaymentCollectionsComponent implements OnInit {
   onGetCustomer() {
     this.loaderbtn = false;
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.orderService.getCustVerify(this.cpInfo.CPCode, this.cust).subscribe((resData: any) => {
+    this.financeService.getCustVerify(this.cpInfo.CPCode, this.cust).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
         this.cust = Object.assign(this.cust, resData.Data[0])
@@ -61,7 +62,7 @@ export class PaymentCollectionsComponent implements OnInit {
       this.cust.SalesAmount = '';
       this.cust.ChequeNo = this.cust.ChequeNo == null ? '' : this.cust.ChequeNo;
       this.cust.ChequeDate = this.cust.ChequeDate == null ? '' : this.cust.ChequeDate;
-      this.orderService.postCustPayment(this.cust).subscribe((resData: any) => {
+      this.financeService.postCustPayment(this.cust).subscribe((resData: any) => {
         this.loaderbtn = true;
         if (resData.StatusCode != 0) {
           AppComponent.SmartAlert.Success(resData.Message);

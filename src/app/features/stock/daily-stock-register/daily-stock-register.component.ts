@@ -31,6 +31,7 @@ export class DailyStockRegisterComponent implements OnInit {
   public productDataSelected: any = [];
   public productSegmentData: any = [];
   public StartMindate: Date;
+  public showCol:boolean=true;
   public maxDate: Date;
   public soundData: any = [];
   public state: any = {
@@ -49,10 +50,19 @@ export class DailyStockRegisterComponent implements OnInit {
     this.showGrid('S');
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allLoad();
-    this.configureSoundGrid();
+   
     this.configureDefectiveGrid();
-    this.configureEmptyGrid();
-    this.configureNewConnectionGrid();
+  
+    if( this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){
+      this.showCol=true;
+      this.configureSoundGrid();
+      this.configureEmptyGrid();
+      this.configureNewConnectionGrid();
+    }else{this.showCol=false;
+      this.configureSoundGrid();
+      this.configureEmptyGrid();
+      this.configureNewConnectionGrid();
+    }
     this.onLoad();
   }
   allLoad() {
@@ -83,6 +93,8 @@ export class DailyStockRegisterComponent implements OnInit {
       { name: 'StockOut', displayName: 'Empty Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
       // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "*",  cellTooltip: true },
       // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "180", cellTooltip: true },
+      //{ name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
+      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
       { name: 'ImbalPlus', displayName: 'Empty +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ImbalMinus', displayName: 'Empty -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing Balance Empty', cellClass: 'cell-right', width: "*", cellTooltip: true }
@@ -121,9 +133,11 @@ export class DailyStockRegisterComponent implements OnInit {
       { name: 'OpeningBal', displayName: 'Opening Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
-      // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170", cellTooltip: true },
-      // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
-      { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      //{ name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170", cellTooltip: true },
+      //{ name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
+      { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
+      //{ name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
+       { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true }
     ]
@@ -140,6 +154,8 @@ export class DailyStockRegisterComponent implements OnInit {
       { name: 'OpeningBal', displayName: 'Opening New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
+      { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
+    //  { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
       // { name: 'StockOutToUsers', displayName: 'Allocated to Retailer', width: "170", cellTooltip: true },
       // { name: 'StockInFromUsers', displayName: 'Return from Retailer', width: "170", cellTooltip: true },
       // { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },

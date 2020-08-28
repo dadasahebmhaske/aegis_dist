@@ -79,19 +79,19 @@ export class OrderService {
     public getRefillDeliveryProductDetails(cpcode, delRef) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliveryProducts?DelRefNo=${delRef}&CPCode=${cpcode}`);
     }
-    public getPayMode() {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetpaymentMode?PayModeId=&PayMode=&IsActive=Y`);
-    }
-    public getCustVerify(cpcode, cust) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCustomerAndPayRegister?ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}`);
-    }
+    // public getPayMode() {
+    //     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetpaymentMode?PayModeId=&PayMode=&IsActive=Y`);
+    // }
+    // public getCustVerify(cpcode, cust) {
+    //     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetCustomerAndPayRegister?ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}`);
+    // }
 
-    public postCustPayment(data: any) {
-        return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/InsertPaymentRegister`, data, AppComponent.httpOptions);
-    }
-    public getCashFlow(cpcode, cust) {
-        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetPaymentRegister?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FromDate=${cust.StartDate}&ToDate=${cust.EndDate}`);
-    }
+    // public postCustPayment(data: any) {
+    //     return this.httpClient.post<any>(`${AppComponent.BaseUrlDist}Order/InsertPaymentRegister`, data, AppComponent.httpOptions);
+    // }
+    // public getCashFlow(cpcode, cust) {
+    //     return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetPaymentRegister?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FromDate=${cust.StartDate}&ToDate=${cust.EndDate}`);
+    // }
     public getDelManWiseData(cpcode, data) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetRefillDeliverySummaryDelManWise?DelRefNo=&pCPCode=${cpcode}&pDelUserCode=${data.DelUserCode}&pFDate=${data.StartDate}&pTDate=${data.EndDate}`);
 

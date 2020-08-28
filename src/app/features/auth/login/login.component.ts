@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
   }
   getNavMenu(){
     let menu=[];
-    this.masterService.getNavMenu(this.CPInfo.RoleCode,this.CPInfo.RoleId).subscribe((resMData: any) => {
+    this.masterService.getNavMenu(this.CPInfo.RoleCode,this.CPInfo.RoleId,this.CPInfo.EmpId).subscribe((resMData: any) => {
       if (resMData.StatusCode != 0) {
         for(let i=0;i<resMData.Data.length;i++){
           menu[i] = resMData.Data[i].AllowdedMenu;

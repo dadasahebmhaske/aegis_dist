@@ -6,6 +6,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 import { MasterService } from '@app/core/custom-services/master.service';
 import { OrderService } from '@app/features/order/order.service';
+import { FinanceService } from '../finance.service';
 
 @Component({
   selector: 'sa-cash-flow-register',
@@ -22,7 +23,7 @@ export class CashFlowRegisterComponent implements OnInit {
   public loaderbtn: boolean = true;
   public minDate: Date;
   public maxDate: Date = new Date();
-  constructor(private appService: AppService, private customerService: CustomerService, private orderService: OrderService,private masterService:MasterService) {
+  constructor(private appService: AppService, private customerService: CustomerService,private financeService:FinanceService, private orderService: OrderService,private masterService:MasterService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', maxDate: this.maxDate, dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
@@ -41,6 +42,7 @@ export class CashFlowRegisterComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
+    this.gridOptions.selectionRowHeaderWidth = 0;
     this.gridOptions.exporterExcelFilename = 'Cash Flow Register list.xlsx';
     let columnDefs = [];
     columnDefs = [
@@ -57,7 +59,9 @@ export class CashFlowRegisterComponent implements OnInit {
       { name: 'ChequeNo', displayName: 'Cheque No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ChequeDate', displayName: 'Cheque Date', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'CollectedByUserName', displayName: 'Payment Collected By', width: "200", cellTooltip: true, filterCellFiltered: true },
-    ]
+      { name: 'PayStatus', displayName: 'Payment Status', width: "150", cellTooltip: true, filterCellFiltered: true },
+        { name: 'PayStatusDate', displayName: 'Payment Status Date', cellClass: 'cell-center', width: "180", cellTooltip: true, filterCellFiltered: true },
+       ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
@@ -70,7 +74,7 @@ export class CashFlowRegisterComponent implements OnInit {
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
     this.cust.StartDate = this.appService.DateToString(this.cust.StartDate)
     this.cust.EndDate = this.appService.DateToString(this.cust.EndDate)
-    this.orderService.getCashFlow(this.cust.CPCode, this.cust).subscribe((resData: any) => {
+    this.financeService.getCashFlow(this.cust.CPCode, this.cust).subscribe((resData: any) => {
       this.loaderbtn=true;
       if (resData.StatusCode != 0) {
         this.cashFlowData = resData.Data;

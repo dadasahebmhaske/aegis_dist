@@ -8,13 +8,18 @@ import { ChequeAndDdPaymentStatusComponent } from './cheque-and-dd-payment-statu
 import { ChequeAndDdPaymentStatusListComponent } from './cheque-and-dd-payment-status-list/cheque-and-dd-payment-status-list.component';
 import { TransferToPettyCashAndBankAccountComponent } from './transfer-to-petty-cash-and-bank-account/transfer-to-petty-cash-and-bank-account.component';
 import { BankAccountDetailsComponent } from './bank-account-details/bank-account-details.component';
-
+import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { ExpensesComponent } from './expenses/expenses.component';
 
 const routes: Routes = [
   { path:'bank-account-details',
   component:BankAccountDetailsComponent},
   { path:'cash-flow-register',
   component:CashFlowRegisterComponent},
+  { path:'expenses-list',
+  component:ExpensesListComponent},
+  { path:'expenses',
+  component:ExpensesComponent},
   { path:'payment-collections',
   component:PaymentCollectionsComponent},
   { path:'petty-cash-details-list',
@@ -33,7 +38,9 @@ export const routing = [RouterModule.forChild(routes)]
 //export class MasterRoutingModule { }
 export const componentArray = [
   BankAccountDetailsComponent,
-  CashFlowRegisterComponent, 
+  CashFlowRegisterComponent,
+  ExpensesListComponent,
+  ExpensesComponent, 
    PaymentCollectionsComponent,
   PettyCashDetailsComponent,
   PettyCashDetailsListComponent,

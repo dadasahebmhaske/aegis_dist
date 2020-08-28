@@ -49,7 +49,7 @@
           <li formflag="MEMPM" routerLinkActive="active">
             <a routerLink="/master/employee-master">Employee Master</a>
           </li>
-          <li formflag="MCHPM" routerLinkActive="active" *ngIf="stockShow">
+          <li formflag="MCHPM" routerLinkActive="active" >
             <a routerLink="/master/channel-partner-master">Channel Partner Master</a>
           </li>
         </ul>
@@ -140,7 +140,7 @@
       </li>
       <li formflag="DFINC" style="display: none;">
         <a title="Finance">
-          <i class="fa fa-lg fa-fw fa-cogs"></i>
+          <i class="fa fa-lg fa-fw fa-inr"></i>
           <span class="menu-item-parent">Finance</span>
         </a>
         <ul>
@@ -158,6 +158,9 @@
           </li>  
           <li formflag="FBACD"  routerLinkActive="active">
             <a routerLink="/finance/bank-account-details">Bank Account Details</a>
+          </li>  
+          <li formflag="FEXPE"  routerLinkActive="active">
+            <a routerLink="/finance/expenses-list">Expenses</a>
           </li>  
         </ul>
       </li>
@@ -177,7 +180,7 @@
             <a routerLink="/stock/add-imbalance">Imbalance </a>
            
           </li>
-          <li formflag="SSSSP" *ngIf="stockShow">
+          <li formflag="SSSSP" >
             <a title="Stock">
               <span >Stock SF / SD / POS</span>
             </a>
@@ -213,7 +216,7 @@
           <li formflag="STPRA" routerLinkActive="active">
             <a routerLink="/settings/price-allocation-list">Price Allocation</a>
           </li> 
-          <li formflag="STSPA" routerLinkActive="active" *ngIf="stockShow">
+          <li formflag="STSPA" routerLinkActive="active" >
             <a routerLink="/settings/sf-sd-price-allocation-list">SF / SD / POS Price Allocation</a>
           </li> 
           <li formflag="STCDA" routerLinkActive="active">

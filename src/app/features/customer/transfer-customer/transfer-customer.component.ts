@@ -46,10 +46,10 @@ export class TransferCustomerComponent implements OnInit {
     this.gridOptions.exporterMenuPdf = false;
     this.gridOptions.exporterExcelFilename = 'Customer In list.xlsx';
     let columnDefs = [];
-    // this.gridOptions.multiSelect = true;
-    // this.gridOptions.enableRowSelection = true;
-    // this.gridOptions.enableSelectAll = true;
-    // this.gridOptions.enableRowHeaderSelection = true;
+    this.gridOptions.multiSelect = true;
+    this.gridOptions.enableRowSelection = true;
+    this.gridOptions.enableSelectAll = true;
+    this.gridOptions.enableRowHeaderSelection = true;
     this.gridOptions.selectionRowHeaderWidth = 35;
     columnDefs = [
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },

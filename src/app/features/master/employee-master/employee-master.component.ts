@@ -28,6 +28,7 @@ export class EmployeeMasterComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
+    this.gridOptions.selectionRowHeaderWidth = 0;
     this.gridOptions.exporterExcelFilename = 'Employee list.xlsx';
     let columnDefs = [];
     columnDefs = [

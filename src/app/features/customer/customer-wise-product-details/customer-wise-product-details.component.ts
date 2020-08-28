@@ -50,6 +50,7 @@
     configureGrid() {
       this.gridOptions = <IGridoption>{}
       this.gridOptions.exporterMenuPdf = false;
+      this.gridOptions.selectionRowHeaderWidth = 0;
       this.gridOptions.exporterExcelFilename = 'Customer Wise Product Details.xlsx';
       let columnDefs = [];
       columnDefs = [

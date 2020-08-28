@@ -42,7 +42,8 @@ export class ChequeAndDdPaymentStatusListComponent implements OnInit {
     configureGrid() {
       this.gridOptions = <IGridoption>{}
       this.gridOptions.exporterMenuPdf = false;
-      this.gridOptions.exporterExcelFilename = 'Cash Flow Register list.xlsx';
+       this.gridOptions.selectionRowHeaderWidth = 0;
+      this.gridOptions.exporterExcelFilename = 'Cheque And DD Payment Status list.xlsx';
       let columnDefs = [];
       columnDefs = [
         {

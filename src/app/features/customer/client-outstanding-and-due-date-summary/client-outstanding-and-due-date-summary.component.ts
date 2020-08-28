@@ -43,6 +43,7 @@ import { OrderService } from '@app/features/order/order.service';
     configureGrid() {
       this.gridOptions = <IGridoption>{}
       this.gridOptions.exporterMenuPdf = false;
+      this.gridOptions.selectionRowHeaderWidth = 0;
       this.gridOptions.exporterExcelFilename = 'Customer Outstanding And Due Date Summary.xlsx';
       let columnDefs = [];
       columnDefs = [

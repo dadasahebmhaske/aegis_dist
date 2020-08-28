@@ -1,0 +1,89 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <!-- widget grid -->  
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-8 col-sm-offset-2">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2>
+              <i class="fa fa-table"></i> Expense Details</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="custPayForm" #custPayForm="ngForm" (ngSubmit)="onSubmitPayment()" ngNativeValidate autocomplete="off">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col-sm-12 ">
+                        <div class="form-group">
+                          <label>Select Employee <span class="errorMessage">*</span>
+                          </label>
+                          <select class="form-control" [(ngModel)]="transfer.EmpId" name="EmpId" required>
+                            <option value="" selected hidden>Select Employee</option>
+                            <option [value]="del.EmpId" *ngFor="let del of EmpData">{{del.EmpName}} - {{del.RoleDesc}}</option>
+                          </select>
+                        </div> 
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Expenses Type <span class="errorMessage">*</span></label>
+                          <select class="form-control" [(ngModel)]="transfer.ExpTypeId" name="ExpTypeId" required>
+                            <option value="" selected hidden>Select Type </option>
+                            <option [value]="exp.ExpTypeId" *ngFor="let exp of ExpensesTypeData">{{exp.ExpType}} </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Expenses Amount <span class="errorMessage">*</span>
+                          </label>
+                          <input type="text" class="form-control" minlength="1" maxlength="11" [(ngModel)]="transfer.CreditAmount" name="CreditAmount" saCommonDir dirType="number"
+                            placeholder="Enter Amount " required />
+                        </div>
+                      </div>
+                      <div class="col-sm-12 ">
+                        <div class="form-group">
+                          <label>Remark</label>
+                       <textarea  class="form-control" [(ngModel)]="transfer.Remark" name="Remark" placeholder=" Enter Remark"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <label>Expenses Proof
+                              </label>
+                              <input type="file" class="form-control"
+                                  (change)="onFileSelected($event)" id="fileControl"
+                                  name="DocFileName" placeholder="Enter File"  />
+                          </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="transfer.ImageName!=null">
+                          <img src="{{filepreview}}" class="img-responsive"  />
+                      </div>
+                  </div>
+                  </div>
+                </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/finance/expenses-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn btn-primary marg-right" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>
+

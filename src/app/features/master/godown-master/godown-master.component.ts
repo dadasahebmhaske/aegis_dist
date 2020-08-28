@@ -24,8 +24,8 @@ export class GodownMasterComponent implements OnInit {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
-    this.gridOptions.exporterExcelFilename = 'Godown list.xlsx';
     this.gridOptions.selectionRowHeaderWidth = 0;
+    this.gridOptions.exporterExcelFilename = 'Godown list.xlsx';
     let columnDefs = [];
     columnDefs = [
       {

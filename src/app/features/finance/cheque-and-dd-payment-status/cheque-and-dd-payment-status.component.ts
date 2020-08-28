@@ -36,9 +36,9 @@ export class ChequeAndDdPaymentStatusComponent implements OnInit, OnDestroy {
       });
     }
     allOnLoad() {
-      this.orderService.getPayMode().subscribe((resR: any) => {
+      this.financeService.getPayMode().subscribe((resR: any) => {
         if (resR.StatusCode != 0)
-          this.PayModeData = resR.Data;console.log(resR.Data);
+          this.PayModeData = resR.Data;
       });
       this.financeService.getPayStatus().subscribe((resPR: any) => {
         if (resPR.StatusCode != 0)

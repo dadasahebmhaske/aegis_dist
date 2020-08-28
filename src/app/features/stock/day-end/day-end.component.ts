@@ -50,14 +50,16 @@ export class DayEndComponent implements OnInit {
 
     this.showGrid('S');
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.configureSoundGrid();
     this.configureDefectiveGrid();
-    this.configureEmptyGrid();
     if( this.cpInfo.ChannelTypeFlag=='DI'|| this.cpInfo.ChannelTypeFlag=='DE'){
       this.showCol=true;
+      this.configureSoundGrid();
       this.configureNewConnectionGrid();
+      this.configureEmptyGrid();
     }else{this.showCol=false;
+      this.configureSoundGrid();
       this.configureNewConnectionGrid();
+      this.configureEmptyGrid();
     }
     this.onLoad();
   }
@@ -72,8 +74,8 @@ export class DayEndComponent implements OnInit {
       { name: 'OpeningBal', displayName: 'Opening Bal Empty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Empty Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Empty Return', cellClass: 'cell-right', width: "*", cellTooltip: true },
-      // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "180", cellTooltip: true },
+     // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
+      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "*", cellTooltip: true ,visible:this.showCol},
       { name: 'ImbalPlus', displayName: 'Empty +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ImbalMinus', displayName: 'Empty -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing Balance Empty', cellClass: 'cell-right', width: "*", cellTooltip: true }
@@ -110,8 +112,8 @@ export class DayEndComponent implements OnInit {
       { name: 'OpeningBal', displayName: 'Opening Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'Delivery Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
-      // { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
-      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "170", cellTooltip: true },
+       { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "*", cellTooltip: true,visible:this.showCol },
+      // { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "*", cellTooltip: true,visible:this.showCol },
       { name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing Balance Filled', cellClass: 'cell-right', width: "*", cellTooltip: true }
@@ -130,7 +132,7 @@ export class DayEndComponent implements OnInit {
       { name: 'StockIn', displayName: 'Inward Qty', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'StockOut', displayName: 'NC to Customer', cellClass: 'cell-right', width: "*", cellTooltip: true },
        { name: 'StockOutToSD', displayName: 'Allocated to SD', cellClass: 'cell-right', width: "150", cellTooltip: true,visible:this.showCol },
-      { name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "150", cellTooltip: true,visible:this.showCol },
+      //{ name: 'StockInFromSD', displayName: 'Return from SD', cellClass: 'cell-right', width: "150", cellTooltip: true,visible:this.showCol },
       //{ name: 'ImbalPlus', displayName: 'Filled +', cellClass: 'cell-right', width: "*", cellTooltip: true },
       //{ name: 'ImbalMinus', displayName: 'Filled -', cellClass: 'cell-right', width: "*", cellTooltip: true },
       { name: 'ClosingBal', displayName: 'Closing New Connection', cellClass: 'cell-right', width: "*", cellTooltip: true }

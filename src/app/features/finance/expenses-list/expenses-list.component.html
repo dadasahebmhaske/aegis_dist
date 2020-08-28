@@ -5,7 +5,7 @@
       <article class="col-sm-12">
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
-            <h2> <i class="fa fa-table"></i> Petty Cash Details List</h2>
+            <h2> <i class="fa fa-table"></i> Expenses List</h2>
           </header>
           <div>
             <div class="widget-body">
@@ -53,18 +53,18 @@
                 </form>
                 <div class="col-sm-1 pull-right">
                   <div class="form-group pull-right">
-                    <a routerLink="/finance/petty-cash-details" class="btn btn-block btn-warning get_details pull-right">
-                      <i class="glyphicon glyphicon-plus"></i> Add Cash </a>
+                    <a routerLink="/finance/expenses" class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i> Add Expense </a>
                   </div>
                 </div>
-                <div class="col-sm-3 pull-right">
-                  <div class="form-group pull-right">
+                <!--  <div class="col-sm-3 pull-right">
+                 <div class="form-group pull-right">
                     <button style="margin-right:20px;" data-toggle="modal" data-target="#bankModal" [disabled]="transferHide"
                       class="btn btn-block btn-info get_details pull-right">
                       <i class="glyphicon glyphicon-plus"></i> Transfer To Bank </button>
                   </div>
-                </div>
-                <div class="col-sm-12 table-responsive">
+                </div> -->
+                <div  class="col-sm-12 table-responsive">
                   <ui-grid [data]="cashFlowData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
                 </div>
               </div>
@@ -76,6 +76,7 @@
   </sa-widgets-grid>
 </div>
 
+
 <!-- Modal -->
 <div class=" modal fade" id="transferModal" role="dialog">
   <div class="modal-dialog modal-lg">
@@ -83,41 +84,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title text-center">Petty Cash Transfer Details</h4>
-      </div>
-      <form name="transferDeatilsForm" #transferDeatilsForm="ngForm" (ngSubmit)="transferToAccount()" autocomplete="off"
-      ngNativeValidate>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-12">
-            <ui-grid [data]="pettyCashData" [gridOptions]="gridOptions1" ></ui-grid>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-success">Transfer</button> --> 
-        <!-- <button class=" btn btn-primary marg-right" type="submit"
-        [disabled]="!loaderbtn">
-        <i class="fa fa-fw"
-            [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
-        {{loaderbtn==true? 'Transfer':'Loading'}}</button> -->
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- Modal -->
-<div class=" modal fade" id="bankModal" role="dialog">
-  <div class="modal-dialog modal-lg">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title text-center">Bank Transfer Details</h4>
+        <h4 class="modal-title text-center">Expenses Details</h4>
       </div>
       <form name="transferDeatilsForm" #transferDeatilsForm="ngForm" (ngSubmit)="transferToAccount()" autocomplete="off"
       ngNativeValidate>
@@ -126,27 +93,9 @@
           <div class="col-sm-12">
             <div class="refill">
               <div class="row">
-                <div class="col-sm-4 ">
-                  <div class="form-group">
-                    <label>Available Petty Cash Amount : <strong>{{availAmt}}</strong></label>
-                  </div>
-                </div>
-                <div class="col-sm-3 ">
-                  <div class="form-group pull-right">
-                    <label>Credit Amount <span class="errorMessage">*</span></label>
-                  </div>
-                </div>
-                <div class="col-sm-2 ">
-                <div class="form-group">
-                  <input type="text" class="form-control" minlength="1" maxlength="10" [(ngModel)]="transfer.CreditAmount" name="CreditAmount" saCommonDir dirType="number"
-                  placeholder="Enter Amount " required />
-                </div>
-              </div>
-                <div class="col-sm-12 ">
-                  <div class="form-group">
-                    <!-- <label>SF / SD / POS <span class="errorMessage">*</span></label> -->
-                 <textarea  class="form-control" [(ngModel)]="transfer.Remark" name="Remark" placeholder=" Enter Remark"></textarea>
-                  </div>
+               
+                <div class="col-sm-12 text-center">
+               <img src="{{imgUrl}}" style="margin: auto;" class="img-responsive text-center"/>
                 </div>
               
               </div>
@@ -156,11 +105,7 @@
       </div>
       <div class="modal-footer">
         <!-- <button type="button" class="btn btn-success">Transfer</button> -->
-        <button class=" btn btn-primary marg-right" type="submit"
-        [disabled]="!loaderbtn">
-        <i class="fa fa-fw"
-            [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
-        {{loaderbtn==true? 'Transfer':'Loading'}}</button>
+     
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
       </form>

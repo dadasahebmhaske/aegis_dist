@@ -27,6 +27,7 @@ export class TransferCustomerInComponent implements OnInit, OnDestroy {
   configureGrid() {
     this.gridOptions = <IGridoption>{}
     this.gridOptions.exporterMenuPdf = false;
+    this.gridOptions.selectionRowHeaderWidth = 0;
     this.gridOptions.exporterExcelFilename = 'Customer Transfer In list.xlsx';
     let columnDefs = [];
     columnDefs = [

@@ -118,8 +118,8 @@ export class MasterService {
   // public getProductSegment() {
   //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=PSM&IsActive=Y`);
   // }
-  public getNavMenu(RoleCode, RoleId) {
-    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAllocated?AllocationId=&AppId=&DeptId=&RoleCode=${RoleCode}&RoleId=${RoleId}&IsActive=Y&Status=&AFlag=DI`, AppComponent.httpOptions);
+  public getNavMenu(RoleCode, RoleId, UserCode) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetMenuAllocated?AllocationId=&AppId=&DeptId=&RoleCode=${RoleCode}&RoleId=${RoleId}&UserCode=${UserCode}&IsActive=Y&Status=&AFlag=DI`, AppComponent.httpOptions);
   }
 
 }
