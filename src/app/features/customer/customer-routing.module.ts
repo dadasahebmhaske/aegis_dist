@@ -11,44 +11,19 @@ import { CustomerWiseTransactionSummaryComponent } from './customer-wise-transac
 import { CustomerWiseTransactionDetailsComponent } from './customer-wise-transaction-details/customer-wise-transaction-details.component';
 import { ClientOutstandingAndDueDateSummaryComponent } from './client-outstanding-and-due-date-summary/client-outstanding-and-due-date-summary.component';
 import { CustomerWiseProductDetailsComponent } from './customer-wise-product-details/customer-wise-product-details.component';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 const routes: Routes = [
-  { path:'customer-wise-product-details',
-  component:CustomerWiseProductDetailsComponent},
-  { path:'customer-wise-transaction-summary',
-  component:CustomerWiseTransactionSummaryComponent},
-  { path:'customer-wise-transaction-details',
-  component:CustomerWiseTransactionDetailsComponent},
-  { path:'client-outstanding-and-due-date-summary',
-  component:ClientOutstandingAndDueDateSummaryComponent},
-  {
-    path:'customer-master',
-    component:CustomerMasterComponent
-  },
-  {
-    path:'new-customer',
-    component:NewCustomerComponent
-  },
-  {
-    path:'update-customer',
-    component:UpdateCustomerComponent
-  },
-  {
-    path:'transfer-customer',
-    component:TransferCustomerComponent
-  },
-  {
-    path:'terminate-customer',
-    component:TerminateCustomerComponent
-  },
-  {
-    path:'sv-creation-printing',
-    component:SvCreationPrintingComponent
-  },
-  {
-    path:'transfer-customer-in',
-    component:TransferCustomerInComponent
-  },
+  { path:'customer-wise-product-details',component:CustomerWiseProductDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCWPD']}},
+  { path:'customer-wise-transaction-summary',component:CustomerWiseTransactionSummaryComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCWTS']}},
+  { path:'customer-wise-transaction-details',component:CustomerWiseTransactionDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCWTD']}},
+  { path:'client-outstanding-and-due-date-summary',component:ClientOutstandingAndDueDateSummaryComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCODD']}},
+  { path:'customer-master', component:CustomerMasterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCUST']}},
+  { path:'new-customer', component:NewCustomerComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCUST']} },
+  { path:'update-customer', component:UpdateCustomerComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CCUST']} },
+  { path:'transfer-customer', component:TransferCustomerComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CTRCO']}},
+  { path:'terminate-customer',component:TerminateCustomerComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CRTDP']}},
+  { path:'sv-creation-printing',component:SvCreationPrintingComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CSVCD']} },
+  {path:'transfer-customer-in',component:TransferCustomerInComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['CTRCI']} },
    
 ]; 
 

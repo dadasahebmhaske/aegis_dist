@@ -17,24 +17,24 @@ import { ChannelPartnerMasterComponent } from './channel-partner-master/channel-
 import { ChannelPartnerComponent } from './channel-partner/channel-partner.component';
 import { RouteMappingMasterComponent } from './route-mapping-master/route-mapping-master.component';
 import { RouteMappingComponent } from './route-mapping/route-mapping.component';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 const routes: Routes = [
-  { path: 'channel-partner-master', component: ChannelPartnerMasterComponent },
-  { path: 'channel-partner', component: ChannelPartnerComponent },
-  { path: 'vehicle-master', component: VehicleMasterComponent },
-  { path: 'vehicle', component: VehicleComponent },
+  { path: 'channel-partner-master', component: ChannelPartnerMasterComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MCHPM']}},
+  { path: 'channel-partner', component: ChannelPartnerComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MCHPM']}},
+  { path: 'vehicle-master', component: VehicleMasterComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MVCLE']}},
+  { path: 'vehicle', component: VehicleComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['MVCLE']} },
   { path: 'route-master', component: RouteMasterComponent },
   { path: 'route', component: RouteComponent },
-  { path: 'route-mapping-master', component: RouteMappingMasterComponent },
-  { path: 'route-mapping', component: RouteMappingComponent },
-  { path: 'godown-master', component: GodownMasterComponent },
-  { path: 'godown', component: GodownComponent },
+  { path: 'route-mapping-master', component: RouteMappingMasterComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MRMM']}},
+  { path: 'route-mapping', component: RouteMappingComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MRMM']}},
+  { path: 'godown-master', component: GodownMasterComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MGODN']}},
+  { path: 'godown', component: GodownComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MGODN']}},
   { path: 'transport-master', component: TransportMasterComponent },
   { path: 'transport', component: TransportComponent },
   { path: 'sub-area-master', component: SubAreaMasterComponent },
   { path: 'sub-area', component: SubAreaComponent },
-  { path: 'employee-master', component: EmployeeMasterComponent },
-  { path: 'employee', component: EmployeeComponent }
+  { path: 'employee-master', component: EmployeeMasterComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MEMPM']}},
+  { path: 'employee', component: EmployeeComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['MEMPM']}}
 ];
 
 // @NgModule({

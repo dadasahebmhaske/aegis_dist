@@ -14,7 +14,7 @@ import { AuthenticationGuard } from '../app/core/guards/authentication.guard';
 import { LoggedInGuard } from '../app/core/guards/loggedIn.guard';
 import { environment } from '../environments/environment';
 import { OnlineStatusComponent } from './features/online-status/online-status.component';
-
+import {RoleAccessGuard} from '../app/core/guards/roleAccess.guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { OnlineStatusComponent } from './features/online-status/online-status.co
     BsDatepickerModule.forRoot(),
 
   ],
-  providers: [AuthenticationGuard, LoggedInGuard],
+  providers: [AuthenticationGuard, LoggedInGuard,RoleAccessGuard],
   exports: [UiGridDirective],
   bootstrap: [AppComponent]
 })

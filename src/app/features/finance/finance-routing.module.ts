@@ -10,28 +10,18 @@ import { TransferToPettyCashAndBankAccountComponent } from './transfer-to-petty-
 import { BankAccountDetailsComponent } from './bank-account-details/bank-account-details.component';
 import { ExpensesListComponent } from './expenses-list/expenses-list.component';
 import { ExpensesComponent } from './expenses/expenses.component';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 const routes: Routes = [
-  { path:'bank-account-details',
-  component:BankAccountDetailsComponent},
-  { path:'cash-flow-register',
-  component:CashFlowRegisterComponent},
-  { path:'expenses-list',
-  component:ExpensesListComponent},
-  { path:'expenses',
-  component:ExpensesComponent},
-  { path:'payment-collections',
-  component:PaymentCollectionsComponent},
-  { path:'petty-cash-details-list',
-  component:PettyCashDetailsListComponent},
-  { path:'petty-cash-details',
-  component:PettyCashDetailsComponent},
-  { path:'cheque-and-dd-payment-status-list',
-  component:ChequeAndDdPaymentStatusListComponent},
-  { path:'cheque-and-dd-payment-status',
-  component:ChequeAndDdPaymentStatusComponent},
-  { path:'transfer-to-petty-cash-and-bank-account',
-  component:TransferToPettyCashAndBankAccountComponent},
+  { path:'bank-account-details',component:BankAccountDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FBACD']}},
+  { path:'cash-flow-register',component:CashFlowRegisterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCFPC']}},
+  { path:'expenses-list',component:ExpensesListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FEXPE']}},
+  { path:'expenses',component:ExpensesComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FEXPE']}},
+  { path:'payment-collections',component:PaymentCollectionsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCFPC']}},
+  { path:'petty-cash-details-list',component:PettyCashDetailsListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FPCBD']}},
+  { path:'petty-cash-details',component:PettyCashDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FPCBD']}},
+  { path:'cheque-and-dd-payment-status-list',component:ChequeAndDdPaymentStatusListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCDPS']}},
+  { path:'cheque-and-dd-payment-status',component:ChequeAndDdPaymentStatusComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCDPS']}},
+  { path:'transfer-to-petty-cash-and-bank-account',component:TransferToPettyCashAndBankAccountComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FTPCB']}},
 ];
 
 export const routing = [RouterModule.forChild(routes)]

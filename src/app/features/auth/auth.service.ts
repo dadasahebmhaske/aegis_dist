@@ -37,6 +37,17 @@ isLoggedIn(){
     return false;
   } 
 }
+isAccessIn(formFlag){  
+  this.appserive.getAppData().subscribe(data=>{
+    this.distInfo=data;
+  });  
+  
+  if (this.distInfo.Menu.some(obj => obj === formFlag)) {
+    return true;
+  }else{
+    return false;
+  } 
+}
 
 
 }

@@ -7,7 +7,7 @@ import { CustomerService } from './customer.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { OrderService } from '@app/features/order/order.service';
 import { SettingService } from '@app/features/settings/setting.service';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 @NgModule({
   declarations: [componentArray, UigridcustomerDirective],
   imports: [
@@ -16,7 +16,7 @@ import { SettingService } from '@app/features/settings/setting.service';
     SharedModule,
     BsDatepickerModule.forRoot(),
   ],
-  providers: [CustomerService,OrderService,SettingService],
+  providers: [CustomerService,OrderService,SettingService,RoleAccessGuard],
   exports: [UigridcustomerDirective]
 })
 export class CustomerModule { }

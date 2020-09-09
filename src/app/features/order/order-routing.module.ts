@@ -12,34 +12,22 @@ import { AreaWiseRefillOrderSummaryComponent } from './area-wise-refill-order-su
 import { CustomerWiseTransactionsComponent } from './customer-wise-transactions/customer-wise-transactions.component';
 import { InstantDeliveredOrdersComponent } from './instant-delivered-orders/instant-delivered-orders.component';
 import { InstantDeliveryProcessComponent } from './instant-delivery-process/instant-delivery-process.component';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 
 const routes: Routes = [
 
-  { path:'refill-booking-list',
-   component:RefillBookingListComponent},
-   { path:'refill-booking',
-   component:RefillBookingComponent},
-   { path:'cash-memo-and-refill-delivery',
-   component:CashMemoAndRefillDeliveryComponent},
-   { path:'deliver-refill',
-   component:DeliverRefillComponent},
-   { path:'instant-delivered-orders',
-   component:InstantDeliveredOrdersComponent},
-   { path:'instant-delivery-process',
-   component:InstantDeliveryProcessComponent},
-   { path:'undeliver-refill',
-   component:UndeliverRefillComponent},
-   { path:'delivered-orders',
-   component:DeliveredOrdersComponent},
-   { path:'undelivered-orders',
-   component:UndeliveredOrdersComponent},
-   { path:'delivery-man-wise-refill-order-summary',
-   component:DeliveryManWiseRefillOrderSummaryComponent},
-   { path:'area-wise-refill-order-summary',
-   component:AreaWiseRefillOrderSummaryComponent},
-   { path:'customer-wise-transactions',
-   component:CustomerWiseTransactionsComponent},
+  { path:'refill-booking-list',component:RefillBookingListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TORDB']}},
+   { path:'refill-booking', component:RefillBookingComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TORDB']}},
+   { path:'cash-memo-and-refill-delivery',component:CashMemoAndRefillDeliveryComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TCMRD']}},
+   { path:'deliver-refill',component:DeliverRefillComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TCMRD']}},
+   { path:'instant-delivered-orders',component:InstantDeliveredOrdersComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TIDCH']}},
+   { path:'instant-delivery-process',component:InstantDeliveryProcessComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TIDCH']}},
+   { path:'undeliver-refill',component:UndeliverRefillComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TCMRD']}},
+   { path:'delivered-orders',component:DeliveredOrdersComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TDORD']}},
+   { path:'undelivered-orders',component:UndeliveredOrdersComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TDCOD']}},
+   { path:'delivery-man-wise-refill-order-summary',component:DeliveryManWiseRefillOrderSummaryComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TDMOS']}},
+   { path:'area-wise-refill-order-summary', component:AreaWiseRefillOrderSummaryComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TAROS']}},
+   { path:'customer-wise-transactions',component:CustomerWiseTransactionsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['TCUWT']}},
 
 ]; 
 

@@ -14,19 +14,20 @@ import { OrderAcceptedRejectedComponent } from './order-accepted-rejected/order-
 import { OrderAcceptedRejectedDispatchedComponent } from './order-accepted-rejected-dispatched/order-accepted-rejected-dispatched.component';
 import { OrderDispatchDetailsComponent } from './order-dispatch-details/order-dispatch-details.component';
 import { ProductWiseOrderReportComponent } from './product-wise-order-report/product-wise-order-report.component';
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 const routes: Routes = [ 
-  { path:'add-imbalance',component:AddImbalanceComponent},
-  { path:'daily-stock-register',component:DailyStockRegisterComponent},
-  { path:'customer-daily-stock-register',component:CustomerDailyStockRegisterComponent},
-  { path:'day-end',component:DayEndComponent},
-  { path:'imbalance',component:ImbalanceComponent},
-  { path:'order-and-dispatch-details',component:OrderAndDispatchDetailsComponent},
-  { path:'order-accepted-rejected',component:OrderAcceptedRejectedComponent},
-  { path:'order-dispatch-details',component:OrderDispatchDetailsComponent},
-  { path:'order-accepted-rejected-dispatched',component:OrderAcceptedRejectedDispatchedComponent},
-  {path:'product-wise-order-report',component:ProductWiseOrderReportComponent},
-  { path:'stock-orders',component:StockOrdersComponent},
-  { path:'stock-orders-list',component:StockOrdersListComponent},
+  { path:'add-imbalance',component:AddImbalanceComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SIMBL']}},
+  { path:'daily-stock-register',component:DailyStockRegisterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SDSTR']}},
+  { path:'customer-daily-stock-register',component:CustomerDailyStockRegisterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SCDSR']}},
+  { path:'day-end',component:DayEndComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SDAYE']}},
+  { path:'imbalance',component:ImbalanceComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SIMBL']}},
+  { path:'order-and-dispatch-details',component:OrderAndDispatchDetailsComponent , canActivate: [RoleAccessGuard],data: {formFlag: ['SSODD']}},
+  { path:'order-accepted-rejected',component:OrderAcceptedRejectedComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSODD']}},
+  { path:'order-dispatch-details',component:OrderDispatchDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSODD']}},
+  { path:'order-accepted-rejected-dispatched',component:OrderAcceptedRejectedDispatchedComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSODD']}},
+  {path:'product-wise-order-report',component:ProductWiseOrderReportComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SPWOR']}},
+  { path:'stock-orders',component:StockOrdersComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSTKO']}},
+  { path:'stock-orders-list',component:StockOrdersListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSTKO']}},
   { path:'return-stock',component:ReturnStockComponent},
   { path:'return-stock-list',component:ReturnStockListComponent},
 ];

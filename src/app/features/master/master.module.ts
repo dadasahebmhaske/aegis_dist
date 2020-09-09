@@ -12,7 +12,7 @@ import { GodownService } from '@app/features/master/godown/godown.service';
 import { EmployeeService } from '@app/features/master/employee/employee.service';
 import { ChannelPartnerService } from '@app/features/master/channel-partner/channel-partner.service';
 import { CustomerService } from '../customer/customer.service';
-
+import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 @NgModule({
   declarations: [componentArray,UigridmasterDirective],
   imports: [
@@ -23,6 +23,6 @@ import { CustomerService } from '../customer/customer.service';
     BsDatepickerModule.forRoot(),
   ],
   exports:[UigridmasterDirective],
-  providers:[ChannelPartnerService,CustomerService,GodownService,EmployeeService,RouteService,SubareaService,TransportService,VehicleService]
+  providers:[ChannelPartnerService,CustomerService,GodownService,EmployeeService,RouteService,SubareaService,TransportService,VehicleService,RoleAccessGuard]
 })
 export class MasterModule { }
