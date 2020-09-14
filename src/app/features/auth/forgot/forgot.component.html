@@ -36,21 +36,28 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
-        <div class="well no-padding">
-          <form id="login-form" class="smart-form client-form">
+        <div class="well no-padding" style="margin-top:67px;">
+          <form id="login-form" class="smart-form client-form" name="forgotForm" #forgotForm="ngForm" (ngSubmit)="forgotpass($event,forgotForm)" ngNativeValidate>
             <header> Forgot Password </header>
             <fieldset>
-              <section>
+              <!-- <section>
                 <label class="label">Channel Partner Code</label>
                 <label class="input"> <i class="icon-append fa fa-user"></i>
                   <input type="text" name="Dist Code">
                 </label>
-              </section>
+              </section> -->
               <section>
                 <label class="label">Registered E-mail ID</label>
                 <label class="input"> <i class="icon-append fa fa-envelope"></i>
-                  <input type="email" name="email">
+                  <input type="email" name="EmailId" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address"
+                    data-message-email="Please enter a VALID email address" ngModel minlength="6" autocomplete="on" email required>
                 </label>
+              </section>
+              <section>
+                <!-- <label class="label">Registered E-mail ID</label>
+                <label class="input"> <i class="icon-append fa fa-envelope"></i>
+                  <input type="email" name="email">
+                </label> -->
                 <div class="note">
                   <a routerLink="/auth/login">I remembered my password!</a>
                 </div>
@@ -60,8 +67,10 @@
               </span></section> -->
             </fieldset>
             <footer>
-              <button (click)="submit($event)" class="btn btn-primary">
-                <i class="fa fa-refresh"></i> Send Password </button>
+              <!-- <button (click)="submit($event)" class="btn btn-primary">
+                <i class="fa fa-refresh"></i> Send Password </button> -->
+                <button class="btn btn-primary" type="submit" [disabled]="!loaderbtn">
+                <i class="fa fa-fw" [ngClass]="{'fa-cog fa-spin':!loaderbtn}" *ngIf="!loaderbtn"></i> {{loaderbtn==true? 'Send Password':'Loading'}}</button>
             </footer>
           </form>
         </div>

@@ -27,6 +27,19 @@ export class AuthService {
           return throwError(errorMessage);
         }))
 }
+forgotpass(forgotData) {
+  return this.httpClient.post<any>(`${AppComponent.BaseUrl}Authentication/GetEMPForgotPwd`, {data: forgotData}).pipe(catchError(errorRes=>{
+        let errorMessage="An error Occured";
+        if(!errorRes.error || errorRes.error.message){
+          return throwError(errorMessage);
+        }
+        switch(errorRes.error.error.message){
+          case "EMAIL_EXISTS":
+          errorMessage="An email is already exists."
+        }
+        return throwError(errorMessage);
+      }))
+}
 isLoggedIn(){  
   this.appserive.getAppData().subscribe(data=>{
     this.distInfo=data;
