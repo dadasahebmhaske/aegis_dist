@@ -101,7 +101,7 @@ public getCustomerWiseProductDetails(cpcode, DelFilter, fd, td) {
     let docobj;
     docobj = this.masterService.filterData(data, val, 'Id');
     if(docobj.length>0)
-    if ((docobj[0].Name).toUpperCase() == 'INDUSTRIAL' || (docobj[0].Name).toUpperCase() == 'COMMERCIAL') {
+    if ((docobj[0].Name).toUpperCase() == 'INDUSTRIAL' || (docobj[0].Name).toUpperCase() == 'COMMERCIAL' || (docobj[0].Name).toUpperCase() == 'ALL') {
       return true;
     } else {
       return false;

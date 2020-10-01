@@ -55,6 +55,7 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'VolumeTypeName', displayName: 'Volume Type', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ServiceTypeName', displayName: 'Service Type', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'FirmTypeName', displayName: 'Firm Type', width: "120", cellTooltip: true, filterCellFiltered: true },
+      { name: 'FirmName', displayName: 'Firm Name', width: "250", cellTooltip: true, filterCellFiltered: true },
       { name: 'ContractualName', displayName: 'Contractual  Non-Contractual', width: "225", cellTooltip: true, filterCellFiltered: true },
       { name: 'RouteName', displayName: 'Rout', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area', width: "130", cellTooltip: true, filterCellFiltered: true },

@@ -22,6 +22,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
   public ProductArray: any = [];
   public loaderbtn: boolean = true;
   public Edeliverrefill: any = {};
+  public ManageDiscount:any;
   constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
@@ -30,11 +31,12 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
     this.dataShare.GetSharedData.subscribe(data => {
 
       this.deliverrefill = data == null ? { IsActive: 'Y' } : data;
-
+        this.ManageDiscount=this.deliverrefill.Discount;
       this.orderService.getCashMemoProducts(this.cpInfo.CPCode, this.deliverrefill.CashMemoRefNo).subscribe((resp: any) => {
         if (resp.StatusCode != 0) {
           this.ProductArray = resp.Data;
           this.deliverrefill = this.orderService.calculateQtyGTotalRefillDelivery(this.deliverrefill, this.ProductArray);
+       this.deliverrefill.Discount =this.ManageDiscount;
         }
       });
     });
