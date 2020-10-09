@@ -8,7 +8,7 @@ import { CustomerService } from '../customer/customer.service';
 import { StockService } from '../stock/stock.service';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
-
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead'
 @NgModule({
   declarations: [compArray, UigridordersDirective],
   imports: [
@@ -16,6 +16,7 @@ import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
     routing,
     SharedModule,
     BsDatepickerModule.forRoot(),
+    TypeaheadModule.forRoot(),
   ],
   providers: [OrderService, CustomerService, StockService, RoleAccessGuard],
   exports: [UigridordersDirective]

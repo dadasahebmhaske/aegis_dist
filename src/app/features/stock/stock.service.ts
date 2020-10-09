@@ -17,6 +17,9 @@ export class StockService {
                 stock.CgstTotal = parseFloat(stock.CgstTotal) + parseFloat(ProductArray[i].CgstAmt);
                 stock.SgstTotal = parseFloat(stock.SgstTotal) + parseFloat(ProductArray[i].SgstAmt);
             }
+            stock.IgstTotal.toFixed(2);
+            stock.CgstTotal.toFixed(2);
+            stock.SgstTotal.toFixed(2);
         return stock;
     }
     getPlantDetails(cpcode) {

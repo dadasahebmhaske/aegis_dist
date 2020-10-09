@@ -62,7 +62,7 @@
                                 <label for="sel1">First Name <span class="errorMessage">*</span>
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter First Name"
-                                  [(ngModel)]="employee.FirstName" name="FirstName" saCommonDir dirType="alphaonly"
+                                  [(ngModel)]="employee.FirstName" name="FirstName" saCommonDir dirType="alphaonlyupper"
                                   required />
                               </div>
                             </div>
@@ -71,7 +71,7 @@
                                 <label for="sel1">Last Name <span class="errorMessage">*</span>
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter Last Name"
-                                  [(ngModel)]="employee.LastName" name="LastName" saCommonDir dirType="alphaonly"
+                                  [(ngModel)]="employee.LastName" name="LastName" saCommonDir dirType="alphaonlyupper"
                                   required />
                               </div>
                             </div>
@@ -160,7 +160,7 @@
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter Qualification"
                                   [(ngModel)]="employee.Qualification" name="Qualification" saCommonDir
-                                  dirType="alphanumeric" required />
+                                  dirType="alphanumericupper" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -185,7 +185,7 @@
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter Contact Person"
                                   [(ngModel)]="employee.ContactPerson" name="ContactPerson" saCommonDir
-                                  dirType="alphaonly" required />
+                                  dirType="alphaonlyupper" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
@@ -279,7 +279,7 @@
                                 <label for="sel1">Address Line 1 <span class="errorMessage" style="color:red;">*</span>
                                 </label>
                                 <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir
-                                  dirType="alphanumeric" [(ngModel)]="employee.AddressLineOne" name="AddressLine1"
+                                  dirType="alphanumericupper" [(ngModel)]="employee.AddressLineOne" name="AddressLine1"
                                   required />
                               </div>
                             </div>
@@ -287,14 +287,14 @@
                               <div class="form-group">
                                 <label for="sel1">Address Line 2</label>
                                 <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir
-                                  dirType="alphanumeric" [(ngModel)]="employee.AddressLineTwo" name="AddressLine2" />
+                                  dirType="alphanumericupper" [(ngModel)]="employee.AddressLineTwo" name="AddressLine2" />
                               </div>
                             </div>
                             <div class="col-sm-4">
                               <div class="form-group">
                                 <label for="sel1">Address Line 3</label>
                                 <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir
-                                  dirType="alphanumeric" [(ngModel)]="employee.AddressLineThree" name="AddressLine3" />
+                                  dirType="alphanumericupper" [(ngModel)]="employee.AddressLineThree" name="AddressLine3" />
                               </div>
                             </div>
                             <div class="col-sm-2">

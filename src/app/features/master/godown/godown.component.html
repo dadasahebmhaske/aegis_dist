@@ -39,7 +39,7 @@
                                                                 <label for="sel1">Godown Name <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Godown Name" [(ngModel)]="godown.GodownName" name="GodownName" saCommonDir
-                                                                    dirType="alphanumeric" required />
+                                                                    dirType="alphanumericupper" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
@@ -55,7 +55,7 @@
                                                                 <label for="sel1">Contact Person <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
                                                                 <input type="text" class="form-control" placeholder="Enter Contact Person" [(ngModel)]="godown.ContactName" name="ContactName"
-                                                                    saCommonDir dirType="alphaonly" required />
+                                                                    saCommonDir dirType="alphaonlyupper" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-2">
@@ -170,21 +170,21 @@
                                                             <div class="form-group">
                                                                 <label for="sel1">Address Line 1 <span class="errorMessage" style="color:red;">*</span>
                                                                 </label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumeric"
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumericupper"
                                                                     [(ngModel)]="godown.AddressLineOne" name="AddressLine1" required />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="sel1">Address Line 2</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumeric"
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumericupper"
                                                                     [(ngModel)]="godown.AddressLineTwo" name="AddressLine2" />
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
                                                             <div class="form-group">
                                                                 <label for="sel1">Address Line 3</label>
-                                                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumeric"
+                                                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumericupper"
                                                                     [(ngModel)]="godown.AddressLineThree" name="AddressLine3" />
                                                             </div>
                                                         </div>

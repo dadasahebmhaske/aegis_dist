@@ -75,6 +75,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
       { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Customer Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "110", cellTooltip: true, filterCellFiltered: true },
+      { name: 'FirmName', displayName: 'Firm Name', width: "220", cellTooltip: true, filterCellFiltered: true },
       { name: 'SubAreaName', displayName: 'Sub Area Name', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoNo', displayName: 'Cash Memo No.', cellClass: 'cell-center', width: "135", cellTooltip: true, filterCellFiltered: true },
       { name: 'CashMemoDate', displayName: 'Cash Memo Date', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
@@ -142,7 +143,7 @@ export class DeliveredOrdersComponent implements OnInit, OnDestroy {
     this.orderService.getRefillDeliveryDetails(this.deliverFilter.CPCode, 4, this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.DeliveredOrderData = resData.Data;
+        this.DeliveredOrderData = resData.Data; 
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }

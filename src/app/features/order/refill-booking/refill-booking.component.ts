@@ -7,7 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { CustomerService } from '@app/features/customer/customer.service';
 import { StockService } from '@app/features/stock/stock.service';
 import { OrderService } from '../order.service';
-
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';
 @Component({
   selector: 'sa-refill-booking',
   templateUrl: './refill-booking.component.html',
@@ -17,6 +17,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
   public cust: any = {};
   public custData: any = {};
+  public preLoadCust:any=[];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public delBoyData: any = [];
   public disQty:boolean=false;
@@ -29,6 +30,9 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   public productDataSelected: any = [];
   public productDataPriceAllocation: any = [];
   public removeProductUpdate: any = [];
+  public selectedOption: any;
+  public SearchBy:String='ConsNo';
+  public noResult = false;
   constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
@@ -62,6 +66,13 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
         this.delBoyData = respD.Data;
+    });
+    this.customerService.getCustomer(this.cpInfo.CPCode,'', '', '', '').subscribe((resData: any) => {
+      this.loaderbtn = true;
+      if (resData.StatusCode != 0) {
+        this.preLoadCust=resData.Data; 
+      }
+      else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   onSelectProdSegment() {
@@ -151,6 +162,13 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.cust.TotalAmtPayable=parseInt(this.cust.RefillAmount)-parseInt(this.cust.Discount== null || this.cust.Discount==''? 0 :this.cust.Discount);
   }
 
+  onSelect(event: TypeaheadMatch): void {
+    this.selectedOption = event.item;
+    this.cust = Object.assign(this.cust, this.selectedOption); 
+  }
+  typeaheadNoResults(event: boolean): void {
+    this.noResult = event;
+  }
   onGetCustomer() {
     this.loaderbtn = false;
     this.product={ ProdSegId: '', ProdId: '' };

@@ -176,7 +176,7 @@ export class StockOrdersComponent implements OnInit, OnDestroy {
     }
   }
   addProduct() {
-    if (this.ProductArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId)) && this.ProductArray.some(obj => obj.OrderType === this.product.OrderType)) {
+    if (this.ProductArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId) &&  obj.OrderType === this.product.OrderType)) {
       AppComponent.SmartAlert.Errmsg("Product is already added in list.");
       this.product = { OrderType: '', ProdSegId: '', ProdId: '' };
     } else {
