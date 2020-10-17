@@ -35,7 +35,7 @@
                                                     <label>Vehicle No. <span class="errorMessage">*</span>
                                                     </label>
                                                     <input type="text" class="form-control" [(ngModel)]="vehicle.VehicleNo" name="VehicleNo" saCommonDir dirType="alphanumericupper" form="vehicleForm"
-                                                        placeholder="Enter Vehicle No." maxlength="15" required />
+                                                        placeholder="Enter Vehicle No." maxlength="15" saUppercase required />
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +112,7 @@
                                                         <label>Document No. <span class="errorMessage">*</span>
                                                         </label>
                                                         <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir
-                                                            dirType="alphanumericupper" required />
+                                                            dirType="alphanumericupper" saUppercase required />
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2">

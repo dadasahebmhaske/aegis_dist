@@ -38,7 +38,7 @@ export class CustomerDailyStockRegisterComponent implements OnInit {
     let columnDefs = [];
     columnDefs = [
 
-      { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "128", cellTooltip: true, filterCellFiltered: true },
+      { name: 'NewConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsName', displayName: 'Customer Name ', width: "280", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },
       { name: 'Date', displayName: 'Date', cellClass: 'cell-center', width: "120", cellTooltip: true, filterCellFiltered: true },

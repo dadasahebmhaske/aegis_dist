@@ -24,7 +24,7 @@
                   <div class="col-sm-2 col-xs-4">
                     <div class="form-group">
                       <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="deliverFilter.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number" />
+                        onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="deliverFilter.CustNoMob" name="CustNoMob" saUppercase saCommonDir dirType="alphanumeric" />
                     </div>
                   </div>
                   <div class="col-sm-2 col-xs-8">

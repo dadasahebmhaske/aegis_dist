@@ -38,7 +38,7 @@
                           <div class="form-group">
                             <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span></label>
                             <input type="text" placeholder="Enter Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                              onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
+                              onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" saUppercase saCommonDir dirType="alphanumeric"
                               required />
                           </div>
                         </div>

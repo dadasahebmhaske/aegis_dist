@@ -92,7 +92,8 @@ public getCustomerWiseProductDetails(cpcode, DelFilter, fd, td) {
       cust.MobileNo = cust.CustNoMob;
       cust.ConsNo = '';
     } else {
-      cust.ConsNo = cust.CustNoMob;
+      let arr=cust.CustNoMob.split('C');
+      cust.ConsNo = arr[arr.length-1];
       cust.MobileNo = '';
     }
     return cust;

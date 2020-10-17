@@ -1,0 +1,79 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+            <header class="text-center"> 
+                      <h2> <i class="fa fa-table"></i> Bulk Price Allocation </h2>
+          </header>
+          <div>
+            <div class="widget-body">
+               
+              <div class="row ">
+                <form name="PAllocationForm" #PAllocationForm="ngForm" (ngSubmit)="OnImport()" ngNativeValidate autocomplete="off">
+                <div class="col-sm-4 col-xs-4">
+                  <div class="form-group">
+                    <!-- <label for="sel1">Channel Partner Code</label> -->
+                    <input type="file" class="form-control" (change)="onFileChange($event)" accept=".xls, .xlsx"
+                    required />
+                  </div>
+                </div>
+             <div class="col-sm-2 col-xs-4">
+                  <div class="form-group">
+                      <button class="btn  btn-success get_details " type="submit" [disabled]="!loaderbtn" >
+                        <i class="fa fa-fw" [ngClass]="{'fa-plus':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Import Excel':'Loading'}}</button>
+                  </div>
+                </div>
+              </form>
+              <form name="PAllocationForm" #PAllocationForm="ngForm" (ngSubmit)="getTemplate()" ngNativeValidate autocomplete="off">
+                <div class="col-sm-2 pull-right">
+                  <div class="form-group">
+                    <button class="btn  btn-warning"  type="submit" [disabled]="!loaderbtn">
+                      <i class="fa fa-fw" [ngClass]="{'fa-download':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Template':'Loading'}}
+                    </button>
+                  </div>
+                </div>
+                <div class="col-sm-3 pull-right" >
+                  <div class="form-group">
+                    <!-- <label>DE / SD / SF / POS <span class="errorMessage">*</span></label> -->
+                    <select class="form-control" [(ngModel)]="CPCode" name="CPCode"  required>
+                      <option value="" selected disabled>Select DE / SD / SF / POS</option>
+                      <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                    </select>
+                  </div>
+                </div>
+                </form>
+                <!-- <div class="col-sm-2 pull-right">                     
+                  <div class="form-group pull-right">
+                    <a routerLink="/settings/sf-sd-price-allocation"  class="btn btn-block btn-warning get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      Add Price
+                    </a>
+                  </div>
+                </div> -->
+               
+              </div>
+             
+              <div class="row" *ngIf="gridhide">
+                  <div class="col-sm-12 table-responsive">
+                      <ui-grid [data]="actionData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" ></ui-grid>
+                    </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 ">
+                  <hr />
+                  <a class="pull-right btn btn-default" routerLink="/settings/sf-sd-price-allocation-list">
+                    <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                    <button class="pull-right btn btn-primary marg-right" type="submit" (click)="onSubmit()" [disabled]="!loaderbtn" *ngIf="gridhide">
+                      <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Submit':'Loading'}}</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>

@@ -19,7 +19,7 @@
                       <div class="row">
                         <div class="col-sm-12 ">
                           <div class="form-group label-center marg-let text-center">
-                            <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.ConsNo}}</strong>
+                            <label><strong> <i class="fa fa-user"></i> Customer Number :</strong> <strong class="text-warning"> {{deliverrefill.NewConsNo}}</strong>
                             </label>
                             <label class=" marg-let"><strong> <i class="fa fa-user"></i> Customer : </strong> <strong class="text-warning">{{deliverrefill.ConsName}}</strong>
                             </label>   
@@ -170,7 +170,7 @@
               <div class="form-group">
                 <label>Return Quantity <span class="errorMessage">*</span>
                 </label>
-                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty" name="ReturnQty" disabled required />
+                <input type="text" class="form-control" placeholder="Enter Quantity" [(ngModel)]="Edeliverrefill.ReturnQty" name="ReturnQty" [disabled]="ProductArray[0].ProdSeg=='DOMESTIC' || ProductArray[0].ProdSeg=='domestic' || ProductArray[0].ProdSeg=='Domestic'" required />
               </div>
             </div>
           </div>

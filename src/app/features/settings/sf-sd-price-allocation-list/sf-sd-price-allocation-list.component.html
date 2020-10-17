@@ -50,14 +50,21 @@
                         <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
                   </div>
                 </div>
-                <div class="col-sm-2 pull-right">                     
-                  <div class="form-group pull-right">
+                <div class="col-sm-4 pull-right">
+                  <div class="form-group pull-right" style="margin-left: 25px;">
                     <a routerLink="/settings/sf-sd-price-allocation"  class="btn btn-block btn-warning get_details pull-right">
                       <i class="glyphicon glyphicon-plus"></i>
                       Add Price
                     </a>
                   </div>
+                  <div class="form-group pull-right" >
+                    <a routerLink="/settings/sf-sd-bulk-price-allocation" class="btn btn-block btn-info get_details pull-right">
+                      <i class="glyphicon glyphicon-plus"></i> Bulk Price </a>
+                  </div>
+            
+              
                 </div>
+              
                
               </div>
               </form>

@@ -60,7 +60,7 @@ export class DeliverRefillComponent implements OnInit, OnDestroy {
     this.Edeliverrefill.index = index;
   }
   onSubmitqty() {
-    this.Edeliverrefill.ReturnQty=this.Edeliverrefill.ProdQty;
+    this.Edeliverrefill.ReturnQty=(this.ProductArray[0].ProdSeg=='DOMESTIC' || this.ProductArray[0].ProdSeg=='domestic' || this.ProductArray[0].ProdSeg=='Domestic')?this.Edeliverrefill.ProdQty:this.Edeliverrefill.ReturnQty;
     this.ProductArray[this.Edeliverrefill.index].ProdQty = this.Edeliverrefill.ProdQty;
     this.ProductArray[this.Edeliverrefill.index].RefillAmount = parseInt(this.ProductArray[this.Edeliverrefill.index].ProdRate) * parseInt(this.Edeliverrefill.ProdQty);
     this.ProductArray[this.Edeliverrefill.index].Discount = parseInt(this.ProductArray[this.Edeliverrefill.index].RefillAmount) * parseInt(this.deliverrefill.DiscountPer) / 100;

@@ -27,5 +27,11 @@ export class SettingService {
     public postSFSDPOSPriceAllocation(data: string) {
       return this.httpClient.post<any>(`${AppComponent.BaseUrl}Settings/ManageAdminPriceAllocation`, { data: data }, AppComponent.httpOptions);
     }
-    
+    // public getTemplate(CPCode) {
+    //   return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetPriceAllocTemplate?CPCode=${CPCode}&PlantId=`, {headers:AppComponent.headers,responseType:'blob'});
+    // }
+    public postBulkPriceAllocation(data) {
+      return this.httpClient.post<any>(`${AppComponent.BaseUrl}Master/UploadProdPriceAllocation`, data, AppComponent.httpOptions);
+    }
+  
 }

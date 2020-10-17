@@ -26,12 +26,12 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   public loaderbtn: boolean = true;
   public product: any = { ProdSegId: '', ProdId: '' };
   public ProductArray: any = [];
-  public productSegmentData: any = [];
+  public productSegmentData: any = [];ProdSegArray:any=[];
   public productDataSelected: any = [];
   public productDataPriceAllocation: any = [];
   public removeProductUpdate: any = [];
   public selectedOption: any;
-  public SearchBy:String='ConsNo';
+  public SearchBy:String='NewConsNo';
   public noResult = false;
   constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -61,7 +61,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   allOnLoad() {
     this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
-        this.productSegmentData = resR.Data;
+        this.productSegmentData = resR.Data;  console.log(this.productSegmentData);
     });
     this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
@@ -70,7 +70,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.customerService.getCustomer(this.cpInfo.CPCode,'', '', '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.preLoadCust=resData.Data; 
+        this.preLoadCust=resData.Data;  console.log(this.preLoadCust);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
@@ -165,6 +165,14 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   onSelect(event: TypeaheadMatch): void {
     this.selectedOption = event.item;
     this.cust = Object.assign(this.cust, this.selectedOption); 
+    let filtrArray;
+    if(this.cust.CustTypeName=='ALL'|| this.cust.ProdSegId==null){
+      this.ProdSegArray=this.productSegmentData;
+    }else{
+      filtrArray = this.masterService.filterData(this.productSegmentData, this.cust.ProdSegId, 'ProdSegId');
+      this.ProdSegArray=filtrArray;
+    }
+  
   }
   typeaheadNoResults(event: boolean): void {
     this.noResult = event;

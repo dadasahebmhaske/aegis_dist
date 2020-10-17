@@ -36,18 +36,21 @@ export class CommonDirDirective {
     // Do not use event.keycode this is deprecated.
     // See: https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
     let current: string = this.el.nativeElement.value;
-    if(this.dirType=='alphanumericupper' || this.dirType=='alphaonlyupper'){
-      this.el.nativeElement.value = this.el.nativeElement.value.toUpperCase();
-    }
+    // if(this.dirType=='alphanumericupper' || this.dirType=='alphaonlyupper'){
+    //  // this.el.nativeElement.value = this.el.nativeElement.value.toUpperCase();
+    //   if (event.keyCode>32 && event.keyCode<128)
+    //   {
+    //      event.target['value']+=event.key.toUpperCase();
+    //      event.preventDefault(); //stop propagation
+    //      //must create a "input" event, if not, there are no change in your value
+    //      var evt = document.createEvent("HTMLEvents");
+    //      evt.initEvent("input", false, true);
+    //      event.target.dispatchEvent(evt);
+    //    }
+    // }
     let next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex[this.dirType])) {
       event.preventDefault();
     }
   }
-  onKeyUp(event: KeyboardEvent) {
-    if(this.dirType=='alphanumericupper' || this.dirType=='alphaonlyupper'){
-      this.el.nativeElement.value = this.el.nativeElement.value.toUpperCase();
-    }
-    
   }
-}

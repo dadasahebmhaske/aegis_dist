@@ -8,6 +8,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { SfSdPriceAllocationListComponent } from './sf-sd-price-allocation-list/sf-sd-price-allocation-list.component';
 import { SfSdPriceAllocationComponent } from './sf-sd-price-allocation/sf-sd-price-allocation.component';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
+import { SfSdBulkPriceAllocationComponent } from './sf-sd-bulk-price-allocation/sf-sd-bulk-price-allocation.component';
 
 const routes: Routes = [
   {path:'category-wise-discount-allocation-list',component:CategoryWiseDiscountAllocationListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['STCDA']}},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path:'price-allocation',component:PriceAllocationComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['STPRA']}},
   {path:'sf-sd-price-allocation-list',component:SfSdPriceAllocationListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['STCDA']}},
   {path:'sf-sd-price-allocation',component:SfSdPriceAllocationComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['STCDA']}},
+  {path:'sf-sd-bulk-price-allocation',component:SfSdBulkPriceAllocationComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['STCDA']}},
 ];
 
 
@@ -28,4 +30,5 @@ export const compArray=[
   PriceAllocationComponent,
   PriceAllocationListComponent,
   SfSdPriceAllocationListComponent,
-  SfSdPriceAllocationComponent];
+  SfSdPriceAllocationComponent,
+  SfSdBulkPriceAllocationComponent];

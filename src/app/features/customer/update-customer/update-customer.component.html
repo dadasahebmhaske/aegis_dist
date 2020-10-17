@@ -38,7 +38,7 @@
                               <div class="form-group">
                                 <label for="sel1">Customer No. <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Customer No." [(ngModel)]="customer.ConsNo" name="ConsNo" saCommonDir dirType="number" disabled />
+                                <input type="text" class="form-control" placeholder="Enter Customer No." [(ngModel)]="customer.NewConsNo" name="NewConsNo" saCommonDir dirType="number" disabled />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -55,7 +55,7 @@
                               <div class="form-group">
                                 <label for="sel1">First Name <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="customer.FirstName" name="FirstName" saCommonDir dirType="alphaonlyupper" required />
+                                <input type="text" class="form-control" placeholder="Enter First Name" [(ngModel)]="customer.FirstName" name="FirstName" saUppercase saCommonDir dirType="alphaonlyupper" required />
                               </div>
                             </div>
                             <!-- <div class="col-sm-3">
@@ -68,7 +68,7 @@
                               <div class="form-group">
                                 <label for="sel1">Last Name <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="customer.LatName" name="LatName" saCommonDir dirType="alphaonlyupper" required />
+                                <input type="text" class="form-control" placeholder="Enter Last Name" [(ngModel)]="customer.LatName" name="LatName" saUppercase saCommonDir dirType="alphaonlyupper" required />
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -85,7 +85,7 @@
                                 <label for="sel1">Optional Mobile No.</label>
                                 <input type="text" class="form-control" placeholder="Enter Mobile No." [(ngModel)]="customer.AltrMobileNo" name="AltrMobileNo" minlength="10" maxlength="10"
                                   pattern="[6-9]{1}[0-9]{9}" oninvalid="this.setCustomValidity('Enter valid 10 digits Mobile number')" onchange="setCustomValidity('')" oninput="setCustomValidity(' ')"
-                                  saCommonDir dirType="number" />
+                                  saCommonDir dirType="number" saUppercase/>
                               </div>
                             </div>
                             <!-- <div class="col-sm-3">
@@ -177,7 +177,7 @@
                               <div class="form-group">
                                 <label for="sel1">Firm Name <span class="errorMessage" *ngIf="firmAction">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Firm Name" saCommonDir dirType="alphanumericupper" [(ngModel)]="customer.FirmName" name="FirmName"
+                                <input type="text" class="form-control" placeholder="Enter Firm Name" saCommonDir dirType="alphanumericupper"  saUppercase [(ngModel)]="customer.FirmName" name="FirmName"
                                   [required]="firmAction" [value]="firmAction==false?'':customer.FirmName==undefined?'':customer.FirmName" [disabled]="!firmAction" />
                               </div>
                             </div>
@@ -249,7 +249,7 @@
                               <div class="form-group">
                                 <label for="sel1">Incharge Name </label>
                                 <input type="text" class="form-control" [(ngModel)]="customer.InchargeName" name="InchargeName" placeholder="Enter Incharge Name" ng-model="consumer.LastName"
-                                saCommonDir dirType="alphaonlyupper" />
+                                saCommonDir dirType="alphaonlyupper" saUppercase/>
                               </div>
                             </div>
                             <div class="col-sm-3">
@@ -263,7 +263,7 @@
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <label for="sel1">GST No. </label>
-                                <input type="text" class="form-control" placeholder="Enter GST No. " [(ngModel)]="customer.GstNo" name="GstNo" saCommonDir dirType="alphanumericupper"
+                                <input type="text" class="form-control" placeholder="Enter GST No. " [(ngModel)]="customer.GstNo" name="GstNo" saUppercase saCommonDir dirType="alphanumericupper"
                                   pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}" />
                               </div>
                             </div>
@@ -271,7 +271,7 @@
                               <div class="form-group">
                                 <label for="sel1">Manifold Certificate No. </label>
                                 <input type="text" class="form-control" placeholder="Enter Certificate No." [(ngModel)]="customer.ManifoldCertNo" name="ManifoldCertNo" saCommonDir
-                                  dirType="alphanumericupper" />
+                                  dirType="alphanumericupper" saUppercase/>
                               </div>
                             </div>
                             <div class="col-sm-3 btn-marg">
@@ -316,21 +316,21 @@
                               <div class="form-group">
                                 <label for="sel1">Address Line 1 <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineOne" name="AddressLine1"
+                                <input type="text" class="form-control" placeholder="Enter Address Line 1" saUppercase saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineOne" name="AddressLine1"
                                   required />
                               </div>
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <label for="sel1">Address Line 2</label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineTwo"
+                                <input type="text" class="form-control" placeholder="Enter Address Line 2" saUppercase saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineTwo"
                                   name="AddressLine2" />
                               </div>
                             </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Address Line 3</label>
-                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineThree"
+                                <input type="text" class="form-control" placeholder="Enter Address Line 3" saUppercase saCommonDir dirType="alphanumericupper" [(ngModel)]="address.AddressLineThree"
                                   name="AddressLine3" />
                               </div>
                             </div>
@@ -569,7 +569,7 @@
                               <div class="form-group">
                                 <label>Document No. <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saCommonDir dirType="alphanumericupper" required />
+                                <input type="text" class="form-control" name="DocNo" [(ngModel)]="document.DocNo" placeholder="Enter Document No." saUppercase saCommonDir dirType="alphanumericupper" required />
                               </div>
                             </div>
                             <div class="col-sm-1">
@@ -659,7 +659,7 @@
                               <div class="form-group">
                                 <label for="sel1">Account Holder Name <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Holder Name" [(ngModel)]="bank.AccountHolderName" name="AccountHolderName" saCommonDir dirType="alphaonlyupper"
+                                <input type="text" class="form-control" placeholder="Enter Holder Name" [(ngModel)]="bank.AccountHolderName" name="AccountHolderName" saUppercase saCommonDir dirType="alphaonlyupper"
                                   required />
                               </div>
                             </div>
@@ -667,21 +667,21 @@
                               <div class="form-group">
                                 <label for="sel1">Bank Name <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="bank.BankName" name="BankName" saCommonDir dirType="alphanumericupper" required />
+                                <input type="text" class="form-control" placeholder="Enter Bank Name" [(ngModel)]="bank.BankName" name="BankName" saUppercase saCommonDir dirType="alphanumericupper" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Branch Name <span class="errorMessage">*</span>
                                 </label>
-                                <input type="text" class="form-control" placeholder="Enter Branch Name" [(ngModel)]="bank.BranchName" name="BranchName" saCommonDir dirType="alphanumericupper" required />
+                                <input type="text" class="form-control" placeholder="Enter Branch Name" [(ngModel)]="bank.BranchName" name="BranchName" saUppercase saCommonDir dirType="alphanumericupper" required />
                               </div>
                             </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">IFSC Code</label>
                                 <input type="text" class="form-control" placeholder="Enter IFSC Code" pattern="[A-Z]{4}[0]{3}[0-9]{4}" [(ngModel)]="bank.IFSCCode" name="IFSCCode"
-                                  oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" saCommonDir dirType="alphanumericupper" />
+                                  oninvalid="this.setCustomValidity('Enter valid IFSC Code ')" onchange=" setCustomValidity('')" oninput=" setCustomValidity(' ')" saUppercase saCommonDir dirType="alphanumericupper" />
                               </div>
                             </div>
                             <div class="col-sm-1">

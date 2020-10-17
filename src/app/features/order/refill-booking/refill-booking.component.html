@@ -21,7 +21,7 @@
                         <div class="form-group">
                           <select class="form-control"   [(ngModel)]="SearchBy" name="SearchBy" required>
                             <option value="" selected disabled>Search Customer By</option>
-                            <option value="ConsNo" selected >Customer No.</option>
+                            <option value="NewConsNo" selected >Customer No.</option>
                             <option value="MobileNo" selected >Mobile No.</option>
                             <option value="FirmName" selected >Firm Name</option>
                           </select>
@@ -29,8 +29,8 @@
                       </div>
                       <div class="col-sm-2">
                         <div class="form-group">
-                                                   <input [(ngModel)]="selectedValue" [typeahead]="preLoadCust" typeaheadOptionField="{{SearchBy}}"
-                            (typeaheadOnSelect)="onSelect($event)" [placeholder]="SearchBy=='ConsNo'?'Search Customer No':SearchBy=='MobileNo'?'Search Mobile No':'Search Firm Name'" 
+                                                   <input [(ngModel)]="selectedValue" saUppercase [typeahead]="preLoadCust" typeaheadOptionField="{{SearchBy}}"
+                            (typeaheadOnSelect)="onSelect($event)" [placeholder]="SearchBy=='NewConsNo'?'Search Customer No':SearchBy=='MobileNo'?'Search Mobile No':'Search Firm Name'" 
                             (typeaheadNoResults)="typeaheadNoResults($event)" [typeaheadScrollable]="true"    [typeaheadOptionsInScrollableView]="15" class="form-control" >
                             <div class="errorMessage" *ngIf="noResult">No Results Found</div>                     
                       </div>
@@ -85,7 +85,7 @@
                         <select class="form-control" (change)="onSelectProdSegment();makequantitydisable()"
                           [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
                           <option value="" selected hidden>Select Segment</option>
-                          <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}}
+                          <option [value]="prod.ProdSegId" *ngFor="let prod of ProdSegArray">{{prod.ProdSeg}}
                           </option>
                         </select>
                       </div>

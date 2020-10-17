@@ -11,7 +11,7 @@ import { AppComponent } from '@app/app.component';
 })
 export class CustomerMasterComponent implements OnInit {
   public cpInfo: any;
-  public ConsNo: number;
+  public ConsNo: any;
   public custData: any = {};
   public custDataStored: any = [];
   public designationData: any = [];
@@ -38,7 +38,7 @@ export class CustomerMasterComponent implements OnInit {
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Update</div>', enableFiltering: false
       },
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'ConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'NewConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
       { name: 'Salutation', displayName: 'Salutation', width: "100", cellTooltip: true, filterCellFiltered: true },
       { name: 'FirstName', displayName: 'First Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'LatName', displayName: 'Last Name', width: "180", cellTooltip: true, filterCellFiltered: true },
@@ -86,7 +86,9 @@ export class CustomerMasterComponent implements OnInit {
     });
   }
   getCustomer() {    this.loaderbtn=false;
-    this.custData = this.masterService.filterData(this.custDataStored, this.ConsNo, 'ConsNo');
+    let arr=this.ConsNo.split('C');
+    let ConsNo=arr[arr.length-1];
+    this.custData = this.masterService.filterData(this.custDataStored, ConsNo, 'ConsNo');
     if (this.custData.length == 0) { this.custData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found'); }
     this.loaderbtn=true;
   }

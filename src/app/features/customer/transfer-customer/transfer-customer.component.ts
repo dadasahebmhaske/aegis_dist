@@ -53,7 +53,7 @@ export class TransferCustomerComponent implements OnInit {
     this.gridOptions.selectionRowHeaderWidth = 35;
     columnDefs = [
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
-      { name: 'ConsNo', displayName: 'Customer No.', width: "*", cellTooltip: true, filterCellFiltered: true },
+      { name: 'NewConsNo', displayName: 'Customer No.',cellClass:'text-center', width: "*", cellTooltip: true, filterCellFiltered: true },
       // { name: 'Salutation', displayName: 'Salutation', width: "100", cellTooltip: true, filterCellFiltered: true },
       { name: 'FirstName', displayName: 'First Name', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'LatName', displayName: 'Last Name', width: "*", cellTooltip: true, filterCellFiltered: true },

@@ -41,9 +41,13 @@ export class AppComponent implements OnInit, OnDestroy {
         'content-Type': 'application/json', Authorization: 'Basic ' + btoa(environment.authKey)
       })
     };
-    AppComponent.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/pdf'
+    // AppComponent.headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Accept': 'application/pdf'
+    // });
+     AppComponent.headers = new HttpHeaders({
+      Authorization: 'Basic ' + btoa(environment.authKey)
+
     });
     AppComponent.BaseUrl = environment.BaseUrl;
     AppComponent.BaseUrlDist = environment.BaseUrlDist;

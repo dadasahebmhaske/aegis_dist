@@ -17,8 +17,8 @@
                       <input type="text" placeholder="Enter Customer No." class="form-control"
                         oninvalid="this.setCustomValidity('Enter Customer Number')"
                         onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" aCommonDir
-                        dirType="number" [(ngModel)]="ConsNo" (change)="getOnChangeCustomer()" name="ConsNo"
-                        maxlength="8" required />
+                        dirType="alphanumeric"  saUppercase [(ngModel)]="ConsNo" (change)="getOnChangeCustomer()" name="ConsNo"
+                       required />
                     </div>
                   </div>
                   <div class="col-sm-1 col-xs-4">

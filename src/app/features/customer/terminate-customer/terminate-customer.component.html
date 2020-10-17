@@ -60,8 +60,8 @@
                         </div>
                         <div class="col-sm-2">
                           <div class="form-group">
-                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')"
-                              onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob" maxlength="10" saCommonDir dirType="number"
+                            <input type="text" placeholder="Customer No. / Mobile No." class="form-control" oninvalid="this.setCustomValidity('Enter consumer number')" saUppercase
+                              onchange="this.setCustomValidity('')" oninput="setCustomValidity(' ')" [(ngModel)]="cust.CustNoMob" name="CustNoMob"  saCommonDir dirType="alphanumeric"
                               required />
                           </div>
                         </div>

@@ -21,6 +21,7 @@ import {SmartadminFormsLiteModule} from "./forms/smartadmin-forms-lite.module";
 import {SmartProgressbarModule} from "./ui/smart-progressbar/smart-progressbar.module";
 import { CalendarComponentsModule } from "@app/shared/calendar/calendar-components.module";
 import {CommonDirDirective} from '../core/directive/common-dir.directive';
+import {UppercaseDirective} from '../core/directive/uppercase.directive';
 import { TrueFalseValueDirective } from '../core/directive/true-false-value.directive';
 import { ConfirmEqualValidatorDirective } from "@app/core/directive/confirm-equal-validator.directive";
 import { NewpassNotEqualValidatorDirective } from "@app/core/directive/newpass-not-equal-validator";
@@ -33,7 +34,7 @@ import { NewpassNotEqualValidatorDirective } from "@app/core/directive/newpass-n
     SmartadminLayoutModule,
     BootstrapModule
   ],
-  declarations: [CommonDirDirective,TrueFalseValueDirective,ConfirmEqualValidatorDirective,NewpassNotEqualValidatorDirective],
+  declarations: [CommonDirDirective,UppercaseDirective,TrueFalseValueDirective,ConfirmEqualValidatorDirective,NewpassNotEqualValidatorDirective],
   exports: [
     CommonModule,
     FormsModule,
@@ -64,6 +65,7 @@ import { NewpassNotEqualValidatorDirective } from "@app/core/directive/newpass-n
 
     CalendarComponentsModule,
     CommonDirDirective,
+    UppercaseDirective,
     TrueFalseValueDirective,
     ConfirmEqualValidatorDirective,
     NewpassNotEqualValidatorDirective
