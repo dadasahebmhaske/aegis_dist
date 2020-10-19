@@ -30,7 +30,7 @@
     "@swimlane/ngx-datatable": "14.0.0",
     "angular": "^1.7.8",
     "angular-ui-grid": "^4.4.7",
-    "bootstrap": "3.3.7",
+    "bootstrap": "3.4.1",
     "bootstrap-colorpicker": "2.5.2",
     "bootstrap-duallistbox": "3.0.6",
     "bootstrap-markdown": "2.10.0",
