@@ -89,7 +89,7 @@
       this.customerService.getCustomerWiseTransactionDetails(this.deliverFilter.CPCode,this.deliverFilter, this.appService.DateToString(this.deliverFilter.StartDate), this.appService.DateToString(this.deliverFilter.EndDate)).subscribe((resData: any) => {
         this.loaderbtn=true;
         if (resData.StatusCode != 0) {
-          this.DeliveredOrderData = resData.Data;
+          this.DeliveredOrderData = resData.Data; 
           AppComponent.SmartAlert.Success(resData.Message);
         }
         else { this.DeliveredOrderData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
