@@ -51,6 +51,7 @@ export class CustomerMasterComponent implements OnInit {
       { name: 'OpeningCylQty', displayName: 'Opening Cyl. Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'OpeningBalAmt', displayName: 'Opening Bal Amt', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'CustTypeName', displayName: 'Customer Type', width: "140", cellTooltip: true, filterCellFiltered: true },
+      { name: 'BusinessType', displayName: 'Business Type', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsuptionTypeName', displayName: 'Consumption Type', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'VolumeTypeName', displayName: 'Volume Type', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ServiceTypeName', displayName: 'Service Type', width: "120", cellTooltip: true, filterCellFiltered: true },

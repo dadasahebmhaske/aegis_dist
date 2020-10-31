@@ -133,6 +133,13 @@
                                 </select>
                               </div>
                             </div>
+                               <div class="col-sm-3">
+                              <div class="form-group">
+                                <label for="sel1">Business Type      </label>
+                                <input type="text" class="form-control" placeholder="Enter Business Type" saCommonDir dirType="alphanumericupper"  saUppercase [(ngModel)]="customer.BusinessType" name="BusinessType"
+                                  />
+                              </div>
+                            </div>
                             <div class="col-sm-3">
                               <div class="form-group">
                                 <label for="sel1">Volume Type <span class="errorMessage">*</span>
@@ -267,14 +274,14 @@
                                   pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}" />
                               </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Manifold Certificate No. </label>
                                 <input type="text" class="form-control" placeholder="Enter Certificate No." [(ngModel)]="customer.ManifoldCertNo" name="ManifoldCertNo" saCommonDir
                                   dirType="alphanumericupper" saUppercase/>
                               </div>
                             </div>
-                            <div class="col-sm-3 btn-marg">
+                            <div class="col-sm-1 btn-marg">
                               <label>
                                 <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='customer.IsActive' form="vehicleForm" /> Is Active </label>
                             </div>
