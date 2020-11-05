@@ -274,14 +274,18 @@
                                   pattern="([0-9]{1}[1-9]{1})|([1-9]{1}[0-9]{1})[a-zA-Z]{5}\d{4}[a-zA-Z]{1}\d{1}[a-zA-Z]{1}[a-zA-Z0-9]{1}" />
                               </div>
                             </div>
+                            <div class="col-sm-1 btn-marg">
+                              <label>
+                                <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="ManifCertFlag" [(ngModel)]='customer.ManifCertFlag' form="vehicleForm" /> Is Manifold </label>
+                            </div>
                             <div class="col-sm-2">
                               <div class="form-group">
                                 <label for="sel1">Manifold Certificate No. </label>
                                 <input type="text" class="form-control" placeholder="Enter Certificate No." [(ngModel)]="customer.ManifoldCertNo" name="ManifoldCertNo" saCommonDir
-                                  dirType="alphanumericupper" saUppercase/>
+                                  dirType="alphanumericupper" saUppercase [disabled]="customer.ManifCertFlag=='N' || customer.ManifCertFlag== null"/>
                               </div>
                             </div>
-                            <div class="col-sm-1 btn-marg">
+                            <div class="col-sm-2">
                               <label>
                                 <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='customer.IsActive' form="vehicleForm" /> Is Active </label>
                             </div>

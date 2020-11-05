@@ -88,7 +88,7 @@ export class ChannelPartnerComponent implements OnInit, OnDestroy {
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
     this.allOnloadMethods();
     this.datashare.GetSharedData.subscribe(data => {
-      this.channal = data == null ? { ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y' } : data;
+      this.channal = data == null ? {ManifCertFlag:'N', ChannelId: '', CPTypeId: '', ROTypeId: '', PackTypeId: '', FirmTypeId: '', IsActive: 'Y' } : data;
       if (this.channal != null && this.channal != undefined) { this.getChType(this.channal.ChannelId); }
       this.channal.ROTypeId = this.channal.ROTypeId == null ? '' : this.channal.ROTypeId;
       this.channal.PackTypeId = this.cpInfo.PackTypeId;

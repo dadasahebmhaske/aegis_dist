@@ -70,7 +70,7 @@ export class CustomerMasterComponent implements OnInit {
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    this.datashare.updateShareData($event.row);
+    this.datashare.updateShareData($event.row);console.log($event.row); 
     AppComponent.Router.navigate(['/customer/update-customer']);
   }
 

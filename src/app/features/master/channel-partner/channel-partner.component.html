@@ -124,6 +124,17 @@
                                 </select>
                               </div>
                             </div>
+                            <div class="col-sm-1 btn-marg">
+                              <label>
+                                <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="ManifCertFlag" [(ngModel)]='channal.ManifCertFlag' /> Is Manifold </label>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="form-group">
+                                <label for="sel1">Manifold Certificate No. </label>
+                                <input type="text" class="form-control" placeholder="Enter Certificate No." [(ngModel)]="channal.ManifoldCertNo" name="ManifoldCertNo" saCommonDir
+                                  dirType="alphanumericupper" saUppercase [disabled]="channal.ManifCertFlag=='N' || channal.ManifCertFlag== null"/>
+                              </div>
+                            </div>
                             <div class="col-sm-3">
                               <div class="form-group btn-marg">
                                 <label>
@@ -266,7 +277,7 @@
                                   placeholder="Enter Telephone No. ( +91-0222-1234567 )" [(ngModel)]="own.LandLineNo"
                                   [ngModelOptions]="{standalone: true}" saCommonDir
                                   pattern="^[\+][9]{1}[1]{1}-[0-9]\d{3,4}-[0-9]\d{6,8}$"
-                                  title="Example: +91-0222-1234567" required />
+                                  title="Example: +91-0222-1234567"  />
                               </div>
                             </div>
                             <div class="col-sm-3">
