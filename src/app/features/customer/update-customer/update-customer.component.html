@@ -216,6 +216,14 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
+                                <label for="sel1">Credit Days 
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Days" minlength="1" maxlength="3"
+                                  [(ngModel)]="customer.CreditDays" name="CreditDays" saCommonDir dirType="number"  />
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                              <div class="form-group">
                                 <label for="sel1">Area <span class="errorMessage">*</span>
                                 </label>
                                 <select [(ngModel)]="customer.AreaId" name="AreaId" (change)="getSubArea()" class="form-control" required>
@@ -285,7 +293,7 @@
                                   dirType="alphanumericupper" saUppercase [disabled]="customer.ManifCertFlag=='N' || customer.ManifCertFlag== null"/>
                               </div>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2 btn-marg">
                               <label>
                                 <input type="checkbox" trueFalseValue trueValue="Y" falseValue="N" name="IsActive" [(ngModel)]='customer.IsActive' form="vehicleForm" /> Is Active </label>
                             </div>

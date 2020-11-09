@@ -57,6 +57,8 @@ export class FinanceService {
     public getCashFlow(cpcode, cust) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetPaymentRegister?&ConsNo=${cust.ConsNo}&MobileNo=${cust.MobileNo}&CPCode=${cpcode}&FromDate=${cust.StartDate}&ToDate=${cust.EndDate}`);
     }
-
+    public getPaymentDue(cpcode, cust) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrlDist}Order/GetPaymentDueReport?ConsId=&CPCode=${cpcode}&Date=${cust.StartDate}&IsActive=Y&${cust.ConsNo}&MobileNo=${cust.MobileNo}`);
+    }
 
 }

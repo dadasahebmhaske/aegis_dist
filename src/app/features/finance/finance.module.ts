@@ -11,6 +11,7 @@ import { StockService } from '../stock/stock.service';
 import {FinanceService } from './finance.service';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
 
+
 @NgModule({
   declarations: [componentArray,UigridfinanceDirective],
   imports: [

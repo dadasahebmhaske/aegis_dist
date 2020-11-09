@@ -11,11 +11,13 @@ import { BankAccountDetailsComponent } from './bank-account-details/bank-account
 import { ExpensesListComponent } from './expenses-list/expenses-list.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
+import { PaymentDueReportComponent } from './payment-due-report/payment-due-report.component';
 const routes: Routes = [
   { path:'bank-account-details',component:BankAccountDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FBACD']}},
   { path:'cash-flow-register',component:CashFlowRegisterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCFPC']}},
   { path:'expenses-list',component:ExpensesListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FEXPE']}},
   { path:'expenses',component:ExpensesComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FEXPE']}},
+  { path:'payment-due-report',component:PaymentDueReportComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FPDUR']}},
   { path:'payment-collections',component:PaymentCollectionsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FCFPC']}},
   { path:'petty-cash-details-list',component:PettyCashDetailsListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FPCBD']}},
   { path:'petty-cash-details',component:PettyCashDetailsComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['FPCBD']}},
@@ -31,6 +33,7 @@ export const componentArray = [
   CashFlowRegisterComponent,
   ExpensesListComponent,
   ExpensesComponent, 
+  PaymentDueReportComponent,
    PaymentCollectionsComponent,
   PettyCashDetailsComponent,
   PettyCashDetailsListComponent,
