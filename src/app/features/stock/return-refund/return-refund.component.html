@@ -1,0 +1,213 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Return Refund</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onSubmitDispatchOrder()" autocomplete="off" ngNativeValidate>
+                <div class="row ">
+           
+                  <div class="col-sm-3"  *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>DE / SD / SF / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="CPCode" name="CPCode" (change)="onsSelectSFSD();onLoad()" required>
+                        <option value="" selected disabled>Select DE / SD / SF / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3" *ngIf="showPltVcle">
+                  <div class="form-group">
+                      <!-- <label>Plant <span class="errorMessage">*</span>
+                      </label> -->
+                      <select class="form-control" id="sel" [(ngModel)]="product.PlantId"
+                          name="PlantId" required>
+                          <option value="" selected disabled>Select Plant *</option>
+                          <option [value]="pl.PlantId" *ngFor="let pl of plantData">
+                              {{pl.PlantName}}</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-sm-3" *ngIf="showPltVcle">
+                <div class="form-group">
+                    <!-- <label>Vehicle <span class="errorMessage">*</span>
+                    </label> -->
+                    <select class="form-control" id="sel" [(ngModel)]="product.VehicleId"
+                        name="VehicleId" required>
+                        <option value="" selected disabled>Select Vehicle *</option>
+                        <option [value]="veh.VehicleId" *ngFor="let veh of vehicleData">
+                            {{veh.VehicleNo}} {{veh.VehicleType}}</option>
+                    </select>
+                </div>
+            </div>
+            
+                   <!--<div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="EndDate" name="EndDate" required onkeydown="return false" [minDate]="minDate"
+                          bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
+                        <option value="" selected hidden>Select Order Status</option>
+                        <option value="PE">Pending</option>
+                        <option value="AC">Accepted By Admin</option>
+                        <option value="RJ">Rejected</option>
+                        <option value="DI">Dispatched</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 pull-right">
+                    <div class="form-group pull-right">
+                      <a routerLink="/stock/return-refund" class="btn btn-block btn-warning get_details pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add Return Refund </a>
+                    </div>
+                  </div> -->
+             
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2" >
+                  <div class="form-group">
+                      <label>Total  Return Qty <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Qty"
+                          name="TtlReturnQty" [(ngModel)]="product.TtlReturnQty"
+                          saCommonDir dirType="decimal" disabled required />
+                  </div>
+              </div>
+                <div class="col-sm-2" >
+                  <div class="form-group">
+                      <label>Total  Refund Amount <span class="errorMessage">*</span>
+                      </label>
+                      <input type="text" class="form-control" placeholder="Enter Amount"
+                          name="TtlRefundAmt" [(ngModel)]="product.TtlRefundAmt"
+                          saCommonDir dirType="decimal" disabled required />
+                  </div>
+              </div>
+              <div class="col-sm-8" >
+                <div class="form-group">
+                    <label>Remark 
+                    </label>
+                    <textarea class="form-control" placeholder="Enter Amount"
+                    name="Remark" [(ngModel)]="product.ReturnRemark" rows="1"></textarea>
+                   
+                </div>
+            </div>
+              </div>
+              <footer>
+                <div class="row">
+                    <div class="col-sm-12 ">
+                        <hr />
+                        <a class="pull-right btn btn-default" routerLink="/stock/return-refund-list">
+                            <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                        <button class="pull-right btn btn-primary marg-right" type="submit"
+                            [disabled]="!loaderbtn">
+                            <i class="fa fa-fw"
+                                [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+                            {{loaderbtn==true? 'Submit':'Loading'}}</button>
+                    </div>
+                </div>
+            </footer>
+          </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>
+<!-- Modal -->
+<div class=" modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Order Return Details</h4>
+      </div>
+      <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onSubmitReturnQty()" autocomplete="off"
+      ngNativeValidate>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="refill">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Product Qty
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Amount"
+                        name="ProdQty" [(ngModel)]="stock.ProdQty"  disabled />
+                </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Refund Rate
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Amount"
+                        name="RefundRate" [(ngModel)]="stock.RefundRate"  disabled />
+                </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Return Qty <span class="errorMessage">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Quantity"
+                        name="ReturnQty" [(ngModel)]="stock.ReturnQty" saCommonDir
+                      (blur)="onEditReturnQty()"  dirType="number" required />
+                </div>
+                </div>
+              
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label> Refund Amount
+                    </label>
+                    <input type="text" class="form-control" placeholder="Enter Amount"
+                        name="RefundAmt" [(ngModel)]="stock.RefundAmt"  disabled />
+                </div>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class=" btn btn-primary " type="submit"
+        [disabled]="!loaderbtn">
+        <i class="fa fa-fw"
+            [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
+        {{loaderbtn==true? 'Submit':'Loading'}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+</form>
+    </div>
+  </div>
+</div>

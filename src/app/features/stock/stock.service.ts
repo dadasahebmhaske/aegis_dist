@@ -10,16 +10,16 @@ export class StockService {
             for (let i = 0; i < ProductArray.length; i++) {
                 stock.ProdAmt = parseFloat(stock.ProdAmt) + parseFloat(ProductArray[i].ProdAmt);
                 stock.TtlRefundAmt = parseFloat(stock.TtlRefundAmt) + parseFloat(ProductArray[i].RefundAmt == null ? 0 : ProductArray[i].RefundAmt);
-                if (ProductArray[i].OrderType == 'RO') 
-                stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
+                if (ProductArray[i].OrderType == 'RO')
+                    stock.QtyTotal = parseInt(stock.QtyTotal) + parseInt(ProductArray[i].ProdQty);
                 stock.SubTotal = parseFloat(stock.SubTotal) + parseFloat(ProductArray[i].SubTotal);
                 stock.IgstTotal = parseFloat(stock.IgstTotal) + parseFloat(ProductArray[i].IgstAmt);
                 stock.CgstTotal = parseFloat(stock.CgstTotal) + parseFloat(ProductArray[i].CgstAmt);
                 stock.SgstTotal = parseFloat(stock.SgstTotal) + parseFloat(ProductArray[i].SgstAmt);
             }
-            stock.IgstTotal.toFixed(2);
-            stock.CgstTotal.toFixed(2);
-            stock.SgstTotal.toFixed(2);
+        stock.IgstTotal.toFixed(2);
+        stock.CgstTotal.toFixed(2);
+        stock.SgstTotal.toFixed(2);
         return stock;
     }
     getPlantDetails(cpcode) {
@@ -30,6 +30,9 @@ export class StockService {
     }
     public postBulkOrders(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrder`, data);
+    }
+    public postReturnRefund(data: any) {
+        return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessStockReturnRefund`, data);
     }
     public getSFSDStockOrderDetails(StartDate, EndDate, order) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrder?StkOrdId=&OrderNo=&FOrderDt=${StartDate}&TOrderDt=${EndDate}&OrderType=&CPCode=${order.CPCode}&PlantId=${order.PlantId}&VehicleId=&OrderStatus=&OrderStage=${order.OrderStage}&ParentCPCode=${order.ParentCPCode}&IsActive=Y`);
@@ -68,7 +71,7 @@ export class StockService {
     public getCustomerDailyStockRegister(data) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetCustomerStock?pCPCode=${data.CPCode}&pSegId=&pProdId=&pMobileNo=${data.MobileNo}&pConsNo=${data.ConsNo}&pFromDate=${data.StartDate}&pToDate=${data.EndDate}`);
     }
-    public  getProductSegmentDetails(ChannelId) {
+    public getProductSegmentDetails(ChannelId) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&StartDate=&EndDate&UserCode&IsActive=Y&PriCode&Name=&TwoFlag&ISHome=&ChannelId=${ChannelId}`);
     }
     public getSFSDOrderReportAcRjDi(data, action) {
@@ -80,12 +83,22 @@ export class StockService {
     public postDispatchOrders(data: any) {
         return this.httpClient.post<any>(`${AppComponent.BaseUrl}Stock/ProcessOrderDispatch`, data);
     }
-    public getProductorderWiseOrderDetails(ParentCPCode,cpcode, StartDate, EndDate,empid) {
+    public getProductorderWiseOrderDetails(ParentCPCode, cpcode, StartDate, EndDate, empid) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetPrimarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&UserCode=`);
     }
-    public getSFSDProductorderWiseOrderDetails(ParentCPCode,cpcode, StartDate, EndDate,empid) {
+    public getSFSDProductorderWiseOrderDetails(ParentCPCode, cpcode, StartDate, EndDate, empid) {
         return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetSecondarySalesDetails?ParentCPCode=${ParentCPCode}&CPCode=${cpcode}&SapId=&ChannelId=&CPTypeId=&RegionId=&StateCode=&CityCode=&FDate=${StartDate}&TDate=${EndDate}&ProdSegId=&ProdId=&PlantId=&RoleId=&EmpId=&OrderType=&UserCode=`);
-        
     }
-    
+    public getStockOrderDetailsForRefund(cpcode,ParentCPCode) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockOrderDtlsForReturnRefund?CPCode=${cpcode}&PlantId=&IsActive=Y&ParentCPCode=${ParentCPCode}&StkReturnRefundId=`);
+    }
+    public getReturnRefundlist(cpcode, StartDate, EndDate, stage) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockReturnRefundSum?CPCode=${cpcode}&PlantId=&IsActive=&ParentCPCode=&ReturnStatus=${stage}&FromDate=${StartDate}&ToDate=${EndDate}`);
+    }
+    public getReturnRefundProductDetails(cpcode, sktorderId) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockReturnRefundDtls?CPCode=${cpcode}&PlantId=&IsActive=&ParentCPCode=&StkReturnRefundId=${sktorderId}`);
+    }
+    public getSFSDReturnRefundlist(cpcode, StartDate, EndDate, stage,ParentCPCode) {
+        return this.httpClient.get<any>(`${AppComponent.BaseUrl}Stock/GetStockReturnRefundSum?CPCode=${cpcode}&PlantId=&IsActive=&ParentCPCode=${ParentCPCode}&ReturnStatus=${stage}&FromDate=${StartDate}&ToDate=${EndDate}`);
+    }
 }

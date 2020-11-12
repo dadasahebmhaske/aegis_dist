@@ -15,6 +15,10 @@ import { OrderAcceptedRejectedDispatchedComponent } from './order-accepted-rejec
 import { OrderDispatchDetailsComponent } from './order-dispatch-details/order-dispatch-details.component';
 import { ProductWiseOrderReportComponent } from './product-wise-order-report/product-wise-order-report.component';
 import { RoleAccessGuard } from '@app/core/guards/roleAccess.guard';
+import { ReturnRefundListComponent } from './return-refund-list/return-refund-list.component';
+import { ReturnRefundComponent } from './return-refund/return-refund.component';
+import { ApproveReturnRefundComponent } from './approve-return-refund/approve-return-refund.component';
+
 const routes: Routes = [ 
   { path:'add-imbalance',component:AddImbalanceComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SIMBL']}},
   { path:'daily-stock-register',component:DailyStockRegisterComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SDSTR']}},
@@ -28,13 +32,17 @@ const routes: Routes = [
   {path:'product-wise-order-report',component:ProductWiseOrderReportComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SPWOR']}},
   { path:'stock-orders',component:StockOrdersComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSTKO']}},
   { path:'stock-orders-list',component:StockOrdersListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SSTKO']}},
-  { path:'return-stock',component:ReturnStockComponent},
+  { path:'return-refund',component:ReturnRefundComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SRNRF']}},
+  { path:'return-refund-list',component:ReturnRefundListComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SRNRF']}},
+  { path:'approve-return-refund',component:ApproveReturnRefundComponent, canActivate: [RoleAccessGuard],data: {formFlag: ['SARRF']}},
+  { path:'return-stock',component:ReturnStockComponent}, 
   { path:'return-stock-list',component:ReturnStockListComponent},
 ];
 
 export const routing = RouterModule.forChild(routes);
 export const compArray=[
   AddImbalanceComponent,
+  ApproveReturnRefundComponent,
   DailyStockRegisterComponent,
   CustomerDailyStockRegisterComponent,
   DayEndComponent,
@@ -46,6 +54,8 @@ export const compArray=[
   OrderDispatchDetailsComponent,
   OrderAcceptedRejectedDispatchedComponent,
   ProductWiseOrderReportComponent,
+  ReturnRefundListComponent,
+  ReturnRefundComponent,
   StockOrdersComponent,
   StockOrdersListComponent
 ];

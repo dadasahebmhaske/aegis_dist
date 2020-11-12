@@ -100,6 +100,11 @@ export function initUiGrid() {
           row
         });
       }
+      $scope.selectEmployee = function (row) {
+        ctrl.onSelect({
+          row
+        });
+      }
       $scope.selectedEmployee = function (row) {
         ctrl.onSelected({
           row

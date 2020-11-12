@@ -1,0 +1,142 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+  <sa-widgets-grid>
+    <div class="row">
+      <article class="col-sm-12">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
+          <header class="text-center">
+            <h2> <i class="fa fa-table"></i> Return Refund</h2>
+          </header>
+          <div>
+            <div class="widget-body">
+              <div class="row ">
+                <form name="stockForm" #stockForm="ngForm" (ngSubmit)="onLoad()" autocomplete="off" ngNativeValidate>
+                 
+                  <div class="col-sm-3"  *ngIf="cpInfo.ChannelTypeFlag=='DI'|| cpInfo.ChannelTypeFlag=='DE'">
+                    <div class="form-group">
+                      <!-- <label>DE / SD / SF / POS <span class="errorMessage">*</span></label> -->
+                      <select class="form-control" [(ngModel)]="CPCode" name="CPCode" (change)="onsSelectSFSD()" required>
+                        <option value="" selected disabled>Select DE / SD / SF / POS</option>
+                        <option *ngFor="let option of chantype" [value]="option.CPCode">{{option.CPName}}</option>
+                      </select>
+                    </div>
+                  </div> <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" class="form-control" placeholder="Enter Start Date" bsDatepicker [(ngModel)]="StartDate" name="Startdate" id="startDate"
+                          (bsValueChange)="resetEndDate($event)" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-xs-8">
+                    <div class="form-group">
+                      <label class="posticon">
+                        <i class="icon-append fa fa-calendar"></i>
+                        <input type="text" id="endDate" class="form-control" placeholder="Enter End Date" [(ngModel)]="EndDate" name="EndDate" required onkeydown="return false" [minDate]="minDate"
+                          bsDatepicker [bsConfig]="datePickerConfig" />
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <select class="form-control" id="sel" [(ngModel)]="stage" name="stage">
+                        <option value="" selected disabled>Select Status</option>
+                        <option value="PE">Pending</option>
+                        <option value="AP">Approved</option>
+                        <option value="RE">Rejected</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 col-xs-4">
+                    <div class="form-group">
+                      <button class="btn btn-block btn-success get_details" type="submit" [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Get Details':'Loading'}}</button>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 pull-right">
+                    <div class="form-group pull-right">
+                      <a routerLink="/stock/return-refund" class="btn btn-block btn-warning get_details pull-right">
+                        <i class="glyphicon glyphicon-plus"></i> Add Return Refund </a>
+                    </div>
+                  </div>
+                </form>
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </sa-widgets-grid>
+</div>
+<!-- Modal -->
+<div class=" modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Return Products Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="refill">
+              <div class="row">
+                <div class="col-sm-6">
+                  <label><strong>Order No :</strong> {{stock.StkReturnRefundId}}</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="pull-right"><strong>Return Date :</strong> {{stock.ReturnDt}}</label>
+                </div>
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product Segment</th>
+                          <th>Product Name</th>
+                          <th class="text-right">Refund Rate</th>
+                          <th class="text-right">Quantity</th>
+                          <th class="text-right">Refund Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>       
+                  
+                        <tr *ngFor="let pr of ProductArray;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{pr.ProdSeg}}</td>
+                          <td>{{pr.Product}}</td>
+                          <td class="text-right"><small class="text-info" *ngIf="pr.OrderType=='NC'">Deposit&nbsp; </small>{{pr.RefundRate}}</td>
+                          <td class="text-right">{{pr.ReturnQty}}</td>
+                          <td class="text-right">{{pr.RefundAmt}}</td>
+                          
+                        </tr>
+                        <tr>
+                          <td colspan="4" class="text-right"><strong>Total</strong> :</td>
+                          <td class="text-right"><strong>{{stock.TtlReturnQty}}</strong></td>
+                          <td class="text-right"><strong>{{stock.TtlRefundAmt}}</strong></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+         
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        
+        <!-- <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('AC')" class="btn btn-success">Accept</button>
+        <button type="button" *ngIf="stock.IsDispatch == 'Y' && stock.OrderStage!='CA' && stock.OrderStage!='RJ'" (click)="DispatchOrder('RJ')" class="btn btn-danger">Reject</button> -->
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
