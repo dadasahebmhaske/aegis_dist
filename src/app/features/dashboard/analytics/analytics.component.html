@@ -5,118 +5,162 @@
       class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
     <sa-stats></sa-stats>
   </div> -->
-
   <sa-widgets-grid>
-
     <div class="row">
       <article class="col-sm-12">
-
-
         <!-- <live-feeds-widget></live-feeds-widget> -->
-        <div sa-widget [sortable]="false" [togglebutton]="false" [editbutton]="false" [fullscreenbutton]="false"
-          [colorbutton]="false" [deletebutton]="false" saSparklineContainer saEasyPieChartContainer>
-
+        <div sa-widget [sortable]="false" [togglebutton]="false" [editbutton]="false" [fullscreenbutton]="false" [colorbutton]="false" [deletebutton]="false" saSparklineContainer
+          saEasyPieChartContainer>
           <header>
             <span class="widget-icon">
               <i class="glyphicon glyphicon-stats txt-color-darken"></i> </span>
-
-            <h2 class="hidden-mobile"> Live Feeds As On
-            </h2>
+            <h2 class="hidden-mobile"> Live Feeds As On </h2>
             <form class="smart-form">
               <div class="col-sm-12 col-xs-4 input-date">
-
                 <label class="input posticon">
-                  <i class="icon-append fa fa-calendar"></i><input class="input-xs" type="text"
-                    placeholder="31-Mar-2020" [(ngModel)]="selectedDate" name="selectedDate" bsDatepicker
+                  <i class="icon-append fa fa-calendar"></i><input class="input-xs" type="text" placeholder="31-Mar-2020" [(ngModel)]="selectedDate" name="selectedDate" bsDatepicker
                     [bsConfig]="datePickerConfig" onkeydown="return false"></label>
               </div>
               <div class="col-sm-12 col-xs-4 go-btn">
-
                 <button class="btn btn-block btn-success " type="submit" [disabled]="!loaderbtn" style="padding: 2px;">
-                  <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
-                  {{loaderbtn==true? 'GO':'Loading'}}</button>
+                  <i class="fa fa-fw" [ngClass]="{'fa-search':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'GO':'Loading'}}</button>
               </div>
             </form>
             <ul class="nav nav-tabs pull-right in" id="myTab">
               <li class="active">
-                <a data-toggle="tab" href="#s1"><i class="fa fa-clock-o"></i> <span
-                    class="hidden-mobile hidden-tablet">&nbsp;Delivery Status</span></a>
+                <a data-toggle="tab" href="#s1"><i class="fa fa-clock-o"></i> <span class="hidden-mobile hidden-tablet">&nbsp;Delivery Status</span></a>
               </li>
               <!-- <li>
                 <a data-toggle="tab" href="#s3"><i class="fa fa-clock-o"></i> <span
                     class="hidden-mobile hidden-tablet">&nbsp;Live Stats</span></a>
               </li> -->
-
               <li>
-                <a data-toggle="tab" href="#s2"><i class="fa fa-globe"></i> <span
-                    class="hidden-mobile hidden-tablet">&nbsp;Delivery Map</span></a>
+                <a data-toggle="tab" href="#s2"><i class="fa fa-globe"></i> <span class="hidden-mobile hidden-tablet">&nbsp;Delivery Map</span></a>
               </li>
-
-
             </ul>
-
           </header>
-
           <div class="no-padding">
-
             <div class="widget-body">
-
               <div id="myTabContent" class="tab-content">
                 <!-- <revenue-feed class="tab-pane fade active in" id="s1" ></revenue-feed> -->
                 <div class="row tab-pane fade active in" id="s1">
+                  <!-- new design started -->
                   <div class="col-sm-9">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> Volume</span>
+                      </div>
+                    </div>
+                    <div class="padding-10">
+                      <sa-flot-chart class="chart-large has-legend-unique" [data]="volumeData" [options]="volumeChartOptions"></sa-flot-chart>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> New Client Addition</span>
+                      </div>
+                    </div>
+                    <div class="padding-10">
+                      <sa-morris-graph [data]="newClientData" type="bar" [options]="{
+                                                                          xkey: 'x',
+                                                                          ykeys: ['y', 'z', 'a'],
+                                                                          labels: ['Total Count From April To March', 'Avg New Addition Per Month', 'Added This Month Till Date']
+                                            
+                                                          }"></sa-morris-graph>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> Client, POS, SF, SD Details</span>
+                      </div>
+                    </div>
+                    <div class="widget-body no-padding">
+                      <sa-morris-graph [data]="compacData" type="bar" [options]="{
+                                                    xkey: 'x',
+                                                    ykeys: ['y', 'z', 'a'],
+                                                    labels: ['Total Count ', 'Total Billed Till Date ', 'Total Billed Till Date Last Month ']
+                      
+                                    }"></sa-morris-graph>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> YTD Pack Wise Sales in KG</span>
+                      </div>
+                    </div>
+                    <div style="width: 250px;display: block;margin: auto;">
+                      <br>
+                      <sa-chart-js type="pie" [data]="chartjsData['pie-chartYTDkg']"></sa-chart-js>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> MTD Pack Wise Sales in KG</span>
+                      </div>
+                    </div>
+                    <div style="width: 250px;display: block;margin: auto;">
+                      <br>
+                      <sa-chart-js type="pie" [data]="chartjsData['pie-chartMTDkg']"></sa-chart-js>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> Commercial/Domestic & Industrial Sales YTD %</span>
+                      </div>
+                    </div>
+                    <div style="width: 250px;display: block;margin: auto;">
+                      <br>
+                      <sa-chart-js type="pie" [data]="chartjsData['pie-chartYTDPer']"></sa-chart-js>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
+                      <div class=" hidden-phone text-center">
+                        <span class="text-center"> Commercial/Domestic & Industrial Sales MTD %</span>
+                      </div>
+                    </div>
+                    <div style="width: 250px;display: block;margin: auto;">
+                      <br>
+                      <sa-chart-js type="pie" [data]="chartjsData['pie-chartMTDPer']"></sa-chart-js>
+                    </div>
+                  </div>
+                  <!-- old -->
+                  <!-- <div class="col-sm-9">
                     <div>
-
                       <div class="widget-body-toolbar bg-color-white smart-form" id="rev-toggles">
                         <div class="btn-group hidden-phone pull-left">
                           <form class="smart-form">
                             <div class="col-sm-12 col-xs-4">
                               <select class="input-sm" [(ngModel)]="statusWise" name="statusWise">
-                                <option  value="DM"> Delivery Man Wise</option>
+                                <option value="DM"> Delivery Man Wise</option>
                                 <option value="AM"> Area Wise</option>
                               </select>
                             </div>
                           </form>
-
-
-                          <!-- <a class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown"><i
-                              class="fa fa-cog"></i> More <span class="caret"> </span> </a>
-                          <ul class="dropdown-menu pull-right">
-                            <li>
-                              <a (click)="(null)"><i class="fa fa-file-text-alt"></i>> Delivery Man Wise</a>
-                            </li>
-                            <li>
-
-                              <a (click)="(null)"><i class="fa fa-question-sign"></i> Area Wise</a>
-                            </li>
-                          </ul> -->
+                      
                         </div>
                         <div class="inline-group pull-right">
                           <label for="gra-0" class="checkbox text-pending">
-                            <input type="checkbox" id="gra-0" [(ngModel)]="state.targetsShow"
-                              (ngModelChange)="updateData()" />
+                            <input type="checkbox" id="gra-0" [(ngModel)]="state.targetsShow" (ngModelChange)="updateData()" />
                             <i></i> Pending </label>
-                          <!-- Target -->
+                      
                           <label for="gra-2" class="checkbox text-delivered">
-                            <input type="checkbox" id="gra-2" [(ngModel)]="state.signupsShow"
-                              (ngModelChange)="updateData()" />
+                            <input type="checkbox" id="gra-2" [(ngModel)]="state.signupsShow" (ngModelChange)="updateData()" />
                             <i></i> Delivered </label>
-                          <!-- Signups -->
+                    
                           <label for="gra-1" class="checkbox text-undelivered">
-                            <input type="checkbox" id="gra-1" [(ngModel)]="state.actualsShow"
-                              (ngModelChange)="updateData()" />
+                            <input type="checkbox" id="gra-1" [(ngModel)]="state.actualsShow" (ngModelChange)="updateData()" />
                             <i></i> Undelivered </label>
-                          <!-- Actual -->
-
+               
                         </div>
-
-
-
                       </div>
-
                       <div class="padding-10">
-                        <sa-flot-chart class="chart-large has-legend-unique" [data]="revenueData"
-                          [options]="revenueChartOptions"></sa-flot-chart>
+                        <sa-flot-chart class="chart-large has-legend-unique" [data]="revenueData" [options]="revenueChartOptions"></sa-flot-chart>
                       </div>
                     </div>
                   </div>
@@ -125,7 +169,6 @@
                       <div class=" hidden-phone text-center">
                         <span class="text-center"> Order Delivery</span>
                       </div>
-
                     </div>
                     <div style="width: 250px;display: block;margin: auto;">
                       <br>
@@ -135,10 +178,7 @@
                       <strong class="pull-left">Top Delivery Man</strong>
                       <strong class="pull-right"> Total Delivery</strong>
                     </div>
-                    <!-- <div class="top_deliverylsit"  *ngFor="let x of topThreeDelBoy;index as i">
-                      <span class="pull-left">{{i+1}} . {{x.DManName}}</span>
-                      <span class="pull-right"> {{x.TotalDeliveredCount}}</span>
-                    </div> -->
+                 
                     <div class="top_deliverylsit">
                       <span class="pull-left">1 . Raju Rathor</span>
                       <span class="pull-right"> 191</span>
@@ -153,11 +193,9 @@
                     </div>
                   </div>
                   <div class="col-sm-12">
-
                     <div class="row show-stat-microcharts">
                       <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-orangeDark" *ngIf="showpie" [attr.data-percent]="per"
-                          data-pie-size="50">
+                        <div class="easy-pie-chart txt-color-orangeDark" *ngIf="showpie" [attr.data-percent]="per" data-pie-size="50">
                           <span class="percent percent-sign">35</span>
                         </div>
                         <span class="easy-pie-title"> REFILL DELIVERY <i class="fa fa-caret-up icon-color-bad"></i>
@@ -168,35 +206,12 @@
                           </li>
                         </ul>
                       </div>
-                      <!-- <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-greenLight" data-percent="78.9" data-pie-size="50">
-                          <span class="percent percent-sign">78.9 </span>
-                        </div>
-                        <span class="easy-pie-title"> CARD DELIVERY <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-blueDark"> 760</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-blue" data-percent="23" data-pie-size="50">
-                          <span class="percent percent-sign">23 </span>
-                        </div>
-                        <span class="easy-pie-title"> DAC <i class="fa fa-caret-up icon-color-good"></i></span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-blueLight"> 444</span>
-                          </li>
-                        </ul>
-                      </div> -->
+               
                       <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                         <div class="easy-pie-chart txt-color-darken" data-percent="36" data-pie-size="50">
                           <span class="percent percent-sign">36 <i class="fa fa-caret-up"></i></span>
                         </div>
-                        <span class="easy-pie-title"> UNDELIVERED ATTEMPTS <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
+                        <span class="easy-pie-title"> UNDELIVERED ATTEMPTS <i class="fa fa-caret-down icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-blueLight"> 124</span>
@@ -207,8 +222,7 @@
                         <div class="easy-pie-chart txt-color-blue" data-percent="23" data-pie-size="50">
                           <span class="percent percent-sign">23 </span>
                         </div>
-                        <span class="easy-pie-title"> Pending Delivery <i
-                            class="fa fa-caret-up icon-color-good"></i></span>
+                        <span class="easy-pie-title"> Pending Delivery <i class="fa fa-caret-up icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-red"> 124</span>
@@ -219,8 +233,7 @@
                         <div class="easy-pie-chart txt-color-greenLight" data-percent="78.9" data-pie-size="50">
                           <span class="percent percent-sign">78.9 </span>
                         </div>
-                        <span class="easy-pie-title"> App Bookings <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
+                        <span class="easy-pie-title"> App Bookings <i class="fa fa-caret-down icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-blueDark"> 360</span>
@@ -228,14 +241,12 @@
                         </ul>
                       </div>
                     </div>
-
                     <div class="row show-stat-microcharts show-stat-bottom">
                       <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                         <div class="easy-pie-chart txt-color-blue" data-percent="36" data-pie-size="50">
                           <span class="percent percent-sign">36 <i class="fa fa-caret-up"></i></span>
                         </div>
-                        <span class="easy-pie-title"> On Field Delivery Man <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
+                        <span class="easy-pie-title"> On Field Delivery Man <i class="fa fa-caret-down icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-red"> 14</span>
@@ -246,8 +257,7 @@
                         <div class="easy-pie-chart txt-color-darken" data-percent="36" data-pie-size="50">
                           <span class="percent percent-sign">36 <i class="fa fa-caret-up"></i></span>
                         </div>
-                        <span class="easy-pie-title"> Collected Payment <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
+                        <span class="easy-pie-title"> Collected Payment <i class="fa fa-caret-down icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-blueLight"> 40000</span>
@@ -255,8 +265,7 @@
                         </ul>
                       </div>
                       <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-orangeDark" *ngIf="showpie" [attr.data-percent]="per"
-                          data-pie-size="50">
+                        <div class="easy-pie-chart txt-color-orangeDark" *ngIf="showpie" [attr.data-percent]="per" data-pie-size="50">
                           <span class="percent percent-sign">35</span>
                         </div>
                         <span class="easy-pie-title"> Pending Payment <i class="fa fa-caret-up icon-color-bad"></i>
@@ -271,8 +280,7 @@
                         <div class="easy-pie-chart txt-color-greenLight" data-percent="78.9" data-pie-size="50">
                           <span class="percent percent-sign">78.9 </span>
                         </div>
-                        <span class="easy-pie-title"> Total Payment <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
+                        <span class="easy-pie-title"> Total Payment <i class="fa fa-caret-down icon-color-good"></i></span>
                         <ul class="smaller-stat hidden-sm pull-right">
                           <li>
                             <span class="label bg-color-greenLight"> 9740000</span>
@@ -280,57 +288,7 @@
                         </ul>
                       </div>
                     </div>
-
-                    <!-- <div class="row show-stat-microcharts ">
-                      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-orangeDark" *ngIf="showpie" [attr.data-percent]="per"
-                          data-pie-size="50">
-                          <span class="percent percent-sign">35</span>
-                        </div>
-                        <span class="easy-pie-title"> Advance Payment <i class="fa fa-caret-up icon-color-bad"></i>
-                        </span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-greenLight"> 99700</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-greenLight" data-percent="78.9" data-pie-size="50">
-                          <span class="percent percent-sign">78.9 </span>
-                        </div>
-                        <span class="easy-pie-title"> App Bookings <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-blueDark"> 360</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-blue" data-percent="23" data-pie-size="50">
-                          <span class="percent percent-sign">23 </span>
-                        </div>
-                        <span class="easy-pie-title"> New Cards <i class="fa fa-caret-up icon-color-good"></i></span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-blueLight"> 222</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        <div class="easy-pie-chart txt-color-darken" data-percent="36" data-pie-size="50">
-                          <span class="percent percent-sign">36 <i class="fa fa-caret-up"></i></span>
-                        </div>
-                        <span class="easy-pie-title"> On Field Delivery Man <i
-                            class="fa fa-caret-down icon-color-good"></i></span>
-                        <ul class="smaller-stat hidden-sm pull-right">
-                          <li>
-                            <span class="label bg-color-red"> 14</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div> -->
+                  
                   </div>
                   <div class="col-sm-12">
                     <div class="text-delivery-man">
@@ -340,19 +298,16 @@
                       <table class="table tbl">
                         <thead>
                           <tr>
-                            <th class="text-center"><img class="img1 fleft img-circle" height="60" width="60"
-                                src="assets/img/avatars/male.png"></th>
+                            <th class="text-center"><img class="img1 fleft img-circle" height="60" width="60" src="assets/img/avatars/male.png"></th>
                             <th class="text-center">Delivery<br> Man</th>
                             <th class="text-center">Refill<br> Delivered </th>
-                            <!-- <th class="text-center">Card <br> Delivery </th>
-                            <th class="text-center">DAC</th> -->
+                 
                             <th class="text-center">Undelivery<br> Attempt</th>
                             <th class="text-center">Pending<br> Delivery</th>
                             <th class="text-center">Collected<br> Payment</th>
                             <th class="text-center">Pending<br> Payment</th>
                             <th class="text-center">Total<br> Payment</th>
                             <th class="text-center">App<br> Bookings</th>
-                            <!-- <th class="text-center">New<br> Cards</th> -->
                             <th class="text-center">Battery<br> Level </th>
                             <th class="text-center">Graph</th>
                             <th class="text-center">Details</th>
@@ -360,19 +315,15 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60"
-                                src="assets/img/avatars/male.png"></td>
+                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60" src="assets/img/avatars/male.png"></td>
                             <td class="text-center ">Aalska Jogi</td>
                             <td class="text-center ">32</td>
-                            <!-- <td class="text-center ">30</td>
-                            <td class="text-center ">2</td> -->
                             <td class="text-center ">0</td>
                             <td class="text-center ">81</td>
                             <td class="text-center "> 20,696.26</td>
                             <td class="text-center ">4,776.01</td>
                             <td class="text-center ">25,472.32</td>
                             <td class="text-center ">0</td>
-                            <!-- <td class="text-center ">0</td> -->
                             <td class="text-center"><img class="bat_image" src="assets/img/battery.png">
                               <span>27%</span></td>
                             <td class="text-center">
@@ -380,24 +331,18 @@
                                 <sa-chart-js type="pie" [data]="chartjsData['pie-chart']"></sa-chart-js>
                               </div>
                             </td>
-                            <td class="text-center"><a class="btn btn-primary btn-xs"
-                                routerLink="/dashboard/analytics"><i class="fa fa-eye" aria-hidden="true"></i>
-                                &nbsp;Details</a></td>
+                            <td class="text-center"><a class="btn btn-primary btn-xs" routerLink="/dashboard/analytics"><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Details</a></td>
                           </tr>
                           <tr>
-                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60"
-                                src="assets/img/avatars/male.png"></td>
+                            <td class="text-center"><img class="img1 fleft img-circle" height="60" width="60" src="assets/img/avatars/male.png"></td>
                             <td class="text-center ">Prakash Varsh</td>
                             <td class="text-center ">32</td>
-                            <!-- <td class="text-center ">30</td>
-                            <td class="text-center ">2</td> -->
                             <td class="text-center ">3</td>
                             <td class="text-center ">77</td>
                             <td class="text-center "> 20,696.26</td>
                             <td class="text-center ">4,776.01</td>
                             <td class="text-center ">15,472.34</td>
                             <td class="text-center ">0</td>
-                            <!-- <td class="text-center ">0</td> -->
                             <td class="text-center"><img class="bat_image" src="assets/img/battery.png">
                               <span>27%</span></td>
                             <td class="text-center">
@@ -405,36 +350,21 @@
                                 <sa-chart-js type="pie" [data]="chartjsData1"></sa-chart-js>
                               </div>
                             </td>
-                            <td class="text-center"><a class="btn btn-primary btn-xs"
-                                routerLink="/dashboard/analytics"><i class="fa fa-eye" aria-hidden="true"></i>
-                                &nbsp;Details</a></td>
+                            <td class="text-center"><a class="btn btn-primary btn-xs" routerLink="/dashboard/analytics"><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Details</a></td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                  </div>
-
+                  </div> -->
                 </div>
-
-
                 <live-stats-feed class="tab-pane fade  padding-10 no-padding-bottom" id="s3"></live-stats-feed>
-
                 <social-network-feed class="tab-pane fade" id="s2"></social-network-feed>
-
-
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </article>
     </div>
-
-
     <!-- <div class="row">
 
       <article class="col-sm-12 col-md-12 col-lg-6">

@@ -13,6 +13,7 @@ export class VehicleMasterComponent implements OnInit {
   public cpInfo: any = {};
   public gridOptions: IGridoption;
   public vehicleData: any;
+  public ProductArray: any = [];
   constructor(private appService: AppService, public datashare: DatashareService, public masters: MasterService) {
   }
   ngOnInit() {
@@ -31,10 +32,15 @@ export class VehicleMasterComponent implements OnInit {
         , width: "48", exporterSuppressExport: true,
         headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Edit</div>', enableFiltering: false
       },
-     //{ name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
+      {
+        name: 'Select1', displayName: 'Details', cellTemplate: `<button  style="margin:3px;" class="btn-warning btn-xs" ng-if="row.entity.IsActive=='Y'"   ng-click="grid.appScope.deleteEmployee(row.entity)"   >&nbsp;Product&nbsp;</button> `
+        , width: "71", exporterSuppressExport: true,
+        headerCellTemplate: '<div style="text-align: center;margin-top: 30px;">Details</div>', enableFiltering: false
+      },
+      //{ name: 'VehicleID', displayName: 'Vehicle ID', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'VehicleNo', displayName: 'Vehicle No', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'VehicleType', displayName: 'Vehicle Type', width: "*", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CylCapacity', displayName: 'Cylinder Capacity', cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
+      // { name: 'CylCapacity', displayName: 'Cylinder Capacity', cellClass: 'cell-right', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'LastFitnessDate', displayName: 'Last Fitness Date', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsInsurance', displayName: 'Insurance Done', width: "*", cellTooltip: true, filterCellFiltered: true },
       { name: 'InsRenewalDate', displayName: 'Insurance Renewal Date', width: "*", cellTooltip: true, filterCellFiltered: true },
@@ -47,11 +53,21 @@ export class VehicleMasterComponent implements OnInit {
     this.datashare.updateShareData($event.row);
     AppComponent.Router.navigate(['/master/vehicle']);
   }
+  onDeleteFunction = ($event) => {
+    let vehInfo = $event.row;
+    this.masters.getVehicaleProductDetails(this.cpInfo.CPCode, vehInfo.VehicleId).subscribe((resp: any) => {
+      if (resp.StatusCode != 0) {
+        this.ProductArray = resp.Data;
+        $('#productsModal').modal('show');
+      } else { AppComponent.SmartAlert.Errmsg(resp.Message); }
+    });
+  }
+
   onLoad() {
     this.masters.getVehicles(this.cpInfo.CPCode).subscribe((resData: any) => {
       if (resData.StatusCode != 0) {
-        this.vehicleData = resData.Data;
-        AppComponent.SmartAlert.Success(resData .Message);
+        this.vehicleData = resData.Data; console.log(this.vehicleData);
+        AppComponent.SmartAlert.Success(resData.Message);
       }
       else { this.vehicleData = [{}]; AppComponent.SmartAlert.Errmsg(resData.Message); }
     });

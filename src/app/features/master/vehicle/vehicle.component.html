@@ -13,8 +13,9 @@
                         <div class="widget-body">
                             <form name="vehicleForm" id="vehicleForm" #vehicleForm="ngForm" (ngSubmit)="onSubmit()" autocomplete="off" ngNativeValidate> </form>
                             <form name="vehicleDocsForm" id="vehicleDocsForm" #vehicleDocsForm="ngForm" (ngSubmit)="onSubmitDoc()" autocomplete="off" ngNativeValidate> </form>
+                            <form name="vehicleCapacityForm" id="vehicleCapacityForm" #vehicleCapacityForm="ngForm" (ngSubmit)="onSubmitCapacity()" autocomplete="off" ngNativeValidate> </form>
                             <div class="row">
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <div class="vehicle-cart">
                                         <label>
                                             <strong class="text-primary">Vehicle Details : </strong>
@@ -40,15 +41,15 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-6">
+                                            <!-- <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Cylinder Carrying Capacity <span class="errorMessage">*</span>
                                                     </label>
                                                     <input type="text" class="form-control" [(ngModel)]="vehicle.CylCapacity" name="CylCapacity" saCommonDir dirType="number" form="vehicleForm"
                                                         placeholder="Enter Cylinder Carrying Capacity" maxlength="4" required />
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-6">
+                                            </div> -->
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Last Fitness Date <span class="errorMessage">*</span>
                                                     </label>
@@ -56,8 +57,22 @@
                                                         placeholder="Enter Last Fitness Date" form="vehicleForm" onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" required />
                                                 </div>
                                             </div>
+                                            <div class="col-sm-4">
+                                                <label class="chekbox-margin">
+                                                    <input type="checkbox" [(ngModel)]="vehicle.IsInsurance" trueFalseValue trueValue="Y" falseValue="N" name="IsInsurance " form="vehicleForm" />
+                                                    Insurance Done ? </label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Insurance Renewal Date <span class="errorMessage" [hidden]="vehicle.IsInsurance=='N'">*</span>
+                                                    </label>
+                                                    <input type="text" id="rendate" class="form-control" [(ngModel)]="vehicle.InsRenewalDate" name="InsRenewalDate" placeholder="Enter Renewal Date"
+                                                        form="vehicleForm" [required]="vehicle.IsInsurance=='Y'" [disabled]="vehicle.IsInsurance=='N' || vehicle.IsInsurance==null"
+                                                        onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-sm-4">
                                                 <label class="chekbox-margin">
                                                     <input type="checkbox" [(ngModel)]="vehicle.IsInsurance" trueFalseValue trueValue="Y" falseValue="N" name="IsInsurance " form="vehicleForm" />
@@ -72,6 +87,69 @@
                                                         onkeydown="return false" bsDatepicker [bsConfig]="datePickerConfig" />
                                                 </div>
                                             </div>
+                                        </div> -->
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <select class="form-control" (change)="onSelectProdSegment()" [(ngModel)]="product.ProdSegId" form="vehicleCapacityForm" name="ProdSegId" required>
+                                                        <option value="" selected hidden>Select Segment</option>
+                                                        <option [value]="prod.ProdSegId" *ngFor="let prod of productSegmentData">{{prod.ProdSeg}} </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="sel1">Product <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" form="vehicleCapacityForm" required>
+                                                        <option value="" selected hidden>Select Product</option>
+                                                        <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Cylinder Capacity <span class="errorMessage">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" [(ngModel)]="product.CylCapacity" name="CylCapacity" saCommonDir dirType="number" form="vehicleCapacityForm"
+                                                        placeholder="Enter Cylinder Carrying Capacity" maxlength="4" required />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-group">
+                                                    <label>&nbsp; </label>
+                                                    <button type="submit" class="btn btn-block btn-warning " form="vehicleCapacityForm">
+                                                        <i class="glyphicon glyphicon-plus"></i> Add </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Product Segment</th>
+                                                                <th>Product</th>
+                                                                <th>Capacity</th>
+                                                                <th>Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let docs of ProductArray;index as i">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{docs.ProdSeg}}</td>
+                                                                <td>{{docs.Product}} </td>
+                                                                <td>{{docs.CylCapacity}} </td>
+                                                                <td>
+                                                                    <button class="btn btn-xs btn-danger" (click)=onRemoveDoc(docs,i+1)>Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
@@ -82,7 +160,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <div class="vehicle-cart">
                                         <label>
                                             <strong class="text-primary">Vehicle Documents : </strong>

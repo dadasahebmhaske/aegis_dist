@@ -14,6 +14,7 @@ export class VehicleComponent implements OnInit, OnDestroy {
   public bdata: any = [];
   public bulkDoc: any = {};
   public cpInfo: any = {};
+  public datePickerConfig: Partial<BsDatepickerConfig>;
   public docTypeData: any = [];
   public DocFileName: string;
   public document: any = { DocTypId: '' };
@@ -25,14 +26,26 @@ export class VehicleComponent implements OnInit, OnDestroy {
   public selectedFile: File = null;
   public vehicle: any = { VehicleTypeId: '' };
   public transportData: any = [];
-  public datePickerConfig: Partial<BsDatepickerConfig>;
+  public product: any = { ProdSegId: '', ProdId: '' };
+  public ProductArray: any = [];
+  public productSegmentData: any = [];
+  public productDataSelected: any = [];
+  public removeProductUpdate: any = [];
   constructor(private appService: AppService, private datashare: DatashareService, private masterService: MasterService, private vehicleService: VehicleService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
   }
   ngOnInit() {
     this.imgUrl = `${AppComponent.ImageUrl}VehicleDocs/`;
     this.appService.getAppData().subscribe(data => { this.cpInfo = data });
-    this.datashare.GetSharedData.subscribe(data => this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data);
+    this.datashare.GetSharedData.subscribe(data => {
+      this.vehicle = data == null ? { IsActive: 'Y', VehicleTypeId: '' } : data;
+      if (this.vehicle.VehicleId != undefined)
+        this.masterService.getVehicaleProductDetails(this.cpInfo.CPCode, this.vehicle.VehicleId).subscribe((resp: any) => {
+          if (resp.StatusCode != 0) {
+            this.ProductArray = resp.Data;
+          } else { AppComponent.SmartAlert.Errmsg(resp.Message); }
+        });
+    });
     this.onLoad();
     if (this.vehicle.VehicleTypeID != '') { this.getVehicleDocumentDetails(); }
   }
@@ -44,13 +57,23 @@ export class VehicleComponent implements OnInit, OnDestroy {
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
-
+    this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
+      if (resR.StatusCode != 0)
+        this.productSegmentData = resR.Data;
+    });
     this.masterService.getDocumentType('VM').subscribe(
       (resD: any) => {
         if (resD.StatusCode != 0) { this.docTypeData = resD.Data; } else { AppComponent.SmartAlert.Errmsg(resD.Message); }
       });
   }
+  onSelectProdSegment() {
 
+    this.masterService.getProducts(this.product.ProdSegId, 'F').subscribe((resPT: any) => {
+      if (resPT.StatusCode != 0) {
+        this.productDataSelected = resPT.Data;
+      } else { this.productDataSelected = []; }
+    });
+  }
   onFileSelected(event) {
     var reader = new FileReader();
     this.selectedFile = <File>event.target.files[0];
@@ -117,11 +140,11 @@ export class VehicleComponent implements OnInit, OnDestroy {
       this.bulkDoc.bdata = this.bdata;
       if (this.removeDocUpdate.length > 0) {
         //this.bdata = this.bdata.concat(this.removeDocUpdate);
-        let  docArray=this.bdata;
-        docArray=docArray.concat(this.removeDocUpdate);
+        let docArray = this.bdata;
+        docArray = docArray.concat(this.removeDocUpdate);
         this.bulkDoc.bdata = docArray;
       }
-     
+
       let ciphertext = this.appService.getEncrypted(this.bulkDoc);
       this.fd.append('CipherText', ciphertext);
       this.masterService.postBulkDoc(this.fd).subscribe((resData: any) => {
@@ -141,25 +164,58 @@ export class VehicleComponent implements OnInit, OnDestroy {
     }
 
   }
+  onSubmitCapacity() {
+    if (this.ProductArray.some(obj => parseInt(obj.ProdId) === parseInt(this.product.ProdId))) {
+      AppComponent.SmartAlert.Errmsg("Product is already added in list.");
+      this.product = { ProdSegId: '', ProdId: '' };
+    } else {
+      let docobj;
+      docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
+      this.product.ProdSeg = docobj[0].ProdSeg;//extra
+      docobj = this.masterService.filterData(this.productDataSelected, this.product.ProdId, 'ProdId');
+      this.product.Product = docobj[0].Product; //extra
+      this.product.VehicleCapId = '';
+      this.product.IsActive = 'Y';
+      this.ProductArray.push(this.product);
+      this.product = { ProdSegId: '', ProdId: '' };
+    }
+  }
+  onRemoveProduct(data, index) {
+    if (data.OrderCode != '') {
+      data.IsActive = 'N';
+      this.removeProductUpdate.push(data);
+    }
+    this.ProductArray.splice(index, 1);
+  }
   public onSubmit() {
-    this.loaderbtn = false;
-    this.vehicle.Flag = this.vehicle.VehicleId == null || this.vehicle.VehicleId == '' ? 'IN' : 'UP';
-    this.vehicle.CPCode = this.cpInfo.CPCode;
-    this.vehicle.UserCode = this.cpInfo.EmpId;
-    this.vehicle.VehicleId = this.vehicle.VehicleId == null ? '' : this.vehicle.VehicleId;
-    let ciphertext = this.appService.getEncrypted(this.vehicle);
-    this.vehicleService.postVehicle(ciphertext).subscribe((resp: any) => {
-      if (resp.StatusCode != 0) {
-        if (resp.Data.length != 0)
-          this.vehicle.VehicleId = resp.Data[0].VehicleId;
-        this.saveDocument();
-        AppComponent.SmartAlert.Success(resp.Message);
-        //AppComponent.Router.navigate(['/master/vehicle-master']);
-      } else {
-        AppComponent.SmartAlert.Errmsg(resp.Message);
-        this.loaderbtn = true;
+    if (this.ProductArray.length > 0) {
+      this.loaderbtn = false;
+      this.vehicle.data = this.ProductArray;
+      if (this.removeProductUpdate.length > 0) {
+        let conArray = this.ProductArray;
+        conArray = conArray.concat(this.removeProductUpdate);
+        this.vehicle.data = conArray;
       }
-    });
+      this.vehicle.Flag = this.vehicle.VehicleId == null || this.vehicle.VehicleId == '' ? 'IN' : 'UP';
+      this.vehicle.CPCode = this.cpInfo.CPCode;
+      this.vehicle.UserCode = this.cpInfo.EmpId;
+      this.vehicle.VehicleId = this.vehicle.VehicleId == null ? '' : this.vehicle.VehicleId;
+      let ciphertext = this.appService.getEncrypted(this.vehicle);
+      this.vehicleService.postVehicle(ciphertext).subscribe((resp: any) => {
+        if (resp.StatusCode != 0) {
+          if (resp.Data.length != 0)
+            this.vehicle.VehicleId = resp.Data[0].VehicleId;
+          this.saveDocument();
+          AppComponent.SmartAlert.Success(resp.Message);
+          //AppComponent.Router.navigate(['/master/vehicle-master']);
+        } else {
+          AppComponent.SmartAlert.Errmsg(resp.Message);
+          this.loaderbtn = true;
+        }
+      });
+    } else {
+      AppComponent.SmartAlert.Errmsg(`Please add cylinder carrying capacity`);
+    }
   }
 
   ngOnDestroy() {

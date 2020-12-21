@@ -10,40 +10,34 @@
           <div>
             <div class="widget-body">
               <div class="row ">
-
                 <!-- <div class="col-sm-12 table-responsive">
                   <ui-grid [data]="stockOrdersData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
                 </div> -->
-                <div class="col-sm-12" >
-                  <ui-grid [data]="actionData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
-                
-              </div>
                 <div class="col-sm-12">
-                  <form name="Disp" #Disp="ngForm" ngNativeValidate> 
+                  <ui-grid [data]="actionData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
+                </div>
+                <div class="col-sm-12">
+                  <form name="Disp" #Disp="ngForm" ngNativeValidate>
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label>Dispatch Remark</label>
-                          <textarea placeholder="Enter Remark"  class="form-control" [(ngModel)]="DispatchRemark" [ngModelOptions]="{standalone: true}" ></textarea>
-                         
-                      </div>
+                          <textarea placeholder="Enter Remark" class="form-control" [(ngModel)]="DispatchRemark" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
                       </div>
                       <div class="col-sm-12">
                         <a class=" btn btn-default pull-right" routerLink="/stock/order-and-dispatch-details" style="margin-top:4px;margin-right:10px;">
-                                <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back
-                        </a>
+                          <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
                         <button class="btn btn-danger pull-right fix-btn" type="submit" (click)="PostDispatchOrder(1)" [disabled]="!loaderbtn">
                           <i class="fa fa-fw" [ngClass]="{'fa-close':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Reject':'Loading'}}</button>
                         <!-- <a class="btn btn-danger pull-right" (click)="PostDispatchOrder(1)" style="margin-top:4px;margin-right:10px;">
                           <i class="glyphicon glyphicon-remove"></i> &nbsp;&nbsp;Reject
                         </a> -->
-
                         <button class="btn btn-success pull-right fix-btn" type="submit" (click)="PostDispatchOrder(0)" [disabled]="!loaderbtn">
                           <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Dispatch':'Loading'}}</button>
                         <!-- <a class=" btn btn-success pull-right"  (click)="PostDispatchOrder(0)" style="margin-top:4px;margin-right:10px;">
                              <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Dispatch
                         </a> -->
-      
                       </div>
                     </div>
                   </form>
@@ -60,7 +54,6 @@
                       <i class="fa fa-fw" [ngClass]="{'fa-check':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? 'Accept':'Loading'}}</button>
                   </div>
                 </div> -->
-          
               </div>
             </div>
           </div>
@@ -69,20 +62,17 @@
     </div>
   </sa-widgets-grid>
 </div>
-
-
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog" data-backdrop="static">
   <div class="modal-dialog">
-
     <!-- Modal content-->
     <div class="modal-content">
-      <div class="modal-header">  
-        <button _ngcontent-eji-c6="" class="close" data-dismiss="modal" type="button" >×</button>   
+      <div class="modal-header">
+        <button _ngcontent-eji-c6="" class="close" data-dismiss="modal" type="button">×</button>
         <h4 class="modal-title">Update Product</h4>
       </div>
-      <form name="DispatchDtls" #DispatchDtls="ngForm" (ngSubmit)="PostRejectOrder()" ngNativeValidate> 
-      <div class="modal-body">
+      <form name="DispatchDtls" #DispatchDtls="ngForm" (ngSubmit)="PostRejectOrder()" ngNativeValidate>
+        <div class="modal-body">
           <!-- <div class="row">
               <div class="col-sm-12">
                   <div class="form-group">
@@ -91,85 +81,82 @@
                   </div>
               </div>
           </div> -->
-            <div class="row">
-          <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6">
               <div class="form-group">
-                  <label>Order Type<span class="errorMessage" style="color:red;">*</span></label>
-                  <!-- pattern="[a-zA-Z]+" ng-pattern-restrict-->
-                  <select  class="form-control"  [(ngModel)]="Order.OrderType" [ngModelOptions]="{standalone: true}" disabled>
-                    <option value="" selected>--Select--</option>
-                    <option *ngFor="let opt of OrderTdata" [value]="opt.MstFlag">{{opt.Name}}</option>
-                    </select>
+                <label>Order Type<span class="errorMessage" style="color:red;">*</span></label>
+                <!-- pattern="[a-zA-Z]+" ng-pattern-restrict-->
+                <select class="form-control" [(ngModel)]="Order.OrderType" [ngModelOptions]="{standalone: true}" disabled>
+                  <option value="" selected>--Select--</option>
+                  <option *ngFor="let opt of OrderTdata" [value]="opt.MstFlag">{{opt.Name}}</option>
+                </select>
               </div>
-            </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Product Segment<span class="errorMessage" style="color:red;">*</span></label>
-                                          <select  class="form-control"  [(ngModel)]="Order.ProdSegId" [ngModelOptions]="{standalone: true}" (change)="getProduct(Order.ProdSegId)"  required>
-                        <option value="" selected hidden>--Select--</option>
-                        <option *ngFor="let option of ProdSegdata" value="{{option.ProdSegId}}">{{option.ProdSeg}}</option>
-                        </select>
-                  </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Product<span class="errorMessage" style="color:red;">*</span></label>
-                      <select  class="form-control"  [(ngModel)]="Order.ProdId" [ngModelOptions]="{standalone: true}" 
-                      (change)="getPrice()" required>
-                        <option value="" selected hidden>--Select--</option>
-                        <option *ngFor="let option of ProductData" value="{{option.ProdId}}">{{option.Product}}</option>
-                        </select>
-                  </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Basic Price<span class="errorMessage" style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="pmode" placeholder="Basic Price" [(ngModel)]="Order.ProdRate" [ngModelOptions]="{standalone: true}" required disabled/>
-                  </div>
-              </div>
-               <div class="col-sm-6">
-                <div class="form-group">
-                    <label>CGST<span class="errorMessage" style="color:red;">*</span></label>
-                    <input type="text" class="form-control" id="pmode" placeholder="CGST"[(ngModel)]="Order.CgstAmt" [ngModelOptions]="{standalone: true}" required disabled/>
-                </div>
             </div>
             <div class="col-sm-6">
               <div class="form-group">
-                  <label>SGST<span class="errorMessage" style="color:red;">*</span></label>
-                  <input type="text" class="form-control" id="pmode" placeholder="SGST" [(ngModel)]="Order.SgstAmt" [ngModelOptions]="{standalone: true}" required disabled/>
+                <label>Product Segment<span class="errorMessage" style="color:red;">*</span></label>
+                <select class="form-control" [(ngModel)]="Order.ProdSegId" [ngModelOptions]="{standalone: true}" (change)="getProduct(Order.ProdSegId)" required>
+                  <option value="" selected hidden>--Select--</option>
+                  <option *ngFor="let option of ProdSegdata" value="{{option.ProdSegId}}">{{option.ProdSeg}}</option>
+                </select>
               </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="form-group">
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Product<span class="errorMessage" style="color:red;">*</span></label>
+                <select class="form-control" [(ngModel)]="Order.ProdId" [ngModelOptions]="{standalone: true}" (change)="getPrice()" required>
+                  <option value="" selected hidden>--Select--</option>
+                  <option *ngFor="let option of ProductData" value="{{option.ProdId}}">{{option.Product}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Basic Price<span class="errorMessage" style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="pmode" placeholder="Basic Price" [(ngModel)]="Order.ProdRate" [ngModelOptions]="{standalone: true}" required disabled />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>CGST<span class="errorMessage" style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="pmode" placeholder="CGST" [(ngModel)]="Order.CgstAmt" [ngModelOptions]="{standalone: true}" required disabled />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>SGST<span class="errorMessage" style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="pmode" placeholder="SGST" [(ngModel)]="Order.SgstAmt" [ngModelOptions]="{standalone: true}" required disabled />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
                 <label>IGST<span class="errorMessage" style="color:red;">*</span></label>
                 <input type="text" class="form-control" id="pmode" placeholder="IGST" [(ngModel)]="Order.IgstAmt" [ngModelOptions]="{standalone: true}" required disabled />
+              </div>
             </div>
-        </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Quantity<span class="errorMessage" style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="pmode" placeholder="Quantity" [(ngModel)]="Order.ProdQty" [ngModelOptions]="{standalone: true}" 
-                      (change)="getGTotal()" required  />
-                  </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Quantity<span class="errorMessage" style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="pmode" placeholder="Quantity" [(ngModel)]="Order.ProdQty" [ngModelOptions]="{standalone: true}" (change)="getGTotal()" required />
               </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Amount<span class="errorMessage" style="color:red;">*</span></label>
-                      <input type="text" class="form-control" id="pmode" placeholder="Amount" [(ngModel)]="Order.ProdAmt" [ngModelOptions]="{standalone: true}" required disabled/>
-                  </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Amount<span class="errorMessage" style="color:red;">*</span></label>
+                <input type="text" class="form-control" id="pmode" placeholder="Amount" [(ngModel)]="Order.ProdAmt" [ngModelOptions]="{standalone: true}" required disabled />
               </div>
-      </div>
-      <div class="modal-footer">             
-          <div class="row ">
-              <div class="col-sm-12 ">
-                  <button class=" btn btn-primary pull-right" type="submit" style="margin-right:10px;" >
-                      <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit
-                  </button>
-              </div>
+            </div>
           </div>
-      </div>
-    </div>
+          <div class="modal-footer">
+            <div class="row ">
+              <div class="col-sm-12 ">
+                <button class=" btn btn-primary pull-right" type="submit" style="margin-right:10px;">
+                  <i class="glyphicon glyphicon-send"></i> &nbsp;&nbsp;Submit </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
+    </div>
   </div>
-</div>
 </div>

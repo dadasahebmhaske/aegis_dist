@@ -1,44 +1,83 @@
 <!-- MAIN CONTENT -->
 <div id="content">
-
- 
   <!-- widget grid -->
   <sa-widgets-grid>
-
-
     <div class="row">
       <article class="col-sm-12">
-
         <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
-            <header class="text-center"> 
+          <header class="text-center">
             <h2><i class="fa fa-database"></i> Vehicle Master</h2>
           </header>
           <div>
             <div class="widget-body">
-                <div class="row ">
-                    <div class="col-sm-12">
-                        <div class="form-group  pull-right">
-                            <a routerLink="/master/vehicle" class="btn btn-block btn-warning ">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                Add Vehicle
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 table-responsive">
-                        <ui-grid [data]="vehicleData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)"></ui-grid>
-                    </div>
+              <div class="row ">
+                <div class="col-sm-12">
+                  <div class="form-group  pull-right">
+                    <a routerLink="/master/vehicle" class="btn btn-block btn-warning ">
+                      <i class="glyphicon glyphicon-plus"></i> Add Vehicle </a>
+                  </div>
                 </div>
-
+                <div class="col-sm-12 table-responsive">
+                  <ui-grid [data]="vehicleData" [gridOptions]="gridOptions" (onEdit)="onEditFunction($event)" (onDelete)="onDeleteFunction($event)"></ui-grid>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-      
-
       </article>
-
-     
     </div>
-  
   </sa-widgets-grid>
+</div>
+<!-- Modal -->
+<div class=" modal fade" id="productsModal" role="dialog">
+  <div class="modal-dialog ">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-center">Vehicle Carrying Capacity Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="refill">
+              <div class="row">
+                <!-- <div class="col-sm-6">
+                  <label><strong>Order No :</strong> {{stock.OrderNo}}</label>
+                </div>
+                <div class="col-sm-6">
+                  <label class="pull-right"><strong>Order Date :</strong> {{stock.OrderDt}}</label>
+                </div> -->
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Product Segment</th>
+                          <th>Product</th>
+                          <th>Capacity</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let docs of ProductArray;index as i">
+                          <td>{{i+1}}</td>
+                          <td>{{docs.ProdSeg}}</td>
+                          <td>{{docs.Product}} </td>
+                          <td>{{docs.CylCapacity}} </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

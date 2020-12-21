@@ -4,8 +4,7 @@
   <sa-widgets-grid>
     <div class="row">
       <article class="col-sm-12">
-        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true"
-          minimize="false" color="blueDark">
+        <div sa-widget [editbutton]="false" [sortable]="false" [deletebutton]="false" [togglebutton]="true" minimize="false" color="blueDark">
           <header class="text-center">
             <h2>
               <i class="fa fa-table"></i> Order Booking</h2>
@@ -19,27 +18,27 @@
                     <div class="row">
                       <div class="col-sm-2">
                         <div class="form-group">
-                          <select class="form-control"   [(ngModel)]="SearchBy" name="SearchBy" required>
+                          <select class="form-control" [(ngModel)]="SearchBy" name="SearchBy" required>
                             <option value="" selected disabled>Search Customer By</option>
-                            <option value="NewConsNo" selected >Customer No.</option>
-                            <option value="MobileNo" selected >Mobile No.</option>
-                            <option value="FirmName" selected >Firm Name</option>
+                            <option value="NewConsNo" selected>Customer No.</option>
+                            <option value="MobileNo" selected>Mobile No.</option>
+                            <option value="FirmName" selected>Firm Name</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-sm-2">
                         <div class="form-group">
-                                                   <input [(ngModel)]="selectedValue" saUppercase [typeahead]="preLoadCust" typeaheadOptionField="{{SearchBy}}"
-                            (typeaheadOnSelect)="onSelect($event)" [placeholder]="SearchBy=='NewConsNo'?'Search Customer No':SearchBy=='MobileNo'?'Search Mobile No':'Search Firm Name'" 
-                            (typeaheadNoResults)="typeaheadNoResults($event)" [typeaheadScrollable]="true"    [typeaheadOptionsInScrollableView]="15" class="form-control" >
-                            <div class="errorMessage" *ngIf="noResult">No Results Found</div>                     
-                      </div>
-                    <!-- <div class="form-group pull-right label-center">
+                          <input [(ngModel)]="selectedValue" saUppercase [typeahead]="preLoadCust" typeaheadOptionField="{{SearchBy}}" (typeaheadOnSelect)="onSelect($event)"
+                            [placeholder]="SearchBy=='NewConsNo'?'Search Customer No':SearchBy=='MobileNo'?'Search Mobile No':'Search Firm Name'" (typeaheadNoResults)="typeaheadNoResults($event)"
+                            [typeaheadScrollable]="true" [typeaheadOptionsInScrollableView]="15" class="form-control">
+                          <div class="errorMessage" *ngIf="noResult">No Results Found</div>
+                        </div>
+                        <!-- <div class="form-group pull-right label-center">
                       <label for="sel1">Customer/Mobile No. <span class="errorMessage">*</span>
                       </label>
                     </div> -->
-                  </div>
-                  <!-- <form name="custForm" #custForm="ngForm" (ngSubmit)="onGetCustomer()" ngNativeValidate
+                      </div>
+                      <!-- <form name="custForm" #custForm="ngForm" (ngSubmit)="onGetCustomer()" ngNativeValidate
                     autocomplete="off">
                     <div class="col-sm-2">
                       <div class="form-group">
@@ -58,220 +57,197 @@
                       </div>
                     </div>
                   </form> -->
-                  <div class="col-sm-7">
-                    <div class="form-group label-center marg-let">
-                      <label><strong> <i class="fa fa-user"></i> Customer : {{cust.ConsName}}</strong>
-                      </label>
-                      <label class="pul-right marg-let"><strong> <i class="fa fa-building"></i> Firm :
-                          {{cust.FirmName}}</strong>
-                      </label>
+                      <div class="col-sm-7">
+                        <div class="form-group label-center marg-let">
+                          <label><strong> <i class="fa fa-user"></i> Customer : {{cust.ConsName}}</strong>
+                          </label>
+                          <label class="pul-right marg-let"><strong> <i class="fa fa-building"></i> Firm : {{cust.FirmName}}</strong>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="refill">
+                    <label>
+                      <strong class="text-primary"> Booking Details : </strong>
+                    </label>
+                    <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()" autocomplete="off" ngNativeValidate>
+                      <div class="row" [hidden]="!hideaddrow">
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="sel1">Product Segment <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" (change)="onSelectProdSegment();makequantitydisable()" [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
+                              <option value="" selected hidden>Select Segment</option>
+                              <option [value]="prod.ProdSegId" *ngFor="let prod of ProdSegArray">{{prod.ProdSeg}} </option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-group">
+                            <label for="sel1">Product <span class="errorMessage">*</span>
+                            </label>
+                            <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId" (change)="onSelectProduct()" required>
+                              <option value="" selected hidden>Select Product</option>
+                              <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label>SV Qty</label>
+                            <input type="text" class="form-control" placeholder="Qty" name="SVQty" [(ngModel)]="product.SVQty" saCommonDir dirType="number" disabled required />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label>Rate </label>
+                            <input type="text" class="form-control" placeholder="Rate" name="DepositAmount" [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir dirType="number"
+                              disabled required />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label>Premium Charge </label>
+                            <input type="text" class="form-control" placeholder="Rate" name="PremiumCharge" [(ngModel)]="product.PremiumCharge" (change)="onSelectProduct()" saCommonDir
+                              dirType="number" />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label> Quantity <span class="errorMessage">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Qty" name="ProdQty" [(ngModel)]="product.ProdQty" (ngModelChange)="onSelectProduct()" saCommonDir
+                              dirType="number" required [disabled]="disQty" />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label> Refill Amount </label>
+                            <input type="text" class="form-control" placeholder=" Refill Amount" name="RefillAmount" [(ngModel)]="product.RefillAmount" disabled />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label> Discount </label>
+                            <input type="text" class="form-control" placeholder=" Discount" name="Discount" [(ngModel)]="product.Discount" disabled />
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group">
+                            <label>Total Amount </label>
+                            <input type="text" class="form-control" placeholder="Total Amount" name="ProdAmt" [(ngModel)]="product.AmountPayable" saCommonDir dirType="number" disabled required />
+                          </div>
+                        </div>
+                        <div class="col-sm-1">
+                          <div class="form-group">
+                            <label>&nbsp; </label>
+                            <button class="btn btn-block btn-warning " [disabled]="!hideaddrow">
+                              <i class="glyphicon glyphicon-plus"></i> Add </button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Product Segment</th>
+                                <th>Product Name</th>
+                                <th class="text-right">Rate</th>
+                                <th class="text-right">Quantity</th>
+                                <th class="text-right">Refill Amount</th>
+                                <th class="text-right">Discount </th>
+                                <th class="text-right">Amount</th>
+                                <th class="text-right">Premium Charge</th>
+                                <th [hidden]="!hideaddrow"> Remove</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let pr of ProductArray;index as i">
+                                <td>{{i+1}}</td>
+                                <td>{{pr.ProdSeg}}</td>
+                                <td>{{pr.Product}}</td>
+                                <td class="text-right">{{pr.ProdRate}}</td>
+                                <td class="text-right">{{pr.ProdQty}}</td>
+                                <td class="text-right">{{pr.RefillAmount}}</td>
+                                <td class="text-right">{{pr.Discount}}</td>
+                                <td class="text-right">{{pr.AmountPayable}}</td>
+                                <td class="text-right">{{pr.PremiumCharge}}</td>
+                                <td [hidden]="!hideaddrow">
+                                  <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="4" class="text-right"><strong>Total</strong> :</td>
+                                <td class="text-right"><strong>{{cust.TtlProdQty}}</strong></td>
+                                <td class="text-right"><strong>{{cust.RefillAmount}}</strong></td>
+                                <td class="text-right"><strong>{{cust.Discount}}</strong></td>
+                                <td class="text-right"><strong>{{cust.TotalAmtPayable}}</strong></td>
+                                <td></td>
+                                <td [hidden]="!hideaddrow"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-sm-12">
-              <div class="refill">
-                <label>
-                  <strong class="text-primary"> Booking Details : </strong>
-                </label>
-                <form name="productForm" #productForm="ngForm" (ngSubmit)="addProduct()" autocomplete="off"
-                  ngNativeValidate>
-                  <div class="row" [hidden]="!hideaddrow">
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label for="sel1">Product Segment <span class="errorMessage">*</span>
-                        </label>
-                        <select class="form-control" (change)="onSelectProdSegment();makequantitydisable()"
-                          [(ngModel)]="product.ProdSegId" name="ProdSegId" required>
-                          <option value="" selected hidden>Select Segment</option>
-                          <option [value]="prod.ProdSegId" *ngFor="let prod of ProdSegArray">{{prod.ProdSeg}}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-3">
-                      <div class="form-group">
-                        <label for="sel1">Product <span class="errorMessage">*</span>
-                        </label>
-                        <select class="form-control" [(ngModel)]="product.ProdId" name="ProdId"
-                          (change)="onSelectProduct()" required>
-                          <option value="" selected hidden>Select Product</option>
-                          <option [value]="pro.ProdId" *ngFor="let pro of productDataSelected">{{pro.Product}}</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-1">
-                      <div class="form-group">
-                        <label>SV Qty</label>
-                        <input type="text" class="form-control" placeholder="Qty" name="SVQty"
-                          [(ngModel)]="product.SVQty" saCommonDir dirType="number" disabled required />
-                      </div>
-                    </div>
-                    <div class="col-sm-1">
-                      <div class="form-group">
-                        <label>Rate </label>
-                        <input type="text" class="form-control" placeholder="Rate" name="DepositAmount"
-                          [(ngModel)]="product.ProdRate" (change)="onSelectProduct()" saCommonDir dirType="number"
-                          disabled required />
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label>Premium Charge </label>
-                        <input type="text" class="form-control" placeholder="Rate" name="PremiumCharge"
-                          [(ngModel)]="product.PremiumCharge" (change)="onSelectProduct()" saCommonDir
-                          dirType="number" />
-                      </div>
-                    </div>
-                    <div class="col-sm-1">
-                      <div class="form-group">
-                        <label> Quantity <span class="errorMessage">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter Qty" name="ProdQty"
-                          [(ngModel)]="product.ProdQty" (ngModelChange)="onSelectProduct()" saCommonDir dirType="number"
-                          required [disabled]="disQty" />
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label> Refill Amount </label>
-                        <input type="text" class="form-control" placeholder=" Refill Amount" name="RefillAmount"
-                          [(ngModel)]="product.RefillAmount" disabled />
-                      </div>
-                    </div>
-                    <div class="col-sm-1">
-                      <div class="form-group">
-                        <label> Discount </label>
-                        <input type="text" class="form-control" placeholder=" Discount" name="Discount"
-                          [(ngModel)]="product.Discount" disabled />
-                      </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="form-group">
-                        <label>Total Amount </label>
-                        <input type="text" class="form-control" placeholder="Total Amount" name="ProdAmt"
-                          [(ngModel)]="product.AmountPayable" saCommonDir dirType="number" disabled required />
-                      </div>
-                    </div>
-                    <div class="col-sm-1">
-                      <div class="form-group">
-                        <label>&nbsp; </label>
-                        <button class="btn btn-block btn-warning " [disabled]="!hideaddrow">
-                          <i class="glyphicon glyphicon-plus"></i> Add </button>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+              <form name="refillBookingForm" #refillBookingForm="ngForm" (ngSubmit)="onSubmitBooking()" autocomplete="off" ngNativeValidate>
                 <div class="row">
-                  <div class="col-sm-12">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Product Segment</th>
-                            <th>Product Name</th>
-                            <th class="text-right">Rate</th>
-                            <th class="text-right">Quantity</th>
-                            <th class="text-right">Refill Amount</th>
-                            <th class="text-right">Discount </th>
-                            <th class="text-right">Amount</th>
-                            <th class="text-right">Premium Charge</th>
-                            <th [hidden]="!hideaddrow"> Remove</th>
-
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let pr of ProductArray;index as i">
-                            <td>{{i+1}}</td>
-                            <td>{{pr.ProdSeg}}</td>
-                            <td>{{pr.Product}}</td>
-                            <td class="text-right">{{pr.ProdRate}}</td>
-
-                            <td class="text-right">{{pr.ProdQty}}</td>
-                            <td class="text-right">{{pr.RefillAmount}}</td>
-                            <td class="text-right">{{pr.Discount}}</td>
-                            <td class="text-right">{{pr.AmountPayable}}</td>
-                            <td class="text-right">{{pr.PremiumCharge}}</td>
-                            <td [hidden]="!hideaddrow">
-                              <button class="btn btn-xs btn-danger" (click)=onRemoveProduct(pr,i)>Remove</button>
-                            </td>
-
-                          </tr>
-                          <tr>
-                            <td colspan="4" class="text-right"><strong>Total</strong> :</td>
-                            <td class="text-right"><strong>{{cust.TtlProdQty}}</strong></td>
-                            <td class="text-right"><strong>{{cust.RefillAmount}}</strong></td>
-                            <td class="text-right"><strong>{{cust.Discount}}</strong></td>
-                            <td class="text-right"><strong>{{cust.TotalAmtPayable}}</strong></td>
-                            <td></td>
-                            <td [hidden]="!hideaddrow"></td>
-
-                          </tr>
-                        </tbody>
-                      </table>
+                  <div class="col-sm-3 ">
+                    <div class="form-group">
+                      <label>Delivery Boy <span class="errorMessage">*</span>
+                      </label>
+                      <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode" [disabled]="!hideaddrow" required>
+                        <option value="" selected hidden>Select Delivery Boy</option>
+                        <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Discount </label>
+                      <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount" (input)="onEditDiscount()" name="Discount" saCommonDir dirType="number" />
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label>Total Payable Amount </label>
+                      <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="cust.TotalAmtPayable" name="TotalAmtPayable" disabled />
+                    </div>
+                  </div>
+                  <div class="col-sm-5" [hidden]="hideaddrow">
+                    <div class="form-group">
+                      <label for="comment">Cancel Remark <span class="errorMessage">*</span></label>
+                      <textarea class="form-control" rows="3" id="comment" [(ngModel)]="cust.CancelReason" name="CancelReason" [required]="!hideaddrow"></textarea>
                     </div>
                   </div>
                 </div>
-              </div>
+                <footer>
+                  <div class="row">
+                    <div class="col-sm-12 ">
+                      <hr />
+                      <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
+                        <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
+                      <button class="pull-right btn  marg-right" [ngClass]="{'btn-primary':btnAction=='Book Now'?true:false,'btn-danger':btnAction!='Order Now'?true:false}" type="submit"
+                        [disabled]="!loaderbtn">
+                        <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i> {{loaderbtn==true? btnAction:'Loading'}}</button>
+                    </div>
+                  </div>
+                </footer>
+              </form>
             </div>
           </div>
-          <form name="refillBookingForm" #refillBookingForm="ngForm" (ngSubmit)="onSubmitBooking()" autocomplete="off"
-            ngNativeValidate>
-            <div class="row">
-              <div class="col-sm-3 ">
-                <div class="form-group">
-                  <label>Delivery Boy <span class="errorMessage">*</span>
-                  </label>
-                  <select class="form-control" [(ngModel)]="cust.AllocatedUserCode" name="AllocatedUserCode"
-                    [disabled]="!hideaddrow" required>
-                    <option value="" selected hidden>Select Delivery Boy</option>
-                    <option [value]="del.EmpId" *ngFor="let del of delBoyData">{{del.EmpName}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-group">
-                  <label>Discount </label>
-                  <input type="text" class="form-control" placeholder="Enter Discount" [(ngModel)]="cust.Discount"
-                    (input)="onEditDiscount()" name="Discount" saCommonDir dirType="number" />
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-group">
-                  <label>Total Payable Amount </label>
-                  <input type="text" class="form-control" placeholder="Enter Amount" [(ngModel)]="cust.TotalAmtPayable"
-                    name="TotalAmtPayable" disabled />
-                </div>
-              </div>
-              <div class="col-sm-5" [hidden]="hideaddrow">
-                <div class="form-group">
-                  <label for="comment">Cancel Remark <span class="errorMessage">*</span></label>
-                  <textarea class="form-control" rows="3" id="comment" [(ngModel)]="cust.CancelReason"
-                    name="CancelReason" [required]="!hideaddrow"></textarea>
-                </div>
-              </div>
-            </div>
-            <footer>
-              <div class="row">
-                <div class="col-sm-12 ">
-                  <hr />
-                  <a class="pull-right btn btn-default" routerLink="/order/refill-booking-list">
-                    <i class="glyphicon glyphicon-arrow-left"></i> &nbsp;&nbsp;Back </a>
-                  <button class="pull-right btn  marg-right"
-                    [ngClass]="{'btn-primary':btnAction=='Book Now'?true:false,'btn-danger':btnAction!='Order Now'?true:false}"
-                    type="submit" [disabled]="!loaderbtn">
-                    <i class="fa fa-fw" [ngClass]="{'fa-paper-plane':loaderbtn,'fa-cog fa-spin':!loaderbtn}"></i>
-                    {{loaderbtn==true? btnAction:'Loading'}}</button>
-                </div>
-              </div>
-            </footer>
-          </form>
         </div>
+      </article>
     </div>
-</div>
-</article>
-</div>
-</sa-widgets-grid>
+  </sa-widgets-grid>
 </div>

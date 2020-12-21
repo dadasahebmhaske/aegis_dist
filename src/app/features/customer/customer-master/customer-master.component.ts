@@ -39,63 +39,66 @@ export class CustomerMasterComponent implements OnInit {
       },
       { name: 'ConsId', displayName: 'ConsId', width: "*", cellTooltip: true, filterCellFiltered: true, visible: false },
       { name: 'NewConsNo', displayName: 'Customer No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Salutation', displayName: 'Salutation', width: "100", cellTooltip: true, filterCellFiltered: true },
+      { name: 'CustTypeName', displayName: 'Customer Type', width: "140", cellTooltip: true, filterCellFiltered: true },
+      { name: 'FirmName', displayName: 'Firm Name', width: "250", cellTooltip: true, filterCellFiltered: true },
+      { name: 'FirmTypeName', displayName: 'Firm Type', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'FirstName', displayName: 'First Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'LatName', displayName: 'Last Name', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'MobileNo', displayName: 'Mobile No.', cellClass: 'cell-center', width: "140", cellTooltip: true, filterCellFiltered: true },
+      { name: 'RouteName', displayName: 'Rout', width: "200", cellTooltip: true, filterCellFiltered: true },
+      { name: 'SubAreaName', displayName: 'Sub Area', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'GstNo', displayName: 'GST No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ContractualName', displayName: 'Contractual  Non-Contractual', width: "225", cellTooltip: true, filterCellFiltered: true },
+      { name: 'Category', displayName: 'Discount Category', width: "160", cellTooltip: true, filterCellFiltered: true, },
+      { name: 'VolumeTypeName', displayName: 'Volume Type', width: "180", cellTooltip: true, filterCellFiltered: true },
+      { name: 'InchargeName', displayName: 'Incharge Name', width: "160", cellTooltip: true, filterCellFiltered: true },
+      { name: 'InchargeMobileNo', displayName: 'Incharge Mob. No.', cellClass: 'cell-center', width: "155", cellTooltip: true, filterCellFiltered: true },
+      { name: 'ManifoldCertNo', displayName: 'Manifold Cert. No.', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'AltrMobileNo', displayName: 'Altr Mobile No.', cellClass: 'cell-center', width: "150", cellTooltip: true, filterCellFiltered: true },
       { name: 'EmailId', displayName: 'Email Id', width: "200", cellTooltip: true, filterCellFiltered: true },
       { name: 'StateDesc', displayName: 'State', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'CityName', displayName: 'City', width: "180", cellTooltip: true, filterCellFiltered: true },
-      { name: 'Category', displayName: 'Discount Category', width: "160", cellTooltip: true, filterCellFiltered: true, },
-      { name: 'OpeningCylQty', displayName: 'Opening Cyl. Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'OpeningBalAmt', displayName: 'Opening Bal Amt', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
-      { name: 'CustTypeName', displayName: 'Customer Type', width: "140", cellTooltip: true, filterCellFiltered: true },
       { name: 'BusinessType', displayName: 'Business Type', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ConsuptionTypeName', displayName: 'Consumption Type', width: "160", cellTooltip: true, filterCellFiltered: true },
-      { name: 'VolumeTypeName', displayName: 'Volume Type', width: "180", cellTooltip: true, filterCellFiltered: true },
       { name: 'ServiceTypeName', displayName: 'Service Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'FirmTypeName', displayName: 'Firm Type', width: "120", cellTooltip: true, filterCellFiltered: true },
-      { name: 'FirmName', displayName: 'Firm Name', width: "250", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ContractualName', displayName: 'Contractual  Non-Contractual', width: "225", cellTooltip: true, filterCellFiltered: true },
-      { name: 'RouteName', displayName: 'Rout', width: "200", cellTooltip: true, filterCellFiltered: true },
-      { name: 'SubAreaName', displayName: 'Sub Area', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'InchargeName', displayName: 'Incharge Name', width: "160", cellTooltip: true, filterCellFiltered: true },
-      { name: 'InchargeMobileNo', displayName: 'Incharge Mob. No.', cellClass: 'cell-center', width: "155", cellTooltip: true, filterCellFiltered: true },
-      { name: 'GstNo', displayName: 'GST No.', cellClass: 'cell-center', width: "130", cellTooltip: true, filterCellFiltered: true },
-      { name: 'ManifoldCertNo', displayName: 'Manifold Cert. No.', cellClass: 'cell-center', width: "160", cellTooltip: true, filterCellFiltered: true },
       { name: 'IsActive', displayName: 'Active', cellClass: 'cell-center', width: "90", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OpeningCylQty', displayName: 'Opening Cyl. Qty', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+      { name: 'OpeningBalAmt', displayName: 'Opening Bal Amt', cellClass: 'cell-right', width: "150", cellTooltip: true, filterCellFiltered: true },
+
+
+      { name: 'Salutation', displayName: 'Salutation', width: "100", cellTooltip: true, filterCellFiltered: true, visible: false },
     ]
     this.gridOptions.columnDefs = columnDefs;
     this.onLoad();
   }
   onEditFunction = ($event) => {
-    this.datashare.updateShareData($event.row);console.log($event.row); 
+    this.datashare.updateShareData($event.row); console.log($event.row);
     AppComponent.Router.navigate(['/customer/update-customer']);
   }
 
   onLoad() {
-    this.loaderbtn=false;
+    this.loaderbtn = false;
     this.masterService.getCustomer(this.cpInfo.CPCode).subscribe((resData: any) => {
-      this.loaderbtn=true;
+      this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.custData = resData.Data;
+        this.custData = resData.Data; console.log(resData.Data);
         this.custDataStored = resData.Data;
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); this.custData = [{}]; }
     });
   }
-  getCustomer() {    this.loaderbtn=false;
-    let arr=this.ConsNo.split('C');
-    let ConsNo=arr[arr.length-1];
+  getCustomer() {
+    this.loaderbtn = false;
+    let arr = this.ConsNo.split('C');
+    let ConsNo = arr[arr.length - 1];
     this.custData = this.masterService.filterData(this.custDataStored, ConsNo, 'ConsNo');
     if (this.custData.length == 0) { this.custData = [{}]; AppComponent.SmartAlert.Errmsg('No Records Found'); }
-    this.loaderbtn=true;
+    this.loaderbtn = true;
   }
-  getOnChangeCustomer() {    this.loaderbtn=false;
-    if (this.custDataStored.length != 0)
-    {this.custData = this.custDataStored;}
-    this.loaderbtn=true;
+  getOnChangeCustomer() {
+    this.loaderbtn = false;
+    if (this.custDataStored.length != 0) { this.custData = this.custDataStored; }
+    this.loaderbtn = true;
   }
 }

@@ -17,21 +17,22 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   public cpInfo: any = {};
   public cust: any = {};
   public custData: any = {};
-  public preLoadCust:any=[];
+  public preLoadCust: any = [];
   public datePickerConfig: Partial<BsDatepickerConfig>;
   public delBoyData: any = [];
-  public disQty:boolean=false;
+  public disQty: boolean = false;
   public btnAction: string;
   public hideaddrow: boolean = true;
   public loaderbtn: boolean = true;
   public product: any = { ProdSegId: '', ProdId: '' };
   public ProductArray: any = [];
-  public productSegmentData: any = [];ProdSegArray:any=[];
+  public productSegmentData: any = []; ProdSegArray: any = [];
   public productDataSelected: any = [];
   public productDataPriceAllocation: any = [];
   public removeProductUpdate: any = [];
+  public selectedValue: any;
   public selectedOption: any;
-  public SearchBy:String='NewConsNo';
+  public SearchBy: String = 'NewConsNo';
   public noResult = false;
   constructor(private appService: AppService, private dataShare: DatashareService, private customerService: CustomerService, private masterService: MasterService, private orderService: OrderService, private stockService: StockService) {
     this.datePickerConfig = Object.assign({}, { containerClass: 'theme-orange', dateInputFormat: 'DD-MMM-YYYY', showWeekNumbers: false, adaptivePosition: true, isAnimated: true });
@@ -61,35 +62,34 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   allOnLoad() {
     this.masterService.getProductSegmentDetails(this.cpInfo.ChannelId).subscribe((resR: any) => {
       if (resR.StatusCode != 0)
-        this.productSegmentData = resR.Data;  console.log(this.productSegmentData);
+        this.productSegmentData = resR.Data; console.log(this.productSegmentData);
     });
     this.masterService.getEmpoyeeDelBoy(this.cpInfo.CPCode).subscribe((respD: any) => {
       if (respD.StatusCode != 0)
         this.delBoyData = respD.Data;
     });
-    this.customerService.getCustomer(this.cpInfo.CPCode,'', '', '', '').subscribe((resData: any) => {
+    this.customerService.getCustomer(this.cpInfo.CPCode, '', '', '', '').subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.preLoadCust=resData.Data;  console.log(this.preLoadCust);
+        this.preLoadCust = resData.Data; console.log(this.preLoadCust);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
     });
   }
   onSelectProdSegment() {
-    if (this.cust.ConsNo == null)
-   { AppComponent.SmartAlert.Errmsg("Please verify customer first");}
-  else{ 
-    this.product.ProdId= '';
-    this.product.SVQty= '';
-    this.product.ProdRate= '';
-    this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId,this.cust.ConsId).subscribe((resCPA: any) => {
-      if (resCPA.StatusCode != 0) {
-        this.productDataSelected = resCPA.Data; 
-      } else { this.productDataSelected = []; }
-    });
+    if (this.cust.ConsNo == null) { AppComponent.SmartAlert.Errmsg("Please verify customer first"); }
+    else {
+      this.product.ProdId = '';
+      this.product.SVQty = '';
+      this.product.ProdRate = '';
+      this.orderService.getCPPriceAllocation(this.cpInfo.CPCode, this.product.ProdSegId, this.cust.ConsId).subscribe((resCPA: any) => {
+        if (resCPA.StatusCode != 0) {
+          this.productDataSelected = resCPA.Data;
+        } else { this.productDataSelected = []; }
+      });
+    }
   }
-  }
- 
+
   onSelectProduct() {
     let docobj;
     docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
@@ -99,7 +99,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.product.ProdRate = docobj[0].Price;
     this.product.Product = docobj[0].Product; //extra
     this.product.ProdCode = docobj[0].ProductCode;
-    this.product.SVQty= docobj[0].SVQty;
+    this.product.SVQty = docobj[0].SVQty;
     // this.product.IgstPer = (docobj[0].IgstPer == null || docobj[0].IgstPer == undefined || docobj[0].IgstPer == '') ? 0 : docobj[0].IgstPer;
     // this.product.CgstPer = (docobj[0].CgstPer == null || docobj[0].CgstPer == undefined || docobj[0].CgstPer == '') ? 0 : docobj[0].CgstPer;
     // this.product.SgstPer = (docobj[0].SgstPer == null || docobj[0].SgstPer == undefined || docobj[0].SgstPer == '') ? 0 : docobj[0].SgstPer;
@@ -108,7 +108,7 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
     this.product.BookNo = '';
 
     if (this.product.ProdQty != null) {
-      this.product.RefillAmount = (parseInt(this.product.ProdRate) + parseInt(this.product.PremiumCharge==null || this.product.PremiumCharge==''?0:this.product.PremiumCharge)  ) * parseInt(this.product.ProdQty);
+      this.product.RefillAmount = (parseInt(this.product.ProdRate) + parseInt(this.product.PremiumCharge == null || this.product.PremiumCharge == '' ? 0 : this.product.PremiumCharge)) * parseInt(this.product.ProdQty);
       // if (this.cpInfo.IsHomeState == 'Y') {
       //   this.product.CgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.CgstPer) / 100);
       //   this.product.SgstAmt = parseInt(this.product.ProdAmt) * (parseInt(this.product.SgstPer) / 100);
@@ -158,33 +158,33 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
       this.product = data;
     }
   }
-  onEditDiscount(){
-    this.cust.TotalAmtPayable=parseInt(this.cust.RefillAmount)-parseInt(this.cust.Discount== null || this.cust.Discount==''? 0 :this.cust.Discount);
+  onEditDiscount() {
+    this.cust.TotalAmtPayable = parseInt(this.cust.RefillAmount) - parseInt(this.cust.Discount == null || this.cust.Discount == '' ? 0 : this.cust.Discount);
   }
 
   onSelect(event: TypeaheadMatch): void {
     this.selectedOption = event.item;
-    this.cust = Object.assign(this.cust, this.selectedOption); 
+    this.cust = Object.assign(this.cust, this.selectedOption);
     let filtrArray;
-    if(this.cust.CustTypeName=='ALL'|| this.cust.ProdSegId==null){
-      this.ProdSegArray=this.productSegmentData;
-    }else{
+    if (this.cust.CustTypeName == 'ALL' || this.cust.ProdSegId == null) {
+      this.ProdSegArray = this.productSegmentData;
+    } else {
       filtrArray = this.masterService.filterData(this.productSegmentData, this.cust.ProdSegId, 'ProdSegId');
-      this.ProdSegArray=filtrArray;
+      this.ProdSegArray = filtrArray;
     }
-  
+
   }
   typeaheadNoResults(event: boolean): void {
     this.noResult = event;
   }
   onGetCustomer() {
     this.loaderbtn = false;
-    this.product={ ProdSegId: '', ProdId: '' };
+    this.product = { ProdSegId: '', ProdId: '' };
     this.cust = this.customerService.checkCustOrMobNo(this.cust);
-    this.customerService.getCustomer(this.cpInfo.CPCode,'', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
+    this.customerService.getCustomer(this.cpInfo.CPCode, '', '', this.cust.ConsNo, this.cust.MobileNo).subscribe((resData: any) => {
       this.loaderbtn = true;
       if (resData.StatusCode != 0) {
-        this.cust = Object.assign(this.cust, resData.Data[0]); 
+        this.cust = Object.assign(this.cust, resData.Data[0]);
         AppComponent.SmartAlert.Success(resData.Message);
       }
       else { AppComponent.SmartAlert.Errmsg(resData.Message); }
@@ -248,13 +248,13 @@ export class RefillBookingComponent implements OnInit, OnDestroy {
   makequantitydisable() {
     let docobj;
     docobj = this.masterService.filterData(this.productSegmentData, this.product.ProdSegId, 'ProdSegId');
-    if(docobj.length>0)
-    if ((docobj[0].ProdSeg).toUpperCase() == 'DOMESTIC' ) {
-      this.product.ProdQty=1;
-      this.disQty=true;
-    } else{
-      this.disQty=false;
-    }
+    if (docobj.length > 0)
+      if ((docobj[0].ProdSeg).toUpperCase() == 'DOMESTIC') {
+        this.product.ProdQty = 1;
+        this.disQty = true;
+      } else {
+        this.disQty = false;
+      }
   }
   ngOnDestroy() {
     this.dataShare.updateShareData(null);

@@ -14,20 +14,23 @@ export const environment = {
     api: null,
     db: 'smartadmin-angular'
   },
-  // BaseUrl: 'http://apk.sipl.pw/AegisAdminApi/api/',
-  // BaseUrlDist: 'http://apk.sipl.pw/AegisDistributorApi/api/',
-  // ImageUrl: 'http://apk.sipl.pw/AEGISAdminApi/Documents/',
-  // authKey: 'Aegis:Aegis@12345?',
-  // secureKey: 'AEGIS11223344556',
-  // deptId: 1006
-
-  
-  BaseUrl: 'http://14.192.18.37:808/AegisAdminApi/api/',
-  BaseUrlDist: 'http://14.192.18.37:808/AegisDistributorApi/api/',
-  ImageUrl: 'http://14.192.18.37:808/AegisAdminApi/Documents/',
-  ImageUrlDist: 'http://14.192.18.37:808/AegisDistributorApi/Expenses/',
+  BaseUrl: 'http://14.192.18.37:808/AegisAdminApiUAT/api/',
+  BaseUrlDist: 'http://14.192.18.37:808/AegisDistributorApiUAT/api/',
+  ImageUrl: 'http://14.192.18.37:808/AegisAdminApiUAT/Documents/',
+  ImageUrlDist: 'http://14.192.18.37:808/AegisDistributorApiUAT/Expenses/',
   authKey: 'Aegis:Aegis@12345?',
   secureKey: 'AEGIS11223344556',
   deptId: 1006
+
+
+
+
+  // BaseUrl: 'http://14.192.18.37:808/AegisAdminApi/api/',
+  // BaseUrlDist: 'http://14.192.18.37:808/AegisDistributorApi/api/',
+  // ImageUrl: 'http://14.192.18.37:808/AegisAdminApi/Documents/',
+  // ImageUrlDist: 'http://14.192.18.37:808/AegisDistributorApi/Expenses/',
+  // authKey: 'Aegis:Aegis@12345?',
+  // secureKey: 'AEGIS11223344556',
+  // deptId: 1006
 
 };

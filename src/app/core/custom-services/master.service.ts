@@ -21,7 +21,7 @@ export class MasterService {
     //   return yearsDiff;
     // }
     if (d2 != null && d1 != null) {
-      d2=new Date(d2); d1=new Date(d1);
+      d2 = new Date(d2); d1 = new Date(d1);
       var diff = (d2.getTime() - d1.getTime()) / 1000;
       diff /= (60 * 60 * 24);
       var yr = Math.abs(diff / 365.25);
@@ -31,7 +31,7 @@ export class MasterService {
       if (month == 12) {
         return parseFloat(`${yr + 1}.0`);
       } else {
-        return parseFloat( `${yr}.${month}`);
+        return parseFloat(`${yr}.${month}`);
       }
 
     }
@@ -70,7 +70,7 @@ export class MasterService {
   public getProductSegmentDetails(ChannelId) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetMasterRecords?MasterCode=PSM&IsActive=Y&ChannelId=${ChannelId}`);
   }
-  public  getNewProducts(cpcode, plantId, Pscode, Prodtype,flag) {
+  public getNewProducts(cpcode, plantId, Pscode, Prodtype, flag) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Settings/GetAdminPriceAllocation?CPCode=${cpcode}&PlantId=${plantId}&ProdSegId=${Pscode}&ProdType=${Prodtype}&FormFlag=${flag}&IsActive=Y`);
   }
   public getProducts(Pscode, ProdType) {
@@ -93,6 +93,9 @@ export class MasterService {
   }
   public getVehicles(cpcode) {
     return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetRelyingData?MasterCode=VM&CPCode=${cpcode}&RoleCode=&IsActive=Y`);
+  }
+  public getVehicaleProductDetails(cpcode, VehicleId) {
+    return this.httpClient.get<any>(`${AppComponent.BaseUrl}Master/GetVehicleCapacity?VehicleId=${VehicleId}&CPCode=${cpcode}`);
   }
   public postBulkDoc(fd: any) {
     return this.httpClient.post<any>(`${AppComponent.BaseUrl}Operational/ManageDocumentDtls`, fd);
